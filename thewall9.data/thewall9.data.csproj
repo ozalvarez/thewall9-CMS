@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1403AFF5-FF97-4FBE-A7D2-0D014FFDFB07}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>thewall9.data</RootNamespace>
+    <AssemblyName>thewall9.data</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.1.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.1.0\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.3.0.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccountBindingModels.cs" />
+    <Compile Include="AccountViewModels.cs" />
+    <Compile Include="Culture.cs" />
+    <Compile Include="IdentityModels.cs" />
+    <Compile Include="Migrations\201410031827156_InitialCreate.cs" />
+    <Compile Include="Migrations\201410031827156_InitialCreate.Designer.cs">
+      <DependentUpon>201410031827156_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201410031842021_AdSite.cs" />
+    <Compile Include="Migrations\201410031842021_AdSite.Designer.cs">
+      <DependentUpon>201410031842021_AdSite.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201410060322551_Add_Pages.cs" />
+    <Compile Include="Migrations\201410060322551_Add_Pages.Designer.cs">
+      <DependentUpon>201410060322551_Add_Pages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201410060327424_Add_CASCADE_SITE_USER.cs" />
+    <Compile Include="Migrations\201410060327424_Add_CASCADE_SITE_USER.Designer.cs">
+      <DependentUpon>201410060327424_Add_CASCADE_SITE_USER.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201410062129153_Add_Culture.cs" />
+    <Compile Include="Migrations\201410062129153_Add_Culture.Designer.cs">
+      <DependentUpon>201410062129153_Add_Culture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201410071636597_AddPageCulture.cs" />
+    <Compile Include="Migrations\201410071636597_AddPageCulture.Designer.cs">
+      <DependentUpon>201410071636597_AddPageCulture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201410071800287_ADD_RedirectUrl_PageCulture.cs" />
+    <Compile Include="Migrations\201410071800287_ADD_RedirectUrl_PageCulture.Designer.cs">
+      <DependentUpon>201410071800287_ADD_RedirectUrl_PageCulture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201410072017585_ADD_Name_PageCulture.cs" />
+    <Compile Include="Migrations\201410072017585_ADD_Name_PageCulture.Designer.cs">
+      <DependentUpon>201410072017585_ADD_Name_PageCulture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201410081743390_AddContent.cs" />
+    <Compile Include="Migrations\201410081743390_AddContent.Designer.cs">
+      <DependentUpon>201410081743390_AddContent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201410272308549_ADDRolesInSite.cs" />
+    <Compile Include="Migrations\201410272308549_ADDRolesInSite.Designer.cs">
+      <DependentUpon>201410272308549_ADDRolesInSite.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411070201218_AddLockToContentProperty.cs" />
+    <Compile Include="Migrations\201411070201218_AddLockToContentProperty.Designer.cs">
+      <DependentUpon>201411070201218_AddLockToContentProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412152042414_ContentCultureAddHint.cs" />
+    <Compile Include="Migrations\201412152042414_ContentCultureAddHint.Designer.cs">
+      <DependentUpon>201412152042414_ContentCultureAddHint.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412160223221_ContentShowInContent.cs" />
+    <Compile Include="Migrations\201412160223221_ContentShowInContent.Designer.cs">
+      <DependentUpon>201412160223221_ContentShowInContent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412172321308_AddUrlToSite.cs" />
+    <Compile Include="Migrations\201412172321308_AddUrlToSite.Designer.cs">
+      <DependentUpon>201412172321308_AddUrlToSite.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412221803482_AddSiteUrl.cs" />
+    <Compile Include="Migrations\201412221803482_AddSiteUrl.Designer.cs">
+      <DependentUpon>201412221803482_AddSiteUrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412221931208_RemoveSiteUrl.cs" />
+    <Compile Include="Migrations\201412221931208_RemoveSiteUrl.Designer.cs">
+      <DependentUpon>201412221931208_RemoveSiteUrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Page.cs" />
+    <Compile Include="ContentProperty.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Site.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201410031827156_InitialCreate.resx">
+      <DependentUpon>201410031827156_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201410031842021_AdSite.resx">
+      <DependentUpon>201410031842021_AdSite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201410060322551_Add_Pages.resx">
+      <DependentUpon>201410060322551_Add_Pages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201410060327424_Add_CASCADE_SITE_USER.resx">
+      <DependentUpon>201410060327424_Add_CASCADE_SITE_USER.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201410062129153_Add_Culture.resx">
+      <DependentUpon>201410062129153_Add_Culture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201410071636597_AddPageCulture.resx">
+      <DependentUpon>201410071636597_AddPageCulture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201410071800287_ADD_RedirectUrl_PageCulture.resx">
+      <DependentUpon>201410071800287_ADD_RedirectUrl_PageCulture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201410072017585_ADD_Name_PageCulture.resx">
+      <DependentUpon>201410072017585_ADD_Name_PageCulture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201410081743390_AddContent.resx">
+      <DependentUpon>201410081743390_AddContent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201410272308549_ADDRolesInSite.resx">
+      <DependentUpon>201410272308549_ADDRolesInSite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411070201218_AddLockToContentProperty.resx">
+      <DependentUpon>201411070201218_AddLockToContentProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412152042414_ContentCultureAddHint.resx">
+      <DependentUpon>201412152042414_ContentCultureAddHint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412160223221_ContentShowInContent.resx">
+      <DependentUpon>201412160223221_ContentShowInContent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412172321308_AddUrlToSite.resx">
+      <DependentUpon>201412172321308_AddUrlToSite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412221803482_AddSiteUrl.resx">
+      <DependentUpon>201412221803482_AddSiteUrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412221931208_RemoveSiteUrl.resx">
+      <DependentUpon>201412221931208_RemoveSiteUrl.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\thewall9.data.binding\thewall9.data.binding.csproj">
+      <Project>{354569c5-3de8-4599-954a-4cf4f3529a14}</Project>
+      <Name>thewall9.data.binding</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,69 @@
+﻿<div class="page-header">
+    <ul class="list-inline pull-right">
+        <li>
+            <a class="btn btn-primary" role="button" ng-href="#pages">
+                <span class="glyphicon glyphicon-arrow-left"></span> Atras a Páginas
+            </a>
+        </li>
+        <li>
+            <select class="form-control">
+                <option ng-repeat="item in cultures">{{item.Name}}</option>
+            </select>
+        </li>
+    </ul>
+    <h1>{{page.TitlePage}}</h1>
+</div>
+<form role="form" ng-submit="save()">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Nombre de la Página</label>
+                <input class="form-control" ng-model="page.Name">
+            </div>
+            <div class="form-group">
+                <label>Título de la Página</label>
+                <input class="form-control" ng-model="page.TitlePage">
+            </div>
+            <div class="form-group">
+                <label>Friendly Url</label>
+                <div class="input-group">
+                    <div class="input-group-addon">/</div>
+                    <input class="form-control" ng-model="page.FriendlyUrl">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>View Render</label>
+                <input class="form-control" ng-model="page.ViewRender">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Alias</label>
+                <input class="form-control" ng-model="page.PageAlias">
+            </div>
+            <div class="form-group">
+                <label>Metatag Description ({{page.MetaDescription.length==null?0:page.MetaDescription.length}})</label>
+                <span class="label label-warning" ng-show="page.MetaDescription.length==null || page.MetaDescription.length<metatagDescriptionMin || page.MetaDescription.length>metatagDescriptionMax">
+                    <i class="fa fa-warning"></i>
+                </span>
+                <span class="label label-success" ng-show="page.MetaDescription.length>=metatagDescriptionMin && page.MetaDescription.length<=metatagDescriptionMax">
+                    <i class="fa fa-check"></i>
+                </span>
+                <textarea class="form-control" ng-model="page.MetaDescription"></textarea>
+                <small class="help-block">Try adding a metatag description between <b>{{metatagDescriptionMin}}</b> and <b>{{metatagDescriptionMax}}</b> characteres</small>
+            </div>
+            <div class="form-group">
+                <label>Redirect Url</label>
+                <input class="form-control" ng-model="page.RedirectUrl">
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" data-ng-model="page.Published">Publicado
+                </label>
+            </div>
+        </div>
+    </div>
+    <p>
+        <button type="submit" class="btn btn-default">Guardar</button>
+    </p>
+</form>

@@ -1,0 +1,21 @@
+﻿<package >
+  <metadata>
+    <id>thewall9CMS</id>
+    <version>1.0.1-alpha</version>
+    <title>thewall9.web.parent</title>
+    <authors>Oswaldo Alvarez</authors>
+    <owners>Oswaldo Alvarez</owners>
+    <projectUrl>https://github.com/ozalvarez/thewall9-CMS</projectUrl>
+    <licenseUrl>https://github.com/ozalvarez/thewall9-CMS/blob/master/LICENCE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>thewall9 CMS</summary>
+    <description>thewall9 CMS Libraries.</description>
+    <releaseNotes>
+      * ADD Licence
+    </releaseNotes>
+    <copyright>Copyright © thewall9 2015</copyright>
+    <tags>
+      ASP.NET MVC CMS Angularjs Bootstrap
+    </tags>
+  </metadata>
+</package>
