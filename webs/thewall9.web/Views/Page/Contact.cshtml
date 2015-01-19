@@ -1,0 +1,100 @@
+﻿@model thewall9.data.binding.PageWeb
+@{
+    Layout = "~/Views/Shared/_LayoutIntern.cshtml";
+}
+<section>
+    <div>
+        <div class="bg-white text-center">
+            <h1>
+                @Html.FindValue(Model, "title")
+            </h1>
+            <div class="container">
+                <h4 class="text-muted">
+                    @Html.FindValue(Model, "subtitle")
+                </h4>
+            </div>
+        </div>
+        <div class="bg-white margin-top">
+            <div class="container">
+                @if (Request.QueryString["contact"] != null)
+                {
+                    <p class="alert alert-success text-center">
+                        @Html.FindValue(Model, "contact-success")
+                    </p>
+                }
+                <div class="row">
+                    <div class="col-md-3">
+                        <address>
+                            <label class="lead">
+                                <strong>Thewall9</strong>
+                            </label>
+                            <br>
+                            Bogotá, Colombia
+                            <br>
+                            <abbr title="Phone">C:</abbr> +57 (320) 863-6740
+                            <br>
+                            <abbr title="Phone">T:</abbr> +57 (1) 471-3619
+                        </address>
+                        <p>
+                            @Html.FindValue(Model, "email-text")
+                        </p>
+                    </div>
+                    <div class="col-md-9">
+                        <div id='crmWebToEntityForm'>
+                            <form action='https://crm.zoho.com/crm/WebToLeadForm' name=WebToLeads1280667000000077060 method='POST'>
+                                <input type='text' style='display:none;' name='xnQsjsdp' value='LDixBJy8ngNthYo@kRl79w$$' />
+                                <input type='hidden' name='zc_gad' id='zc_gad' value='' />
+                                <input type='text' style='display:none;' name='xmIwtLD' value='4YXvI2lXP@ByXABGh8UW-e5aln7sxYgw' />
+                                <input type='text' style='display:none;' name='actionType' value='TGVhZHM=' />
+                                <input type='text' style='display:none;' name='returnURL' value='http&#x3a;&#x2f;&#x2f;thewall9.com&#x2f;contactanos&#x3f;contact&#x3d;True' />
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>
+                                                @Html.FindValue(Model, "name")
+                                            </label>
+                                            <input type="text" class="form-control" name='First Name' placeholder="@Html.FindValue(Model, "name-placeholder")" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>
+                                                @Html.FindValue(Model, "lastname")
+                                            </label>
+                                            <input type="text" class="form-control" name='Last Name' placeholder="@Html.FindValue(Model, "lastname-placeholder")" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>
+                                                @Html.FindValue(Model, "company")
+                                            </label>
+                                            <input type="text" class="form-control" name='Company' placeholder="@Html.FindValue(Model, "company-placeholder")" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>
+                                                @Html.FindValue(Model, "email")
+                                            </label>
+                                            <input type="email" class="form-control" name='Email' placeholder="@Html.FindValue(Model, "email-placeholder")" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>
+                                                @Html.FindValue(Model, "phone")
+                                            </label>
+                                            <input type="text" class="form-control" name='Phone' placeholder="@Html.FindValue(Model, "phone-placeholder")" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>
+                                                @Html.FindValue(Model, "description")
+                                            </label>
+                                            <textarea class="form-control" name='Description' placeholder="@Html.FindValue(Model, "description-placeholder")"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-default">@Html.FindValue(Model, "contact-btn-text")</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

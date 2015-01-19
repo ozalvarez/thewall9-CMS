@@ -1,0 +1,311 @@
+﻿html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+body {
+  /* some reset styles */
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  font-family: 'Exo', sans-serif;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  line-height: 1.3;
+}
+a:hover {
+  -moz-transition: all 0.3s ease-in;
+  -o-transition: all 0.3s ease-in;
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+.layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #FFF;
+  top: 0px;
+  left: 0px;
+  opacity: 0.8;
+  z-index: -1;
+}
+#home.wrapper {
+  z-index: 101;
+  /* set the height of the element which contains what you want to center */
+  height: 100%;
+  /* these styles are optional, to set width horizontally center the page */
+  max-width: 970px;
+  margin: 0 auto;
+}
+#home.wrapper:before,
+#home.wrapper .container {
+  /* these are the important styles for the centered element: */
+  display: inline-block;
+  vertical-align: middle;
+}
+#home.wrapper:before {
+  /* this is the important part */
+  content: '';
+  display: inline-block;
+  width: 0;
+  height: 100%;
+  vertical-align: middle;
+  /* this just takes care of whitespace added by having display:inline-block (there are other methods) */
+  margin-left: -0.25em;
+}
+#home.wrapper.loaded {
+  -moz-animation: fadein 4s;
+  -o-animation: fadein 4s;
+  -webkit-animation: fadein 4s;
+  animation: fadein 4s;
+}
+#home.wrapper .container {
+  width: 99%;
+}
+#home.wrapper .container a.logo {
+  max-width: 350px;
+}
+#home.wrapper .container a.logo img {
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+#home.wrapper .container a.logo img:hover {
+  -moz-transform: rotate(-10deg);
+  -ms-transform: rotate(-10deg);
+  -o-transform: rotate(-10deg);
+  -webkit-transform: rotate(-10deg);
+  transform: rotate(-10deg);
+}
+#home.wrapper .container h1 {
+  font-size: 1.6em;
+  text-transform: uppercase;
+  margin: 30px 0;
+}
+#home.wrapper .container h2 {
+  font-size: 2.2em;
+  font-style: italic;
+}
+#home.wrapper .container .btns {
+  margin: 30px 0;
+  -moz-animation: fadein 6s;
+  -o-animation: fadein 6s;
+  -webkit-animation: fadein 6s;
+  animation: fadein 6s;
+}
+#home.wrapper .container .btns #contact-btn {
+  -webkit-animation: glowIt 4s infinite;
+  -moz-animation: glowIt 4s infinite;
+  -o-animation: glowIt 4s infinite;
+  animation: glowIt 4s infinite;
+  border-color: #ff0000;
+}
+/*WORK*/
+#work #work-list a.img {
+  max-width: 128px;
+}
+/*SIDR*/
+a#simple-menu {
+  position: absolute;
+  top: 25px;
+  left: 40px;
+}
+.sidr {
+  font-family: 'Exo', sans-serif;
+  font-size: 1.6em;
+}
+.sidr li a.home-link {
+  display: block;
+  background-image: url('images/logo-thewall9-white.png');
+  padding: 25px;
+  height: 35px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.sidr .social {
+  margin: 30px 0;
+}
+.sidr .social a {
+  margin: 0px 10px;
+}
+.sidr .social a i {
+  color: #ffF;
+}
+.sidr .social a:hover {
+  text-decoration: none;
+}
+/*-----MY BOOSTRAP-----*/
+.btn-primary {
+  background-color: transparent;
+  border-color: #ff0000;
+  color: #000;
+}
+.btn-lg,
+.btn-group-lg > .btn {
+  border-radius: 0px;
+  border: 2px solid transparent;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+  background-color: #ff0000;
+  border-color: #ff0000;
+  color: #fff;
+}
+.btn-xl {
+  font-size: 2.7em;
+  background-color: #ff0000;
+}
+/*DARK*/
+body.dark {
+  background-color: #000;
+  -moz-animation: fadein 2s;
+  -o-animation: fadein 2s;
+  -webkit-animation: fadein 2s;
+  animation: fadein 2s;
+}
+body.dark .social a i {
+  color: #000;
+}
+body.dark .sidr li a.home-link {
+  background-image: url('images/logo-thewall9-black.png');
+}
+body.dark a#simple-menu {
+  top: 17px;
+  right: 20px;
+  left: auto;
+}
+body.dark .btn-primary {
+  color: #FFF;
+}
+body.dark .btn-primary:hover,
+body.dark .btn-primary:focus,
+body.dark .btn-primary:active,
+body.dark .btn-primary.active,
+body.dark .open > .dropdown-toggle.btn-primary {
+  background-color: #ff0000;
+  border-color: #ff0000;
+}
+body.dark header {
+  padding: 12px;
+  margin-right: 100px;
+}
+body.dark header a.logo-intern {
+  max-width: 280px;
+  display: block;
+}
+body.dark .bg-white {
+  background-color: #FFF;
+  padding: 35px;
+}
+body.dark h1 {
+  color: #ff0000;
+}
+/*MISC*/
+.margin-top {
+  margin-top: 10px;
+}
+.vertical-align {
+  display: flex;
+  align-items: center;
+}
+/*ANGULARJS*/
+[ng\:cloak],
+[ng-cloak],
+.ng-cloak {
+  display: none;
+}
+/*--------------Extra small devices Phones (<768px)---------------*/
+@media only screen and (max-width: 768px) {
+  #home.wrapper .container h1 {
+    font-size: 1.0em;
+  }
+  #home.wrapper .container h2 {
+    font-size: 1.3em;
+  }
+  /*SIDR*/
+  a#simple-menu {
+    top: 5px;
+    left: 5px;
+  }
+  body.dark a#simple-menu {
+    top: 5px;
+    left: auto;
+    right: 5px;
+  }
+  .btn-xl {
+    font-size: 1.1em;
+  }
+}
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-ms-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-o-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes glowIt {
+  0% {
+    box-shadow: 0 0 9px #ccc;
+  }
+  75% {
+    box-shadow: 0 0 18px #ff0000;
+  }
+  100% {
+    box-shadow: 0 0 9px #ccc;
+  }
+}
+@-webkit-keyframes glowIt {
+  0% {
+    box-shadow: 0 0 9px #ccc;
+  }
+  75% {
+    box-shadow: 0 0 18px #ff0000;
+  }
+  100% {
+    box-shadow: 0 0 9px #ccc;
+  }
+}

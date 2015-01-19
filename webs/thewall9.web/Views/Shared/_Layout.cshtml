@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Theme = "light";
+}
+<!DOCTYPE html>
+<html lang="@Html.Lang()">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @Html.MetatagDescription()
+    <title>@Html.TitlePageText()</title>
+    @RenderSection("styles", required: false)
+    @Styles.Render("~/Content/sidr-black")
+    @Styles.Render("~/Content/css")
+    <link href='http://fonts.googleapis.com/css?family=Exo:400,800' rel='stylesheet' type='text/css'>
+    @Scripts.Render("~/bundles/modernizr")
+    <script type="text/javascript" src="https://mylivechat.com/chatinline.aspx?hccid=51184327"></script>
+</head>
+<body class="light">
+    @Html.Partial("_SidebarPage")
+    @RenderBody()
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/sidr")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#simple-menu').sidr();
+        });
+    </script>
+    @Html.GAScript()
+</body>
+</html>

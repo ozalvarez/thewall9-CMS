@@ -1,0 +1,45 @@
+﻿@model thewall9.data.binding.PageWeb
+@{
+    Layout = "~/Views/Shared/_LayoutIntern.cshtml";
+}
+<section id="services">
+    <div class="bg-white text-center">
+        <h1>
+            @Html.FindValue(Model, "title")
+        </h1>
+        <div class="container">
+            <h4 class="text-muted">
+                @Html.FindValue(Model, "subtitle")
+            </h4>
+        </div>
+    </div>
+    <div class="bg-white margin-top">
+        <div class="container">
+            <div class="row">
+                @{int _Cont = 0;}
+                @foreach (var item in Html.FindItems(Model, "list-service"))
+                {
+                    <div class="col-md-4">
+                        <h2 class="text-center">
+                            @Html.FindValue(item, "title")
+                        </h2>
+                        @foreach (var item2 in Html.FindItems(item, "list"))
+                        {
+                            <h4 class="text-center">
+                                @Html.GetValue(item2)
+                            </h4>
+                        }
+                    </div>
+                    if (_Cont % 3 == 2)
+                    {
+                        <div class="clearfix"></div>
+                    }
+                    _Cont++;
+                }
+            </div>
+        </div>
+    </div>
+    <a href="@Html.FindValue(Model, "contact-btn-url")" class="btn btn-xl margin-top btn-primary btn-block">
+        <span class="glyphicon glyphicon-envelope small"></span> @Html.FindValue(Model, "contact-btn-text")
+    </a>
+</section>

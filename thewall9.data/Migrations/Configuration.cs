@@ -11,8 +11,11 @@ namespace thewall9.data.Migrations
 
     internal sealed class Configuration : DbMigrationsConfiguration<thewall9.data.Models.ApplicationDbContext>
     {
-        public const string EmailRoot = "[YOUR ROOT EMAIL]";
-        public const string NameRoot = "[YOUR ROOT NAME]";
+        //CHANGE ME
+        public const string EmailRoot = "oz@thewall9.com";
+        //CHANGE ME
+        public const string NameRoot = "Oswaldo Alvarez";
+
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
