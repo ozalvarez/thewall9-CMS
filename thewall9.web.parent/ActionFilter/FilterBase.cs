@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Threading;
 using thewall9.web.parent.BLL;
+using thewall9.web.parent.HtmlHelpers;
 namespace thewall9.web.parent.ActionFilter
 {
     public class FilterBase : ActionFilterAttribute
@@ -13,6 +14,9 @@ namespace thewall9.web.parent.ActionFilter
         SiteBLL SiteService = new SiteBLL();
         PageBLL PageService = new PageBLL();
         ContentBLL ContentService = new ContentBLL();
+        string CultureName = null;
+
+       
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (!filterContext.RouteData.Values.ContainsKey("NoFilterBase"))
@@ -25,10 +29,8 @@ namespace thewall9.web.parent.ActionFilter
                      * https://katanaproject.codeplex.com/workitem/197
                      */
                     filterContext.HttpContext.Session["Workaround"] = 0;
-                    if (APP._Site == null || filterContext.HttpContext.Request.IsLocal)
-                    {
-                        APP._Site = SiteService.Get(APP._SiteID, filterContext.HttpContext.Request.Url.Authority, null);
-                    }
+                    //SetCulture(filterContext.HttpContext.Request);
+                    
                 }
             }
         }
@@ -38,6 +40,10 @@ namespace thewall9.web.parent.ActionFilter
             {
                 if (!filterContext.IsChildAction && !filterContext.HttpContext.Request.IsAjaxRequest())
                 {
+                    if (APP._Site == null || filterContext.HttpContext.Request.IsLocal)
+                    {
+                        APP._Site = SiteService.Get(APP._SiteID, filterContext.HttpContext.Request.Url.Authority, APP._Lang);
+                    }
                     if (filterContext.HttpContext.Request.IsAuthenticated)
                     {
 

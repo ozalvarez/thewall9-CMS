@@ -1,16 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
 using thewall9.web.parent.BLL;
+using thewall9.web.parent.HtmlHelpers;
 
 namespace thewall9.web.parent.Controllers
 {
     public class PageContentBaseController : Controller
     {
         PageBLL PageService = new PageBLL();
+
+        private string GetCulture()
+        {
+            string CultureName = null;
+            // Attempt to read the culture cookie from Request
+            HttpCookie cultureCookie = Request.Cookies["_Culture"];
+            if (cultureCookie != null)
+                CultureName = cultureCookie.Value;
+            else
+            {
+                CultureName = Request.UserLanguages != null && Request.UserLanguages.Length > 0 ?
+                        Request.UserLanguages[0] :  // obtain it from HTTP header AcceptLanguages
+                        null;
+                // Validate culture name
+                // cultureName = "es";
+            }
+            CultureName = CultureHelper.GetImplementedCulture(CultureName); // This is safe
+
+            // Modify current thread's cultures            
+            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(CultureName);
+            Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
+            return CultureName;
+        }
 
         public ActionResult Index(string FriendlyUrl)
         {
@@ -23,6 +48,7 @@ namespace thewall9.web.parent.Controllers
                     return Redirect(_Model.Page.RedirectUrl);
                 ViewBag.Title = _Model.Page.TitlePage;
                 ViewBag.MetaDescription = _Model.Page.MetaDescription;
+                APP._Lang = _Model.Page.CultureName;
                 return View(_Model.Page.ViewRender, _Model);
             }
         }
@@ -49,6 +75,24 @@ namespace thewall9.web.parent.Controllers
             )));
             return Content("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + sitemap.ToString(), "text/xml");
         }
-
+        public ActionResult SetCulture(string culture)
+        {
+            // Validate input
+            culture = CultureHelper.GetImplementedCulture(culture);
+            // Save culture in a cookie
+            HttpCookie cookie = Request.Cookies["_culture"];
+            if (cookie != null)
+                cookie.Value = culture;
+            else
+            {
+                cookie = new HttpCookie("_culture");
+                cookie.Value = culture;
+                cookie.Expires = DateTime.Now.AddYears(1);
+            }
+            Response.Cookies.Add(cookie);
+            if (Request.UrlReferrer != null && !string.IsNullOrEmpty(Request.UrlReferrer.AbsoluteUri))
+                return Redirect(Request.UrlReferrer.AbsoluteUri);
+            return RedirectToAction("index", "home");
+        }
     }
 }

@@ -165,9 +165,21 @@ namespace thewall9.bll
                         ContentPropertyID = p.ContentPropertyID,
                         ContentPropertyParentID = p.ContentPropertyParentID,
                         ContentPropertyType = p.ContentPropertyType,
-                        ContentPropertyValue = p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Select(m => m.ContentPropertyValue).FirstOrDefault(),
+                        
+                        ContentPropertyValue =p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Any()
+                        ? p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Select(m => m.ContentPropertyValue).FirstOrDefault()
+                        : p.ContentPropertyCultures.Select(m => m.ContentPropertyValue).FirstOrDefault(),
+
+                        Edit=p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Any()
+                        ? false
+                        : true,
+                        
                         ShowInContent = p.ShowInContent,
-                        Hint = p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Select(m => m.Hint).FirstOrDefault(),
+                        
+                        Hint = p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Any()
+                        ? p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Select(m => m.Hint).FirstOrDefault()
+                        : p.ContentPropertyCultures.Select(m => m.Hint).FirstOrDefault(),
+                        
                         IsEditable = _c.ContentProperties.Where(m => m.SiteID == p.SiteID && m.ContentPropertyParentID == p.ContentPropertyParentID && m.ShowInContent && m.ContentPropertyID != p.ContentPropertyID).Any(),
 
                         Items = _c.ContentProperties.Where(m => m.ContentPropertyParentID == p.ContentPropertyID).Any()

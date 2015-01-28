@@ -4,19 +4,19 @@
     </button>
     <div class="page-header">
         <ul class="list-inline pull-right">
-            <!--<li ng-if="isAdmin">
-                <span class="label label-danger" ng-show="hintRemain>0">{{hintRemain}}</span>
-                <span class="label label-success" ng-show="hintRemain==0">Hints DONE</span>
-            </li>-->
             <li>
                 <button class="btn btn-primary" role="button" ng-click="save()">
                     <span class="fa fa-save"></span> Guardar Cambios
                 </button>
             </li>
             <li>
-                <select class="form-control">
+                <!--<select class="form-control">
                     <option ng-repeat="item in cultures">{{item.Name}}</option>
-                </select>
+                </select>-->
+                <select ng-options="culture as culture.Name for culture in cultures"
+                        ng-model="selectedCulture"
+                        ng-change="updateCulture()"
+                        class="form-control"></select>
             </li>
         </ul>
         <h1>Contenido</h1>
@@ -52,6 +52,8 @@
             <div class="input-group" ng-if="isAdmin" ng-class="{'has-error':item.Hint==null}">
                 <span class="input-group-addon">Hint</span>
                 <input class="form-control" ng-model="item.Hint" placeholder="Hint" ng-change="item.Edit=true;updateHintRemaining()" />
+                <span class="input-group-addon">{{item.Edit}}</span>
+
             </div>
             <div class="clearfix"></div>
         </div>

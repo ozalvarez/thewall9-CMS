@@ -1,6 +1,5 @@
 ﻿app.controller('editContentController', ['$scope', '$location', 'toastrService', 'contentService', 'cultureService', 'siteService',
     function ($scope, $location, toastrService, contentService, cultureService, siteService) {
-
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
                 $scope.$apply(function () {
@@ -20,7 +19,6 @@
         $scope.get = function () {
             contentService.getTree().then(function (data) {
                 $scope.data = data;
-                $scope.updateHintRemaining();
             });
         };
         $scope.save = function () {
@@ -28,20 +26,6 @@
                 toastrService.success("Cambios guardados exitosamente");
             });
         }
-        $scope.updateHintRemaining = function () {
-            //var _remaining = 0;
-            //angular.forEach($scope.data, function (item) {
-            //    if (item.Hint == null) {
-            //        _remaining++;
-            //    }
-            //});
-            //angular.forEach($scope.dataShowInContent, function (item) {
-            //    if (item.Hint == null) {
-            //        _remaining++;
-            //    }
-            //});
-            //$scope.hintRemain = _remaining;
-        };
         $scope.duplicate = function (item) {
             contentService.duplicate(item).then(function (data) {
                 $scope.get();
@@ -56,9 +40,14 @@
                 });
             }
         };
+        $scope.updateCulture = function () {
+            cultureService.currentCulture = $scope.selectedCulture;
+            $scope.init();
+        }
         /*INIT*/
         $scope.init = function () {
             $scope.get();
+            $scope.selectedCulture = cultureService.currentCulture;
         };
         $scope.$on('initDone', function (event) {
             $scope.init();

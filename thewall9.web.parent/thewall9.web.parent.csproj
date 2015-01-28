@@ -92,6 +92,7 @@
     <Compile Include="BLL\PageBLL.cs" />
     <Compile Include="BLL\SiteBLL.cs" />
     <Compile Include="Controllers\PageContentBaseController.cs" />
+    <Compile Include="HtmlHelpers\CultureHelper.cs" />
     <Compile Include="HtmlHelpers\HtmlExtensionMethods.cs" />
     <Compile Include="HtmlHelpers\HtmlModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

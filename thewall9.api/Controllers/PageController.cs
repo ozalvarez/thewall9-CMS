@@ -22,7 +22,7 @@ namespace thewall9.api.Controllers
         [AllowAnonymous]
         public IHttpActionResult Get(int SiteID,string Url, string FriendlyUrl)
         {
-            return Ok(_PageService.GetPage(SiteID,Url, FriendlyUrl));
+            return Ok(_PageService.GetPage(SiteID, Url, FriendlyUrl));
         }
 
         [AllowAnonymous]

@@ -34,6 +34,10 @@ namespace thewall9.web.parent.HtmlHelpers
             {
                 throw new ArgumentNullException("Value=" + Value + " in " + Model.ContentPropertyAlias + " is NULL", e.InnerException);
             }
+            catch (NullReferenceException e)
+            {
+                throw new ArgumentNullException("Value=" + Value + " in " + Model.ContentPropertyAlias + " is NULL", e.InnerException);
+            }
         }
         public static MvcHtmlString GetValue(this HtmlHelper helper, ContentBindingList Model)
         {

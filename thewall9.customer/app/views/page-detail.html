@@ -6,9 +6,10 @@
             </a>
         </li>
         <li>
-            <select class="form-control">
-                <option ng-repeat="item in cultures">{{item.Name}}</option>
-            </select>
+            <select ng-options="culture as culture.Name for culture in cultures"
+                    ng-model="selectedCulture" 
+                    ng-change="updateCulture()" 
+                    class="form-control"></select>
         </li>
     </ul>
     <h1>{{page.TitlePage}}</h1>

@@ -33,5 +33,17 @@ namespace thewall9.web.parent
                 return System.Configuration.ConfigurationManager.AppSettings["API_URL"];
             }
         }
+        public static string _Lang
+        {
+            get
+            {
+                return HttpContext.Current.Items["_Lang"] as string;
+            }
+            set
+            {
+                HttpContext.Current.Items["_Lang"] = value;
+            }
+        }
+
     }
 }
