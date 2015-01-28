@@ -2,6 +2,7 @@
 
 This is a **experimental CMS** created with .NET MVC 5.2.2 framework with a Web API architecture using Visual Studio 2013. 
 
+Screenshots: [https://www.flickr.com/photos/129114186@N06/sets/72157650109877927/](https://www.flickr.com/photos/129114186@N06/sets/72157650109877927/)
 ## Why a Cloud CMS
 
 There are a several reason to create this architecture, here some of them:
