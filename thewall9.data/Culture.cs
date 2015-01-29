@@ -12,5 +12,6 @@ namespace thewall9.data
     {
         [ForeignKey("SiteID")]
         public virtual Site Site { get; set; }
+        public virtual List<PageCulture> PageCulture { get; set; }
     }
 }

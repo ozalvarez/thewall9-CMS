@@ -21,4 +21,8 @@ namespace thewall9.data.binding
         public int CultureIDOld { get; set; }
         public int CultureIDNew { get; set; }
     }
+    public class CultureRoutes : CultureBase
+    {
+        public string FriendlyUrl { get; set; }
+    }
 }

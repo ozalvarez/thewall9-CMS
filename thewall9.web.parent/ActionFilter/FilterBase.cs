@@ -14,7 +14,6 @@ namespace thewall9.web.parent.ActionFilter
         SiteBLL SiteService = new SiteBLL();
         PageBLL PageService = new PageBLL();
         ContentBLL ContentService = new ContentBLL();
-        string CultureName = null;
 
        
         public override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -29,8 +28,7 @@ namespace thewall9.web.parent.ActionFilter
                      * https://katanaproject.codeplex.com/workitem/197
                      */
                     filterContext.HttpContext.Session["Workaround"] = 0;
-                    //SetCulture(filterContext.HttpContext.Request);
-                    
+                    APP._Langs = SiteService.GetLang(APP._SiteID, filterContext.HttpContext.Request.Url.Authority);
                 }
             }
         }
@@ -42,7 +40,7 @@ namespace thewall9.web.parent.ActionFilter
                 {
                     if (APP._Site == null || filterContext.HttpContext.Request.IsLocal)
                     {
-                        APP._Site = SiteService.Get(APP._SiteID, filterContext.HttpContext.Request.Url.Authority, APP._Lang);
+                        APP._Site = SiteService.Get(APP._SiteID, filterContext.HttpContext.Request.Url.Authority, APP._CurrentLang);
                     }
                     if (filterContext.HttpContext.Request.IsAuthenticated)
                     {

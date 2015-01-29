@@ -20,12 +20,18 @@ namespace thewall9.api.Controllers
     public class SiteController : ApiController
     {
         SiteBLL SiteService = new SiteBLL();
+        CultureBLL CultureService = new CultureBLL();
 
         #region WEB
         [AllowAnonymous]
         public IHttpActionResult Get(int SiteID, string Url, string Lang)
         {
             return Ok(SiteService.Get(SiteID, Url, Lang));
+        }
+        [AllowAnonymous]
+        public IHttpActionResult GetLang(int SiteID, string Url)
+        {
+            return Ok(CultureService.Get(SiteID, Url));
         }
         #endregion
 

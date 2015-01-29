@@ -6,7 +6,6 @@
     <span class="glyphicon glyphicon-align-justify"></span>
     <span>Menu</span>
 </a>
-
 <div id="sidr" ng-cloak>
     <ul class="text-center">
         <li>
@@ -49,4 +48,12 @@
         </a>
     </div>
     <p class="text-center">@Html.FindValue(_LayoutContent, "copyright")</p>
+    <p class="text-center">
+        @foreach (var item in Html.GetLangs())
+        {
+            <a href="@Html.LinkUrl(item)">
+                @Html.FindValue(_LayoutContent, item.Name)
+            </a>
+        }
+    </p>
 </div>

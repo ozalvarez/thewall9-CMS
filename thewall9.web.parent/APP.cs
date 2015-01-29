@@ -33,15 +33,26 @@ namespace thewall9.web.parent
                 return System.Configuration.ConfigurationManager.AppSettings["API_URL"];
             }
         }
-        public static string _Lang
+        public static string _CurrentLang
         {
             get
             {
-                return HttpContext.Current.Items["_Lang"] as string;
+                return HttpContext.Current.Items["_CurrentLang"] as string;
             }
             set
             {
-                HttpContext.Current.Items["_Lang"] = value;
+                HttpContext.Current.Items["_CurrentLang"] = value;
+            }
+        }
+        public static List<CultureRoutes> _Langs
+        {
+            get
+            {
+                return HttpContext.Current.Session["Langs"] as List<CultureRoutes>;
+            }
+            set
+            {
+                HttpContext.Current.Session["Langs"] = value;
             }
         }
 

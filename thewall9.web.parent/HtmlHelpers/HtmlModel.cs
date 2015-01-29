@@ -72,5 +72,19 @@ namespace thewall9.web.parent.HtmlHelpers
         {
             return new MvcHtmlString(GetFriendlyUrlByAlias(helper, Alias).Replace("#", ""));
         }
+        #region LANG
+        public static List<CultureRoutes> GetLangs(this HtmlHelper helper)
+        {
+            return APP._Langs;
+        }
+        public static MvcHtmlString LinkUrl(this HtmlHelper helper, CultureRoutes Culture)
+        {
+            return new MvcHtmlString("/change-lang?Lang=" + Culture.Name);
+        }
+        public static MvcHtmlString LinkHome(this HtmlHelper helper)
+        {
+            return new MvcHtmlString("/" +APP._Langs.Where(m=>m.Name==APP._CurrentLang).FirstOrDefault().FriendlyUrl);
+        }
+        #endregion
     }
 }

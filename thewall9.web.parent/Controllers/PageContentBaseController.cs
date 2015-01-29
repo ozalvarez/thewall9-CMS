@@ -29,7 +29,7 @@ namespace thewall9.web.parent.Controllers
                 // Validate culture name
                 // cultureName = "es";
             }
-            CultureName = CultureHelper.GetImplementedCulture(CultureName); // This is safe
+            //CultureName = CultureHelper.GetImplementedCulture(CultureName); // This is safe
 
             // Modify current thread's cultures            
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(CultureName);
@@ -39,6 +39,15 @@ namespace thewall9.web.parent.Controllers
 
         public ActionResult Index(string FriendlyUrl)
         {
+            if (string.IsNullOrEmpty(FriendlyUrl))
+            {
+                var _CultureName = GetCulture();
+                var _DatabaseCulture=APP._Langs.Where(m => _CultureName.Contains(m.Name)).FirstOrDefault();
+                if (_DatabaseCulture != null && !string.IsNullOrEmpty(_DatabaseCulture.FriendlyUrl))
+                {
+                    return Redirect("/" + _DatabaseCulture.FriendlyUrl);
+                }
+            }
             var _Model = PageService.Get(FriendlyUrl, APP._SiteID, Request.Url.Authority);
             if (_Model == null)
                 throw new HttpException(404, "Page Not Found");
@@ -48,7 +57,7 @@ namespace thewall9.web.parent.Controllers
                     return Redirect(_Model.Page.RedirectUrl);
                 ViewBag.Title = _Model.Page.TitlePage;
                 ViewBag.MetaDescription = _Model.Page.MetaDescription;
-                APP._Lang = _Model.Page.CultureName;
+                APP._CurrentLang = _Model.Page.CultureName;
                 return View(_Model.Page.ViewRender, _Model);
             }
         }
@@ -75,24 +84,23 @@ namespace thewall9.web.parent.Controllers
             )));
             return Content("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + sitemap.ToString(), "text/xml");
         }
-        public ActionResult SetCulture(string culture)
+        [Route("change-lang")]
+        public ActionResult ChangeLang(string Lang)
         {
             // Validate input
-            culture = CultureHelper.GetImplementedCulture(culture);
+            //Lang = CultureHelper.GetImplementedCulture(Lang);
             // Save culture in a cookie
-            HttpCookie cookie = Request.Cookies["_culture"];
+            HttpCookie cookie = Request.Cookies["_Culture"];
             if (cookie != null)
-                cookie.Value = culture;
+                cookie.Value = Lang;
             else
             {
-                cookie = new HttpCookie("_culture");
-                cookie.Value = culture;
+                cookie = new HttpCookie("_Culture");
+                cookie.Value = Lang;
                 cookie.Expires = DateTime.Now.AddYears(1);
             }
             Response.Cookies.Add(cookie);
-            if (Request.UrlReferrer != null && !string.IsNullOrEmpty(Request.UrlReferrer.AbsoluteUri))
-                return Redirect(Request.UrlReferrer.AbsoluteUri);
-            return RedirectToAction("index", "home");
+            return Redirect("/"+APP._Langs.Where(m => m.Name.Equals(Lang)).FirstOrDefault().FriendlyUrl);
         }
     }
 }

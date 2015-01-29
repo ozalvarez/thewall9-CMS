@@ -15,5 +15,9 @@ namespace thewall9.web.parent.BLL
         {
             return DownloadObject<SiteFullBinding>("api/site?SiteID=" + SiteID + "&Url=" + Url +"&Lang=" + Lang);
         }
+        public List<CultureRoutes> GetLang(int SiteID, string Url)
+        {
+            return DownloadObject<List<CultureRoutes>>("api/site?SiteID=" + SiteID + "&Url=" + Url);
+        }
     }
 }
