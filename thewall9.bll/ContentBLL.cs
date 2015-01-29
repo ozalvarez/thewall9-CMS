@@ -194,7 +194,7 @@ namespace thewall9.bll
                 Can(Model.SiteID, UserID, _c);
                 foreach (var item in Model.Items)
                 {
-                    if (item.Edit || !string.IsNullOrEmpty(item.FileName))
+                    if (item.Edit)
                     {
                         var _ContentCulture = _c.ContentPropertyCultures.Where(m => m.ContentPropertyID == item.ContentPropertyID && m.CultureID == Model.CultureID).SingleOrDefault();
                         if (_ContentCulture == null)
@@ -205,8 +205,17 @@ namespace thewall9.bll
                             _c.ContentPropertyCultures.Add(_ContentCulture);
                         }
                         _ContentCulture.Hint = item.Hint;
-                        if (item.ContentPropertyType == ContentPropertyType.IMG && !string.IsNullOrEmpty(item.FileName))
-                            _ContentCulture.ContentPropertyValue = SaveFile(item.ContentPropertyID, Model.CultureID, item.FileName, item.FileContent);
+
+                        if (item.ContentPropertyType == ContentPropertyType.IMG)
+                        {
+                            if (!string.IsNullOrEmpty(item.FileName))
+                                _ContentCulture.ContentPropertyValue = SaveFile(item.ContentPropertyID, Model.CultureID, item.FileName, item.FileContent);
+                            else if (!string.IsNullOrEmpty(item.ContentPropertyValue))
+                            {
+                                //CASE SAVE IMG IN OTHER LANGUAGE
+                                _ContentCulture.ContentPropertyValue = item.ContentPropertyValue;
+                            }
+                        }
                         else if (item.ContentPropertyType == ContentPropertyType.TXT || item.ContentPropertyType == ContentPropertyType.HTML)
                             _ContentCulture.ContentPropertyValue = item.ContentPropertyValue;
                         _c.SaveChanges();
@@ -220,6 +229,7 @@ namespace thewall9.bll
                             Items = item.Items
                         }, UserID);
                     }
+                    
                 }
             }
         }
