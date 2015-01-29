@@ -57,7 +57,7 @@ Now you have the database, you can change the location of the database in `Web.c
     1. Find a file in this folder `/webs` called `SITE.json`
     2. Be sure you have installed and running **Windows Azure Storage Emulator - v3.4+** otherwise this don't work.
     3. In **Admin Portal** go to **Site** section and press **Import Site** button select the file you already locate called `SITE.json` and press the **Upload** button
-    4. Now you have a copy of [thewall9.com](thewall9.com) site.
+    4. Now you have a copy of [thewall9.com](http://thewall9.com) site.
 8. We going to test your copy of [thewall9.com](http://thewall9.com) site is working
     1. Open in your IIS Express `thewall9.web` website
     2. Be sure in `thewall9.web` `Web.config` file the value of your **Site ID** is the same that in your **Admin Portal Sites** section `<add key="SiteID" value="1" />`
