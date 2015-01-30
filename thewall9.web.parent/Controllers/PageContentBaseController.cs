@@ -29,7 +29,7 @@ namespace thewall9.web.parent.Controllers
                 // Validate culture name
                 // cultureName = "es";
             }
-            //CultureName = CultureHelper.GetImplementedCulture(CultureName); // This is safe
+            CultureName = CultureHelper.GetImplementedCulture(CultureName); // This is safe
 
             // Modify current thread's cultures            
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(CultureName);

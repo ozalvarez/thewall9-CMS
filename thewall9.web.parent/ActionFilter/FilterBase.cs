@@ -15,7 +15,7 @@ namespace thewall9.web.parent.ActionFilter
         PageBLL PageService = new PageBLL();
         ContentBLL ContentService = new ContentBLL();
 
-       
+
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (!filterContext.RouteData.Values.ContainsKey("NoFilterBase"))
@@ -28,7 +28,8 @@ namespace thewall9.web.parent.ActionFilter
                      * https://katanaproject.codeplex.com/workitem/197
                      */
                     filterContext.HttpContext.Session["Workaround"] = 0;
-                    APP._Langs = SiteService.GetLang(APP._SiteID, filterContext.HttpContext.Request.Url.Authority);
+                    if (APP._Langs == null || filterContext.HttpContext.Request.IsLocal)
+                        APP._Langs = SiteService.GetLang(APP._SiteID, filterContext.HttpContext.Request.Url.Authority);
                 }
             }
         }
@@ -37,16 +38,7 @@ namespace thewall9.web.parent.ActionFilter
             if (!filterContext.RouteData.Values.ContainsKey("NoFilterBase"))
             {
                 if (!filterContext.IsChildAction && !filterContext.HttpContext.Request.IsAjaxRequest())
-                {
-                    if (APP._Site == null || filterContext.HttpContext.Request.IsLocal)
-                    {
-                        APP._Site = SiteService.Get(APP._SiteID, filterContext.HttpContext.Request.Url.Authority, APP._CurrentLang);
-                    }
-                    if (filterContext.HttpContext.Request.IsAuthenticated)
-                    {
-
-                    }
-                }
+                    APP._Site = SiteService.Get(APP._SiteID, filterContext.HttpContext.Request.Url.Authority, APP._CurrentLang);
             }
         }
     }

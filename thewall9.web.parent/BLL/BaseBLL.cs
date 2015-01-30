@@ -27,7 +27,9 @@ namespace thewall9.web.parent.BLL
                 {
                     var _TimeElapsed = DateTime.Now;
                     var _Page = JsonConvert.DeserializeObject<T>(_c.DownloadString(APP._API_URL + URI));
-                    System.Diagnostics.Debug.WriteLine("Finish Web Request -> " + APP._API_URL + URI + " TIME: " + DateTime.Now.Subtract(_TimeElapsed).Milliseconds + " Milliseconds", "thewall9");
+                    var _Output="Finish Web Request -> " + APP._API_URL + URI + " TIME: " + DateTime.Now.Subtract(_TimeElapsed).Milliseconds + " Milliseconds";
+                    //System.Diagnostics.Debug.WriteLine(_Output, "thewall9");
+                    System.Diagnostics.Trace.WriteLine(_Output, "thewall9");
                     return _Page;
                 }
             }
