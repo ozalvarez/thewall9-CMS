@@ -37,11 +37,11 @@ namespace thewall9.web.parent
         {
             get
             {
-                return HttpContext.Current.Session["CurrentLang"] as string;
+                return HttpContext.Current.Items["CurrentLang"] as string;
             }
             set
             {
-                HttpContext.Current.Session["CurrentLang"] = value;
+                HttpContext.Current.Items["CurrentLang"] = value;
             }
         }
         public static List<CultureRoutes> _Langs
