@@ -67,7 +67,7 @@ namespace thewall9.bll
                        where u.Url.Equals(Url)
                        select m;
                 return (from p in _Q
-                        where  p.Page.InMenu && p.Culture.Name.Equals(DefaultLang)
+                        where p.Page.InMenu && p.Culture.Name.Equals(DefaultLang)
                         && p.Published && p.Page.Published
                         orderby p.Page.Priority
                         select new PageCultureBinding
@@ -103,6 +103,28 @@ namespace thewall9.bll
                             Name = p.Name,
                             PageAlias = p.Page.Alias
                         }).ToList();
+            }
+        }
+        public string GetPageFriendlyUrl(int SiteID, string Url, string FriendlyUrl, string TargetLang)
+        {
+            FriendlyUrl = FriendlyUrl.Replace("/", "");
+            using (var _c = db)
+            {
+                var _Q = SiteID != 0
+                    ? from p in _c.PageCultures
+                      where p.Page.SiteID == SiteID
+                      select p
+                     : from m in _c.PageCultures
+                       join u in _c.SiteUrls on m.Page.Site.SiteID equals u.SiteID
+                       where u.Url.Equals(Url)
+                       select m;
+                var _PageID = (from p in _Q
+                              where FriendlyUrl == null ? p.FriendlyUrl == "" : (p.FriendlyUrl.ToLower().Equals(FriendlyUrl.ToLower()))
+                              select p.PageID).FirstOrDefault();
+                var _Page = _Q.Where(m =>m.PageID==_PageID && m.Culture.Name.Equals(TargetLang.ToLower())).FirstOrDefault();
+                if (_Page == null)
+                    throw new RuleException("No existe página con ese FriendlyUrl", "0x000");
+                return _Page.FriendlyUrl;
             }
         }
         #endregion

@@ -12,10 +12,13 @@
                 });
             }
         });
-        var noAdmin = $location.search()["noAdmin"];
-        if (noAdmin != null) {
+        var isAdmin = $location.search()["isAdmin"];
+        if (isAdmin != null && isAdmin) {
+            $scope.isAdmin = true;
+        } else {
             $scope.isAdmin = false;
         }
+
         $scope.get = function () {
             contentService.getTree().then(function (data) {
                 $scope.data = data;

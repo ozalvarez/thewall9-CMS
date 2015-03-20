@@ -85,11 +85,8 @@ namespace thewall9.web.parent.Controllers
             return Content("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + sitemap.ToString(), "text/xml");
         }
         [Route("change-lang")]
-        public ActionResult ChangeLang(string Lang)
+        public ActionResult ChangeLang(string Lang, string FriendlyUrl)
         {
-            // Validate input
-            //Lang = CultureHelper.GetImplementedCulture(Lang);
-            // Save culture in a cookie
             HttpCookie cookie = Request.Cookies["_Culture"];
             if (cookie != null)
                 cookie.Value = Lang;
@@ -100,7 +97,8 @@ namespace thewall9.web.parent.Controllers
                 cookie.Expires = DateTime.Now.AddYears(1);
             }
             Response.Cookies.Add(cookie);
-            return Redirect("/"+APP._Langs.Where(m => m.Name.Equals(Lang)).FirstOrDefault().FriendlyUrl);
+            var _UrlRedirect = "/" + PageService.GetPageFriendlyUrl(APP._SiteID, Request.Url.Authority, FriendlyUrl, Lang);
+            return Redirect(_UrlRedirect);
         }
     }
 }

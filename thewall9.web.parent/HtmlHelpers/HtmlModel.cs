@@ -79,7 +79,8 @@ namespace thewall9.web.parent.HtmlHelpers
         }
         public static MvcHtmlString LinkUrl(this HtmlHelper helper, CultureRoutes Culture)
         {
-            return new MvcHtmlString("/change-lang?Lang=" + Culture.Name);
+            var _Request = helper.ViewContext.RequestContext.HttpContext.Request;
+            return new MvcHtmlString("/change-lang?Lang=" + Culture.Name+"&FriendlyUrl="+_Request.Url.AbsolutePath);
         }
         public static MvcHtmlString LinkHome(this HtmlHelper helper)
         {

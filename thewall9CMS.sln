@@ -38,6 +38,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "thewall9.web", "webs\thewall9.web\thewall9.web.csproj", "{EC1240C8-585D-4846-BD2E-26A652549E5A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{B46AA2A2-89F0-4FFB-85EB-B92D132C8A62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "thewall9.bll.test", "thewall9.bll.test\thewall9.bll.test.csproj", "{F03DA678-F31B-41E7-B4FE-95F2B12C0F05}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +84,10 @@ Global
 		{EC1240C8-585D-4846-BD2E-26A652549E5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC1240C8-585D-4846-BD2E-26A652549E5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC1240C8-585D-4846-BD2E-26A652549E5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F03DA678-F31B-41E7-B4FE-95F2B12C0F05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F03DA678-F31B-41E7-B4FE-95F2B12C0F05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F03DA678-F31B-41E7-B4FE-95F2B12C0F05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F03DA678-F31B-41E7-B4FE-95F2B12C0F05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,5 +98,6 @@ Global
 		{A3F8C792-E3D3-4945-A5A1-B999141C8980} = {99EF3134-9897-42EE-A595-21286B5E905A}
 		{D76FF67E-DCC6-4560-A8D9-432060F5449A} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
 		{EC1240C8-585D-4846-BD2E-26A652549E5A} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
+		{F03DA678-F31B-41E7-B4FE-95F2B12C0F05} = {B46AA2A2-89F0-4FFB-85EB-B92D132C8A62}
 	EndGlobalSection
 EndGlobal

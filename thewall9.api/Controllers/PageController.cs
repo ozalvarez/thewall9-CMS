@@ -37,6 +37,11 @@ namespace thewall9.api.Controllers
         {
             return Ok(_PageService.GetSitemap(SiteID,Url));
         }
+        [AllowAnonymous]
+        public IHttpActionResult GetPageFriendlyUrl(int SiteID, string Url, string FriendlyUrl, string TargetLang)
+        {
+            return Ok(_PageService.GetPageFriendlyUrl(SiteID, Url, FriendlyUrl, TargetLang));
+        }
         #endregion
 
         #region CUSTOMER
