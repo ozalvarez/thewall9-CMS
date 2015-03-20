@@ -1,6 +1,6 @@
 # Welcome to thewall9 CMS
 
-This is a **Experimental Cloud CMS** created with ASP.NET MVC 5.2.2, ASP.NET Web API 2, Entity Framework Code First, Identity 2.0, SQL Server on Azure, Azure Blobs, Angular.js, jQuery and Twitter Bootstrap.
+This is a Multilanguaje **Experimental Cloud CMS** created with ASP.NET MVC 5.2.2, ASP.NET Web API 2, Entity Framework Code First, Identity 2.0, SQL Server on Azure, Azure Blobs, Angular.js, jQuery and Twitter Bootstrap.
 
 Screenshots: [https://www.flickr.com/photos/129114186@N06/sets/72157650109877927/](https://www.flickr.com/photos/129114186@N06/sets/72157650109877927/)
 ## Why a Cloud CMS
