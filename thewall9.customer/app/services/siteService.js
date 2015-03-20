@@ -9,18 +9,10 @@ app.factory('siteService', ["$myhttp", "$q", "ngAuthSettings", 'localStorageServ
         siteServiceFactory.getSites = function () {
             var deferred = $q.defer();
             $http.get(ngAuthSettings.apiServiceBaseUri + 'api/site').then(function (data) {
-
-                var _site = localStorageService.get('site');
-                if (_site == null) {
-                    siteServiceFactory.site = data[0];
-                } else {
-                    siteServiceFactory.site = _site;
-                }
+                siteServiceFactory.site = data[0];
                 siteServiceFactory.sites = data;
                 siteServiceFactory.sitesLoaded = true
-
                 localStorageService.set('site', siteServiceFactory.site);
-
                 deferred.resolve(data);
             });
             return deferred.promise;

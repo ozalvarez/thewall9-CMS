@@ -27,7 +27,7 @@ namespace thewall9.bll
                     GAID = m.GAID,
                     SiteID = m.SiteID,
                     SiteName = m.SiteName,
-                    ECommerce=m.ECommerce
+                    ECommerce = m.ECommerce
                 }).SingleOrDefault();
             }
         }
@@ -78,7 +78,8 @@ namespace thewall9.bll
                     DefaultLang = m.Site.DefaultLang,
                     GAID = m.Site.GAID,
                     SiteID = m.Site.SiteID,
-                    SiteName = m.Site.SiteName
+                    SiteName = m.Site.SiteName,
+                    ECommerce=m.Site.ECommerce
                 }).ToList();
             }
         }
@@ -108,7 +109,7 @@ namespace thewall9.bll
                     Enabled = m.Enabled,
                     DateCreated = m.DateCreated,
                     Url = string.Join(",", m.SiteUrls.Select(m2 => m2.Url)),
-                    ECommerce=m.ECommerce,
+                    ECommerce = m.ECommerce,
                     Cultures = m.Cultures.Select(m2 => new CultureBinding
                     {
                         CultureID = m2.CultureID,
@@ -134,6 +135,9 @@ namespace thewall9.bll
                         DefaultLang = Model.DefaultLang,
                         GAID = Model.GAID
                     };
+                    if(Model.Cultures==null || Model.Cultures.Count()==0)
+                        throw new RuleException("Cultures is Empty");
+                 
                     //ADD CULTURES
                     foreach (var item in Model.Cultures)
                     {

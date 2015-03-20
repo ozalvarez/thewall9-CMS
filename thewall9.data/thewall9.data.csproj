@@ -89,6 +89,7 @@
   <ItemGroup>
     <Compile Include="AccountBindingModels.cs" />
     <Compile Include="AccountViewModels.cs" />
+    <Compile Include="Category.cs" />
     <Compile Include="Culture.cs" />
     <Compile Include="IdentityModels.cs" />
     <Compile Include="Migrations\201410031827156_InitialCreate.cs" />
@@ -159,6 +160,10 @@
     <Compile Include="Migrations\201503201916341_add-e-commerce.Designer.cs">
       <DependentUpon>201503201916341_add-e-commerce.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503202004521_add-category-to-e-commerce.cs" />
+    <Compile Include="Migrations\201503202004521_add-category-to-e-commerce.Designer.cs">
+      <DependentUpon>201503202004521_add-category-to-e-commerce.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="ContentProperty.cs" />
@@ -220,6 +225,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503201916341_add-e-commerce.resx">
       <DependentUpon>201503201916341_add-e-commerce.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503202004521_add-category-to-e-commerce.resx">
+      <DependentUpon>201503202004521_add-category-to-e-commerce.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

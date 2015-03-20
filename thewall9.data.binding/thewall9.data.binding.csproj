@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CategoryBinding.cs" />
     <Compile Include="Content.cs" />
     <Compile Include="Culture.cs" />
     <Compile Include="Page.cs" />

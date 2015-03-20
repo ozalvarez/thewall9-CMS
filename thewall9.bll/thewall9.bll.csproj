@@ -142,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseBLL.cs" />
+    <Compile Include="CategoryBLL.cs" />
     <Compile Include="Exceptions\RuleException.cs" />
     <Compile Include="ContentBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

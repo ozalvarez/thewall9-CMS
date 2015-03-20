@@ -44,6 +44,8 @@ namespace thewall9.data.Models
         public DbSet<ContentProperty> ContentProperties { get; set; }
         public DbSet<ContentPropertyCulture> ContentPropertyCultures { get; set; }
         public DbSet<SiteUrl> SiteUrls { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<CategoryCulture> CategoryCultures { get; set; }
         
     }
 }
