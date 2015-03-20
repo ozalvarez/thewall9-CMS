@@ -19,6 +19,7 @@ namespace thewall9.data.binding
         public string GAID { get; set; }
         public bool Enabled { get; set; }
         public DateTime DateCreated { get; set; }
+        public bool ECommerce { get; set; }
     }
     public class SiteBinding : SiteBase
     {

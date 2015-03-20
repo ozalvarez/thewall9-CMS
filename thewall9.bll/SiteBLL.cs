@@ -26,7 +26,8 @@ namespace thewall9.bll
                     DefaultLang = m.DefaultLang,
                     GAID = m.GAID,
                     SiteID = m.SiteID,
-                    SiteName = m.SiteName
+                    SiteName = m.SiteName,
+                    ECommerce=m.ECommerce
                 }).SingleOrDefault();
             }
         }
@@ -107,6 +108,7 @@ namespace thewall9.bll
                     Enabled = m.Enabled,
                     DateCreated = m.DateCreated,
                     Url = string.Join(",", m.SiteUrls.Select(m2 => m2.Url)),
+                    ECommerce=m.ECommerce,
                     Cultures = m.Cultures.Select(m2 => new CultureBinding
                     {
                         CultureID = m2.CultureID,
@@ -121,7 +123,7 @@ namespace thewall9.bll
             using (var _c = db)
             {
                 Site _Model;
-                var _SiteUrls = Model.Url.Split(',');
+                var _SiteUrls = string.IsNullOrEmpty(Model.Url) ? new string[0] : Model.Url.Split(',');
                 if (Model.SiteID == 0)
                 {
                     _Model = new Site
@@ -217,6 +219,15 @@ namespace thewall9.bll
                 _c.SaveChanges();
             }
         }
+        public void EnableEcommerce(SiteEnabledBinding Model)
+        {
+            using (var _c = db)
+            {
+                var _Model = _c.Sites.Where(m => m.SiteID == Model.SiteID).SingleOrDefault();
+                _Model.ECommerce = Model.Enabled;
+                _c.SaveChanges();
+            }
+        }
         public void AddUserToAllRoles(AddUserInSiteBinding Model)
         {
             using (var _c = db)
@@ -304,6 +315,7 @@ namespace thewall9.bll
                 _c.SaveChanges();
             }
         }
+
 
         #region IMPORT / EXPORT / DUPLICATE
         private SiteExport ExportObject(int SiteID)

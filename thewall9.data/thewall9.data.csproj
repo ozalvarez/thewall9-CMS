@@ -155,6 +155,10 @@
     <Compile Include="Migrations\201412221931208_RemoveSiteUrl.Designer.cs">
       <DependentUpon>201412221931208_RemoveSiteUrl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503201916341_add-e-commerce.cs" />
+    <Compile Include="Migrations\201503201916341_add-e-commerce.Designer.cs">
+      <DependentUpon>201503201916341_add-e-commerce.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="ContentProperty.cs" />
@@ -213,6 +217,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412221931208_RemoveSiteUrl.resx">
       <DependentUpon>201412221931208_RemoveSiteUrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503201916341_add-e-commerce.resx">
+      <DependentUpon>201503201916341_add-e-commerce.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

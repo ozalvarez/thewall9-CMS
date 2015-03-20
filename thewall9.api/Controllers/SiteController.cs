@@ -74,6 +74,13 @@ namespace thewall9.api.Controllers
             return Ok();
         }
         [Authorize(Roles = "admin")]
+        [Route("enable-ecommerce")]
+        public IHttpActionResult PostEnableECommerce(SiteEnabledBinding Model)
+        {
+            SiteService.EnableEcommerce(Model);
+            return Ok();
+        }
+        [Authorize(Roles = "admin")]
         [Route("user")]
         public IHttpActionResult PostAddUser(AddUserInSiteBinding Model)
         {

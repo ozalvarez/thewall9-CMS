@@ -54,6 +54,16 @@ app.controller('siteController', ['$scope', 'siteService', 'toastrService',
                     toastrService.success("Disabled");
             });
         };
+        $scope.enableECommerce = function (item, enable) {
+            siteService.enableECommerce(item.SiteID, enable).then(function (data) {
+                item.ECommerce = enable;
+                $scope.get();
+                if (item.ECommerce)
+                    toastrService.success("Enabled");
+                else
+                    toastrService.success("Disabled");
+            });
+        };
         $scope.openAddUser = function (item) {
             $scope.u = {
                 SiteID: item.SiteID

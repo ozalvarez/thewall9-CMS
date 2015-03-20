@@ -18,6 +18,12 @@ app.factory('siteService', ["$myhttp",
                     Enabled: enable
                 });
             },
+            enableECommerce: function (id, enable) {
+                return $http.post(_Url + '/enable-ecommerce', {
+                    SiteID: id,
+                    Enabled: enable
+                });
+            },
             addUser: function (object) {
                 return $http.post(_Url + '/user', object);
             },

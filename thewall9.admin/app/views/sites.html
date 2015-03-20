@@ -39,11 +39,17 @@
                         <i class="glyphicon glyphicon-user"></i>
                         Add User
                     </button>
-                    <button class="btn btn-primary" ng-show="item.Enabled" ng-click="enable(item,false)">
+                    <button class="btn btn-success" ng-show="item.Enabled" ng-click="enable(item,false)">
                         Enabled
                     </button>
                     <button class="btn btn-danger" ng-hide="item.Enabled" ng-click="enable(item,true)">
                         Disabled
+                    </button>
+                    <button class="btn btn-success" ng-show="item.ECommerce" ng-click="enableECommerce(item,false)">
+                        Enabled E-Commerce
+                    </button>
+                    <button class="btn btn-danger" ng-hide="item.ECommerce" ng-click="enableECommerce(item,true)">
+                        Disabled E-Commerce
                     </button>
                     <button class="btn btn-primary" ng-click="export(item)">
                         <i class="fa fa-download"></i>
