@@ -1,4 +1,5 @@
-﻿using Microsoft.WindowsAzure;
+﻿using Microsoft.Azure;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;
@@ -15,8 +16,7 @@ namespace thewall9.bll.Utils
         public CloudBlobContainer GetBlobContainer(string container)
         {
             // Retrieve storage account from connection string.
-            CloudStorageAccount _StorageAccount = CloudStorageAccount.Parse(
-                CloudConfigurationManager.GetSetting("StorageConnectionString"));
+            CloudStorageAccount _StorageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
 
             // Create the blob client.
             CloudBlobClient _BlobClient = _StorageAccount.CreateCloudBlobClient();

@@ -4,11 +4,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace thewall9.bll.test
 {
     [TestClass]
-    public class UnitTest1
+    public class PageBLLTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void GetPage()
         {
+            var _Page=new PageBLL().GetPage(1, null, null);
+            Assert.IsNotNull(_Page);
         }
     }
 }
