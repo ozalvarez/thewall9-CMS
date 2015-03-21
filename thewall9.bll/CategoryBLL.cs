@@ -55,17 +55,26 @@ namespace thewall9.bll
             {
                 Can(Model.SiteID, UserID, _c);
                 var _Category = new Category();
+                var _NewBros = _c.Categories.Where(m => m.CategoryParentID == Model.CategoryParentID && m.SiteID == Model.SiteID);
                 if (Model.CategoryID == 0)
                 {
                     //CREATING
-                    var _Parent = _c.Categories.Where(m => m.CategoryParentID == Model.CategoryParentID && m.SiteID == Model.SiteID).Select(m => m.Priority);
-                    _Category.Priority = _Parent.Any() ? _Parent.Max() + 1 : 0;
                     _Category.SiteID = Model.SiteID;
                     _c.Categories.Add(_Category);
                 }
                 else
+                {
                     //UPDATING
                     _Category = _c.Categories.Where(m => m.CategoryID == Model.CategoryID).FirstOrDefault();
+                    //UPDATE PRIORITIES
+                    var _Bros = _c.Categories.Where(m => m.CategoryParentID == _Category.CategoryParentID && m.SiteID == _Category.SiteID && m.Priority > _Category.Priority).ToList();
+                    foreach (var item in _Bros)
+                    {
+                        item.Priority--;
+                    }
+
+                } 
+                _Category.Priority = _NewBros.Select(m => m.Priority).Any() ? _NewBros.Select(m => m.Priority).Max() + 1 : 0;
                 _Category.CategoryAlias = Model.CategoryAlias;
                 _Category.CategoryParentID = Model.CategoryParentID;
                 _c.SaveChanges();

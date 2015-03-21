@@ -1,7 +1,7 @@
 ﻿<div class="page-header">
     <ul class="list-inline pull-right">
         <li>
-            <button class="btn btn-primary" role="button" ng-click="openNew(0)">
+            <button class="btn btn-primary" role="button" ng-click="openNew(null,null)">
                 <span class="glyphicon glyphicon-plus"></span> Nueva Categoría
             </button>
         </li>
@@ -11,10 +11,18 @@
 <script type="text/ng-template" id="nodes_renderer.html">
     <div ui-tree-handle ng-attr-data-nodrag="{{true}}">
         {{item.CategoryAlias}}
+        <ul class="list-inline pull-right">
+            <li>
+                <button class="btn btn-primary btn-sm" role="button" ng-click="openNew(item,null)">
+                    <span class="glyphicon glyphicon-plus"></span> Nueva Categoría
+                </button>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
     </div>
     <ol ui-tree-nodes="options" ng-model="item.CategoryItems">
         <li ng-repeat="item in item.CategoryItems" ui-tree-node ng-include="'nodes_renderer.html'">
-            
+
         </li>
     </ol>
 </script>
@@ -32,6 +40,14 @@
             </div>
             <div class="modal-body">
                 <form ng-submit="save()">
+                    <div class="form-group" ng-if="selectedCategory">
+                        <label>Categoría Padre: {{selectedCategory.CategoryAlias}}</label>
+                        <select ng-options="category as category.CategoryAlias for category in categories"
+                                ng-model="selectedCategory"
+                                ng-change="model.CategoryParentID=selectedCategory.CategoryID"
+                                class="form-control"></select>
+                        {{model.CategoryParentID}}
+                    </div>
                     <div class="form-group">
                         <label>Nombre de la Categoría</label>
                         <input type="text" class="form-control" ng-model="model.CategoryAlias" required />
