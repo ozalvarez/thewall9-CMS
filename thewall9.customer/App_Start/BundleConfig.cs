@@ -79,6 +79,7 @@ namespace thewall9.customer
                 "~/app/services/siteService.js",
                 "~/app/services/pageService.js",
                 "~/app/services/contentService.js",
+                "~/app/services/categoryService.js",
                 "~/app/services/cultureService.js",
                 "~/app/services/toastrService.js",
                 "~/app/services/utilService.js",
@@ -90,7 +91,9 @@ namespace thewall9.customer
                 "~/app/controllers/pageDetailController.js",
                 "~/app/controllers/contentController.js",
                 "~/app/controllers/editContentController.js",
-                "~/app/controllers/passwordController.js"));
+                "~/app/controllers/passwordController.js"
+                , "~/app/controllers/categoryController.js"
+                ));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862

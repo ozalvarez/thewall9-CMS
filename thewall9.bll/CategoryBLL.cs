@@ -11,42 +11,24 @@ namespace thewall9.bll
 {
     public class CategoryBLL : BaseBLL
     {
-        public int Save(CategoryBinding Model, string UserID)
+        private Category GetByID(int CategoryID, ApplicationDbContext _c)
         {
-            using (var _c = db)
-            {
-                Can(Model.SiteID, UserID, _c);
-                var _Category = new Category();
-                if (Model.CategoryID == 0)
-                {
-                    //CREATING
-                    var _Parent = _c.Categories.Where(m => m.CategoryParentID == Model.CategoryParentID).Select(m => m.Priority);
-                    _Category.CategoryParentID = Model.CategoryParentID;
-                    _Category.Priority = _Parent.Any() ? _Parent.Max() + 1 : 0;
-                    _Category.SiteID = Model.SiteID;
-                    _c.Categories.Add(_Category);
-                }
-                else
-                    //UPDATING
-                    _Category = _c.Categories.Where(m => m.CategoryID == Model.CategoryID).FirstOrDefault();
-                _Category.CategoryAlias = Model.CategoryAlias;
-                _c.SaveChanges();
-                return _Category.CategoryID;
-            }
+            return _c.Categories.Where(m => m.CategoryID == CategoryID).SingleOrDefault();
         }
-
-        public List<CategoryBinding> Get(int SiteID)
+        public List<CategoryBinding> Get(int SiteID, string UserID)
         {
             using (var _c = db)
             {
+                Can(SiteID, UserID, _c);
                 var _Category = _c.Categories.Where(m => m.Site.SiteID == SiteID).ToList();
-                return Get(_Category, 0, _c);
+                return GetTree(_Category, 0, _c);
             }
         }
-        private List<CategoryBinding> Get(List<Category> Model, int ParentID, ApplicationDbContext _c)
+        private List<CategoryBinding> GetTree(List<Category> Model, int ParentID, ApplicationDbContext _c)
         {
             return (from c in Model
                     where c.CategoryParentID == ParentID
+                    orderby c.Priority
                     select new CategoryBinding
                     {
                         CategoryAlias = c.CategoryAlias,
@@ -63,9 +45,79 @@ namespace thewall9.bll
                         }),
 
                         CategoryItems = Model.Where(m => m.CategoryParentID == c.CategoryID).Any()
-                        ? Get(Model.Where(m => m.CategoryParentID == c.CategoryID).ToList(), c.CategoryID, _c)
+                        ? GetTree(Model, c.CategoryID, _c)
                         : new List<CategoryBinding>()
                     }).ToList();
+        }
+        public int Save(CategoryBinding Model, string UserID)
+        {
+            using (var _c = db)
+            {
+                Can(Model.SiteID, UserID, _c);
+                var _Category = new Category();
+                if (Model.CategoryID == 0)
+                {
+                    //CREATING
+                    var _Parent = _c.Categories.Where(m => m.CategoryParentID == Model.CategoryParentID && m.SiteID == Model.SiteID).Select(m => m.Priority);
+                    _Category.Priority = _Parent.Any() ? _Parent.Max() + 1 : 0;
+                    _Category.SiteID = Model.SiteID;
+                    _c.Categories.Add(_Category);
+                }
+                else
+                    //UPDATING
+                    _Category = _c.Categories.Where(m => m.CategoryID == Model.CategoryID).FirstOrDefault();
+                _Category.CategoryAlias = Model.CategoryAlias;
+                _Category.CategoryParentID = Model.CategoryParentID;
+                _c.SaveChanges();
+                return _Category.CategoryID;
+            }
+        }
+        public void UpOrDown(UpOrDown Model, string UserID)
+        {
+            using (var _c = db)
+            {
+                var _Category = GetByID(Model.CategoryID, _c);
+                Can(_Category.SiteID, UserID, _c);
+                var _P = _c.Categories.Where(m => m.CategoryParentID == _Category.CategoryParentID);
+                if (Model.Up)
+                {
+                    if (_P.Select(m => m.Priority).Min() < _Category.Priority)
+                    {
+                        var _Next = _P.Where(m => m.Priority < _Category.Priority).OrderBy(m => m.Priority).ToList().Last();
+                        _Next.Priority++;
+                        _Category.Priority--;
+                    }
+                }
+                else
+                {
+                    if (_P.Select(m => m.Priority).Max() > _Category.Priority)
+                    {
+                        var _Next = _P.Where(m => m.Priority > _Category.Priority).OrderBy(m => m.Priority).ToList().First();
+                        _Next.Priority--;
+                        _Category.Priority++;
+                    }
+                }
+                _c.SaveChanges();
+            }
+        }
+        public void Delete(int CategoryID, string UserID)
+        {
+            using (var _c = db)
+            {
+                var _Childs = _c.Categories.Where(m => m.CategoryParentID == CategoryID).ToList();
+                foreach (var item in _Childs)
+                {
+                    Delete(item.CategoryID, UserID);
+                }
+                var _Category = GetByID(CategoryID, _c);
+                var _Bro = _c.Categories.Where(m => m.CategoryParentID == _Category.CategoryParentID && m.Priority > _Category.Priority).OrderBy(m => m.Priority).ToList();
+                foreach (var item in _Bro)
+                {
+                    item.Priority--;
+                }
+                _c.Categories.Remove(_Category);
+                _c.SaveChanges();
+            }
         }
     }
 }

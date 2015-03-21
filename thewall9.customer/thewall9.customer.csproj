@@ -140,6 +140,7 @@
     <Content Include="app\app.js" />
     <Content Include="app\controllers\appController.js" />
     <Content Include="app\controllers\configurationController.js" />
+    <Content Include="app\controllers\categoryController.js" />
     <Content Include="app\controllers\editContentController.js" />
     <Content Include="app\controllers\pageDetailController.js" />
     <Content Include="app\controllers\contentController.js" />
@@ -153,12 +154,14 @@
     <Content Include="app\services\authService.js" />
     <Content Include="app\services\cultureService.js" />
     <Content Include="app\services\contentService.js" />
+    <Content Include="app\services\categoryService.js" />
     <Content Include="app\services\myHttpService.js" />
     <Content Include="app\services\pageService.js" />
     <Content Include="app\services\siteService.js" />
     <Content Include="app\services\toastrService.js" />
     <Content Include="app\services\utilService.js" />
     <Content Include="app\views\associate.html" />
+    <Content Include="app\views\categories.html" />
     <Content Include="app\views\edit-content.html" />
     <Content Include="app\views\page-detail.html" />
     <Content Include="app\views\content.html" />

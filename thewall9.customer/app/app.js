@@ -31,6 +31,10 @@ app.config(["$routeProvider", "blockUIConfig", function ($routeProvider, blockUI
         controller: 'editContentController',
         templateUrl: '/app/views/edit-content.html'
     });
+    $routeProvider.when('/categories', {
+        controller: 'categoryController',
+        templateUrl: '/app/views/categories.html'
+    });
 
     $routeProvider.otherwise({ redirectTo: "/" });
 

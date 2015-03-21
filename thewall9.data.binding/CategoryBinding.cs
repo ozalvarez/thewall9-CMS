@@ -28,4 +28,9 @@ namespace thewall9.data.binding
         public int CultureID { get; set; }
         public string CultureName { get; set; }
     }
+    public class UpOrDown
+    {
+        public int CategoryID { get; set; }
+        public bool Up { get; set; }
+    }
 }
