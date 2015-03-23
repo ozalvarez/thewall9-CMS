@@ -11,8 +11,11 @@ app.factory('categoryService', ["$myhttp", "$q", "ngAuthSettings", "siteService"
             model.SiteID = siteService.site.SiteID;
             return $http.post(ngAuthSettings.apiServiceBaseUri + uri, model);
         };
-        categoryFactory.up = function (model) {
-            return $http.post(ngAuthSettings.apiServiceBaseUri + uri + '/up-or-down', model);
+        categoryFactory.up = function (categoryID,up) {
+            return $http.post(ngAuthSettings.apiServiceBaseUri + uri + '/up-or-down', {
+                CategoryID: categoryID,
+                Up:up
+            });
         };
         categoryFactory.remove = function (categoryID) {
             return $http.delete(ngAuthSettings.apiServiceBaseUri + uri + '?CategoryID=' + categoryID);

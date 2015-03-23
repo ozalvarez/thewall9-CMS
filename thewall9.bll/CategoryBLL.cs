@@ -60,21 +60,25 @@ namespace thewall9.bll
                 {
                     //CREATING
                     _Category.SiteID = Model.SiteID;
+                    _Category.Priority = _NewBros.Select(m => m.Priority).Any() ? _NewBros.Select(m => m.Priority).Max() + 1 : 0;
                     _c.Categories.Add(_Category);
                 }
                 else
                 {
                     //UPDATING
                     _Category = _c.Categories.Where(m => m.CategoryID == Model.CategoryID).FirstOrDefault();
-                    //UPDATE PRIORITIES
-                    var _Bros = _c.Categories.Where(m => m.CategoryParentID == _Category.CategoryParentID && m.SiteID == _Category.SiteID && m.Priority > _Category.Priority).ToList();
-                    foreach (var item in _Bros)
+                    if (_Category.CategoryParentID != Model.CategoryParentID)
                     {
-                        item.Priority--;
+                        _Category.Priority = _NewBros.Select(m => m.Priority).Any() ? _NewBros.Select(m => m.Priority).Max() + 1 : 0;
+                        //UPDATE PRIORITIES
+                        var _Bros = _c.Categories.Where(m => m.CategoryParentID == _Category.CategoryParentID && m.SiteID == _Category.SiteID && m.Priority > _Category.Priority).ToList();
+                        foreach (var item in _Bros)
+                        {
+                            item.Priority--;
+                        }
                     }
 
                 } 
-                _Category.Priority = _NewBros.Select(m => m.Priority).Any() ? _NewBros.Select(m => m.Priority).Max() + 1 : 0;
                 _Category.CategoryAlias = Model.CategoryAlias;
                 _Category.CategoryParentID = Model.CategoryParentID;
                 _c.SaveChanges();
