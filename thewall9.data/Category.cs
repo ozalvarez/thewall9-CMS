@@ -15,13 +15,13 @@ namespace thewall9.data
         public virtual Site Site { get; set; }
         public virtual List<CategoryCulture> CategoryCultures { get; set; }
     }
-    public class CategoryCulture:CategoryCultureBase
+    public class CategoryCulture : CategoryCultureBase
     {
         [Key, Column(Order = 1)]
         public int CategoryID { get; set; }
         [Key, Column(Order = 2)]
         public int CultureID { get; set; }
-        
+
         [ForeignKey("CategoryID")]
         public virtual Category Category { get; set; }
         [ForeignKey("CultureID")]

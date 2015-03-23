@@ -1,7 +1,7 @@
 ﻿<div class="page-header">
     <ul class="list-inline pull-right">
         <li>
-            <button class="btn btn-primary" role="button" ng-click="openNew(null,null)">
+            <button class="btn btn-primary" role="button" ng-click="openNew(null)">
                 <span class="glyphicon glyphicon-plus"></span> Nueva Categoría
             </button>
         </li>
@@ -28,7 +28,7 @@
                 </button>
             </li>
             <li>
-                <button class="btn btn-primary btn-sm" role="button" ng-click="openNew(item,null)">
+                <button class="btn btn-primary btn-sm" role="button" ng-click="openNew(item)">
                     <span class="glyphicon glyphicon-plus"></span> Nueva Categoría
                 </button>
             </li>
@@ -61,7 +61,7 @@
             <div class="modal-body">
                 <form ng-submit="save()">
                     <div class="form-group" ng-if="selectedCategory">
-                        <label>Categoría Padre: {{selectedCategory.CategoryAlias}}</label>
+                        <label>Categoría Padre</label>
                         <select ng-options="category as category.CategoryAlias for category in categories"
                                 ng-model="selectedCategory"
                                 ng-change="model.CategoryParentID=selectedCategory.CategoryID"
@@ -70,6 +70,12 @@
                     <div class="form-group">
                         <label>Nombre de la Categoría</label>
                         <input type="text" class="form-control" ng-model="model.CategoryAlias" required />
+                    </div>
+                    <div ng-repeat="item in model.CategoryCultures">
+                        <div class="form-group">
+                            <label>Nombre de la Categoría [{{item.CultureName}}]</label>
+                            <input type="text" class="form-control" ng-model="item.CategoryName" required />
+                        </div>
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Guardar Categoría" class="btn btn-primary" />

@@ -1,6 +1,6 @@
-﻿app.controller('categoryController', ['$scope', 'categoryService', 'siteService','toastrService',
+﻿app.controller('categoryController', ['$scope', 'categoryService', 'siteService', 'toastrService',
     function ($scope, categoryService, siteService, toastrService) {
-        function createCategories(list,prefix) {
+        function createCategories(list, prefix) {
             angular.forEach(list, function (item) {
                 $scope.categories.push(angular.copy(item));
                 createCategories(item.CategoryItems);
@@ -13,7 +13,7 @@
                 $scope.data = data;
             });
         }
-        $scope.openNew = function (itemParent, itemUpdate) {
+        $scope.openNew = function (itemParent) {
             $scope.selectedCategory = {}
             if (itemParent != null) {
                 angular.forEach($scope.categories, function (item) {
@@ -23,8 +23,16 @@
                 });
             }
             $scope.model = {
-                CategoryParentID: $scope.selectedCategory.CategoryID
+                CategoryParentID: $scope.selectedCategory.CategoryID,
+                CategoryCultures:[]
             };
+            angular.forEach($scope.cultures, function (item) {
+                $scope.model.CategoryCultures.push({
+                    CultureID: item.CultureID,
+                    CultureName: item.Name,
+                    CategoryName: ""
+                });
+            });
             $('#modal-new').modal({
                 backdrop: true
             });
@@ -39,6 +47,23 @@
                 });
             }
             $scope.model = item;
+            angular.forEach($scope.cultures, function (itemC) {
+                var exist = false;
+                angular.forEach($scope.model.CategoryCultures, function (itemCC) {
+                    if (itemCC.CultureID == itemC.CultureID) {
+                        exist = true;
+                    }
+                });
+                if (!exist) {
+                    $scope.model.CategoryCultures.push({
+                        CultureID: itemC.CultureID,
+                        CultureName: itemC.Name,
+                        CategoryName: "",
+                        CategoryID: item.CategoryID,
+                        Adding:true
+                    })
+                }
+            });
             $('#modal-new').modal({
                 backdrop: true
             });
@@ -57,8 +82,8 @@
                 });
             }
         };
-        $scope.up = function (item,up) {
-            categoryService.up(item.CategoryID,up).then(function (data) {
+        $scope.up = function (item, up) {
+            categoryService.up(item.CategoryID, up).then(function (data) {
                 $scope.get();
             });
         };

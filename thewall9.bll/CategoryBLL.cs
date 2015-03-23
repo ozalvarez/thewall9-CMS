@@ -42,7 +42,7 @@ namespace thewall9.bll
                             CategoryName = m.CategoryName,
                             CultureID = m.CultureID,
                             CultureName = m.Culture.Name
-                        }),
+                        }).ToList(),
 
                         CategoryItems = Model.Where(m => m.CategoryParentID == c.CategoryID).Any()
                         ? GetTree(Model, c.CategoryID, _c)
@@ -61,12 +61,39 @@ namespace thewall9.bll
                     //CREATING
                     _Category.SiteID = Model.SiteID;
                     _Category.Priority = _NewBros.Select(m => m.Priority).Any() ? _NewBros.Select(m => m.Priority).Max() + 1 : 0;
+                    _Category.CategoryCultures=new List<CategoryCulture>();
+                    //ADDING CULTURES
+                    foreach (var item in Model.CategoryCultures)
+                    {
+                        _Category.CategoryCultures.Add(new CategoryCulture
+                        {
+                            CategoryName=item.CategoryName,
+                            CultureID=item.CultureID
+                        });
+                    }
                     _c.Categories.Add(_Category);
                 }
                 else
                 {
                     //UPDATING
                     _Category = _c.Categories.Where(m => m.CategoryID == Model.CategoryID).FirstOrDefault();
+                    //ADDING CULTURES
+                    foreach (var item in Model.CategoryCultures)
+                    {
+                        if (item.Adding)
+                        {
+                            _Category.CategoryCultures.Add(new CategoryCulture
+                            {
+                                CategoryName = item.CategoryName,
+                                CultureID = item.CultureID
+                            });
+                        }
+                        else
+                        {
+                            var _CC=_Category.CategoryCultures.Where(m => m.CultureID == item.CultureID).SingleOrDefault();
+                            _CC.CategoryName = item.CategoryName;
+                        }
+                    }
                     if (_Category.CategoryParentID != Model.CategoryParentID)
                     {
                         _Category.Priority = _NewBros.Select(m => m.Priority).Any() ? _NewBros.Select(m => m.Priority).Max() + 1 : 0;

@@ -18,7 +18,7 @@ namespace thewall9.data.binding
     {
         public string CategoryName { get; set; }
     }
-    public class CategoryBinding:CategoryBase
+    public class CategoryBinding : CategoryBase
     {
         public List<CategoryBinding> CategoryItems { get; set; }
         public IEnumerable<CategoryCultureBinding> CategoryCultures { get; set; }
@@ -27,6 +27,7 @@ namespace thewall9.data.binding
     {
         public int CultureID { get; set; }
         public string CultureName { get; set; }
+        public bool Adding { get; set; }
     }
     public class UpOrDown
     {
