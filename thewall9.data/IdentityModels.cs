@@ -46,6 +46,7 @@ namespace thewall9.data.Models
         public DbSet<SiteUrl> SiteUrls { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<CategoryCulture> CategoryCultures { get; set; }
+        public DbSet<Currency> Currencies { get; set; }
         
     }
 }

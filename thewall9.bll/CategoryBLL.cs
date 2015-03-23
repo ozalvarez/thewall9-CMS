@@ -63,13 +63,16 @@ namespace thewall9.bll
                     _Category.Priority = _NewBros.Select(m => m.Priority).Any() ? _NewBros.Select(m => m.Priority).Max() + 1 : 0;
                     _Category.CategoryCultures=new List<CategoryCulture>();
                     //ADDING CULTURES
-                    foreach (var item in Model.CategoryCultures)
+                    if (Model.CategoryCultures != null)
                     {
-                        _Category.CategoryCultures.Add(new CategoryCulture
+                        foreach (var item in Model.CategoryCultures)
                         {
-                            CategoryName=item.CategoryName,
-                            CultureID=item.CultureID
-                        });
+                            _Category.CategoryCultures.Add(new CategoryCulture
+                            {
+                                CategoryName = item.CategoryName,
+                                CultureID = item.CultureID
+                            });
+                        }
                     }
                     _c.Categories.Add(_Category);
                 }
@@ -78,20 +81,23 @@ namespace thewall9.bll
                     //UPDATING
                     _Category = _c.Categories.Where(m => m.CategoryID == Model.CategoryID).FirstOrDefault();
                     //ADDING CULTURES
-                    foreach (var item in Model.CategoryCultures)
+                    if (Model.CategoryCultures != null)
                     {
-                        if (item.Adding)
+                        foreach (var item in Model.CategoryCultures)
                         {
-                            _Category.CategoryCultures.Add(new CategoryCulture
+                            if (item.Adding)
                             {
-                                CategoryName = item.CategoryName,
-                                CultureID = item.CultureID
-                            });
-                        }
-                        else
-                        {
-                            var _CC=_Category.CategoryCultures.Where(m => m.CultureID == item.CultureID).SingleOrDefault();
-                            _CC.CategoryName = item.CategoryName;
+                                _Category.CategoryCultures.Add(new CategoryCulture
+                                {
+                                    CategoryName = item.CategoryName,
+                                    CultureID = item.CultureID
+                                });
+                            }
+                            else
+                            {
+                                var _CC = _Category.CategoryCultures.Where(m => m.CultureID == item.CultureID).SingleOrDefault();
+                                _CC.CategoryName = item.CategoryName;
+                            }
                         }
                     }
                     if (_Category.CategoryParentID != Model.CategoryParentID)
@@ -118,7 +124,7 @@ namespace thewall9.bll
             {
                 var _Category = GetByID(Model.CategoryID, _c);
                 Can(_Category.SiteID, UserID, _c);
-                var _P = _c.Categories.Where(m => m.CategoryParentID == _Category.CategoryParentID);
+                var _P = _c.Categories.Where(m => m.CategoryParentID == _Category.CategoryParentID && m.SiteID==_Category.SiteID);
                 if (Model.Up)
                 {
                     if (_P.Select(m => m.Priority).Min() < _Category.Priority)

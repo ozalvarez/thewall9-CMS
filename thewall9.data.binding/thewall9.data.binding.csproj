@@ -46,6 +46,7 @@
     <Compile Include="CategoryBinding.cs" />
     <Compile Include="Content.cs" />
     <Compile Include="Culture.cs" />
+    <Compile Include="CurrencyBinding.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="SiteBinding.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

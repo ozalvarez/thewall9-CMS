@@ -16,6 +16,19 @@ namespace thewall9.bll.test
         private int _CID7;
         private int _CID8;
         private int _CID9;
+
+        /*
+         * TREE TEST SETTINGUP
+         *  00
+         *      00 - 00
+         *      00 - 01
+         *      00 - 02
+         *      00 - 03
+         *          00 - 03 - 00
+         *      00 - 04
+         *  01
+         *      01 -00
+         */
         private void SettingUp()
         {
             _CID = new CategoryBLL().Save(new data.binding.CategoryBinding
@@ -47,18 +60,19 @@ namespace thewall9.bll.test
                 SiteID = _SiteID,
                 CategoryParentID = _CID
             }, _CustomerUser.Id);
-            _CID9 = new CategoryBLL().Save(new data.binding.CategoryBinding
-            {
-                CategoryAlias = "00 - 04",
-                SiteID = _SiteID,
-                CategoryParentID = _CID
-            }, _CustomerUser.Id);
             _CID8 = new CategoryBLL().Save(new data.binding.CategoryBinding
             {
                 CategoryAlias = "00 - 03 - 00",
                 SiteID = _SiteID,
                 CategoryParentID = _CID6
             }, _CustomerUser.Id);
+            _CID9 = new CategoryBLL().Save(new data.binding.CategoryBinding
+            {
+                CategoryAlias = "00 - 04",
+                SiteID = _SiteID,
+                CategoryParentID = _CID
+            }, _CustomerUser.Id);
+            
             _CID5 = new CategoryBLL().Save(new data.binding.CategoryBinding
             {
                 CategoryAlias = "01",
@@ -67,7 +81,7 @@ namespace thewall9.bll.test
             Assert.IsNotNull(_CID);
             _CID7 = new CategoryBLL().Save(new data.binding.CategoryBinding
             {
-                CategoryAlias = "01 - 01",
+                CategoryAlias = "01 - 00",
                 SiteID = _SiteID,
                 CategoryParentID = _CID5
             }, _CustomerUser.Id);

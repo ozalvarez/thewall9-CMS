@@ -139,6 +139,7 @@
     <Content Include="app\app-login.js" />
     <Content Include="app\app.js" />
     <Content Include="app\controllers\appController.js" />
+    <Content Include="app\controllers\currencyController.js" />
     <Content Include="app\controllers\configurationController.js" />
     <Content Include="app\controllers\categoryController.js" />
     <Content Include="app\controllers\editContentController.js" />
@@ -152,6 +153,7 @@
     <Content Include="app\directives\fileread.js" />
     <Content Include="app\services\authInterceptorService.js" />
     <Content Include="app\services\authService.js" />
+    <Content Include="app\services\currencyService.js" />
     <Content Include="app\services\cultureService.js" />
     <Content Include="app\services\contentService.js" />
     <Content Include="app\services\categoryService.js" />
@@ -161,6 +163,7 @@
     <Content Include="app\services\toastrService.js" />
     <Content Include="app\services\utilService.js" />
     <Content Include="app\views\associate.html" />
+    <Content Include="app\views\currency.html" />
     <Content Include="app\views\categories.html" />
     <Content Include="app\views\edit-content.html" />
     <Content Include="app\views\page-detail.html" />

@@ -93,11 +93,16 @@ namespace thewall9.customer
                 "~/app/controllers/editContentController.js",
                 "~/app/controllers/passwordController.js"
                 , "~/app/controllers/categoryController.js"
+
+                , "~/app/services/currencyService.js"
+                , "~/app/controllers/currencyController.js"
+                
+
                 ));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862
-            //BundleTable.EnableOptimizations = true;
+           // BundleTable.EnableOptimizations = true;
         }
     }
 }
