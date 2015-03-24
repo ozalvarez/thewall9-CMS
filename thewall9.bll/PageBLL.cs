@@ -107,7 +107,7 @@ namespace thewall9.bll
         }
         public string GetPageFriendlyUrl(int SiteID, string Url, string FriendlyUrl, string TargetLang)
         {
-            FriendlyUrl = FriendlyUrl.Replace("/", "");
+            FriendlyUrl = !string.IsNullOrEmpty(FriendlyUrl) ? FriendlyUrl.Replace("/", "") : "";
             using (var _c = db)
             {
                 var _Q = SiteID != 0
@@ -119,9 +119,9 @@ namespace thewall9.bll
                        where u.Url.Equals(Url)
                        select m;
                 var _PageID = (from p in _Q
-                              where FriendlyUrl == null ? p.FriendlyUrl == "" : (p.FriendlyUrl.ToLower().Equals(FriendlyUrl.ToLower()))
-                              select p.PageID).FirstOrDefault();
-                var _Page = _Q.Where(m =>m.PageID==_PageID && m.Culture.Name.Equals(TargetLang.ToLower())).FirstOrDefault();
+                               where FriendlyUrl == null ? p.FriendlyUrl == "" : (p.FriendlyUrl.ToLower().Equals(FriendlyUrl.ToLower()))
+                               select p.PageID).FirstOrDefault();
+                var _Page = _Q.Where(m => m.PageID == _PageID && m.Culture.Name.Equals(TargetLang.ToLower())).FirstOrDefault();
                 if (_Page == null)
                     throw new RuleException("No existe página con ese FriendlyUrl", "0x000");
                 return _Page.FriendlyUrl;
@@ -225,7 +225,7 @@ namespace thewall9.bll
                             RedirectUrl = m.RedirectUrl,
                             TitlePage = m.TitlePage,
                             ViewRender = m.ViewRender
-                        })
+                        }).ToList()
                     }).OrderBy(m => m.Priority).ToList();
         }
 

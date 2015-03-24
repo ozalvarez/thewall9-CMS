@@ -14,6 +14,7 @@ namespace thewall9.bll.test
 
         protected int _SiteID;
         protected ApplicationUser _CustomerUser;
+        protected List<CultureBase> _Cultures;
 
         //[ClassInitialize()]
         //public static void ClassInit(TestContext context)
@@ -34,6 +35,10 @@ namespace thewall9.bll.test
             {
                 Name = "es"
             });
+            _C.Add(new CultureBinding
+            {
+                Name = "en"
+            });
             var _W = new data.binding.SiteAllBinding
             {
                 SiteName = PREFIX + DateTime.Now.ToShortTimeString(),
@@ -45,6 +50,7 @@ namespace thewall9.bll.test
                 Email = EMAIL,
                 SiteID = _SiteID
             });
+            _Cultures=new CultureBLL().Get(_SiteID);
         }
         [TestCleanup()]
         public void Cleanup()

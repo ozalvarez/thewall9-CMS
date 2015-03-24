@@ -48,7 +48,7 @@ namespace thewall9.data.binding
     public class PageBindingListWithCultures : PageBinding
     {
         public ICollection<PageBindingListWithCultures> Items { get; set; }
-        public IEnumerable<PageCultureBinding> PageCultures { get; set; }
+        public List<PageCultureBinding> PageCultures { get; set; }
     }
     public class MoveBinding
     {
