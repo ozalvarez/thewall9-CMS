@@ -39,6 +39,10 @@ app.config(["$routeProvider", "blockUIConfig", function ($routeProvider, blockUI
         controller: 'currencyController',
         templateUrl: '/app/views/currency.html'
     });
+    $routeProvider.when('/tags', {
+        controller: 'tagController',
+        templateUrl: '/app/views/tag.html'
+    });
 
     $routeProvider.otherwise({ redirectTo: "/" });
 

@@ -91,6 +91,11 @@
     <Compile Include="AccountViewModels.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Culture.cs" />
+    <Compile Include="Migrations\201503241647500_add-tag.cs" />
+    <Compile Include="Migrations\201503241647500_add-tag.Designer.cs">
+      <DependentUpon>201503241647500_add-tag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tag.cs" />
     <Compile Include="Currency.cs" />
     <Compile Include="IdentityModels.cs" />
     <Compile Include="Migrations\201410031827156_InitialCreate.cs" />
@@ -236,6 +241,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503232057106_add-currency.resx">
       <DependentUpon>201503232057106_add-currency.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503241647500_add-tag.resx">
+      <DependentUpon>201503241647500_add-tag.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

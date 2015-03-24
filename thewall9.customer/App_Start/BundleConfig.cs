@@ -96,6 +96,9 @@ namespace thewall9.customer
 
                 , "~/app/services/currencyService.js"
                 , "~/app/controllers/currencyController.js"
+
+                , "~/app/services/tagService.js"
+                , "~/app/controllers/tagController.js"
                 
 
                 ));

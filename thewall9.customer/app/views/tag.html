@@ -2,30 +2,24 @@
     <ul class="list-inline pull-right">
         <li>
             <button class="btn btn-primary" role="button" ng-click="open()">
-                <span class="glyphicon glyphicon-plus"></span> Nueva Moneda
+                <span class="glyphicon glyphicon-plus"></span> Nuevo Tag
             </button>
         </li>
     </ul>
-    <h1>Monedas</h1>
+    <h1>Tags</h1>
 </div>
 <div class="table-responsive">
     <table class="table table-bordered table-hover table-striped">
         <thead>
             <tr>
-                <td>Moneda</td>
+                <td>Tag</td>
                 <td></td>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="item in data">
-                <td>{{item.CurrencyName}}</td>
+                <td>{{item.TagName}}</td>
                 <td>
-                    <button class="btn btn-sm btn-success" ng-disabled="true" ng-show="item.Default">
-                        <span class="glyphicon glyphicon-check"></span> Default
-                    </button>
-                    <button class="btn btn-sm btn-default" ng-click="default(item)" ng-hide="item.Default">
-                        <span class="glyphicon glyphicon-unchecked"></span> Marcar como Default
-                    </button>
                     <button class="btn btn-sm btn-default" ng-click="open(item)">
                         <span class="glyphicon glyphicon-edit"></span>
                     </button>
@@ -43,13 +37,13 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Datos de la Moneda</h4>
+                <h4 class="modal-title">Datos del Tag</h4>
             </div>
             <div class="modal-body">
                 <form ng-submit="save()">
                     <div class="form-group">
-                        <label>Nombre de la Moneda</label>
-                        <input type="text" class="form-control" ng-model="model.CurrencyName" required />
+                        <label>Nombre del Tag</label>
+                        <input type="text" class="form-control" ng-model="model.TagName" required />
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Guardar Tag" class="btn btn-primary" />
