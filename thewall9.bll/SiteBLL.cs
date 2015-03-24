@@ -406,6 +406,7 @@ namespace thewall9.bll
         {
             using (var _c = db)
             {
+                _c.Products.RemoveRange(_c.Products.Where(m => m.Site.SiteName.Contains(Prefix)).ToList());
                 _c.Sites.RemoveRange(_c.Sites.Where(m => m.SiteName.Contains(Prefix)).ToList());
                 _c.SaveChanges();
             }

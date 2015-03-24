@@ -79,7 +79,7 @@ namespace thewall9.bll
                 else
                 {
                     //UPDATING
-                    _Category = _c.Categories.Where(m => m.CategoryID == Model.CategoryID).FirstOrDefault();
+                    _Category = GetByID(Model.CategoryID,_c);
                     //ADDING CULTURES
                     if (Model.CategoryCultures != null)
                     {

@@ -89,6 +89,11 @@
   <ItemGroup>
     <Compile Include="AccountBindingModels.cs" />
     <Compile Include="AccountViewModels.cs" />
+    <Compile Include="Migrations\201503242013269_add-product-to-ecommerce.cs" />
+    <Compile Include="Migrations\201503242013269_add-product-to-ecommerce.Designer.cs">
+      <DependentUpon>201503242013269_add-product-to-ecommerce.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Product.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Culture.cs" />
     <Compile Include="Migrations\201503241647500_add-tag.cs" />
@@ -251,6 +256,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503241706439_add-global-social-accounts.resx">
       <DependentUpon>201503241706439_add-global-social-accounts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503242013269_add-product-to-ecommerce.resx">
+      <DependentUpon>201503242013269_add-product-to-ecommerce.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
