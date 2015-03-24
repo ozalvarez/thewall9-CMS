@@ -95,6 +95,10 @@
     <Compile Include="Migrations\201503241647500_add-tag.Designer.cs">
       <DependentUpon>201503241647500_add-tag.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503241706439_add-global-social-accounts.cs" />
+    <Compile Include="Migrations\201503241706439_add-global-social-accounts.Designer.cs">
+      <DependentUpon>201503241706439_add-global-social-accounts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tag.cs" />
     <Compile Include="Currency.cs" />
     <Compile Include="IdentityModels.cs" />
@@ -244,6 +248,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503241647500_add-tag.resx">
       <DependentUpon>201503241647500_add-tag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503241706439_add-global-social-accounts.resx">
+      <DependentUpon>201503241706439_add-global-social-accounts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

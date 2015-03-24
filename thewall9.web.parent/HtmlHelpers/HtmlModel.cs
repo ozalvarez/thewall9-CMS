@@ -86,6 +86,30 @@ namespace thewall9.web.parent.HtmlHelpers
         {
             return new MvcHtmlString("/" +APP._Langs.Where(m=>m.Name==APP._CurrentLang).FirstOrDefault().FriendlyUrl);
         }
+
+        /*
+         * SOCIAL METHODS
+         */
+        public static MvcHtmlString LinkTwitter(this HtmlHelper helper)
+        {
+            return new MvcHtmlString("http://twitter.com/"+APP._Langs.Where(m => m.Name == APP._CurrentLang).FirstOrDefault().Twitter);
+        }
+        public static MvcHtmlString LinkFacebook(this HtmlHelper helper)
+        {
+            return new MvcHtmlString("http://facebook.com/" + APP._Langs.Where(m => m.Name == APP._CurrentLang).FirstOrDefault().Facebook);
+        }
+        public static MvcHtmlString LinkTumblr(this HtmlHelper helper)
+        {
+            return new MvcHtmlString("http://" + APP._Langs.Where(m => m.Name == APP._CurrentLang).FirstOrDefault().Tumblr);
+        }
+        public static MvcHtmlString LinkGPlus(this HtmlHelper helper)
+        {
+            return new MvcHtmlString("http://plus.google.com/+" + APP._Langs.Where(m => m.Name == APP._CurrentLang).FirstOrDefault().GPlus);
+        }
+        public static MvcHtmlString LinkInstagram(this HtmlHelper helper)
+        {
+            return new MvcHtmlString("http://instagram.com/" + APP._Langs.Where(m => m.Name == APP._CurrentLang).FirstOrDefault().Instagram);
+        }
         #endregion
     }
 }

@@ -152,6 +152,7 @@
     <Content Include="app\controllers\passwordController.js" />
     <Content Include="app\directives\autoFillSync.js" />
     <Content Include="app\directives\fileread.js" />
+    <Content Include="app\directives\tab.js" />
     <Content Include="app\services\authInterceptorService.js" />
     <Content Include="app\services\authService.js" />
     <Content Include="app\services\tagService.js" />

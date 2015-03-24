@@ -44,7 +44,12 @@ namespace thewall9.data.binding
             {
                 _Cultures.Add(new CultureBinding
                 {
-                    Name = item.Name
+                    Name = item.Name,
+                    Facebook = item.Facebook,
+                    GPlus = item.GPlus,
+                    Instagram = item.Instagram,
+                    Tumblr = item.Tumblr,
+                    Twitter = item.Twitter
                 });
             }
             this.Cultures = _Cultures;

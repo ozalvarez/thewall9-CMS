@@ -50,7 +50,26 @@ namespace thewall9.bll.test
                 Email = EMAIL,
                 SiteID = _SiteID
             });
+
             _Cultures=new CultureBLL().Get(_SiteID);
+            new CultureBLL().Save(new CultureBinding
+            {
+                CultureID = _Cultures[0].CultureID,
+                SiteID=_SiteID,
+                Facebook = "f" + _Cultures[0].Name,
+                GPlus = "g" + _Cultures[0].Name,
+                Instagram = "i" + _Cultures[0].Name,
+                Tumblr = "t" + _Cultures[0].Name
+            },_CustomerUser.Id);
+            new CultureBLL().Save(new CultureBinding
+            {
+                CultureID = _Cultures[1].CultureID,
+                Facebook = "f" + _Cultures[1].Name,
+                GPlus = "g" + _Cultures[1].Name,
+                Instagram = "i" + _Cultures[1].Name,
+                Tumblr = "t" + _Cultures[1].Name,
+                SiteID = _SiteID,
+            },_CustomerUser.Id);
         }
         [TestCleanup()]
         public void Cleanup()

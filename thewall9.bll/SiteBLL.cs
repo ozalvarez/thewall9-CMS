@@ -143,7 +143,13 @@ namespace thewall9.bll
                     {
                         _Model.Cultures.Add(new Culture
                         {
-                            Name = item.Name
+                            Name = item.Name,
+
+                            Facebook = item.Facebook,
+                            GPlus = item.GPlus,
+                            Instagram = item.Instagram,
+                            Tumblr = item.Tumblr,
+                            Twitter = item.Twitter
                         });
                     }
                     //ADD SITES
@@ -354,10 +360,10 @@ namespace thewall9.bll
             ImportSaveContent(SiteContent.Content, _SiteID, 0);
             return _SiteID;
         }
-        public void Import(FileRead _FileRead)
+        public int Import(FileRead _FileRead)
         {
             byte[] binary = Convert.FromBase64String(_FileRead.FileContent.Split(',')[1]);
-            ImportObject(JsonConvert.DeserializeObject<SiteExport>(Encoding.UTF8.GetString(binary)));
+            return ImportObject(JsonConvert.DeserializeObject<SiteExport>(Encoding.UTF8.GetString(binary)));
         }
         private void ImportSavePages(ICollection<PageBindingListWithCultures> Pages, int SiteID, int PageParentID)
         {

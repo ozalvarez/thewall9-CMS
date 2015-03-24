@@ -1,6 +1,18 @@
 ﻿'use strict';
-app.controller('configurationController', ['$scope', "siteService", 'authService', "toastrService",
-    function ($scope, siteService, authService, toastrService) {
+app.controller('configurationController', ['$scope', "siteService","cultureService", 'authService', "toastrService",
+    function ($scope, siteService,cultureService, authService, toastrService) {
+        $scope.saveSite = function () {
+            siteService.save($scope.site).then(function (data) {
+                toastrService.success("Configuración Guardada");
+            });
+        };
+        $scope.save = function (item) {
+            cultureService.save(item).then(function (data) {
+                toastrService.success("Configuración Guardada");
+            });
+        }
+
+
         $scope.init = function () {
             $scope.site = siteService.site;
         };
@@ -10,11 +22,5 @@ app.controller('configurationController', ['$scope', "siteService", 'authService
         if (siteService.sitesLoaded) {
             $scope.init();
         }
-
-        $scope.saveSite = function () {
-            siteService.save($scope.site).then(function (data) {
-                toastrService.success("Configuración Guardada");
-            });
-        };
     }
 ]);

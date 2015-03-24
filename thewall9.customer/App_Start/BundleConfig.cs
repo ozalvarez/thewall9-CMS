@@ -83,8 +83,11 @@ namespace thewall9.customer
                 "~/app/services/cultureService.js",
                 "~/app/services/toastrService.js",
                 "~/app/services/utilService.js",
-                "~/app/directives/fileread.js",
-                "~/app/controllers/appController.js",
+
+                "~/app/directives/fileread.js"
+                , "~/app/directives/tab.js"
+
+                ,"~/app/controllers/appController.js",
                 "~/app/controllers/homeController.js",
                 "~/app/controllers/configurationController.js",
                 "~/app/controllers/pagesController.js",
@@ -99,6 +102,8 @@ namespace thewall9.customer
 
                 , "~/app/services/tagService.js"
                 , "~/app/controllers/tagController.js"
+
+
                 
 
                 ));

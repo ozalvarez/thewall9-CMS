@@ -14,6 +14,9 @@ app.factory('cultureService', ["$myhttp","$q", "ngAuthSettings", "siteService",
                 deferred.resolve(data);
             });
         };
+        cultureFactory.save = function (item) {
+            return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/culture',item);
+        };
 
         return cultureFactory;
     }]);
