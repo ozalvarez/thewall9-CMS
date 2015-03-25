@@ -50,6 +50,11 @@ namespace thewall9.data.binding
         public bool Adding { get; set; }
         public bool Deleting { get; set; }
     }
+    public class ProductCategoryAutoCompleteBinding
+    {
+        public int CategoryID { get; set; }
+        public string CategoryAlias { get; set; }
+    }
     public class ProductGalleryBase
     {
         public int ProductGalleryID { get; set; }

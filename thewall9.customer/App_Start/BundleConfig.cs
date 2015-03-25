@@ -56,30 +56,34 @@ namespace thewall9.customer
                       "~/Content/plugins/timeline.css",
                       "~/Content/plugins/morris.css",
                       "~/Content/font-awesome.min.css",
-                      "~/Content/toastr.css",
-                      "~/Content/site.css"));
+                      "~/Content/toastr.css"
+                      , "~/Content/site.css"
+                      ));
 
             bundles.Add(new ScriptBundle("~/bundles/intern").Include(
                       "~/Scripts/jquery-{version}.js",
                       "~/Scripts/bootstrap.min.js",
                       "~/Scripts/toastr.js",
                       "~/scripts/plugins/metisMenu/metisMenu.min.js",
+                      "~/scripts/sb-admin-2.js"
+                      ));
 
-                      "~/scripts/sb-admin-2.js"));
             bundles.Add(new ScriptBundle("~/bundles/intern/angular").Include(
                     "~/Scripts/angular.min.js",
                       "~/Scripts/angular-route.min.js",
                       "~/Scripts/angular-local-storage.min.js",
                       "~/Scripts/angular-block-ui.min.js",
-                      "~/Scripts/angular-ui-tree.min.js",
-                        "~/app/app.js",
+
+                      "~/Scripts/angular-ui-tree.min.js"
+
+                      , "~/app/app.js",
                         "~/app/services/myHttpService.js",
                 "~/app/services/authService.js",
                 "~/app/services/authInterceptorService.js",
                 "~/app/services/siteService.js",
                 "~/app/services/pageService.js",
                 "~/app/services/contentService.js",
-                "~/app/services/categoryService.js",
+
                 "~/app/services/cultureService.js",
                 "~/app/services/toastrService.js",
                 "~/app/services/utilService.js",
@@ -87,7 +91,7 @@ namespace thewall9.customer
                 "~/app/directives/fileread.js"
                 , "~/app/directives/tab.js"
 
-                ,"~/app/controllers/appController.js",
+                , "~/app/controllers/appController.js",
                 "~/app/controllers/homeController.js",
                 "~/app/controllers/configurationController.js",
                 "~/app/controllers/pagesController.js",
@@ -95,6 +99,8 @@ namespace thewall9.customer
                 "~/app/controllers/contentController.js",
                 "~/app/controllers/editContentController.js",
                 "~/app/controllers/passwordController.js"
+
+                , "~/app/services/categoryService.js"
                 , "~/app/controllers/categoryController.js"
 
                 , "~/app/services/currencyService.js"
@@ -103,14 +109,16 @@ namespace thewall9.customer
                 , "~/app/services/tagService.js"
                 , "~/app/controllers/tagController.js"
 
+                , "~/app/services/productService.js"
+                , "~/app/controllers/productController.js"
+                , "~/app/controllers/productsController.js"
 
-                
 
                 ));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862
-           // BundleTable.EnableOptimizations = true;
+            //BundleTable.EnableOptimizations = true;
         }
     }
 }

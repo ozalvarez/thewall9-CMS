@@ -1,0 +1,55 @@
+﻿<div class="page-header">
+    <ul class="list-inline pull-right">
+        <li>
+            <a class="btn btn-primary" role="button" ng-href="#/products">
+                <span class="fa fa-arrow-left"></span> Atras
+            </a>
+        </li>
+    </ul>
+    <h1>Productos</h1>
+</div>
+<!--<code>
+    {{model}}
+</code>-->
+<form ng-submit="save()">
+    <div class="form-group">
+        <label>Alias del Producto</label>
+        <input type="text" class="form-control" ng-model="model.ProductAlias" required />
+    </div>
+    <div class="form-group">
+        <label>Categorias</label>
+        <input type="text" class="form-control" ng-change="loadCategories(queryCategories)" ng-model="queryCategories" />
+        <div class="list-group list-group-autocomplete" ng-show="categories!=null && categories.length>0">
+            <a ng-click="addCategory(item)" href="" class="list-group-item" ng-repeat="item in categories">
+                {{item.CategoryAlias}}
+            </a>
+        </div>
+        <button class="btn btn-sm btn-default" ng-repeat="item in model.ProductCategories" ng-show="model.ProductCategories.length>0" ng-click="removeCategory(item)">
+            {{item.CategoryAlias}} <i class="fa fa-remove"></i>
+        </button>
+    </div>
+    <tabs>
+        <pane title="{{item.CultureName}}" ng-repeat="item in model.ProductCultures">
+            <br />
+            <div class="form-group">
+                <label>Nombre del Producto [{{item.CultureName}}]</label>
+                <input type="text" class="form-control" ng-model="item.ProductName" required />
+            </div>
+            <div class="form-group">
+                <label>Friendly Url</label>
+                <input type="text" class="form-control" ng-model="item.FriendlyUrl"/>
+            </div>
+            <div class="form-group">
+                <label>Descripción</label>
+                <textarea class="form-control" ng-model="item.Description" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Imformación Adicional</label>
+                <textarea class="form-control" ng-model="item.AdditionalInformation" rows="3"></textarea>
+            </div>
+        </pane>
+    </tabs>
+    <div class="form-group">
+        <input type="submit" value="Guardar Producto" class="btn btn-primary" />
+    </div>
+</form>

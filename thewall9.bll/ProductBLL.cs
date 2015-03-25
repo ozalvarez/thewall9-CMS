@@ -147,23 +147,26 @@ namespace thewall9.bll
                     }
                 }
                 //ADDING TAGS
-                foreach (var item in Model.ProductTags)
+                if (Model.ProductTags != null)
                 {
-                    ProductTag _PT = null;
-                    if (Model.ProductID != 0)
-                        _PT = _c.ProductTags.Where(m => m.TagID == item.TagID && m.ProductID == Model.ProductID).SingleOrDefault();
-                    if (item.Adding || Model.ProductID == 0)
+                    foreach (var item in Model.ProductTags)
                     {
-                        if (_PT == null)
-                            _Product.ProductTags.Add(new ProductTag
-                            {
-                                TagID = item.TagID
-                            });
-                    }
-                    else if (item.Deleting)
-                    {
-                        if (_PT != null)
-                            _Product.ProductTags.Remove(_PT);
+                        ProductTag _PT = null;
+                        if (Model.ProductID != 0)
+                            _PT = _c.ProductTags.Where(m => m.TagID == item.TagID && m.ProductID == Model.ProductID).SingleOrDefault();
+                        if (item.Adding || Model.ProductID == 0)
+                        {
+                            if (_PT == null)
+                                _Product.ProductTags.Add(new ProductTag
+                                {
+                                    TagID = item.TagID
+                                });
+                        }
+                        else if (item.Deleting)
+                        {
+                            if (_PT != null)
+                                _Product.ProductTags.Remove(_PT);
+                        }
                     }
                 }
                 _c.SaveChanges();
@@ -175,8 +178,25 @@ namespace thewall9.bll
             using (var _c = db)
             {
                 var _Category = GetByID(ProductID, _c);
+                Can(_Category.SiteID, UserID, _c);
                 _c.Products.Remove(_Category);
                 _c.SaveChanges();
+            }
+        }
+
+        //CATEGORIES
+        public List<ProductCategoryAutoCompleteBinding> GetCategories(int SiteID, string Query)
+        {
+            using (var _c = db)
+            {
+                return (from cc in _c.CategoryCultures
+                        where cc.CategoryName.ToLower().Contains(Query.ToLower())
+                        || cc.Category.CategoryAlias.ToLower().Contains(Query.ToLower())
+                        select new ProductCategoryAutoCompleteBinding
+                        {
+                            CategoryID = cc.CategoryID,
+                            CategoryAlias = cc.Category.CategoryAlias
+                        }).Distinct().ToList();
             }
         }
     }

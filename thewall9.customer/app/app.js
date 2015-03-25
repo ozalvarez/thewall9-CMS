@@ -1,4 +1,4 @@
-﻿var app = angular.module('AngularAuthApp',
+﻿var app = angular.module('app',
     ['ngRoute', 'LocalStorageModule', 'blockUI', 'ui.tree']);
 
 app.config(["$routeProvider", "blockUIConfig", function ($routeProvider, blockUIConfig) {
@@ -37,11 +37,19 @@ app.config(["$routeProvider", "blockUIConfig", function ($routeProvider, blockUI
     });
     $routeProvider.when('/currencies', {
         controller: 'currencyController',
-        templateUrl: '/app/views/currency.html'
+        templateUrl: '/app/views/currencies.html'
     });
     $routeProvider.when('/tags', {
         controller: 'tagController',
-        templateUrl: '/app/views/tag.html'
+        templateUrl: '/app/views/tags.html'
+    });
+    $routeProvider.when('/products', {
+        controller: 'productsController',
+        templateUrl: '/app/views/products.html'
+    });
+    $routeProvider.when('/product/:productID?', {
+        controller: 'productController',
+        templateUrl: '/app/views/product.html'
     });
 
     $routeProvider.otherwise({ redirectTo: "/" });

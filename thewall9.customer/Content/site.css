@@ -72,3 +72,12 @@ div.page-header h1 {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+.twitter-typeahead {
+  width: 100%;
+  position: relative;
+}
+/*TYPEAHEAD*/
+.list-group-autocomplete {
+  position: fixed;
+  z-index: 100;
+}
