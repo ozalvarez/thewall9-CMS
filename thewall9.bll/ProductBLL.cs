@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using thewall9.bll.Exceptions;
@@ -16,47 +17,63 @@ namespace thewall9.bll
         {
             return _c.Products.Where(m => m.ProductID == ProductID).SingleOrDefault();
         }
+        private ProductBinding Get(Product c, ApplicationDbContext _c)
+        {
+            return (new ProductBinding
+            {
+                ProductID = c.ProductID,
+                ProductAlias = c.ProductAlias,
+                SiteID = c.SiteID,
+                ProductCultures = c.ProductCultures.Select(m => new ProductCultureBinding
+                {
+                    ProductName = m.ProductName,
+                    CultureID = m.CultureID,
+                    CultureName = m.Culture.Name,
+                    Description = m.Description,
+                    AdditionalInformation = m.AdditionalInformation,
+                    IconPath = m.IconPath,
+                    FriendlyUrl = m.FriendlyUrl
+                }).ToList(),
+                ProductTags = c.ProductTags.Select(m => new ProductTagBinding
+                {
+                    ProductID = m.ProductID,
+                    TagID = m.TagID,
+                    TagName = m.Tag.TagName
+                }).ToList(),
+                ProductCategories = c.ProductCategories.Select(m => new ProductCategoryBinding
+                {
+                    ProductID = m.ProductID,
+                    CategoryID = m.CategoryID,
+                    CategoryAlias = m.Category.CategoryAlias
+                }).ToList(),
+                ProductGalleries = c.ProductGalleries.Select(m => new ProductGalleryBinding
+                {
+                    ProductID = m.ProductID,
+                    ProductGalleryID = m.ProductGalleryID,
+                    PhotoPath = m.PhotoPath
+                }).ToList(),
+            });
+        }
+        public ProductBinding GetByID(int ProductID, string UserID)
+        {
+            using (var _c = db)
+            {
+                var _P = (from c in _c.Products
+                          where c.ProductID == ProductID
+                          select c).SingleOrDefault();
+                Can(_P.SiteID, UserID, _c);
+                return Get(_P, _c);
+            }
+        }
         public List<ProductBinding> Get(int SiteID, string UserID)
         {
             using (var _c = db)
             {
                 Can(SiteID, UserID, _c);
-                return (from c in _c.Products
-                        where c.SiteID == SiteID
-                        select new ProductBinding
-                        {
-                            ProductID = c.ProductID,
-                            ProductAlias = c.ProductAlias,
-                            SiteID = c.SiteID,
-                            ProductCultures = c.ProductCultures.Select(m => new ProductCultureBinding
-                            {
-                                ProductName = m.ProductName,
-                                CultureID = m.CultureID,
-                                CultureName = m.Culture.Name,
-                                Description = m.Description,
-                                AdditionalInformation = m.AdditionalInformation,
-                                IconPath = m.IconPath,
-                                FriendlyUrl = m.FriendlyUrl
-                            }).ToList(),
-                            ProductTags = c.ProductTags.Select(m => new ProductTagBinding
-                            {
-                                ProductID = m.ProductID,
-                                TagID = m.TagID,
-                                TagName = m.Tag.TagName
-                            }).ToList(),
-                            ProductCategories = c.ProductCategories.Select(m => new ProductCategoryBinding
-                            {
-                                ProductID = m.ProductID,
-                                CategoryID = m.CategoryID,
-                                CategoryAlias = m.Category.CategoryAlias
-                            }).ToList(),
-                            ProductGalleries = c.ProductGalleries.Select(m => new ProductGalleryBinding
-                            {
-                                ProductID = m.ProductID,
-                                ProductGalleryID = m.ProductGalleryID,
-                                PhotoPath = m.PhotoPath
-                            }).ToList(),
-                        }).ToList();
+                var _P = from c in _c.Products
+                         where c.SiteID == SiteID
+                         select c;
+                return _P.ToList().Select(m => Get(m, _c)).ToList();
             }
         }
 
@@ -185,17 +202,31 @@ namespace thewall9.bll
         }
 
         //CATEGORIES
-        public List<ProductCategoryAutoCompleteBinding> GetCategories(int SiteID, string Query)
+        public List<ProductCategoryBinding> GetCategories(int SiteID, string Query)
         {
             using (var _c = db)
             {
                 return (from cc in _c.CategoryCultures
                         where cc.CategoryName.ToLower().Contains(Query.ToLower())
                         || cc.Category.CategoryAlias.ToLower().Contains(Query.ToLower())
-                        select new ProductCategoryAutoCompleteBinding
+                        select new ProductCategoryBinding
                         {
                             CategoryID = cc.CategoryID,
                             CategoryAlias = cc.Category.CategoryAlias
+                        }).Distinct().ToList();
+            }
+        }
+        //TAGS
+        public List<ProductTagBinding> GetTags(int SiteID, string Query)
+        {
+            using (var _c = db)
+            {
+                return (from cc in _c.Tags
+                        where cc.TagName.ToLower().Contains(Query.ToLower())
+                        select new ProductTagBinding
+                        {
+                            TagID = cc.TagID,
+                            TagName = cc.TagName
                         }).Distinct().ToList();
             }
         }

@@ -8,7 +8,24 @@
             };
             if ($routeParams.productID != null) {
                 productService.getByID($routeParams.productID).then(function (data) {
-                    $scope.data = data;
+                    $scope.model = data;
+                    angular.forEach($scope.cultures, function (item) {
+                        var exist = false;
+                        angular.forEach($scope.model.ProductCultures, function (itemPC) {
+                            if (itemPC.CultureID == item.CultureID) {
+                                exist = true;
+                            }
+                        });
+                        if (!exist) {
+                            $scope.model.ProductCultures.push({
+                                CultureID: item.CultureID,
+                                CultureName: item.Name,
+                                ProductName: "",
+                                ProductID: itemPC.ProductID,
+                                Adding: true
+                            })
+                        }
+                    });
                 });
             } else {
                 angular.forEach($scope.cultures, function (item) {
@@ -27,15 +44,33 @@
             });
         };
         $scope.addCategory = function (item) {
+            item.Adding = true;
+            item.Deleting = false;
             $scope.model.ProductCategories.push(item);
             $scope.categories = [];
             $scope.queryCategories = "";
         };
         $scope.removeCategory = function (item) {
-            var index=$scope.model.ProductCategories.indexOf(item);
-            $scope.model.ProductCategories.splice(index, 1);
+            item.Deleting = true;
+            item.Adding = false;
         };
-
+        //TAGS
+        $scope.loadTags = function (query) {
+            productService.getTags(query).then(function (data) {
+                $scope.tags = data;
+            });
+        };
+        $scope.addTag = function (item) {
+            item.Adding = true;
+            item.Deleting = false;
+            $scope.model.ProductTags.push(item);
+            $scope.tags = [];
+            $scope.queryTags = "";
+        };
+        $scope.removeTag = function (item) {
+            item.Deleting = true;
+            item.Adding = false;
+        };
 
 
 

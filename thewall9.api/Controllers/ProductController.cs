@@ -19,6 +19,11 @@ namespace thewall9.api.Controllers
         {
             return Ok(_ProductService.Get(SiteID, User.Identity.GetUserId()));
         }
+        [Route("byID")]
+        public IHttpActionResult GetByID(int ProductID)
+        {
+            return Ok(_ProductService.GetByID(ProductID, User.Identity.GetUserId()));
+        }
         public IHttpActionResult PostSave(ProductBinding Model)
         {
             return Ok(_ProductService.Save(Model, User.Identity.GetUserId()));
@@ -28,11 +33,15 @@ namespace thewall9.api.Controllers
             _ProductService.Delete(ProductID, User.Identity.GetUserId());
             return Ok();
         }
-        [AllowAnonymous]
         [Route("categories")]
         public IHttpActionResult GetCategories(int SiteID, string Query)
         {
             return Ok(_ProductService.GetCategories(SiteID, Query));
+        }
+        [Route("tags")]
+        public IHttpActionResult GetTags(int SiteID, string Query)
+        {
+            return Ok(_ProductService.GetTags(SiteID, Query));
         }
     }
 }

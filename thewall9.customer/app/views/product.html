@@ -9,24 +9,38 @@
     <h1>Productos</h1>
 </div>
 <!--<code>
-    {{model}}
+    {{model.ProductTags}}
 </code>-->
 <form ng-submit="save()">
     <div class="form-group">
         <label>Alias del Producto</label>
         <input type="text" class="form-control" ng-model="model.ProductAlias" required />
     </div>
-    <div class="form-group">
-        <label>Categorias</label>
-        <input type="text" class="form-control" ng-change="loadCategories(queryCategories)" ng-model="queryCategories" />
-        <div class="list-group list-group-autocomplete" ng-show="categories!=null && categories.length>0">
-            <a ng-click="addCategory(item)" href="" class="list-group-item" ng-repeat="item in categories">
-                {{item.CategoryAlias}}
-            </a>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label>Categorias</label>
+            <input type="text" class="form-control" ng-change="loadCategories(queryCategories)" ng-model="queryCategories" />
+            <div class="list-group list-group-autocomplete" ng-show="categories!=null && categories.length>0">
+                <a ng-click="addCategory(item)" href="" class="list-group-item" ng-repeat="item in categories">
+                    {{item.CategoryAlias}}
+                </a>
+            </div>
+            <button class="btn btn-sm btn-default" ng-repeat="item in model.ProductCategories" ng-show="item.Deleting==null || item.Deleting==false" ng-click="removeCategory(item)" type="button">
+                {{item.CategoryAlias}} <i class="fa fa-remove"></i>
+            </button>
         </div>
-        <button class="btn btn-sm btn-default" ng-repeat="item in model.ProductCategories" ng-show="model.ProductCategories.length>0" ng-click="removeCategory(item)">
-            {{item.CategoryAlias}} <i class="fa fa-remove"></i>
-        </button>
+        <div class="form-group col-md-6">
+            <label>Tags</label>
+            <input type="text" class="form-control" ng-change="loadTags(queryTags)" ng-model="queryTags" />
+            <div class="list-group list-group-autocomplete" ng-show="tags!=null && tags.length>0">
+                <a ng-click="addTag(item)" href="" class="list-group-item" ng-repeat="item in tags">
+                    {{item.TagName}}
+                </a>
+            </div>
+            <button class="btn btn-sm btn-default" ng-repeat="item in model.ProductTags" ng-show="item.Deleting==null || item.Deleting==false" ng-click="removeTag(item)" type="button">
+                {{item.TagName}} <i class="fa fa-remove"></i>
+            </button>
+        </div>
     </div>
     <tabs>
         <pane title="{{item.CultureName}}" ng-repeat="item in model.ProductCultures">

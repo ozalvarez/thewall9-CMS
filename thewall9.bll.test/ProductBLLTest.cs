@@ -41,6 +41,19 @@ namespace thewall9.bll.test
             Assert.IsTrue(_P[0].ProductCategories.Count==1);
         }
         [TestMethod]
+        public void GetTest()
+        {
+            SettingUp();
+            var _P = new ProductBLL().Get(_SiteID, _CustomerUser.Id);
+            Assert.IsNotNull(_P);
+        }
+        [TestMethod]
+        public void GetByIDTest()
+        {
+            SettingUp();
+            var _P = new ProductBLL().GetByID(_PID, _CustomerUser.Id);
+            Assert.IsNotNull(_P);
+        }
         public void UpdateProductTest()
         {
             SettingUp();
@@ -55,7 +68,7 @@ namespace thewall9.bll.test
                 ProductAlias = "00 Updated",
                 SiteID = _SiteID,
                 ProductCategories = _PC,
-                ProductID=_PID
+                ProductID = _PID
             }, _CustomerUser.Id);
             var _P = new ProductBLL().Get(_SiteID, _CustomerUser.Id);
             Assert.IsNotNull(_P);
