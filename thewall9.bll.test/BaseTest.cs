@@ -16,11 +16,6 @@ namespace thewall9.bll.test
         protected ApplicationUser _CustomerUser;
         protected List<CultureBase> _Cultures;
 
-        //[ClassInitialize()]
-        //public static void ClassInit(TestContext context)
-        //{
-
-        //}
         [TestInitialize()]
         public void Initialize()
         {
@@ -77,11 +72,6 @@ namespace thewall9.bll.test
             //REMOVING A WEBSITE
             new SiteBLL().RemoveSites(PREFIX);
         }
-        //[ClassCleanup()]
-        //public static void ClassCleanup()
-        //{
-
-        //}
         public BaseTest()
         {
 
