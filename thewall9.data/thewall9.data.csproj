@@ -93,6 +93,14 @@
     <Compile Include="Migrations\201503242013269_add-product-to-ecommerce.Designer.cs">
       <DependentUpon>201503242013269_add-product-to-ecommerce.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503261922334_add-product-currency.cs" />
+    <Compile Include="Migrations\201503261922334_add-product-currency.Designer.cs">
+      <DependentUpon>201503261922334_add-product-currency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503261943096_add-product-currency-price.cs" />
+    <Compile Include="Migrations\201503261943096_add-product-currency-price.Designer.cs">
+      <DependentUpon>201503261943096_add-product-currency-price.cs</DependentUpon>
+    </Compile>
     <Compile Include="Product.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Culture.cs" />
@@ -259,6 +267,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503242013269_add-product-to-ecommerce.resx">
       <DependentUpon>201503242013269_add-product-to-ecommerce.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503261922334_add-product-currency.resx">
+      <DependentUpon>201503261922334_add-product-currency.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503261943096_add-product-currency-price.resx">
+      <DependentUpon>201503261943096_add-product-currency-price.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

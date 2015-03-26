@@ -27,6 +27,7 @@ namespace thewall9.data.binding
         public List<ProductTagBinding> ProductTags { get; set; }
         public List<ProductCategoryBinding> ProductCategories { get; set; }
         public List<ProductGalleryBinding> ProductGalleries { get; set; }
+        public List<ProductCurrencyBinding> ProductCurrencies { get; set; }
     }
     public class ProductCultureBinding : ProductCultureBase
     {
@@ -59,5 +60,17 @@ namespace thewall9.data.binding
     }
     public class ProductGalleryBinding : ProductGalleryBase
     {
+
+    }
+    public class ProductCurrencyBase
+    {
+        public double Price { get; set; }
+    }
+    public class ProductCurrencyBinding:ProductCurrencyBase
+    {
+        public int ProductID { get; set; }
+        public int CurrencyID { get; set; }
+        public string CurrencyName { get; set; }
+        public bool Adding { get; set; }
     }
 }

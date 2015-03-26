@@ -17,6 +17,7 @@ namespace thewall9.data
         public virtual List<ProductTag> ProductTags { get; set; }
         public virtual List<ProductCategory> ProductCategories { get; set; }
         public virtual List<ProductGallery> ProductGalleries { get; set; }
+        public virtual List<ProductCurrency> ProductCurrencies { get; set; }
     }
     public class ProductCulture : ProductCultureBase
     {
@@ -58,5 +59,17 @@ namespace thewall9.data
     {
         [ForeignKey("ProductID")]
         public virtual Product Product { get; set; }
+    }
+    public class ProductCurrency : ProductCurrencyBase
+    {
+        [Key, Column(Order = 1)]
+        public int ProductID { get; set; }
+        [Key, Column(Order = 2)]
+        public int CurrencyID { get; set; }
+
+        [ForeignKey("ProductID")]
+        public virtual Product Product { get; set; }
+        [ForeignKey("CurrencyID")]
+        public virtual Currency Currency { get; set; }
     }
 }

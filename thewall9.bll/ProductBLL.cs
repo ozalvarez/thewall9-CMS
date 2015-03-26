@@ -52,6 +52,13 @@ namespace thewall9.bll
                     ProductGalleryID = m.ProductGalleryID,
                     PhotoPath = m.PhotoPath
                 }).ToList(),
+                ProductCurrencies = c.ProductCurrencies.Select(m => new ProductCurrencyBinding
+                {
+                    CurrencyID = m.CurrencyID,
+                    CurrencyName = m.Currency.CurrencyName,
+                    ProductID = m.ProductID,
+                    Price=m.Price
+                }).ToList()
             });
         }
         public ProductBinding GetByID(int ProductID, string UserID)
@@ -82,6 +89,8 @@ namespace thewall9.bll
             using (var _c = db)
             {
                 Can(Model.SiteID, UserID, _c);
+                //VALIDATE IT HAS A CATEGORY
+                //TO-DO VALIDATE IT HAS CATEGORIES BUT FOR DELETE
                 if (Model.ProductCategories == null || Model.ProductCategories.Count == 0)
                     throw new RuleException("Categories Empty", "0x000");
                 var _Product = new Product();
@@ -90,34 +99,35 @@ namespace thewall9.bll
                     //CREATING
                     _Product.SiteID = Model.SiteID;
                     _Product.ProductCultures = new List<ProductCulture>();
-                    //ADDING CULTURES
-                    if (Model.ProductCultures != null)
-                    {
-                        foreach (var m in Model.ProductCultures)
-                        {
-                            _Product.ProductCultures.Add(new ProductCulture
-                            {
-                                ProductName = m.ProductName,
-                                CultureID = m.CultureID,
-                                Description = m.Description,
-                                AdditionalInformation = m.AdditionalInformation,
-                                IconPath = m.IconPath,
-                                FriendlyUrl = m.FriendlyUrl
-                            });
-                        }
-                    }
+                    _Product.ProductCategories = new List<ProductCategory>();
+                    _Product.ProductCurrencies = new List<ProductCurrency>();
+                    _Product.ProductTags = new List<ProductTag>();
                     _c.Products.Add(_Product);
                 }
                 else
                 {
                     //UPDATING
                     _Product = GetByID(Model.ProductID, _c);
-                    //ADDING CULTURES
-                    if (Model.ProductCultures != null)
+                }
+                _Product.ProductAlias = Model.ProductAlias;
+                
+                //ADDING CULTURES
+                if (Model.ProductCultures != null)
+                {
+                    foreach (var item in Model.ProductCultures)
                     {
-                        foreach (var item in Model.ProductCultures)
+                        if (Model.ProductID != 0)
                         {
-                            if (item.Adding)
+                            if (!item.Adding)
+                            {
+                                var _CC = _Product.ProductCultures.Where(m => m.CultureID == item.CultureID).SingleOrDefault();
+                                _CC.ProductName = item.ProductName;
+                                _CC.Description = item.Description;
+                                _CC.AdditionalInformation = item.AdditionalInformation;
+                                _CC.IconPath = item.IconPath;
+                                _CC.FriendlyUrl = item.FriendlyUrl;
+                            }
+                            if (Model.ProductID == 0 || item.Adding)
                             {
                                 _Product.ProductCultures.Add(new ProductCulture
                                 {
@@ -129,20 +139,32 @@ namespace thewall9.bll
                                     FriendlyUrl = item.FriendlyUrl
                                 });
                             }
-                            else
-                            {
-                                var _CC = _Product.ProductCultures.Where(m => m.CultureID == item.CultureID).SingleOrDefault();
-                                _CC.ProductName = item.ProductName;
-                                _CC.Description = item.Description;
-                                _CC.AdditionalInformation = item.AdditionalInformation;
-                                _CC.IconPath = item.IconPath;
-                                _CC.FriendlyUrl = item.FriendlyUrl;
-                            }
                         }
                     }
                 }
-                _Product.ProductAlias = Model.ProductAlias;
-                _Product.ProductCategories = new List<ProductCategory>();
+                //CURRENCIES
+                if (Model.ProductCurrencies != null)
+                {
+                    foreach (var item in Model.ProductCurrencies)
+                    {
+                        if (Model.ProductID != 0)
+                        {
+                            if (!item.Adding)
+                            {
+                                var _CC = _Product.ProductCurrencies.Where(m => m.CurrencyID == item.CurrencyID).SingleOrDefault();
+                                _CC.Price = item.Price;
+                            }
+                        }
+                        if (Model.ProductID == 0 || item.Adding)
+                        {
+                            _Product.ProductCurrencies.Add(new ProductCurrency
+                            {
+                                CurrencyID = item.CurrencyID,
+                                Price = item.Price
+                            });
+                        }
+                    }
+                }
                 //ADDING CATEGORIES
                 foreach (var item in Model.ProductCategories)
                 {

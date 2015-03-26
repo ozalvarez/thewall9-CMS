@@ -9,60 +9,69 @@
     <h1>Productos</h1>
 </div>
 <!--<code>
-    {{model.ProductTags}}
+    {{model.ProductCurrencies}}
 </code>-->
 <form ng-submit="save()">
-    <div class="form-group">
-        <label>Alias del Producto</label>
-        <input type="text" class="form-control" ng-model="model.ProductAlias" required />
-    </div>
     <div class="row">
-        <div class="form-group col-md-6">
-            <label>Categorias</label>
-            <input type="text" class="form-control" ng-change="loadCategories(queryCategories)" ng-model="queryCategories" />
-            <div class="list-group list-group-autocomplete" ng-show="categories!=null && categories.length>0">
-                <a ng-click="addCategory(item)" href="" class="list-group-item" ng-repeat="item in categories">
-                    {{item.CategoryAlias}}
-                </a>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Alias del Producto</label>
+                <input type="text" class="form-control" ng-model="model.ProductAlias" required />
             </div>
-            <button class="btn btn-sm btn-default" ng-repeat="item in model.ProductCategories" ng-show="item.Deleting==null || item.Deleting==false" ng-click="removeCategory(item)" type="button">
-                {{item.CategoryAlias}} <i class="fa fa-remove"></i>
-            </button>
-        </div>
-        <div class="form-group col-md-6">
-            <label>Tags</label>
-            <input type="text" class="form-control" ng-change="loadTags(queryTags)" ng-model="queryTags" />
-            <div class="list-group list-group-autocomplete" ng-show="tags!=null && tags.length>0">
-                <a ng-click="addTag(item)" href="" class="list-group-item" ng-repeat="item in tags">
-                    {{item.TagName}}
-                </a>
+            <hr />
+            <div class="form-group">
+                <label>Categorias</label>
+                <input type="text" class="form-control" ng-change="loadCategories(queryCategories)" ng-model="queryCategories" />
+                <div class="list-group list-group-autocomplete" ng-show="categories!=null && categories.length>0">
+                    <a ng-click="addCategory(item)" href="" class="list-group-item" ng-repeat="item in categories">
+                        {{item.CategoryAlias}}
+                    </a>
+                </div>
+                <button class="btn btn-sm btn-default" ng-repeat="item in model.ProductCategories" ng-show="item.Deleting==null || item.Deleting==false" ng-click="removeCategory(item)" type="button">
+                    {{item.CategoryAlias}} <i class="fa fa-remove"></i>
+                </button>
             </div>
-            <button class="btn btn-sm btn-default" ng-repeat="item in model.ProductTags" ng-show="item.Deleting==null || item.Deleting==false" ng-click="removeTag(item)" type="button">
-                {{item.TagName}} <i class="fa fa-remove"></i>
-            </button>
+            <hr />
+            <div class="form-group">
+                <label>Tags</label>
+                <input type="text" class="form-control" ng-change="loadTags(queryTags)" ng-model="queryTags" />
+                <div class="list-group list-group-autocomplete" ng-show="tags!=null && tags.length>0">
+                    <a ng-click="addTag(item)" href="" class="list-group-item" ng-repeat="item in tags">
+                        {{item.TagName}}
+                    </a>
+                </div>
+                <button class="btn btn-sm btn-default" ng-repeat="item in model.ProductTags" ng-show="item.Deleting==null || item.Deleting==false" ng-click="removeTag(item)" type="button">
+                    {{item.TagName}} <i class="fa fa-remove"></i>
+                </button>
+            </div>
+            <hr />
+            <div class="form-group" ng-repeat="item in model.ProductCurrencies">
+                <label>Precio [{{item.CurrencyName}}]</label>
+                <input type="number" class="form-control" ng-model="item.Price" required />
+            </div>
         </div>
+        <tabs class="col-md-8">
+            <pane title="{{item.CultureName}}" ng-repeat="item in model.ProductCultures">
+                <br />
+                <div class="form-group">
+                    <label>Nombre del Producto [{{item.CultureName}}]</label>
+                    <input type="text" class="form-control" ng-model="item.ProductName" required />
+                </div>
+                <div class="form-group">
+                    <label>Friendly Url</label>
+                    <input type="text" class="form-control" ng-model="item.FriendlyUrl" />
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea class="form-control" ng-model="item.Description" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Imformación Adicional</label>
+                    <textarea class="form-control" ng-model="item.AdditionalInformation" rows="3"></textarea>
+                </div>
+            </pane>
+        </tabs>
     </div>
-    <tabs>
-        <pane title="{{item.CultureName}}" ng-repeat="item in model.ProductCultures">
-            <br />
-            <div class="form-group">
-                <label>Nombre del Producto [{{item.CultureName}}]</label>
-                <input type="text" class="form-control" ng-model="item.ProductName" required />
-            </div>
-            <div class="form-group">
-                <label>Friendly Url</label>
-                <input type="text" class="form-control" ng-model="item.FriendlyUrl"/>
-            </div>
-            <div class="form-group">
-                <label>Descripción</label>
-                <textarea class="form-control" ng-model="item.Description" rows="3"></textarea>
-            </div>
-            <div class="form-group">
-                <label>Imformación Adicional</label>
-                <textarea class="form-control" ng-model="item.AdditionalInformation" rows="3"></textarea>
-            </div>
-        </pane>
-    </tabs>
     <div class="form-group">
         <input type="submit" value="Guardar Producto" class="btn btn-primary" />
     </div>

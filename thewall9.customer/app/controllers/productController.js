@@ -1,14 +1,15 @@
-﻿app.controller('productController', ['$scope', '$routeParams','$location', 'productService', 'siteService', 'toastrService',
-    function ($scope, $routeParams,$location, productService, siteService, toastrService) {
-
+﻿app.controller('productController', ['$scope', '$routeParams', '$location', 'productService', 'siteService', 'currencyService', 'toastrService',
+    function ($scope, $routeParams, $location, productService, siteService, currencyService, toastrService) {
         $scope.get = function () {
             $scope.model = {
                 ProductCultures: [],
-                ProductCategories:[]
+                ProductCategories: [],
+                ProductCurrencies: []
             };
             if ($routeParams.productID != null) {
                 productService.getByID($routeParams.productID).then(function (data) {
                     $scope.model = data;
+                    //CATEGORIES
                     angular.forEach($scope.cultures, function (item) {
                         var exist = false;
                         angular.forEach($scope.model.ProductCultures, function (itemPC) {
@@ -21,7 +22,24 @@
                                 CultureID: item.CultureID,
                                 CultureName: item.Name,
                                 ProductName: "",
-                                ProductID: itemPC.ProductID,
+                                ProductID: data.ProductID,
+                                Adding: true
+                            })
+                        }
+                    });
+                    //CURRENCIES
+                    angular.forEach($scope.currencies, function (item) {
+                        var exist = false;
+                        angular.forEach($scope.model.ProductCurrencies, function (itemPC) {
+                            if (itemPC.CurrencyID == item.CurrencyID) {
+                                exist = true;
+                            }
+                        });
+                        if (!exist) {
+                            $scope.model.ProductCurrencies.push({
+                                CurrencyID: item.CurrencyID,
+                                CurrencyName: item.CurrencyName,
+                                ProductID: data.ProductID,
                                 Adding: true
                             })
                         }
@@ -32,7 +50,15 @@
                     $scope.model.ProductCultures.push({
                         CultureID: item.CultureID,
                         CultureName: item.Name,
-                        ProductName: ""
+                        ProductName: "",
+                        Adding: true
+                    });
+                });
+                angular.forEach($scope.currencies, function (item) {
+                    $scope.model.ProductCurrencies.push({
+                        CurrencyID: item.CurrencyID,
+                        CurrencyName: item.CurrencyName,
+                        Adding: true
                     });
                 });
             }
@@ -71,45 +97,6 @@
             item.Deleting = true;
             item.Adding = false;
         };
-
-
-
-
-        $scope.open = function (item) {
-            $scope.model = {
-                ProductCultures: []
-            };
-            if (item == null) {
-                angular.forEach($scope.cultures, function (itemC) {
-                    $scope.model.ProductCultures.push({
-                        CultureID: itemC.CultureID,
-                        CultureName: itemC.Name,
-                        ProductName: ""
-                    });
-                });
-            } else {
-                angular.forEach($scope.cultures, function (itemC) {
-                    var exist = false;
-                    angular.forEach($scope.model.ProductCultures, function (itemCC) {
-                        if (itemCC.CultureID == itemC.CultureID) {
-                            exist = true;
-                        }
-                    });
-                    if (!exist) {
-                        $scope.model.CategoryCultures.push({
-                            CultureID: itemC.CultureID,
-                            CultureName: itemC.Name,
-                            ProductName: "",
-                            ProductID: item.ProductID,
-                            Adding: true
-                        })
-                    }
-                });
-            }
-            $('#modal-new').modal({
-                backdrop: true
-            });
-        };
         $scope.save = function () {
             if ($scope.model.ProductCategories != null && $scope.model.ProductCategories.length > 0) {
                 productService.save($scope.model).then(function (data) {
@@ -129,7 +116,10 @@
         };
         /*INIT*/
         $scope.init = function () {
-            $scope.get();
+            currencyService.get().then(function (data) {
+                $scope.currencies = data;
+                $scope.get();
+            })
         };
         $scope.$on('initDone', function (event) {
             $scope.init();
