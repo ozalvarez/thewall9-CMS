@@ -8,7 +8,7 @@ using thewall9.bll.Exceptions;
 using thewall9.data;
 using thewall9.data.binding;
 using thewall9.data.Models;
-
+using thewall9.bll.Utils;
 namespace thewall9.bll
 {
     public class ProductBLL : BaseBLL
@@ -57,7 +57,7 @@ namespace thewall9.bll
                     CurrencyID = m.CurrencyID,
                     CurrencyName = m.Currency.CurrencyName,
                     ProductID = m.ProductID,
-                    Price=m.Price
+                    Price = m.Price
                 }).ToList()
             });
         }
@@ -93,6 +93,7 @@ namespace thewall9.bll
                 //TO-DO VALIDATE IT HAS CATEGORIES BUT FOR DELETE
                 if (Model.ProductCategories == null || Model.ProductCategories.Count == 0)
                     throw new RuleException("Categories Empty", "0x000");
+
                 var _Product = new Product();
                 if (Model.ProductID == 0)
                 {
@@ -110,14 +111,22 @@ namespace thewall9.bll
                     _Product = GetByID(Model.ProductID, _c);
                 }
                 _Product.ProductAlias = Model.ProductAlias;
-                
+
                 //ADDING CULTURES
                 if (Model.ProductCultures != null)
                 {
                     foreach (var item in Model.ProductCultures)
                     {
+                        //GENERATE FRIENDLYURL
+                        if (string.IsNullOrEmpty(item.FriendlyUrl))
+                            item.FriendlyUrl = item.ProductName.CleanUrl();
                         if (Model.ProductID != 0)
                         {
+                            if (_c.ProductCultures.Where(m => m.Product.SiteID == Model.SiteID
+                                && m.FriendlyUrl == item.FriendlyUrl
+                                && m.ProductID != Model.ProductID
+                                && m.CultureID != item.CultureID).Any())
+                                throw new RuleException("FriendlyURL Exist", "0x001");
                             if (!item.Adding)
                             {
                                 var _CC = _Product.ProductCultures.Where(m => m.CultureID == item.CultureID).SingleOrDefault();
@@ -127,21 +136,31 @@ namespace thewall9.bll
                                 _CC.IconPath = item.IconPath;
                                 _CC.FriendlyUrl = item.FriendlyUrl;
                             }
-                            if (Model.ProductID == 0 || item.Adding)
+                        }
+                        else
+                        {
+                            if (_c.ProductCultures.Where(m => m.Product.SiteID == Model.SiteID
+                                && m.FriendlyUrl == item.FriendlyUrl).Any())
+                                throw new RuleException("FriendlyURL Exist", "0x001");
+
+                        }
+                        if (Model.ProductID == 0 || item.Adding)
+                        {
+                            _Product.ProductCultures.Add(new ProductCulture
                             {
-                                _Product.ProductCultures.Add(new ProductCulture
-                                {
-                                    ProductName = item.ProductName,
-                                    CultureID = item.CultureID,
-                                    Description = item.Description,
-                                    AdditionalInformation = item.AdditionalInformation,
-                                    IconPath = item.IconPath,
-                                    FriendlyUrl = item.FriendlyUrl
-                                });
-                            }
+                                ProductName = item.ProductName,
+                                CultureID = item.CultureID,
+                                Description = item.Description,
+                                AdditionalInformation = item.AdditionalInformation,
+                                IconPath = item.IconPath,
+                                FriendlyUrl = item.FriendlyUrl
+                            });
                         }
                     }
                 }
+                var _G = Model.ProductCultures.GroupBy(m => m.FriendlyUrl);
+                if (Model.ProductCultures.GroupBy(m => m.FriendlyUrl).Count() < Model.ProductCultures.Count)
+                    throw new RuleException("FriendlyURL Should be Different", "0x002");
                 //CURRENCIES
                 if (Model.ProductCurrencies != null)
                 {
