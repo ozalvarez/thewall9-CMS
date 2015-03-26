@@ -43,7 +43,8 @@ namespace thewall9.bll.test
         [TestMethod]
         public void GetPage()
         {
-            var _Page = new PageBLL().GetPage(1, null, null);
+            SettingUp();
+            var _Page = new PageBLL().GetPage(_SiteID, null, "");
             Assert.IsNotNull(_Page);
         }
         [TestMethod]
