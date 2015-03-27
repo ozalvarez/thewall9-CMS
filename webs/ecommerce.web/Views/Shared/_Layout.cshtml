@@ -1,0 +1,65 @@
+﻿@{
+    var _LayoutContent = Html.GetSite().ContentLayout;
+}
+<!DOCTYPE html>
+<html lang="@Html.Lang()">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @Html.MetatagDescription()
+    <title>@Html.TitlePageText()</title>
+    @RenderSection("styles", required: false)
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <header class="container header">
+        <div class="row">
+            @*LOGO*@
+            <div class="col-md-3">
+                <img src="@Html.FindValue(_LayoutContent, "logo")" class="img-responsive" alt="logo">
+            </div>
+            @*SEARCH*@
+            <div class="col-md-6 mtop">
+                <input type="text" class="form-control form-search" placeholder="@Html.FindValue(_LayoutContent, "search-text")" />
+            </div>
+            @*CART*@
+            <div class="col-md-3 mtop">
+                <div class="btn-group btn-group-cart">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span class="pull-left">
+                            <i class="fa fa-shopping-cart icon-cart"></i>
+                        </span>
+                        <span class="pull-left">Shopping Cart: 2 item(s)</span>
+                        <span class="pull-right">
+                            <i class="fa fa-caret-down"></i>
+                        </span>
+                    </button>
+                    <ul class="dropdown-menu cart-content" role="menu">
+                        <li>
+                            <a href="detail.html">
+                                <b>Penn State College T-Shirt</b>
+                                <span>x1 $528.96</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="detail.html">
+                                <b>Live Nation ACDC Gray T-Shirt</b>
+                                <span>x1 $428.96</span>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="cart.html">Total: $957.92</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    @RenderBody()
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/angularjs")
+    @RenderSection("scripts", required: false)
+    @Html.GAScript()
+</body>
+</html>

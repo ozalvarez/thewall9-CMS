@@ -40,17 +40,16 @@
             <textarea rows="10" ng-model="item.ContentPropertyValue" class="form-control" ng-change="item.Edit=true" ng-if="item.ContentPropertyType==4"></textarea>
             <div ng-if="item.ContentPropertyType==1">
                 <div class="pull-left" style="margin-right:5px;">
-                    <img ng-src="{{item.ContentPropertyValue}}" class="img-responsive img-thumbnail" width="200" ng-show="!item.FileContent" />
-                    <img ng-src="{{item.FileContent}}" ng-show="item.FileContent" class="img-responsive img-thumbnail" width="200" />
+                    <img ng-src="{{item.ContentPropertyValue}}" class="img-responsive img-thumbnail" width="200" ng-show="!item.FileContent"/>
+                    <img ng-src="{{item.FileContent}}" ng-show="item.FileContent" class="img-responsive img-thumbnail" width="200"  />
                 </div>
-                <input type="file" data-fileread="item" />
+                <input type="file" data-fileread="item"/>
                 <div class="clearfix"></div>
             </div>
             <div class="input-group" ng-if="isAdmin" ng-class="{'has-error':item.Hint==null}">
                 <span class="input-group-addon">Hint</span>
                 <input class="form-control" ng-model="item.Hint" placeholder="Hint" ng-change="item.Edit=true;updateHintRemaining()" />
                 <span class="input-group-addon">{{item.Edit}}</span>
-
             </div>
             <div class="clearfix"></div>
         </div>

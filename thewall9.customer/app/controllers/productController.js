@@ -4,7 +4,8 @@
             $scope.model = {
                 ProductCultures: [],
                 ProductCategories: [],
-                ProductCurrencies: []
+                ProductCurrencies: [],
+                ProductTags: []
             };
             if ($routeParams.productID != null) {
                 productService.getByID($routeParams.productID).then(function (data) {

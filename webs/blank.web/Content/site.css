@@ -2,13 +2,5 @@
 .margin-top-10 {
   margin-top: 10px;
 }
-/*BOOTSTRAP*/
-.navbar-nav {
-  width: 100%;
-  text-align: center;
-}
-.navbar-nav > li {
-  float: none;
-  display: inline-block;
-}
+/*YOUR CUSTOM BOOTSTRAP*/
 /*--------------Extra small devices Phones (<768px)---------------*/
