@@ -84,6 +84,14 @@ namespace thewall9.bll
             }
         }
 
+        private string SaveIcon(int ProductID, int CultureID, FileRead FileReadModel)
+        {
+            var _Container="product-icon";
+            var _ContainerReference = ProductID + "/" + CultureID + "/" + FileReadModel.FileName;
+            new Utils.FileUtil().DeleteFolder(_Container, ProductID + "/" + CultureID + "/");
+            new Utils.FileUtil().UploadImage(Utils.ImageUtil.StringToStream(FileReadModel.FileContent), _Container, _ContainerReference);
+            return StorageUrl +"/"+ _Container +"/"+ _ContainerReference;
+        }
         public int Save(ProductBinding Model, string UserID)
         {
             using (var _c = db)
@@ -120,6 +128,8 @@ namespace thewall9.bll
                         //GENERATE FRIENDLYURL
                         if (string.IsNullOrEmpty(item.FriendlyUrl))
                             item.FriendlyUrl = item.ProductName.CleanUrl();
+                        
+
                         if (Model.ProductID != 0)
                         {
                             if (_c.ProductCultures.Where(m => m.Product.SiteID == Model.SiteID
@@ -227,7 +237,21 @@ namespace thewall9.bll
                         }
                     }
                 }
+
                 _c.SaveChanges();
+                //ADDING ICON
+                if (Model.ProductCultures!= null)
+                {
+                    foreach (var item in Model.ProductCultures)
+                    {
+                        if (item.IconFile != null)
+                        {
+                            var _PC=_c.ProductCultures.Where(m => m.ProductID == _Product.ProductID && m.CultureID == item.CultureID).SingleOrDefault();
+                            _PC.IconPath = SaveIcon(_Product.ProductID, item.CultureID, item.IconFile);
+                        }
+                    }
+                    _c.SaveChanges();
+                }
                 return _Product.ProductID;
             }
         }

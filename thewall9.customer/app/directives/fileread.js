@@ -8,6 +8,9 @@
                 var reader = new FileReader();
                 reader.onload = function (loadEvent) {
                     scope.$apply(function () {
+                        if (scope.fileread == null) {
+                            scope.fileread = {};
+                        }
                         scope.fileread.FileContent = loadEvent.target.result;
                         scope.fileread.FileName = changeEvent.target.files[0].name;
                     });

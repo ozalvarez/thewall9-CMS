@@ -34,6 +34,7 @@ namespace thewall9.data.binding
         public int CultureID { get; set; }
         public string CultureName { get; set; }
         public bool Adding { get; set; }
+        public FileRead IconFile { get; set; }
     }
     public class ProductTagBinding
     {
@@ -66,7 +67,7 @@ namespace thewall9.data.binding
     {
         public double Price { get; set; }
     }
-    public class ProductCurrencyBinding:ProductCurrencyBase
+    public class ProductCurrencyBinding : ProductCurrencyBase
     {
         public int ProductID { get; set; }
         public int CurrencyID { get; set; }

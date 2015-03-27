@@ -9,11 +9,11 @@
     <h1>Productos</h1>
 </div>
 <!--<code>
-    {{model.ProductCurrencies}}
+    {{model.ProductCultures}}
 </code>-->
 <form ng-submit="save()">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="form-group">
                 <label>Alias del Producto</label>
                 <input type="text" class="form-control" ng-model="model.ProductAlias" required />
@@ -50,24 +50,36 @@
                 <input type="number" class="form-control" ng-model="item.Price" required />
             </div>
         </div>
-        <tabs class="col-md-8">
+        <tabs class="col-md-9">
             <pane title="{{item.CultureName}}" ng-repeat="item in model.ProductCultures">
                 <br />
-                <div class="form-group">
-                    <label>Nombre del Producto [{{item.CultureName}}]</label>
-                    <input type="text" class="form-control" ng-model="item.ProductName" required />
-                </div>
-                <div class="form-group">
-                    <label>Friendly Url</label>
-                    <input type="text" class="form-control" ng-model="item.FriendlyUrl" />
-                </div>
-                <div class="form-group">
-                    <label>Descripción</label>
-                    <textarea class="form-control" ng-model="item.Description" rows="3"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Imformación Adicional</label>
-                    <textarea class="form-control" ng-model="item.AdditionalInformation" rows="3"></textarea>
+                <div  class="row">
+                    <div class="col-md-3">
+                        <img ng-src="{{item.IconPath}}" class="img-responsive img-thumbnail" width="200" ng-show="item.IconPath && !item.IconFile" />
+                        <img ng-src="{{item.IconFile.FileContent}}" ng-show="item.IconFile" class="img-responsive img-thumbnail" width="200" />
+                        <span class="btn btn-default btn-file">
+                            <span class="glyphicon glyphicon-open"></span> Ícono
+                            <input type="file" data-fileread="item.IconFile">
+                        </span>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label>Nombre del Producto [{{item.CultureName}}]</label>
+                            <input type="text" class="form-control" ng-model="item.ProductName" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Friendly Url</label>
+                            <input type="text" class="form-control" ng-model="item.FriendlyUrl" />
+                        </div>
+                        <div class="form-group">
+                            <label>Descripción</label>
+                            <textarea class="form-control" ng-model="item.Description" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Imformación Adicional</label>
+                            <textarea class="form-control" ng-model="item.AdditionalInformation" rows="3"></textarea>
+                        </div>
+                    </div>
                 </div>
             </pane>
         </tabs>

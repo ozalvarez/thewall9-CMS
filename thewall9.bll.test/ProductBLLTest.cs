@@ -84,6 +84,31 @@ namespace thewall9.bll.test
             Assert.IsTrue(_P[0].ProductCurrencies.Count == 2);
         }
         [TestMethod]
+        public void SaveProductIconTest()
+        {
+            SettingUp();
+
+            var _FileName="logo.png";
+            var _FileContent = "64base,"+System.Convert.ToBase64String(System.IO.File.ReadAllBytes(_FileName));
+            
+            _Product.ProductID = 0;
+            _Product.ProductCultures[0].IconFile = new FileRead
+            {
+                FileContent = _FileContent,
+                FileName = _FileName
+            };
+            _Product.ProductCultures[0].ProductName =_Product.ProductCultures[0].ProductName + DateTime.Now.ToShortTimeString();
+            _Product.ProductCultures[1].ProductName = _Product.ProductCultures[1].ProductName + DateTime.Now.ToShortTimeString();
+            _Product.ProductCultures[0].FriendlyUrl = null;
+            _Product.ProductCultures[1].FriendlyUrl = null;
+
+
+            var _PID=new ProductBLL().Save(_Product, _CustomerUser.Id);
+            var _P = new ProductBLL().GetByID(_PID, _CustomerUser.Id);
+            var _PathExpected=BaseBLL.StorageUrl+"/product-icon/"+_PID+"/"+_P.ProductCultures[0].CultureID+"/"+_FileName;
+            Assert.IsTrue(_P.ProductCultures[0].IconPath==_PathExpected);
+        }
+        [TestMethod]
         public void GetTest()
         {
             SettingUp();
