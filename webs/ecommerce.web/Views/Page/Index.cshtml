@@ -21,6 +21,7 @@
         <div class="subtitle">
             Products
         </div>
+        @{int i = 1;}
         @foreach (var item in _Products)
         {
             <div class="col-md-4">
@@ -48,6 +49,11 @@
                     </div>
                 </div>
             </div>
+            if (i % 3 == 0)
+            {
+                <div class="clearfix"></div>
+            }
+            i++;
         }
     </div>
 </div>

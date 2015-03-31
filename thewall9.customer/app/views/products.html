@@ -13,12 +13,12 @@
         {{item.ProductAlias}}
         <ul class="list-inline pull-right">
             <li>
-                <a class="btn btn-sm btn-default" ng-href="#/product/{{item.ProductID}}">
+                <a class="btn btn-sm btn-default" ng-href="#/product/{{item.ProductID}}" data-nodrag>
                     <span class="glyphicon glyphicon-edit"></span>
                 </a>
             </li>
             <li>
-                <button class="btn btn-sm btn-danger" ng-click="delete(item)">
+                <button class="btn btn-sm btn-danger" ng-click="delete(item)" data-nodrag>
                     <span class="glyphicon glyphicon-remove"></span>
                 </button>
             </li>
