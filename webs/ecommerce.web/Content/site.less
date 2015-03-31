@@ -8,11 +8,16 @@ body {
 header.header {
     padding: 10px 0px;
 
-    .col-md-6.mtop,.col-md-3.mtop{
-        margin-top:30px;
+    .col-md-6.mtop, .col-md-3.mtop {
+        margin-top: 30px;
     }
+
     .btn-group-cart {
         width: 100%;
+
+        .btn {
+            width: 100%;
+        }
 
         .icon-cart {
             margin-right: 5px;
@@ -36,13 +41,138 @@ header.header {
     }
 }
 
+.navbar {
+    margin-bottom: 0px;
+}
+
+.body {
+    background: #fff;
+    padding-top: 20px;
+
+    div.subtitle {
+        font-size: 18px;
+        border-bottom: 3px solid #eee;
+        padding-bottom: 8px;
+        margin-bottom: 20px;
+        color: #4c7ed3;
+        text-transform:uppercase;
+    }
+}
+
 /*MISC*/
 .margin-top-10 {
     margin-top: 10px;
 }
+/*BOOSTRAP*/
+@bgDefault: #535252;
+@bgHighlight: #428bca;
+@colDefault: #fff;
+@colHighlight: #fff;
+
+
+.navbar-toggle {
+    margin-right: 5px;
+}
+
+.navbar-default {
+    border-radius: 0px;
+    background-color: @bgDefault;
+    border-color: @bgHighlight;
+
+
+    .navbar-brand {
+        color: @colDefault;
+        padding: 5px;
+
+        &:hover, &:focus {
+            color: @colHighlight;
+        }
+    }
+
+    .navbar-text {
+        color: @colDefault;
+    }
+
+    .navbar-nav {
+
+        > li {
+            > a {
+                color: @colDefault;
+
+                &:hover, &:focus {
+                    color: @colHighlight;
+                }
+            }
+        }
+
+        > .active {
+            > a, > a:hover, > a:focus {
+                color: @colHighlight;
+                background-color: @bgHighlight;
+            }
+        }
+
+        > .open {
+            > a, > a:hover, > a:focus {
+                color: @colHighlight;
+                background-color: @bgHighlight;
+            }
+        }
+    }
+
+    .navbar-toggle {
+        border-color: @bgHighlight;
+
+        &:hover, &:focus {
+            background-color: @colHighlight;
+        }
+
+        .icon-bar {
+            background-color: @colDefault;
+        }
+    }
+
+    .navbar-collapse,
+    .navbar-form {
+        border-color: @colDefault;
+    }
+
+    .navbar-link {
+        color: @colDefault;
+
+        &:hover {
+            color: @colHighlight;
+        }
+    }
+}
+
 
 /*YOUR CUSTOM BOOTSTRAP*/
-
-/*--------------Extra small devices Phones (<768px)---------------*/
+/*Tablet Portrait*/
+@media only screen and (max-width : 992px) {
+}
+/*Phone Portrait*/
 @media only screen and (max-width : 768px) {
+    header.header {
+        .col-md-6.mtop, .col-md-3.mtop {
+            margin-top: 5px;
+        }
+    }
+    /*BOOSTRAP*/
+    .navbar-default .navbar-nav .open .dropdown-menu {
+        > li > a {
+            color: @colDefault;
+
+            &:hover, &:focus {
+                color: @colHighlight;
+            }
+        }
+
+        > .active {
+            > a, > a:hover, > a:focus {
+                color: @colHighlight;
+                background-color: @bgHighlight;
+            }
+        }
+    }
 }

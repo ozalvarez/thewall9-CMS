@@ -1,1 +1,22 @@
 ﻿@model thewall9.data.binding.PageWeb
+@{
+    var _Categories = Html.GetCategories();
+}
+<div class="row">
+    <div class="col-md-3">
+        <div class="subtitle">
+            Categories
+        </div>
+        <div class="list-group">
+            @foreach (var item in _Categories)
+            {
+                <a href="@item.FriendlyUrl" class="list-group-item">
+                    @item.CategoryName
+                </a>
+            }
+        </div>
+    </div>
+    <div class="col-md-9">
+
+    </div>
+</div>

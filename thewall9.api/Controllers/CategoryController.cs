@@ -15,6 +15,12 @@ namespace thewall9.api.Controllers
     {
         CategoryBLL _CategoryService = new CategoryBLL();
 
+        #region Web & Customer
+        [AllowAnonymous]
+        
+        #endregion
+
+        #region Customer
         public IHttpActionResult Get(int SiteID)
         {
             return Ok(_CategoryService.Get(SiteID, User.Identity.GetUserId()));
@@ -34,5 +40,6 @@ namespace thewall9.api.Controllers
             _CategoryService.UpOrDown(Model, User.Identity.GetUserId());
             return Ok();
         }
+        #endregion
     }
 }

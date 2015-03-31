@@ -14,14 +14,16 @@ namespace thewall9.data.binding
         public int Priority { get; set; }
         public int CategoryParentID { get; set; }
     }
-    public class CategoryCultureBase
-    {
-        public string CategoryName { get; set; }
-    }
     public class CategoryBinding : CategoryBase
     {
         public List<CategoryBinding> CategoryItems { get; set; }
         public IEnumerable<CategoryCultureBinding> CategoryCultures { get; set; }
+    }
+
+    public class CategoryCultureBase
+    {
+        public string CategoryName { get; set; }
+        public string FriendlyUrl { get; set; }
     }
     public class CategoryCultureBinding : CategoryCultureBase
     {
@@ -29,6 +31,11 @@ namespace thewall9.data.binding
         public string CultureName { get; set; }
         public bool Adding { get; set; }
     }
+    public class CategoryWeb : CategoryCultureBase
+    {
+        public List<CategoryWeb> CategoryItems { get; set; }
+    }
+
     public class UpOrDown
     {
         public int CategoryID { get; set; }

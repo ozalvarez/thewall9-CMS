@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using thewall9.data.binding;
+using System.Collections.Generic;
 
 namespace thewall9.bll.test
 {
@@ -31,59 +32,82 @@ namespace thewall9.bll.test
          */
         private void SettingUp()
         {
+            var _CC = new List<CategoryCultureBinding>();
+            _CC.Add(new CategoryCultureBinding
+            {
+                Adding=true,
+                CategoryName="IN ES",
+                CultureID=_Cultures[0].CultureID
+            });
+            _CC.Add(new CategoryCultureBinding
+            {
+                Adding = true,
+                CategoryName = "IN EN",
+                CultureID = _Cultures[1].CultureID
+            });
+
             _CID = new CategoryBLL().Save(new data.binding.CategoryBinding
             {
                 CategoryAlias = "00",
                 SiteID = _SiteID,
+                CategoryCultures = _CC
             }, _CustomerUser.Id);
             _CID2 = new CategoryBLL().Save(new data.binding.CategoryBinding
             {
                 CategoryAlias = "00 - 00",
                 SiteID = _SiteID,
-                CategoryParentID = _CID
+                CategoryParentID = _CID,
+                CategoryCultures = _CC
             }, _CustomerUser.Id);
             _CID3 = new CategoryBLL().Save(new data.binding.CategoryBinding
             {
                 CategoryAlias = "00 - 01",
                 SiteID = _SiteID,
-                CategoryParentID = _CID
+                CategoryParentID = _CID,
+                CategoryCultures = _CC
             }, _CustomerUser.Id);
             _CID4 = new CategoryBLL().Save(new data.binding.CategoryBinding
             {
                 CategoryAlias = "00 - 02",
                 SiteID = _SiteID,
-                CategoryParentID = _CID
+                CategoryParentID = _CID,
+                CategoryCultures = _CC
             }, _CustomerUser.Id);
             _CID6 = new CategoryBLL().Save(new data.binding.CategoryBinding
             {
                 CategoryAlias = "00 - 03",
                 SiteID = _SiteID,
-                CategoryParentID = _CID
+                CategoryParentID = _CID,
+                CategoryCultures = _CC
             }, _CustomerUser.Id);
             _CID8 = new CategoryBLL().Save(new data.binding.CategoryBinding
             {
                 CategoryAlias = "00 - 03 - 00",
                 SiteID = _SiteID,
-                CategoryParentID = _CID6
+                CategoryParentID = _CID6,
+                CategoryCultures = _CC
             }, _CustomerUser.Id);
             _CID9 = new CategoryBLL().Save(new data.binding.CategoryBinding
             {
                 CategoryAlias = "00 - 04",
                 SiteID = _SiteID,
-                CategoryParentID = _CID
+                CategoryParentID = _CID,
+                CategoryCultures = _CC
             }, _CustomerUser.Id);
-            
+
             _CID5 = new CategoryBLL().Save(new data.binding.CategoryBinding
             {
                 CategoryAlias = "01",
                 SiteID = _SiteID,
+                CategoryCultures = _CC
             }, _CustomerUser.Id);
             Assert.IsNotNull(_CID);
             _CID7 = new CategoryBLL().Save(new data.binding.CategoryBinding
             {
                 CategoryAlias = "01 - 00",
                 SiteID = _SiteID,
-                CategoryParentID = _CID5
+                CategoryParentID = _CID5,
+                CategoryCultures = _CC
             }, _CustomerUser.Id);
             Assert.IsNotNull(_CID);
         }
@@ -189,6 +213,15 @@ namespace thewall9.bll.test
             Assert.IsTrue(_Site[0].Priority == 0);
             Assert.IsTrue(_Site[0].CategoryID == _CID5);
             Assert.IsTrue(_Site[0].CategoryItems[0].CategoryID == _CID7);
+        }
+        [TestMethod]
+        public void GetCategoriesWebTreeTest()
+        {
+            SettingUp();
+            var _Categories = new CategoryBLL().Get(_SiteID, null, _Cultures[0].Name);
+            Assert.IsTrue(_Categories.Count == 2);
+            Assert.IsTrue(_Categories[0].CategoryItems.Count == 5);
+            Assert.IsTrue(_Categories[0].CategoryItems[3].CategoryItems.Count == 1);
         }
     }
 }

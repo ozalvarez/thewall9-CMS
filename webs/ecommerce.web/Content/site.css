@@ -12,6 +12,9 @@ header.header .col-md-3.mtop {
 header.header .btn-group-cart {
   width: 100%;
 }
+header.header .btn-group-cart .btn {
+  width: 100%;
+}
 header.header .btn-group-cart .icon-cart {
   margin-right: 5px;
 }
@@ -28,9 +31,104 @@ header.header .btn-group-cart ul.cart-content b {
   display: block;
   color: #428BCA;
 }
+.navbar {
+  margin-bottom: 0px;
+}
+.body {
+  background: #fff;
+  padding-top: 20px;
+}
+.body div.subtitle {
+  font-size: 18px;
+  border-bottom: 3px solid #eee;
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+  color: #4c7ed3;
+  text-transform: uppercase;
+}
 /*MISC*/
 .margin-top-10 {
   margin-top: 10px;
 }
+/*BOOSTRAP*/
+.navbar-toggle {
+  margin-right: 5px;
+}
+.navbar-default {
+  border-radius: 0px;
+  background-color: #535252;
+  border-color: #428bca;
+}
+.navbar-default .navbar-brand {
+  color: #ffffff;
+  padding: 5px;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #ffffff;
+}
+.navbar-default .navbar-text {
+  color: #ffffff;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #ffffff;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #ffffff;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #ffffff;
+  background-color: #428bca;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  color: #ffffff;
+  background-color: #428bca;
+}
+.navbar-default .navbar-toggle {
+  border-color: #428bca;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: #ffffff;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #ffffff;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #ffffff;
+}
+.navbar-default .navbar-link {
+  color: #ffffff;
+}
+.navbar-default .navbar-link:hover {
+  color: #ffffff;
+}
 /*YOUR CUSTOM BOOTSTRAP*/
-/*--------------Extra small devices Phones (<768px)---------------*/
+/*Tablet Portrait*/
+/*Phone Portrait*/
+@media only screen and (max-width: 768px) {
+  header.header .col-md-6.mtop,
+  header.header .col-md-3.mtop {
+    margin-top: 5px;
+  }
+  /*BOOSTRAP*/
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #ffffff;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #ffffff;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #ffffff;
+    background-color: #428bca;
+  }
+}

@@ -101,6 +101,10 @@
     <Compile Include="Migrations\201503261943096_add-product-currency-price.Designer.cs">
       <DependentUpon>201503261943096_add-product-currency-price.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503311708550_add-friendly-url-in-categoryculture.cs" />
+    <Compile Include="Migrations\201503311708550_add-friendly-url-in-categoryculture.Designer.cs">
+      <DependentUpon>201503311708550_add-friendly-url-in-categoryculture.cs</DependentUpon>
+    </Compile>
     <Compile Include="Product.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Culture.cs" />
@@ -273,6 +277,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503261943096_add-product-currency-price.resx">
       <DependentUpon>201503261943096_add-product-currency-price.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503311708550_add-friendly-url-in-categoryculture.resx">
+      <DependentUpon>201503311708550_add-friendly-url-in-categoryculture.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

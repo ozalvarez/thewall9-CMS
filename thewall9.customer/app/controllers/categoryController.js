@@ -60,7 +60,8 @@
                         CultureName: itemC.Name,
                         CategoryName: "",
                         CategoryID: item.CategoryID,
-                        Adding:true
+                        Adding: true,
+                        FriendlyUrl:item.FriendlyUrl
                     })
                 }
             });

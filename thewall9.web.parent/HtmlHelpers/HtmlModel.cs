@@ -64,6 +64,10 @@ namespace thewall9.web.parent.HtmlHelpers
         {
             return APP._Site;
         }
+        public static List<CategoryWeb> GetCategories(this HtmlHelper helper)
+        {
+            return APP._Site.Categories;
+        }
         private static string GetFriendlyUrlByAlias(this HtmlHelper helper, string Alias)
         {
             return APP._Site.Menu.Where(m => m.PageAlias.Equals(Alias)).Select(m => m.FriendlyUrl).SingleOrDefault();

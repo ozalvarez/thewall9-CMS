@@ -1,5 +1,6 @@
 ﻿@{
     var _LayoutContent = Html.GetSite().ContentLayout;
+    var _Menu = Html.GetMenu();
 }
 <!DOCTYPE html>
 <html lang="@Html.Lang()">
@@ -55,7 +56,72 @@
             </div>
         </div>
     </header>
-    @RenderBody()
+    @*NAVIGATION BAR*@
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand visible-xs" href="#">@Html.FindValue(_LayoutContent, "project-name")</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="@Html.LinkHome()">
+                            @Html.FindValue(_LayoutContent, "home-text")
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            @Html.FindValue(_LayoutContent, "catalogue-text")
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            @Html.FindValue(_LayoutContent, "shooping-cart-text")
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            @Html.FindValue(_LayoutContent, "checkout-text")
+                        </a>
+                    </li>
+                    @*<li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Pages <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                @foreach (var item in _Menu)
+                                {
+                                    <li>
+                                        <a href="@(item.RedirectUrl!=null ? item.RedirectUrl : '/' + item.FriendlyUrl)">
+                                            @item.Name
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>*@
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @foreach (var item in _Menu)
+                    {
+                        <li>
+                            <a href="@(item.RedirectUrl!=null ? item.RedirectUrl : '/' + item.FriendlyUrl)">
+                                @item.Name
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+    </nav>
+    <div class="body container">
+        @RenderBody()
+    </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/angularjs")
