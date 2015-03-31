@@ -220,6 +220,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Page\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Page\_Categories.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\controllers\" />

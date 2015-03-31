@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using thewall9.bll.Exceptions;
 using thewall9.data;
 using thewall9.data.binding;
 using thewall9.data.Models;
-
+using thewall9.bll.Utils;
 namespace thewall9.bll
 {
     public class CategoryBLL : BaseBLL
@@ -27,20 +28,21 @@ namespace thewall9.bll
                        select m;
 
                 var _Category = _Q.ToList();
-                return GetTree(_Category, 0, _c);
+                return GetTree(_Category, 0, null, _c);
             }
         }
-        private List<CategoryWeb> GetTree(List<CategoryCulture> Model, int ParentID, ApplicationDbContext _c)
+        private List<CategoryWeb> GetTree(List<CategoryCulture> Model, int ParentID, String ParentName, ApplicationDbContext _c)
         {
             return (from c in Model
                     where c.Category.CategoryParentID == ParentID
                     orderby c.Category.Priority
                     select new CategoryWeb
                     {
-                        CategoryName=c.CategoryName,
-                        FriendlyUrl=c.FriendlyUrl,
+                        CategoryName = c.CategoryName,
+                        FriendlyUrl = c.FriendlyUrl,
+                        CategoryParentName=ParentName,
                         CategoryItems = Model.Where(m => m.Category.CategoryParentID == c.CategoryID).Any()
-                        ? GetTree(Model, c.CategoryID, _c)
+                        ? GetTree(Model, c.CategoryID, c.CategoryName, _c)
                         : new List<CategoryWeb>()
                     }).ToList();
         }
@@ -74,7 +76,7 @@ namespace thewall9.bll
                             CategoryName = m.CategoryName,
                             CultureID = m.CultureID,
                             CultureName = m.Culture.Name,
-                            FriendlyUrl=m.FriendlyUrl
+                            FriendlyUrl = m.FriendlyUrl
                         }).ToList(),
 
                         CategoryItems = Model.Where(m => m.CategoryParentID == c.CategoryID).Any()
@@ -85,6 +87,32 @@ namespace thewall9.bll
         private Category GetByID(int CategoryID, ApplicationDbContext _c)
         {
             return _c.Categories.Where(m => m.CategoryID == CategoryID).SingleOrDefault();
+        }
+        private string GetFriendlyUrl(CategoryBinding Model, string CategoryName, string FriendlyUrl, int CultureID, ApplicationDbContext _c)
+        {
+            if (!string.IsNullOrEmpty(FriendlyUrl))
+            {
+                var _G = Model.CategoryCultures.GroupBy(m => m.FriendlyUrl);
+                if (_G.Count() < Model.CategoryCultures.Count())
+                    throw new RuleException("FriendlyURL Should be Different", "0x002");
+            }
+
+            FriendlyUrl = string.IsNullOrEmpty(FriendlyUrl) ? CategoryName.CleanUrl() : FriendlyUrl;
+            if (Model.CategoryID != 0)
+            {
+                if (_c.CategoryCultures.Where(m => m.Category.SiteID == Model.SiteID
+                                    && m.FriendlyUrl == FriendlyUrl
+                                    && m.CategoryID != Model.CategoryID
+                                    && m.CultureID != CultureID).Any())
+                    throw new RuleException("FriendlyURL Exist", "0x001");
+            }
+            else
+            {
+                if (_c.CategoryCultures.Where(m => m.Category.SiteID == Model.SiteID
+                                && m.FriendlyUrl == FriendlyUrl).Any())
+                    throw new RuleException("FriendlyURL Exist", "0x001");
+            };
+            return FriendlyUrl;
         }
         public int Save(CategoryBinding Model, string UserID)
         {
@@ -108,7 +136,7 @@ namespace thewall9.bll
                             {
                                 CategoryName = item.CategoryName,
                                 CultureID = item.CultureID,
-                                FriendlyUrl=item.FriendlyUrl
+                                FriendlyUrl = GetFriendlyUrl(Model, item.CategoryName, item.FriendlyUrl, item.CultureID, _c)
                             });
                         }
                     }
@@ -129,14 +157,14 @@ namespace thewall9.bll
                                 {
                                     CategoryName = item.CategoryName,
                                     CultureID = item.CultureID,
-                                    FriendlyUrl = item.FriendlyUrl
+                                    FriendlyUrl = GetFriendlyUrl(Model, item.CategoryName, item.FriendlyUrl, item.CultureID, _c)
                                 });
                             }
                             else
                             {
                                 var _CC = _Category.CategoryCultures.Where(m => m.CultureID == item.CultureID).SingleOrDefault();
                                 _CC.CategoryName = item.CategoryName;
-                                _CC.FriendlyUrl = item.FriendlyUrl;
+                                _CC.FriendlyUrl = GetFriendlyUrl(Model, item.CategoryName, item.FriendlyUrl, item.CultureID, _c);
                             }
                         }
                     }

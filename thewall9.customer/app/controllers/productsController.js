@@ -13,6 +13,16 @@
                 });
             }
         };
+        $scope.options = {
+            dropped: function (event) {
+                var sourceNode = event.source.nodeScope;
+                var index = event.dest.index;
+                var productID = sourceNode.$modelValue.ProductID
+                productService.move(productID, index).then(function (data) {
+
+                });
+            }
+        };
         /*INIT*/
         $scope.init = function () {
             $scope.get();

@@ -24,9 +24,9 @@ namespace thewall9.api.Controllers
 
         #region WEB
         [AllowAnonymous]
-        public IHttpActionResult Get(int SiteID, string Url, string Lang)
+        public IHttpActionResult Get(int SiteID, string Url, string Lang, int CurrencyID = 0)
         {
-            return Ok(SiteService.Get(SiteID, Url, Lang));
+            return Ok(SiteService.Get(SiteID, Url, Lang, CurrencyID));
         }
         [AllowAnonymous]
         public IHttpActionResult GetLang(int SiteID, string Url)

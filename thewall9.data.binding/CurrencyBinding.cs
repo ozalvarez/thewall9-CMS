@@ -12,6 +12,7 @@ namespace thewall9.data.binding
         public string CurrencyName { get; set; }
         public bool Default { get; set; }
         public int SiteID { get; set; }
+        public string MoneySymbol { get; set; }
     }
     public class CurrencyBinding:CurrencyBase
     {

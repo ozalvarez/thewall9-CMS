@@ -38,7 +38,7 @@ namespace thewall9.web.parent.ActionFilter
             if (!filterContext.RouteData.Values.ContainsKey("NoFilterBase"))
             {
                 if (!filterContext.IsChildAction && !filterContext.HttpContext.Request.IsAjaxRequest())
-                    APP._Site = SiteService.Get(APP._SiteID, filterContext.HttpContext.Request.Url.Authority, APP._CurrentLang);
+                    APP._Site = SiteService.Get(APP._SiteID, filterContext.HttpContext.Request.Url.Authority, APP._CurrentLang, APP._CurrentCurrencyID);
             }
         }
     }

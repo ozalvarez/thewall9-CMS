@@ -33,7 +33,7 @@ namespace thewall9.bll
         }
 
         #region WEB
-        public SiteFullBinding Get(int SiteID, string Url, string Lang)
+        public SiteFullBinding Get(int SiteID, string Url, string Lang, int CurrencyID)
         {
             using (var _c = db)
             {
@@ -52,7 +52,8 @@ namespace thewall9.bll
                                  DefaultLang = m.DefaultLang,
                                  GAID = m.GAID,
                                  SiteID = m.SiteID,
-                                 SiteName = m.SiteName
+                                 SiteName = m.SiteName,
+                                 ECommerce = m.ECommerce
                              }
                          }).SingleOrDefault();
                 if (_Site != null)
@@ -61,7 +62,12 @@ namespace thewall9.bll
                         Lang = _Site.Site.DefaultLang;
                     _Site.Menu = new PageBLL().GetMenu(SiteID, Url, Lang);
                     _Site.ContentLayout = new ContentBLL().GetContent(SiteID, Url, "layout", Lang);
-                    _Site.Categories = new CategoryBLL().Get(SiteID, Url, Lang);
+                    if (_Site.Site.ECommerce)
+                    {
+                        _Site.Currencies = new CurrencyBLL().Get(SiteID, Url);
+                        _Site.Categories = new CategoryBLL().Get(SiteID, Url, Lang);
+                        _Site.Products = new ProductBLL().Get(SiteID, Url, Lang, CurrencyID == 0 ? _Site.Currencies[0].CurrencyID : CurrencyID, 10, 1);
+                    }
                     return _Site;
                 }
                 throw new RuleException("Site not found", SiteExceptionMessages.SITE_NOT_FOUNT);
@@ -80,7 +86,7 @@ namespace thewall9.bll
                     GAID = m.Site.GAID,
                     SiteID = m.Site.SiteID,
                     SiteName = m.Site.SiteName,
-                    ECommerce=m.Site.ECommerce
+                    ECommerce = m.Site.ECommerce
                 }).ToList();
             }
         }
@@ -136,9 +142,9 @@ namespace thewall9.bll
                         DefaultLang = Model.DefaultLang,
                         GAID = Model.GAID
                     };
-                    if(Model.Cultures==null || Model.Cultures.Count()==0)
+                    if (Model.Cultures == null || Model.Cultures.Count() == 0)
                         throw new RuleException("Cultures is Empty");
-                 
+
                     //ADD CULTURES
                     foreach (var item in Model.Cultures)
                     {

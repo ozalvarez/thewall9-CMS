@@ -17,6 +17,12 @@ app.factory('productService', ["$myhttp", "$q", "ngAuthSettings", "siteService",
         productFactory.remove = function (productID) {
             return $http.delete(ngAuthSettings.apiServiceBaseUri + uri + '?ProductID=' + productID);
         };
+        productFactory.move = function (productID, index) {
+            return $http.post(ngAuthSettings.apiServiceBaseUri + uri + '/move', {
+                ProductID: productID,
+                Index:index
+            });
+        };
         //CATEGORIES
         productFactory.getCategories = function (query) {
             return $http.get(ngAuthSettings.apiServiceBaseUri + uri + '/categories?SiteID=' + siteService.site.SiteID + "&Query=" + query);

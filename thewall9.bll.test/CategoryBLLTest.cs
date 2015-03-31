@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using thewall9.data.binding;
 using System.Collections.Generic;
-
+using thewall9.bll.Exceptions;
 namespace thewall9.bll.test
 {
     [TestClass]
@@ -17,6 +17,7 @@ namespace thewall9.bll.test
         private int _CID7;
         private int _CID8;
         private int _CID9;
+        private List<CategoryCultureBinding> _CC;
 
         /*
          * TREE TEST SETTINGUP
@@ -32,12 +33,12 @@ namespace thewall9.bll.test
          */
         private void SettingUp()
         {
-            var _CC = new List<CategoryCultureBinding>();
+            _CC = new List<CategoryCultureBinding>();
             _CC.Add(new CategoryCultureBinding
             {
-                Adding=true,
-                CategoryName="IN ES",
-                CultureID=_Cultures[0].CultureID
+                Adding = true,
+                CategoryName = "IN ES",
+                CultureID = _Cultures[0].CultureID
             });
             _CC.Add(new CategoryCultureBinding
             {
@@ -52,6 +53,8 @@ namespace thewall9.bll.test
                 SiteID = _SiteID,
                 CategoryCultures = _CC
             }, _CustomerUser.Id);
+            _CC[0].CategoryName += DateTime.Now.ToString();
+            _CC[1].CategoryName += DateTime.Now.ToString();
             _CID2 = new CategoryBLL().Save(new data.binding.CategoryBinding
             {
                 CategoryAlias = "00 - 00",
@@ -59,6 +62,8 @@ namespace thewall9.bll.test
                 CategoryParentID = _CID,
                 CategoryCultures = _CC
             }, _CustomerUser.Id);
+            _CC[0].CategoryName += DateTime.Now.ToString();
+            _CC[1].CategoryName += DateTime.Now.ToString();
             _CID3 = new CategoryBLL().Save(new data.binding.CategoryBinding
             {
                 CategoryAlias = "00 - 01",
@@ -66,6 +71,8 @@ namespace thewall9.bll.test
                 CategoryParentID = _CID,
                 CategoryCultures = _CC
             }, _CustomerUser.Id);
+            _CC[0].CategoryName += DateTime.Now.ToString();
+            _CC[1].CategoryName += DateTime.Now.ToString();
             _CID4 = new CategoryBLL().Save(new data.binding.CategoryBinding
             {
                 CategoryAlias = "00 - 02",
@@ -73,6 +80,8 @@ namespace thewall9.bll.test
                 CategoryParentID = _CID,
                 CategoryCultures = _CC
             }, _CustomerUser.Id);
+            _CC[0].CategoryName += DateTime.Now.ToString();
+            _CC[1].CategoryName += DateTime.Now.ToString();
             _CID6 = new CategoryBLL().Save(new data.binding.CategoryBinding
             {
                 CategoryAlias = "00 - 03",
@@ -80,6 +89,8 @@ namespace thewall9.bll.test
                 CategoryParentID = _CID,
                 CategoryCultures = _CC
             }, _CustomerUser.Id);
+            _CC[0].CategoryName += DateTime.Now.ToString();
+            _CC[1].CategoryName += DateTime.Now.ToString();
             _CID8 = new CategoryBLL().Save(new data.binding.CategoryBinding
             {
                 CategoryAlias = "00 - 03 - 00",
@@ -87,6 +98,8 @@ namespace thewall9.bll.test
                 CategoryParentID = _CID6,
                 CategoryCultures = _CC
             }, _CustomerUser.Id);
+            _CC[0].CategoryName += DateTime.Now.ToString();
+            _CC[1].CategoryName += DateTime.Now.ToString();
             _CID9 = new CategoryBLL().Save(new data.binding.CategoryBinding
             {
                 CategoryAlias = "00 - 04",
@@ -94,14 +107,16 @@ namespace thewall9.bll.test
                 CategoryParentID = _CID,
                 CategoryCultures = _CC
             }, _CustomerUser.Id);
-
+            _CC[0].CategoryName += DateTime.Now.ToString();
+            _CC[1].CategoryName += DateTime.Now.ToString();
             _CID5 = new CategoryBLL().Save(new data.binding.CategoryBinding
             {
                 CategoryAlias = "01",
                 SiteID = _SiteID,
                 CategoryCultures = _CC
             }, _CustomerUser.Id);
-            Assert.IsNotNull(_CID);
+            _CC[0].CategoryName += DateTime.Now.ToString();
+            _CC[1].CategoryName += DateTime.Now.ToString();
             _CID7 = new CategoryBLL().Save(new data.binding.CategoryBinding
             {
                 CategoryAlias = "01 - 00",
@@ -222,6 +237,54 @@ namespace thewall9.bll.test
             Assert.IsTrue(_Categories.Count == 2);
             Assert.IsTrue(_Categories[0].CategoryItems.Count == 5);
             Assert.IsTrue(_Categories[0].CategoryItems[3].CategoryItems.Count == 1);
+        }
+        [TestMethod]
+        public void ValidateDuplicateFriendlyUrlTest()
+        {
+            SettingUp();
+            var _FUrl = Utils.Util.RandomString(10) + DateTime.Now.ToString();
+            _CC[0].FriendlyUrl = _FUrl;
+            _CC[1].FriendlyUrl = _FUrl;
+            try
+            {
+                new CategoryBLL().Save(new data.binding.CategoryBinding
+                     {
+                         CategoryAlias = "02",
+                         SiteID = _SiteID,
+                         CategoryParentID = 0,
+                         CategoryCultures = _CC
+                     }, _CustomerUser.Id);
+                Assert.Fail();
+            }
+            catch (RuleException e)
+            {
+                Assert.IsTrue(e.CodeRuleException.Equals("0x002"));
+            }
+        }
+        [TestMethod]
+        public void ValidateDuplicateNameTest()
+        {
+            SettingUp();
+            var _FUrl = Utils.Util.RandomString(10) + DateTime.Now.ToString();
+            _CC[0].CultureName = _FUrl;
+            _CC[1].CultureName = _FUrl;
+            _CC[0].FriendlyUrl = null;
+            _CC[1].FriendlyUrl = null;
+            try
+            {
+                new CategoryBLL().Save(new data.binding.CategoryBinding
+                {
+                    CategoryAlias = "02",
+                    SiteID = _SiteID,
+                    CategoryParentID = 0,
+                    CategoryCultures = _CC
+                }, _CustomerUser.Id);
+                Assert.Fail();
+            }
+            catch (RuleException e)
+            {
+                Assert.IsTrue(e.CodeRuleException.Equals("0x001"));
+            }
         }
     }
 }

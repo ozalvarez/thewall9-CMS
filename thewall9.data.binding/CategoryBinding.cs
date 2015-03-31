@@ -34,6 +34,7 @@ namespace thewall9.data.binding
     public class CategoryWeb : CategoryCultureBase
     {
         public List<CategoryWeb> CategoryItems { get; set; }
+        public string CategoryParentName { get; set; }
     }
 
     public class UpOrDown

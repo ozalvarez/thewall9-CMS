@@ -8,28 +8,28 @@
     </ul>
     <h1>Productos</h1>
 </div>
-<div class="table-responsive">
-    <table class="table table-bordered table-hover table-striped">
-        <thead>
-            <tr>
-                <td>Alias</td>
-                <td></td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="item in data">
-                <td>{{item.ProductAlias}}</td>
-                <td>
-                    <a class="btn btn-sm btn-default" ng-href="#/product/{{item.ProductID}}">
-                        <span class="glyphicon glyphicon-edit"></span>
-                    </a>
-                    <button class="btn btn-sm btn-danger" ng-click="delete(item)">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<script type="text/ng-template" id="nodes_renderer.html">
+    <div ui-tree-handle>
+        {{item.ProductAlias}}
+        <ul class="list-inline pull-right">
+            <li>
+                <a class="btn btn-sm btn-default" ng-href="#/product/{{item.ProductID}}">
+                    <span class="glyphicon glyphicon-edit"></span>
+                </a>
+            </li>
+            <li>
+                <button class="btn btn-sm btn-danger" ng-click="delete(item)">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+</script>
+<div ui-tree="options" class="ui-tree-tw">
+    <ol ui-tree-nodes="" ng-model="data" id="tree-root">
+        <li ng-repeat="item in data" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+    </ol>
 </div>
 <div class="modal fade" id="modal-new" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">

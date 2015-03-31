@@ -15,6 +15,7 @@ namespace thewall9.api.Controllers
     {
         ProductBLL _ProductService = new ProductBLL();
 
+        #region Customers
         public IHttpActionResult Get(int SiteID)
         {
             return Ok(_ProductService.Get(SiteID, User.Identity.GetUserId()));
@@ -27,6 +28,12 @@ namespace thewall9.api.Controllers
         public IHttpActionResult PostSave(ProductBinding Model)
         {
             return Ok(_ProductService.Save(Model, User.Identity.GetUserId()));
+        }
+        [Route("move")]
+        public IHttpActionResult PostMove(ProductUpdatePriorities Model)
+        {
+            _ProductService.UpdatePriorities(Model, User.Identity.GetUserId());
+            return Ok();
         }
         public IHttpActionResult Delete(int ProductID)
         {
@@ -43,5 +50,6 @@ namespace thewall9.api.Controllers
         {
             return Ok(_ProductService.GetTags(SiteID, Query));
         }
+        #endregion
     }
 }

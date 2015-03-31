@@ -13,6 +13,50 @@ namespace thewall9.bll
 {
     public class ProductBLL : BaseBLL
     {
+        #region Web
+        private IQueryable<ProductCulture> Get(int SiteID, string Url, string Lang, ApplicationDbContext _c)
+        {
+            return (SiteID != 0
+                    ? from m in _c.ProductCultures
+                      where m.Product.SiteID == SiteID && m.Culture.Name.ToLower().Equals(Lang.ToLower())
+                      orderby m.Product.Priority
+                      select m
+                     : from m in _c.ProductCultures
+                       join u in _c.SiteUrls on m.Product.SiteID equals u.SiteID
+                       where u.Url.Equals(Url) && m.Culture.Name.ToLower().Equals(Lang.ToLower())
+                       orderby m.Product.Priority
+                       select m);
+        }
+        public List<ProductWeb> Get(int SiteID, string Url, string Lang, int CurrencyID, int Take, int Page)
+        {
+            using (var _c = db)
+            {
+                return Get(SiteID, Url, Lang, _c).Select(m => new ProductWeb
+                {
+                    AdditionalInformation = m.AdditionalInformation,
+                    Description = m.Description,
+                    FriendlyUrl = m.FriendlyUrl,
+                    IconPath = m.IconPath,
+                    ProductName = m.ProductName,
+
+                    //TO-DO OPTIMIZE ME
+                    Price = (CurrencyID == 0 || !m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).Any())
+                    ? (m.Product.ProductCurrencies.Any()
+                        ? m.Product.ProductCurrencies.FirstOrDefault().Price
+                        : 0)
+                    : m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).FirstOrDefault().Price,
+
+                    MoneySymbol = (CurrencyID == 0 || !m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).Any())
+                    ? (m.Product.ProductCurrencies.Any()
+                        ? m.Product.ProductCurrencies.FirstOrDefault().Currency.MoneySymbol
+                        : "Price")
+                    : m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).FirstOrDefault().Currency.MoneySymbol
+                }).Skip(Take * (Page - 1)).Take(Take).ToList();
+            }
+        }
+        #endregion
+
+        #region Customer
         private Product GetByID(int ProductID, ApplicationDbContext _c)
         {
             return _c.Products.Where(m => m.ProductID == ProductID).SingleOrDefault();
@@ -79,6 +123,7 @@ namespace thewall9.bll
                 Can(SiteID, UserID, _c);
                 var _P = from c in _c.Products
                          where c.SiteID == SiteID
+                         orderby c.Priority
                          select c;
                 return _P.ToList().Select(m => Get(m, _c)).ToList();
             }
@@ -86,11 +131,11 @@ namespace thewall9.bll
 
         private string SaveIcon(int ProductID, int CultureID, FileRead FileReadModel)
         {
-            var _Container="product-icon";
+            var _Container = "product-icon";
             var _ContainerReference = ProductID + "/" + CultureID + "/" + FileReadModel.FileName;
             new Utils.FileUtil().DeleteFolder(_Container, ProductID + "/" + CultureID + "/");
             new Utils.FileUtil().UploadImage(Utils.ImageUtil.StringToStream(FileReadModel.FileContent), _Container, _ContainerReference);
-            return StorageUrl +"/"+ _Container +"/"+ _ContainerReference;
+            return StorageUrl + "/" + _Container + "/" + _ContainerReference;
         }
         public int Save(ProductBinding Model, string UserID)
         {
@@ -111,6 +156,7 @@ namespace thewall9.bll
                     _Product.ProductCategories = new List<ProductCategory>();
                     _Product.ProductCurrencies = new List<ProductCurrency>();
                     _Product.ProductTags = new List<ProductTag>();
+                    _Product.Priority = _c.Products.Where(m => m.SiteID == Model.SiteID).Select(m=>m.Priority).Max() + 1;
                     _c.Products.Add(_Product);
                 }
                 else
@@ -128,7 +174,7 @@ namespace thewall9.bll
                         //GENERATE FRIENDLYURL
                         if (string.IsNullOrEmpty(item.FriendlyUrl))
                             item.FriendlyUrl = item.ProductName.CleanUrl();
-                        
+
 
                         if (Model.ProductID != 0)
                         {
@@ -169,7 +215,7 @@ namespace thewall9.bll
                     }
                 }
                 var _G = Model.ProductCultures.GroupBy(m => m.FriendlyUrl);
-                if (Model.ProductCultures.GroupBy(m => m.FriendlyUrl).Count() < Model.ProductCultures.Count)
+                if (_G.Count() < Model.ProductCultures.Count)
                     throw new RuleException("FriendlyURL Should be Different", "0x002");
                 //CURRENCIES
                 if (Model.ProductCurrencies != null)
@@ -240,13 +286,13 @@ namespace thewall9.bll
 
                 _c.SaveChanges();
                 //ADDING ICON
-                if (Model.ProductCultures!= null)
+                if (Model.ProductCultures != null)
                 {
                     foreach (var item in Model.ProductCultures)
                     {
                         if (item.IconFile != null)
                         {
-                            var _PC=_c.ProductCultures.Where(m => m.ProductID == _Product.ProductID && m.CultureID == item.CultureID).SingleOrDefault();
+                            var _PC = _c.ProductCultures.Where(m => m.ProductID == _Product.ProductID && m.CultureID == item.CultureID).SingleOrDefault();
                             _PC.IconPath = SaveIcon(_Product.ProductID, item.CultureID, item.IconFile);
                         }
                     }
@@ -265,6 +311,32 @@ namespace thewall9.bll
                 _c.SaveChanges();
             }
         }
+        public void UpdatePriorities(ProductUpdatePriorities Model, string UserID)
+        {
+            using (var _c = db)
+            {
+                var _P = GetByID(Model.ProductID,_c);
+                Can(_P.SiteID, UserID, _c);
+                if (Model.Index > _P.Priority)
+                {
+                    var _OP = _c.Products.Where(m => m.SiteID == _P.SiteID && m.Priority > _P.Priority && m.Priority <= Model.Index).ToList();
+                    foreach (var item in _OP)
+                    {
+                        item.Priority--;
+                    }
+                }
+                else if (Model.Index < _P.Priority)
+                {
+                    var _OP = _c.Products.Where(m => m.SiteID == _P.SiteID && m.Priority < _P.Priority && m.Priority >= Model.Index).ToList();
+                    foreach (var item in _OP)
+                    {
+                        item.Priority++;
+                    }
+                }
+                _P.Priority = Model.Index;
+                _c.SaveChanges();
+            }
+        }
 
         //CATEGORIES
         public List<ProductCategoryBinding> GetCategories(int SiteID, string Query)
@@ -272,8 +344,8 @@ namespace thewall9.bll
             using (var _c = db)
             {
                 return (from cc in _c.CategoryCultures
-                        where cc.CategoryName.ToLower().Contains(Query.ToLower())
-                        || cc.Category.CategoryAlias.ToLower().Contains(Query.ToLower())
+                        where cc.Category.SiteID == SiteID && (cc.CategoryName.ToLower().Contains(Query.ToLower())
+                        || cc.Category.CategoryAlias.ToLower().Contains(Query.ToLower()))
                         select new ProductCategoryBinding
                         {
                             CategoryID = cc.CategoryID,
@@ -295,5 +367,6 @@ namespace thewall9.bll
                         }).Distinct().ToList();
             }
         }
+        #endregion
     }
 }

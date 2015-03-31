@@ -13,12 +13,14 @@
         <thead>
             <tr>
                 <td>Moneda</td>
+                <td>Símbolo</td>
                 <td></td>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="item in data">
                 <td>{{item.CurrencyName}}</td>
+                <td>{{item.MoneySymbol}}</td>
                 <td>
                     <button class="btn btn-sm btn-success" ng-disabled="true" ng-show="item.Default">
                         <span class="glyphicon glyphicon-check"></span> Default
@@ -50,6 +52,10 @@
                     <div class="form-group">
                         <label>Nombre de la Moneda</label>
                         <input type="text" class="form-control" ng-model="model.CurrencyName" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Símbolo de la Moneda</label>
+                        <input type="text" class="form-control" ng-model="model.MoneySymbol" required />
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Guardar Tag" class="btn btn-primary" />

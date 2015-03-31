@@ -208,5 +208,12 @@ namespace thewall9.bll.test
                 Assert.IsTrue(e.CodeRuleException.Equals("0x002"));
             }
         }
+        [TestMethod]
+        public void GetWebTest()
+        {
+            SettingUp();
+            var _P = new ProductBLL().Get(_SiteID, null, _Cultures[0].Name, _ProductCurrencies[0].CurrencyID,50,1);
+            Assert.IsNotNull(_P);
+        }
     }
 }

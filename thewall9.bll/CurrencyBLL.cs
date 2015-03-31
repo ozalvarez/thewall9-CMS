@@ -11,6 +11,35 @@ namespace thewall9.bll
 {
     public class CurrencyBLL : BaseBLL
     {
+        #region Web
+        private IQueryable<Currency> Get(int SiteID, string Url, ApplicationDbContext _c)
+        {
+            return (SiteID != 0
+                    ? from c in _c.Currencies
+                      where c.SiteID == SiteID
+                      orderby c.Default
+                      select c
+                     : from c in _c.Currencies
+                       join u in _c.SiteUrls on c.SiteID equals u.SiteID
+                       where u.Url.Equals(Url)
+                       orderby c.Default
+                       select c);
+        }
+        public List<CurrencyBinding> Get(int SiteID, string Url)
+        {
+            using (var _c = db)
+            {
+                return Get(SiteID, Url, _c).Select(m => new CurrencyBinding
+                {
+                    CurrencyID = m.CurrencyID,
+                    CurrencyName = m.CurrencyName,
+                    MoneySymbol = m.MoneySymbol
+                }).ToList();
+            }
+        }
+        #endregion
+
+        #region Customer
         private Currency GetByID(int CurrencyID, ApplicationDbContext _c)
         {
             return _c.Currencies.Where(m => m.CurrencyID == CurrencyID).SingleOrDefault();
@@ -24,7 +53,8 @@ namespace thewall9.bll
                     CurrencyID = m.CurrencyID,
                     CurrencyName = m.CurrencyName,
                     Default = m.Default,
-                    SiteID = m.SiteID
+                    SiteID = m.SiteID,
+                    MoneySymbol = m.MoneySymbol
                 }).ToList();
             }
         }
@@ -33,22 +63,20 @@ namespace thewall9.bll
             using (var _c = db)
             {
                 Can(Model.SiteID, UserID, _c);
-                Currency _C = null;
+                Currency _C = new Currency();
                 if (Model.CurrencyID == 0)
                 {
-                    _C = new Currency
-                    {
-                        CurrencyName = Model.CurrencyName,
-                        Default = false,
-                        SiteID = Model.SiteID
-                    };
+                    _C.CurrencyName = Model.CurrencyName;
+                    _C.Default = false;
+                    _C.SiteID = Model.SiteID;
                     _c.Currencies.Add(_C);
                 }
                 else
                 {
                     _C = GetByID(Model.CurrencyID, _c);
-                    _C.CurrencyName = Model.CurrencyName;
                 }
+                _C.CurrencyName = Model.CurrencyName;
+                _C.MoneySymbol = Model.MoneySymbol;
                 _c.SaveChanges();
                 return _C.CurrencyID;
             }
@@ -74,5 +102,6 @@ namespace thewall9.bll
                 _c.SaveChanges();
             }
         }
+        #endregion
     }
 }

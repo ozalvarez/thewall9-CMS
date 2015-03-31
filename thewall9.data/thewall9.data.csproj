@@ -105,6 +105,14 @@
     <Compile Include="Migrations\201503311708550_add-friendly-url-in-categoryculture.Designer.cs">
       <DependentUpon>201503311708550_add-friendly-url-in-categoryculture.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503311959149_add-priority-on-products.cs" />
+    <Compile Include="Migrations\201503311959149_add-priority-on-products.Designer.cs">
+      <DependentUpon>201503311959149_add-priority-on-products.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503312038267_add-money-symbol-products.cs" />
+    <Compile Include="Migrations\201503312038267_add-money-symbol-products.Designer.cs">
+      <DependentUpon>201503312038267_add-money-symbol-products.cs</DependentUpon>
+    </Compile>
     <Compile Include="Product.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Culture.cs" />
@@ -280,6 +288,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503311708550_add-friendly-url-in-categoryculture.resx">
       <DependentUpon>201503311708550_add-friendly-url-in-categoryculture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503311959149_add-priority-on-products.resx">
+      <DependentUpon>201503311959149_add-priority-on-products.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503312038267_add-money-symbol-products.resx">
+      <DependentUpon>201503312038267_add-money-symbol-products.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

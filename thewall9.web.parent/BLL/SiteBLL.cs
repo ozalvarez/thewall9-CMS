@@ -11,9 +11,9 @@ namespace thewall9.web.parent.BLL
 {
     public class SiteBLL : BaseBLL
     {
-        public SiteFullBinding Get(int SiteID,string Url, string Lang)
+        public SiteFullBinding Get(int SiteID,string Url, string Lang, int CurrencyID)
         {
-            return DownloadObject<SiteFullBinding>("api/site?SiteID=" + SiteID + "&Url=" + Url +"&Lang=" + Lang);
+            return DownloadObject<SiteFullBinding>("api/site?SiteID=" + SiteID + "&Url=" + Url + "&Lang=" + Lang + "&CurrencyID=" + CurrencyID);
         }
         public List<CultureRoutes> GetLang(int SiteID, string Url)
         {
