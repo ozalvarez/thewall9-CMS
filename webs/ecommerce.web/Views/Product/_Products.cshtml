@@ -1,81 +1,76 @@
 ﻿@model thewall9.data.binding.ProductsWeb
-<div class="row">
+<script>
+    var _Products=@Html.Raw(Json.Encode(Model));
+</script>
+<div class="row" ng-controller="productController">
     <div class="col-md-3">
         <div class="subtitle">
             Categories
         </div>
-        <ul class="list-unstyled">
-            @foreach (var item in Model.Categories)
-            {
-                <li class="list-group-item">
-                    @Html.Partial("_Categories", item)
+        <script type="text/ng-template" id="_categories.html">
+            <a ng-href="/products/{{item.FriendlyUrl}}/{{item.CategoryID}}" href="">
+                {{item.CategoryName}}
+            </a>
+            <ul ng-if="item.CategoryItems">
+                <li ng-repeat="item in item.CategoryItems" ng-include="'_categories.html'">
                 </li>
-            }
+            </ul>
+        </script>
+        <ul class="list-unstyled">
+            <li class="list-group-item" ng-repeat="item in data.Categories" ng-include="'_categories.html'">
+            </li>
         </ul>
     </div>
     <div class="col-md-9">
         <div class="subtitle">
             Products
         </div>
-        @{int count = 1;}
-        @foreach (var item in Model.Products)
-        {
-            <div class="col-md-4">
-                <div class="thumbnail">
-                    <a href="@item.FriendlyUrl">
-                        <img src="@item.IconPath" />
+        <div class="col-md-4" ng-repeat-start="item in data.Products">
+            <div class="thumbnail">
+                <a href="" ng-href="/product/{{item.FriendlyUrl}}">
+                    <img ng-src="{{item.IconPath}}" />
+                </a>
+                <div class="text-center">
+                    <a href="" ng-href="/product/{{item.FriendlyUrl}}">
+                        {{item.ProductName}}
                     </a>
-                    <div class="text-center">
-                        <a href="@item.FriendlyUrl">
-                            @item.ProductName
-                        </a>
-                        <div class="small">
-                            @item.Description
-                        </div>
-                        <div>
-                            <div class="btn-group dropup">
-                                <button type="button" class="btn btn-default">
-                                    @item.MoneySymbol @item.Price
-                                </button>
-                                <button type="button" class="btn btn-primary">
-                                    <i class="fa fa-shopping-cart"></i> Buy
-                                </button>
-                            </div>
+                    <div class="small">
+                        {{item.Description}}
+                    </div>
+                    <div>
+                        <div class="btn-group dropup">
+                            <button type="button" class="btn btn-default" ng-click="addProduct(item)">
+                                {{moneySymbol}} {{item.Price}}
+                            </button>
+                            <button type="button" class="btn btn-primary" ng-click="addProduct(item)">
+                                <i class="fa fa-shopping-cart"></i> Buy
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-            if (count % 3 == 0)
-            {
-                <div class="clearfix"></div>
-            }
-            count++;
-        }
+        </div>
+        <div class="clearfix" ng-if="$index%3==2"></div>
+        <div ng-repeat-end=""></div>
         <div class="clearfix"></div>
-        @if (Model.NumberPages > 0)
-        {
-            <nav>
-                <ul class="pagination">
-                    <li>
-                        <a href="/products/1" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    @for (int i = 1; i <= Model.NumberPages + 1; i++)
-                    {
-                        <li>
-                            <a href="/products/@i">
-                                @i
-                            </a>
-                        </li>
-                    }
-                    <li>
-                        <a href="/products/@(Model.NumberPages + 1)" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        }
+        <nav ng-if="item.NumberPages>0">
+            <ul class="pagination">
+                <li>
+                    <a href="/products/1" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li ng-repeat="item in NumberPagesArray">
+                    <a href="/products/{{item}}">
+                        {{item}}
+                    </a>
+                </li>
+                <li>
+                    <a href="/products/{{item.NumberPages + 1}}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </div>

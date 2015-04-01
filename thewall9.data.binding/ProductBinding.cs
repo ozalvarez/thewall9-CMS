@@ -39,8 +39,8 @@ namespace thewall9.data.binding
     }
     public class ProductWeb : ProductCultureBase
     {
+        public int ProductID { get; set; }
         public double Price { get; set; }
-        public string MoneySymbol { get; set; }
     }
     public class ProductsWeb
     {

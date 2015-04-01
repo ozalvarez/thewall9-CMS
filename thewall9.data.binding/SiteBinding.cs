@@ -27,7 +27,6 @@ namespace thewall9.data.binding
     }
     public class SiteFullBinding
     {
-       
         public SiteBinding  Site { get; set; }
         public List<PageCultureBinding> Menu { get; set; }
         public ContentBindingList ContentLayout { get; set; }

@@ -45,19 +45,14 @@ namespace thewall9.bll
                 FriendlyUrl = m.FriendlyUrl,
                 IconPath = m.IconPath,
                 ProductName = m.ProductName,
+                ProductID=m.ProductID,
 
                 //TO-DO OPTIMIZE ME
                 Price = (CurrencyID == 0 || !m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).Any())
                 ? (m.Product.ProductCurrencies.Any()
                     ? m.Product.ProductCurrencies.FirstOrDefault().Price
                     : 0)
-                : m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).FirstOrDefault().Price,
-
-                MoneySymbol = (CurrencyID == 0 || !m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).Any())
-                ? (m.Product.ProductCurrencies.Any()
-                    ? m.Product.ProductCurrencies.FirstOrDefault().Currency.MoneySymbol
-                    : "Price")
-                : m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).FirstOrDefault().Currency.MoneySymbol
+                : m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).FirstOrDefault().Price
             });
         }
         public ProductsWeb Get(int SiteID, string Url, string Lang, string FriendlyUrl, int CurrencyID, int CategoryID, int Take, int Page)

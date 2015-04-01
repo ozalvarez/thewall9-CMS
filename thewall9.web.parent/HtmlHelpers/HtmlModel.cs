@@ -84,7 +84,7 @@ namespace thewall9.web.parent.HtmlHelpers
         }
         public static MvcHtmlString LinkHome(this HtmlHelper helper)
         {
-            return new MvcHtmlString("/" +APP._Langs.Where(m=>m.Name==APP._CurrentLang).FirstOrDefault().FriendlyUrl);
+            return new MvcHtmlString(APP._Langs.Where(m=>m.Name==APP._CurrentLang).FirstOrDefault().FriendlyUrl);
         }
 
         /*

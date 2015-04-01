@@ -30,6 +30,7 @@ namespace thewall9.web.parent.Controllers
                     return Redirect(_Model.Page.RedirectUrl);
                 ViewBag.Title = _Model.Page.TitlePage;
                 ViewBag.MetaDescription = _Model.Page.MetaDescription;
+                ViewBag.Active = "page-" + FriendlyUrl;
                 APP._CurrentLang = _Model.Page.CultureName;
                 return View(_Model.Page.ViewRender, _Model);
             }

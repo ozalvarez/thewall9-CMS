@@ -20,12 +20,14 @@ namespace thewall9.web
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/toastr.min.js"));
 
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/toastr.min.css",
                       "~/Content/font-awesome.min.css",
+                      "~/Content/angular-block-ui.min.css",
                       "~/Content/site.min.css"));
 
             /*--------------------JQUERY PLUGINS---------------------------*/
@@ -33,7 +35,16 @@ namespace thewall9.web
             /*--------------------ANGULARJS---------------------------*/
             bundles.Add(new ScriptBundle("~/bundles/angularjs").Include("~/Scripts/angular.min.js"
                       , "~/Scripts/angular-block-ui.min.js"
-                      , "~/app/app.js"));
+                      , "~/Scripts/angular-local-storage.js"
+                      , "~/app/app.js"
+
+                      //SERVICES
+                      , "~/app/services/toastrService.js"
+                      , "~/app/services/productService.js"
+
+                      //CONTROLLERS
+                      , "~/app/controllers/appController.js"
+                      , "~/app/controllers/productController.js"));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862

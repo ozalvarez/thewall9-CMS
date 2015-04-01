@@ -1,2 +1,2 @@
-﻿var app = angular.module('app', ['blockUI']);
+﻿var app = angular.module('app', ['blockUI', 'LocalStorageModule']);
 

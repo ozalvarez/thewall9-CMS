@@ -3,7 +3,7 @@
     var _Menu = Html.GetMenu();
 }
 <!DOCTYPE html>
-<html lang="@Html.Lang()">
+<html lang="@Html.Lang()" ng-app="app">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,12 +13,14 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
+<body ng-controller="appController">
     <header class="container header">
         <div class="row">
             @*LOGO*@
             <div class="col-md-3">
-                <img src="@Html.FindValue(_LayoutContent, "logo")" class="img-responsive" alt="logo">
+                <a href="/@Html.LinkHome()">
+                    <img src="@Html.FindValue(_LayoutContent, "logo")" class="img-responsive" alt="logo">
+                </a>
             </div>
             @*SEARCH*@
             <div class="col-md-6 mtop">
@@ -31,26 +33,22 @@
                         <span class="pull-left">
                             <i class="fa fa-shopping-cart icon-cart"></i>
                         </span>
-                        <span class="pull-left">Shopping Cart: 2 item(s)</span>
+                        <span class="pull-left">Shopping Cart: {{cart.length}} item(s)</span>
                         <span class="pull-right">
                             <i class="fa fa-caret-down"></i>
                         </span>
                     </button>
                     <ul class="dropdown-menu cart-content" role="menu">
-                        <li>
+                        <li ng-repeat="item in cart">
                             <a href="detail.html">
-                                <b>Penn State College T-Shirt</b>
-                                <span>x1 $528.96</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="detail.html">
-                                <b>Live Nation ACDC Gray T-Shirt</b>
-                                <span>x1 $428.96</span>
+                                <b>{{item.ProductName}}</b>
+                                <span>x{{item.Number}} {{moneySymbol}} {{item.Price}}</span>
                             </a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="cart.html">Total: $957.92</a></li>
+                        <li>
+                            <a href="cart.html">Total: {{moneySymbol}} {{totalCart()}}</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -66,50 +64,37 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand visible-xs" href="#">@Html.FindValue(_LayoutContent, "project-name")</a>
+                <a class="navbar-brand visible-xs" href="#">
+                    @Html.FindValue(_LayoutContent, "project-name")
+                </a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active">
-                        <a href="@Html.LinkHome()">
+                    <li ng-class="{'active':active=='page-@Html.LinkHome()'}">
+                        <a href="/@Html.LinkHome()">
                             @Html.FindValue(_LayoutContent, "home-text")
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
+                    <li ng-class="{'active':active=='products'}">
+                        <a href="@Url.Action("Index", "Product")">
                             @Html.FindValue(_LayoutContent, "catalogue-text")
                         </a>
                     </li>
-                    <li>
+                    <li ng-class="{'active':active=='cart'}">
                         <a href="#">
                             @Html.FindValue(_LayoutContent, "shooping-cart-text")
                         </a>
                     </li>
-                    <li>
+                    <li ng-class="{'active':active=='checkout'}">
                         <a href="#">
                             @Html.FindValue(_LayoutContent, "checkout-text")
                         </a>
                     </li>
-                    @*<li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                Pages <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                @foreach (var item in _Menu)
-                                {
-                                    <li>
-                                        <a href="@(item.RedirectUrl!=null ? item.RedirectUrl : '/' + item.FriendlyUrl)">
-                                            @item.Name
-                                        </a>
-                                    </li>
-                                }
-                            </ul>
-                        </li>*@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @foreach (var item in _Menu)
                     {
-                        <li>
+                        <li ng-class="{'active':active=='page-@item.FriendlyUrl'}">
                             <a href="@(item.RedirectUrl!=null ? item.RedirectUrl : '/' + item.FriendlyUrl)">
                                 @item.Name
                             </a>
@@ -122,6 +107,10 @@
     <div class="body container">
         @RenderBody()
     </div>
+    <script>
+        var _Active = '@ViewBag.Active';
+        var _MoneySymbol = @Html.Raw(Json.Encode(Html.GetSite().Currencies[0]));
+    </script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/angularjs")
