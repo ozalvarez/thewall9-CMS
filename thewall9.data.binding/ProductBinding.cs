@@ -42,6 +42,14 @@ namespace thewall9.data.binding
         public double Price { get; set; }
         public string MoneySymbol { get; set; }
     }
+    public class ProductsWeb
+    {
+        public List<ProductWeb> Products { get; set; }
+        public List<CategoryWeb> Categories { get; set; }
+        public int NumberPages { get; set; }
+        public int CultureID { get; set; }
+        public string CultureName { get; set; }
+    }
 
     public class ProductTagBinding
     {

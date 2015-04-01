@@ -14,46 +14,70 @@ namespace thewall9.bll
     public class ProductBLL : BaseBLL
     {
         #region Web
-        private IQueryable<ProductCulture> Get(int SiteID, string Url, string Lang, ApplicationDbContext _c)
+        //private ProductCulture GetCulture(int SiteID, string Lang, string FriendlyUrl, ApplicationDbContext _c)
+        //{
+        //    return _c.ProductCultures.Where(m => m.Product.SiteID == SiteID
+        //        && (!string.IsNullOrEmpty(FriendlyUrl)
+        //            ? m.FriendlyUrl.ToLower().Equals(FriendlyUrl.ToLower())
+        //            : (!string.IsNullOrEmpty(Lang)
+        //                ? m.Culture.Name.ToLower().Equals(Lang.ToLower())
+        //                : false))).FirstOrDefault();
+        //}
+        private IQueryable<ProductCulture> Get(int SiteID, int CultureID, int CategoryID, ApplicationDbContext _c)
         {
-            return (SiteID != 0
-                    ? from m in _c.ProductCultures
-                      where m.Product.SiteID == SiteID && m.Culture.Name.ToLower().Equals(Lang.ToLower())
-                      orderby m.Product.Priority
-                      select m
-                     : from m in _c.ProductCultures
-                       join u in _c.SiteUrls on m.Product.SiteID equals u.SiteID
-                       where u.Url.Equals(Url) && m.Culture.Name.ToLower().Equals(Lang.ToLower())
-                       orderby m.Product.Priority
-                       select m);
+            return (CategoryID == 0
+                ? from m in _c.ProductCultures
+                  where m.Product.SiteID == SiteID && m.CultureID == CultureID
+                  orderby m.Product.Priority
+                  select m
+               : from m in _c.ProductCultures
+                 join u in _c.ProductCategories on m.ProductID equals u.ProductID
+                 where u.CategoryID == CategoryID && m.CultureID == CultureID
+                 orderby m.Product.Priority
+                 select m);
         }
-        public List<ProductWeb> Get(int SiteID, string Url, string Lang, int CurrencyID, int Take, int Page)
+        private IQueryable<ProductWeb> Get(int SiteID, int CultureID, int CurrencyID, int CategoryID, int Take, int Page, ApplicationDbContext _c)
+        {
+            return Get(SiteID, CultureID, CategoryID, _c).Select(m => new ProductWeb
+            {
+                AdditionalInformation = m.AdditionalInformation,
+                Description = m.Description,
+                FriendlyUrl = m.FriendlyUrl,
+                IconPath = m.IconPath,
+                ProductName = m.ProductName,
+
+                //TO-DO OPTIMIZE ME
+                Price = (CurrencyID == 0 || !m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).Any())
+                ? (m.Product.ProductCurrencies.Any()
+                    ? m.Product.ProductCurrencies.FirstOrDefault().Price
+                    : 0)
+                : m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).FirstOrDefault().Price,
+
+                MoneySymbol = (CurrencyID == 0 || !m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).Any())
+                ? (m.Product.ProductCurrencies.Any()
+                    ? m.Product.ProductCurrencies.FirstOrDefault().Currency.MoneySymbol
+                    : "Price")
+                : m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).FirstOrDefault().Currency.MoneySymbol
+            });
+        }
+        public ProductsWeb Get(int SiteID, string Url, string Lang, string FriendlyUrl, int CurrencyID, int CategoryID, int Take, int Page)
         {
             using (var _c = db)
             {
-                return Get(SiteID, Url, Lang, _c).Select(m => new ProductWeb
-                {
-                    AdditionalInformation = m.AdditionalInformation,
-                    Description = m.Description,
-                    FriendlyUrl = m.FriendlyUrl,
-                    IconPath = m.IconPath,
-                    ProductName = m.ProductName,
-
-                    //TO-DO OPTIMIZE ME
-                    Price = (CurrencyID == 0 || !m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).Any())
-                    ? (m.Product.ProductCurrencies.Any()
-                        ? m.Product.ProductCurrencies.FirstOrDefault().Price
-                        : 0)
-                    : m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).FirstOrDefault().Price,
-
-                    MoneySymbol = (CurrencyID == 0 || !m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).Any())
-                    ? (m.Product.ProductCurrencies.Any()
-                        ? m.Product.ProductCurrencies.FirstOrDefault().Currency.MoneySymbol
-                        : "Price")
-                    : m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).FirstOrDefault().Currency.MoneySymbol
-                }).Skip(Take * (Page - 1)).Take(Take).ToList();
+                if (SiteID == 0)
+                    SiteID = new SiteBLL().Get(Url, _c).SiteID;
+                var _Culture = new CategoryBLL().GetCulture(SiteID, Lang, FriendlyUrl, _c);
+                var _Q = Get(SiteID, _Culture.CultureID, CurrencyID, CategoryID, Take, Page, _c);
+                var _PW = new ProductsWeb();
+                _PW.Products = _Q.Skip(Take * (Page - 1)).Take(Take).ToList();
+                _PW.NumberPages = _Q.Count() / Take;
+                _PW.Categories = new CategoryBLL().Get(SiteID, null, CategoryID, Lang, FriendlyUrl);
+                _PW.CultureID = _Culture.CultureID;
+                _PW.CultureName = _Culture.Name;
+                return _PW;
             }
         }
+
         #endregion
 
         #region Customer
@@ -156,7 +180,9 @@ namespace thewall9.bll
                     _Product.ProductCategories = new List<ProductCategory>();
                     _Product.ProductCurrencies = new List<ProductCurrency>();
                     _Product.ProductTags = new List<ProductTag>();
-                    _Product.Priority = _c.Products.Where(m => m.SiteID == Model.SiteID).Select(m=>m.Priority).Max() + 1;
+                    _Product.Priority = _c.Products.Where(m => m.SiteID == Model.SiteID).Any()
+                    ? _c.Products.Where(m => m.SiteID == Model.SiteID).Select(m => m.Priority).Max() + 1
+                    : 0;
                     _c.Products.Add(_Product);
                 }
                 else
@@ -315,7 +341,7 @@ namespace thewall9.bll
         {
             using (var _c = db)
             {
-                var _P = GetByID(Model.ProductID,_c);
+                var _P = GetByID(Model.ProductID, _c);
                 Can(_P.SiteID, UserID, _c);
                 if (Model.Index > _P.Priority)
                 {

@@ -14,24 +14,24 @@ namespace thewall9.bll
     {
 
         #region Web
-        public List<CategoryWeb> Get(int SiteID, string Url, string Lang)
+        public Culture GetCulture(int SiteID, string Lang,string FriendlyUrl, ApplicationDbContext _c)
         {
-            using (var _c = db)
-            {
-                var _Q = SiteID != 0
-                    ? from m in _c.CategoryCultures
-                      where m.Category.SiteID == SiteID && m.Culture.Name.ToLower().Equals(Lang.ToLower())
-                      select m
-                     : from m in _c.CategoryCultures
-                       join u in _c.SiteUrls on m.Category.SiteID equals u.SiteID
-                       where u.Url.Equals(Url) && m.Culture.Name.ToLower().Equals(Lang.ToLower())
-                       select m;
-
-                var _Category = _Q.ToList();
-                return GetTree(_Category, 0, null, _c);
-            }
+            if (!string.IsNullOrEmpty(Lang))
+                return new CultureBLL().GetByName(SiteID, Lang);
+            else if (!string.IsNullOrEmpty(FriendlyUrl))
+                return _c.CategoryCultures.Where(m => m.Category.SiteID == SiteID && m.FriendlyUrl.ToLower().Equals(FriendlyUrl.ToLower())).Select(m=>m.Culture).FirstOrDefault();
+            else throw new RuleException("Friendly URL & Lang NULL");
         }
-        private List<CategoryWeb> GetTree(List<CategoryCulture> Model, int ParentID, String ParentName, ApplicationDbContext _c)
+        private IQueryable<CategoryCulture> Get(int SiteID, int CultureID, int CategoryID, ApplicationDbContext _c)
+        {
+            return from m in _c.CategoryCultures
+                   where m.Category.CategoryParentID == CategoryID
+                    && m.Category.SiteID == SiteID
+                    && m.Culture.CultureID == CultureID
+                   orderby m.Category.Priority
+                   select m;
+        }
+        private List<CategoryWeb> GetTree(List<CategoryCulture> Model, int SiteID, int CultureID, int ParentID, ApplicationDbContext _c)
         {
             return (from c in Model
                     where c.Category.CategoryParentID == ParentID
@@ -40,12 +40,25 @@ namespace thewall9.bll
                     {
                         CategoryName = c.CategoryName,
                         FriendlyUrl = c.FriendlyUrl,
-                        CategoryParentName=ParentName,
-                        CategoryItems = Model.Where(m => m.Category.CategoryParentID == c.CategoryID).Any()
-                        ? GetTree(Model, c.CategoryID, c.CategoryName, _c)
+                        CategoryID = c.CategoryID,
+
+                        CategoryItems = Get(SiteID, CultureID, c.CategoryID, _c).Any()
+                        ? GetTree(Get(SiteID, CultureID, c.CategoryID, _c).ToList(), SiteID, CultureID, c.CategoryID, _c)
                         : new List<CategoryWeb>()
                     }).ToList();
         }
+        public List<CategoryWeb> Get(int SiteID, string Url, int CategoryID, string Lang, string FriendlyUrl)
+        {
+            using (var _c = db)
+            {
+                if (SiteID == 0)
+                    SiteID = new SiteBLL().Get(Url, _c).SiteID;
+                int CultureID=GetCulture(SiteID,Lang,FriendlyUrl,_c).CultureID;
+                var _Category = Get(SiteID, CultureID, CategoryID, _c).ToList();
+                return GetTree(_Category, SiteID, CultureID, CategoryID, _c);
+            }
+        }
+
         #endregion
 
         #region Customer

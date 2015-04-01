@@ -14,39 +14,12 @@ namespace thewall9.web.parent.Controllers
     {
         PageBLL PageService = new PageBLL();
 
-        private string GetCulture()
-        {
-            string CultureName = null;
-            // Attempt to read the culture cookie from Request
-            HttpCookie cultureCookie = Request.Cookies["_Culture"];
-            if (cultureCookie != null)
-                CultureName = cultureCookie.Value;
-            else
-            {
-                CultureName = Request.UserLanguages != null && Request.UserLanguages.Length > 0 ?
-                        Request.UserLanguages[0] :  // obtain it from HTTP header AcceptLanguages
-                        null;
-                // Validate culture name
-                // cultureName = "es";
-            }
-            CultureName = CultureHelper.GetImplementedCulture(CultureName); // This is safe
-
-            // Modify current thread's cultures            
-            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(CultureName);
-            Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
-            return CultureName;
-        }
-
         public ActionResult Index(string FriendlyUrl)
         {
             if (string.IsNullOrEmpty(FriendlyUrl))
             {
-                var _CultureName = GetCulture();
-                var _DatabaseCulture=APP._Langs.Where(m => _CultureName.Contains(m.Name)).FirstOrDefault();
-                if (_DatabaseCulture != null && !string.IsNullOrEmpty(_DatabaseCulture.FriendlyUrl))
-                {
-                    return Redirect("/" + _DatabaseCulture.FriendlyUrl);
-                }
+                if (!string.IsNullOrEmpty(APP._CurrentFriendlyUrl))
+                    return Redirect("/" + APP._CurrentFriendlyUrl);
             }
             var _Model = PageService.Get(FriendlyUrl, APP._SiteID, Request.Url.Authority);
             if (_Model == null)

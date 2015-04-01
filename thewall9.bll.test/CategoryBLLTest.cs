@@ -127,7 +127,7 @@ namespace thewall9.bll.test
             Assert.IsNotNull(_CID);
         }
         [TestMethod]
-        public void UpdateCategoryTest()
+        public void CategoryUpdateTest()
         {
             SettingUp();
             _CID4 = new CategoryBLL().Save(new data.binding.CategoryBinding
@@ -147,12 +147,12 @@ namespace thewall9.bll.test
 
         }
         [TestMethod]
-        public void SaveCategoryTest()
+        public void CategorySaveTest()
         {
             SettingUp();
         }
         [TestMethod]
-        public void GetCategoriesTreeTest()
+        public void CategoryGetTreeTest()
         {
             SettingUp();
             var _Site = new CategoryBLL().Get(_SiteID, _CustomerUser.Id);
@@ -163,7 +163,7 @@ namespace thewall9.bll.test
             Assert.IsTrue(_Site[0].CategoryItems[3].CategoryItems.Count == 1);
         }
         [TestMethod]
-        public void UpTest()
+        public void CategoryUpTest()
         {
             SettingUp();
             new CategoryBLL().UpOrDown(new UpOrDown
@@ -178,7 +178,7 @@ namespace thewall9.bll.test
             Assert.IsTrue(_Site[0].CategoryItems[2].Priority == 2);
         }
         [TestMethod]
-        public void UpFirstItemTest()
+        public void CategoryUpFirstItemTest()
         {
             SettingUp();
             new CategoryBLL().UpOrDown(new UpOrDown
@@ -190,7 +190,8 @@ namespace thewall9.bll.test
             Assert.IsTrue(_Site[0].CategoryID == _CID);
             Assert.IsTrue(_Site[0].Priority == 0);
         }
-        public void DownTest()
+        [TestMethod]
+        public void CategoryDownTest()
         {
             SettingUp();
             new CategoryBLL().UpOrDown(new UpOrDown
@@ -205,7 +206,7 @@ namespace thewall9.bll.test
             Assert.IsTrue(_Site[0].CategoryItems[2].Priority == 2);
         }
         [TestMethod]
-        public void DownLastItemTest()
+        public void CategoryDownLastItemTest()
         {
             SettingUp();
             new CategoryBLL().UpOrDown(new UpOrDown
@@ -218,7 +219,7 @@ namespace thewall9.bll.test
             Assert.IsTrue(_Site[1].Priority == 1);
         }
         [TestMethod]
-        public void DeleteTest()
+        public void CategoryDeleteTest()
         {
             SettingUp();
             new CategoryBLL().Delete(_CID, _CustomerUser.Id);
@@ -230,16 +231,24 @@ namespace thewall9.bll.test
             Assert.IsTrue(_Site[0].CategoryItems[0].CategoryID == _CID7);
         }
         [TestMethod]
-        public void GetCategoriesWebTreeTest()
+        public void CategoryGetWebTreeTest()
         {
             SettingUp();
-            var _Categories = new CategoryBLL().Get(_SiteID, null, _Cultures[0].Name);
+            var _Categories = new CategoryBLL().Get(_SiteID, null, 0, _Cultures[0].Name, null);
             Assert.IsTrue(_Categories.Count == 2);
             Assert.IsTrue(_Categories[0].CategoryItems.Count == 5);
             Assert.IsTrue(_Categories[0].CategoryItems[3].CategoryItems.Count == 1);
         }
         [TestMethod]
-        public void ValidateDuplicateFriendlyUrlTest()
+        public void CategoryGetWebWithParentTreeTest()
+        {
+            SettingUp();
+            var _Categories = new CategoryBLL().Get(_SiteID, null, _CID, _Cultures[0].Name, null);
+            Assert.IsTrue(_Categories.Count == 5);
+            Assert.IsTrue(_Categories[3].CategoryItems.Count == 1);
+        }
+        [TestMethod]
+        public void CategoryValidateDuplicateFriendlyUrlTest()
         {
             SettingUp();
             var _FUrl = Utils.Util.RandomString(10) + DateTime.Now.ToString();
@@ -262,7 +271,7 @@ namespace thewall9.bll.test
             }
         }
         [TestMethod]
-        public void ValidateDuplicateNameTest()
+        public void CategoryValidateDuplicateNameTest()
         {
             SettingUp();
             var _FUrl = Utils.Util.RandomString(10) + DateTime.Now.ToString();

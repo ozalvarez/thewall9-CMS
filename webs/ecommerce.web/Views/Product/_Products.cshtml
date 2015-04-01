@@ -1,0 +1,81 @@
+﻿@model thewall9.data.binding.ProductsWeb
+<div class="row">
+    <div class="col-md-3">
+        <div class="subtitle">
+            Categories
+        </div>
+        <ul class="list-unstyled">
+            @foreach (var item in Model.Categories)
+            {
+                <li class="list-group-item">
+                    @Html.Partial("_Categories", item)
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="col-md-9">
+        <div class="subtitle">
+            Products
+        </div>
+        @{int count = 1;}
+        @foreach (var item in Model.Products)
+        {
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <a href="@item.FriendlyUrl">
+                        <img src="@item.IconPath" />
+                    </a>
+                    <div class="text-center">
+                        <a href="@item.FriendlyUrl">
+                            @item.ProductName
+                        </a>
+                        <div class="small">
+                            @item.Description
+                        </div>
+                        <div>
+                            <div class="btn-group dropup">
+                                <button type="button" class="btn btn-default">
+                                    @item.MoneySymbol @item.Price
+                                </button>
+                                <button type="button" class="btn btn-primary">
+                                    <i class="fa fa-shopping-cart"></i> Buy
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            if (count % 3 == 0)
+            {
+                <div class="clearfix"></div>
+            }
+            count++;
+        }
+        <div class="clearfix"></div>
+        @if (Model.NumberPages > 0)
+        {
+            <nav>
+                <ul class="pagination">
+                    <li>
+                        <a href="/products/1" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    @for (int i = 1; i <= Model.NumberPages + 1; i++)
+                    {
+                        <li>
+                            <a href="/products/@i">
+                                @i
+                            </a>
+                        </li>
+                    }
+                    <li>
+                        <a href="/products/@(Model.NumberPages + 1)" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        }
+    </div>
+</div>

@@ -15,6 +15,14 @@ namespace thewall9.api.Controllers
     {
         ProductBLL _ProductService = new ProductBLL();
 
+        #region Web
+        [AllowAnonymous]
+        public IHttpActionResult Get(int SiteID, string Url, string Lang, string FriendlyUrl, int CurrencyID, int CategoryID, int Take, int Page)
+        {
+            return Ok(_ProductService.Get(SiteID, Url, Lang, FriendlyUrl, CurrencyID, CategoryID, Take, Page));
+        }
+        #endregion
+
         #region Customers
         public IHttpActionResult Get(int SiteID)
         {

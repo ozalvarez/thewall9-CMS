@@ -1,5 +1,5 @@
 ﻿@model thewall9.data.binding.CategoryWeb
-<a href="category/@Model.FriendlyUrl">
+<a href="@Url.Action("Index", "Product", new { FriendlyUrl = Model.FriendlyUrl, CategoryID=Model.CategoryID })">
     @Model.CategoryName
 </a>
 @if (Model.CategoryItems.Count > 0)

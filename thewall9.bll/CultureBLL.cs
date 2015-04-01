@@ -59,6 +59,13 @@ namespace thewall9.bll
                 }).ToList();
             }
         }
+        public Culture GetByName(int SiteID, string Name)
+        {
+            using (var _c = db)
+            {
+                return _c.Cultures.Where(m => m.SiteID == SiteID && m.Name.ToLower().Equals(Name)).FirstOrDefault();
+            }
+        }
         public void Save(CultureBinding Model, string UserID)
         {
             using (var _c=db)

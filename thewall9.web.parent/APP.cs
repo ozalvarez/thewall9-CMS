@@ -44,6 +44,17 @@ namespace thewall9.web.parent
                 HttpContext.Current.Items["CurrentLang"] = value;
             }
         }
+        public static string _CurrentFriendlyUrl
+        {
+            get
+            {
+                return HttpContext.Current.Items["CurrentFriendlyUrl"] as string;
+            }
+            set
+            {
+                HttpContext.Current.Items["CurrentFriendlyUrl"] = value;
+            }
+        }
         public static List<CultureRoutes> _Langs
         {
             get

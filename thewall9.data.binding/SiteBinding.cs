@@ -31,8 +31,6 @@ namespace thewall9.data.binding
         public SiteBinding  Site { get; set; }
         public List<PageCultureBinding> Menu { get; set; }
         public ContentBindingList ContentLayout { get; set; }
-        public List<CategoryWeb> Categories { get; set; }
-        public List<ProductWeb> Products { get; set; }
         public List<CurrencyBinding> Currencies { get; set; }
     }
     public class SiteAllBinding : SiteBinding

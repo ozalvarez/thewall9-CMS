@@ -30,10 +30,26 @@ namespace thewall9.bll.test
                 ProductName = "vows for girls"
             });
             //INIT CATEGORIES
+            var _CategoryCultures = new List<CategoryCultureBinding>();
+            _CategoryCultures.Add(new CategoryCultureBinding
+            {
+                Adding = true,
+                CultureID = _Cultures[0].CultureID,
+                CategoryName = "00" + _Cultures[0].Name + DateTime.Now.ToString(),
+                FriendlyUrl = (Util.RandomString(10) + _Cultures[0].Name + DateTime.Now.ToString()).CleanUrl()
+            });
+            _CategoryCultures.Add(new CategoryCultureBinding
+            {
+                Adding = true,
+                CultureID = _Cultures[1].CultureID,
+                CategoryName = "00" + _Cultures[1].Name + DateTime.Now.ToString(),
+                FriendlyUrl = (Util.RandomString(10) + _Cultures[1].Name + DateTime.Now.ToString()).CleanUrl()
+            });
             _Category = new CategoryBinding
             {
                 CategoryAlias = "00",
                 SiteID = _SiteID,
+                CategoryCultures = _CategoryCultures
             };
             _Category.CategoryID = new CategoryBLL().Save(_Category, _CustomerUser.Id);
             _ProductCategories.Add(new ProductCategoryBinding
@@ -75,7 +91,7 @@ namespace thewall9.bll.test
             Assert.IsNotNull(_Product.ProductID);
         }
         [TestMethod]
-        public void SaveProductTest()
+        public void ProductSaveTest()
         {
             SettingUp();
             var _P = new ProductBLL().Get(_SiteID, _CustomerUser.Id);
@@ -84,46 +100,46 @@ namespace thewall9.bll.test
             Assert.IsTrue(_P[0].ProductCurrencies.Count == 2);
         }
         [TestMethod]
-        public void SaveProductIconTest()
+        public void ProductSaveIconTest()
         {
             SettingUp();
 
-            var _FileName="logo.png";
-            var _FileContent = "64base,"+System.Convert.ToBase64String(System.IO.File.ReadAllBytes(_FileName));
-            
+            var _FileName = "logo.png";
+            var _FileContent = "64base," + System.Convert.ToBase64String(System.IO.File.ReadAllBytes(_FileName));
+
             _Product.ProductID = 0;
             _Product.ProductCultures[0].IconFile = new FileRead
             {
                 FileContent = _FileContent,
                 FileName = _FileName
             };
-            _Product.ProductCultures[0].ProductName =_Product.ProductCultures[0].ProductName + DateTime.Now.ToShortTimeString();
+            _Product.ProductCultures[0].ProductName = _Product.ProductCultures[0].ProductName + DateTime.Now.ToShortTimeString();
             _Product.ProductCultures[1].ProductName = _Product.ProductCultures[1].ProductName + DateTime.Now.ToShortTimeString();
             _Product.ProductCultures[0].FriendlyUrl = null;
             _Product.ProductCultures[1].FriendlyUrl = null;
 
 
-            var _PID=new ProductBLL().Save(_Product, _CustomerUser.Id);
+            var _PID = new ProductBLL().Save(_Product, _CustomerUser.Id);
             var _P = new ProductBLL().GetByID(_PID, _CustomerUser.Id);
-            var _PathExpected=BaseBLL.StorageUrl+"/product-icon/"+_PID+"/"+_P.ProductCultures[0].CultureID+"/"+_FileName;
-            Assert.IsTrue(_P.ProductCultures[0].IconPath==_PathExpected);
+            var _PathExpected = BaseBLL.StorageUrl + "/product-icon/" + _PID + "/" + _P.ProductCultures[0].CultureID + "/" + _FileName;
+            Assert.IsTrue(_P.ProductCultures[0].IconPath == _PathExpected);
         }
         [TestMethod]
-        public void GetTest()
+        public void ProductGetTest()
         {
             SettingUp();
             var _P = new ProductBLL().Get(_SiteID, _CustomerUser.Id);
             Assert.IsNotNull(_P);
         }
         [TestMethod]
-        public void GetByIDTest()
+        public void ProductGetByIDTest()
         {
             SettingUp();
             var _P = new ProductBLL().GetByID(_Product.ProductID, _CustomerUser.Id);
             Assert.IsNotNull(_P);
         }
         [TestMethod]
-        public void UpdateProductTest()
+        public void ProductUpdateTest()
         {
             SettingUp();
             //CATEGORIES
@@ -147,7 +163,7 @@ namespace thewall9.bll.test
             Assert.IsTrue(_P[0].ProductCurrencies[1].Price == _ProductCurrencies[1].Price);
         }
         [TestMethod]
-        public void SaveProductEmptyFriendlyURLTest()
+        public void ProductSaveEmptyFriendlyURLTest()
         {
             SettingUp();
             var _P = new ProductBLL().Get(_SiteID, _CustomerUser.Id);
@@ -155,7 +171,7 @@ namespace thewall9.bll.test
             Assert.IsNotNull(_P[0].ProductCultures[0].FriendlyUrl);
         }
         [TestMethod]
-        public void SaveProductDuplicateFriendlyURLTest()
+        public void ProductSaveDuplicateFriendlyURLTest()
         {
             SettingUp();
             _Product.ProductID = 0;
@@ -171,7 +187,7 @@ namespace thewall9.bll.test
             }
         }
         [TestMethod]
-        public void SaveProductDuplicateFriendlyURLOnPostModelTest()
+        public void ProductSaveDuplicateFriendlyURLOnPostModelTest()
         {
             SettingUp();
             _Product.ProductID = 0;
@@ -189,7 +205,7 @@ namespace thewall9.bll.test
             }
         }
         [TestMethod]
-        public void SaveProductDuplicateEmptyFriendlyURLOnPostModelTest()
+        public void ProductSaveDuplicateEmptyFriendlyURLOnPostModelTest()
         {
             SettingUp();
             _Product.ProductID = 0;
@@ -209,11 +225,13 @@ namespace thewall9.bll.test
             }
         }
         [TestMethod]
-        public void GetWebTest()
+        public void ProductGetWebTest()
         {
             SettingUp();
-            var _P = new ProductBLL().Get(_SiteID, null, _Cultures[0].Name, _ProductCurrencies[0].CurrencyID,50,1);
+            var _Pr = new ProductBLL().Get(_SiteID, _CustomerUser.Id);
+            var _P = new ProductBLL().Get(_SiteID, null, null, _Category.CategoryCultures[0].FriendlyUrl, _ProductCurrencies[0].CurrencyID, 0, 50, 1);
             Assert.IsNotNull(_P);
+            Assert.IsTrue(_P.Categories.Count == 1);
         }
     }
 }

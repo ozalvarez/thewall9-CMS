@@ -64,14 +64,6 @@ namespace thewall9.web.parent.HtmlHelpers
         {
             return APP._Site;
         }
-        public static List<CategoryWeb> GetCategories(this HtmlHelper helper)
-        {
-            return APP._Site.Categories;
-        }
-        public static List<ProductWeb> GetProducts(this HtmlHelper helper)
-        {
-            return APP._Site.Products;
-        }
         private static string GetFriendlyUrlByAlias(this HtmlHelper helper, string Alias)
         {
             return APP._Site.Menu.Where(m => m.PageAlias.Equals(Alias)).Select(m => m.FriendlyUrl).SingleOrDefault();
@@ -100,7 +92,7 @@ namespace thewall9.web.parent.HtmlHelpers
          */
         public static MvcHtmlString LinkTwitter(this HtmlHelper helper)
         {
-            return new MvcHtmlString("http://twitter.com/"+APP._Langs.Where(m => m.Name == APP._CurrentLang).FirstOrDefault().Twitter);
+            return new MvcHtmlString("http://twitter.com/" + APP._Langs.Where(m => m.Name == APP._CurrentLang).FirstOrDefault().Twitter);
         }
         public static MvcHtmlString LinkFacebook(this HtmlHelper helper)
         {
