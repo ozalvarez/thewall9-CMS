@@ -92,7 +92,6 @@
     <Compile Include="BLL\ProductBLL.cs" />
     <Compile Include="BLL\PageBLL.cs" />
     <Compile Include="BLL\SiteBLL.cs" />
-    <Compile Include="Controllers\ProductBaseController.cs" />
     <Compile Include="Controllers\PageContentBaseController.cs" />
     <Compile Include="HtmlHelpers\CultureHelper.cs" />
     <Compile Include="HtmlHelpers\HtmlExtensionMethods.cs" />

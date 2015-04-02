@@ -23,26 +23,19 @@ namespace thewall9.web
 
             //PRODUCTS
             routes.MapRoute(
-                name: "GetProducts",
-                url: "get-products",
-                defaults: new { controller = "Product", action = "GetProducts", CategoryID = UrlParameter.Optional, Page = UrlParameter.Optional }
+                name: "GetProductsPartialView",
+                url: "get-products/{CategoryFriendlyUrl}/{CategoryID}/{Page}",
+                defaults: new { controller = "Page", action = "GetProducts", CategoryFriendlyUrl = UrlParameter.Optional, CategoryID = UrlParameter.Optional, Page = UrlParameter.Optional }
             );
             routes.MapRoute(
                 name: "ProductsInCategory",
-                url: "products/{FriendlyUrl}/{CategoryID}/{Page}",
-                defaults: new { controller = "Product", action = "Index", Page = UrlParameter.Optional }
+                url: "{FriendlyUrl}/{CategoryFriendlyUrl}/{CategoryID}/{Page}",
+                defaults: new { controller = "Page", action = "Products", Page = UrlParameter.Optional }
             );
             routes.MapRoute(
                 name: "Products",
-                url: "products/{Page}",
-                defaults: new { controller = "Product", action = "Index",  Page = UrlParameter.Optional }
-            );
-
-            //CART
-            routes.MapRoute(
-                name: "Cart",
-                url: "cart",
-                defaults: new { controller = "Cart", action = "Index" }
+                url: "{FriendlyUrl}/{Page}",
+                defaults: new { controller = "Page", action = "Products", Page = UrlParameter.Optional }
             );
 
             //DEFAULT ROUTE

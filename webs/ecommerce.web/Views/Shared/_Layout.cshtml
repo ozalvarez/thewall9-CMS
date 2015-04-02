@@ -73,13 +73,6 @@
                     @{var cont=0;}
                     @foreach (var item in _Menu)
                     {
-                        if(cont==1){
-                            <li ng-class="{'active':active=='products'}">
-                                <a href="@Url.Action("Index", "Product")">
-                                    @Html.FindValue(_LayoutContent, "catalogue-text")
-                                </a>
-                            </li>
-                        }
                         <li ng-class="{'active':active=='page-@item.FriendlyUrl'}">
                             <a href="@(item.RedirectUrl!=null ? item.RedirectUrl : '/' + item.FriendlyUrl)">
                                 @item.Name

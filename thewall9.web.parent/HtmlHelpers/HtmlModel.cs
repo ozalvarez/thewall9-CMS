@@ -98,7 +98,10 @@ namespace thewall9.web.parent.HtmlHelpers
         {
             return new MvcHtmlString(APP._Site.Menu.Where(m => m.PageAlias == "checkout").FirstOrDefault().FriendlyUrl);
         }
-
+        public static MvcHtmlString LinkCatalog(this HtmlHelper helper)
+        {
+            return new MvcHtmlString(APP._Site.Menu.Where(m => m.PageAlias == "catalog").FirstOrDefault().FriendlyUrl);
+        }
 
         /*
          * SOCIAL METHODS

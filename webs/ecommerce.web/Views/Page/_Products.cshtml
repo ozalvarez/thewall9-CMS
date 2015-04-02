@@ -8,7 +8,7 @@
             Categories
         </div>
         <script type="text/ng-template" id="_categories.html">
-            <a ng-href="/products/{{item.FriendlyUrl}}/{{item.CategoryID}}" href="">
+            <a ng-href="/@Html.LinkCatalog()/{{item.FriendlyUrl}}/{{item.CategoryID}}" href="">
                 {{item.CategoryName}}
             </a>
             <ul ng-if="item.CategoryItems">
