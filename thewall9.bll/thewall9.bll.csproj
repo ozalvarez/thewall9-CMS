@@ -144,6 +144,7 @@
     <Compile Include="BaseBLL.cs" />
     <Compile Include="ProductBLL.cs" />
     <Compile Include="CategoryBLL.cs" />
+    <Compile Include="OrderBLL.cs" />
     <Compile Include="TagBLL.cs" />
     <Compile Include="CurrencyBLL.cs" />
     <Compile Include="Exceptions\RuleException.cs" />

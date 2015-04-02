@@ -1,7 +1,43 @@
-﻿<div ng-controller="cartController">
+﻿<div ng-controller="checkoutController">
     <div class="subtitle">
         Checkout
     </div>
+    <table class="table table-bordered tbl-checkout">
+        <tbody>
+            <tr>
+                <td>First Name</td>
+                <td>
+                    <input type="text" name="" class="form-control" />
+                </td>
+                <td>Email</td>
+                <td>
+                    <input type="text" name="" class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <td>Telephone</td>
+                <td>
+                    <input type="text" name="" class="form-control" />
+                </td>
+                <td>City</td>
+                <td>
+                    <input type="text" name="" class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td colspan="3">
+                    <textarea name="" class="form-control"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>Comment</td>
+                <td colspan="3">
+                    <textarea name="" class="form-control"></textarea>
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <table class="table table-bordered tbl-cart">
         <thead>
             <tr>
@@ -59,7 +95,7 @@
             </tr>
         </tbody>
     </table>
-        <button type="button" class="btn btn-primary">
-            Confirm Order <i class="fa fa-arrow-circle-right"></i>
-        </button>
+    <button type="button" class="btn btn-primary" ng-click="sendOrder('@Html.LinkOrderSent()')">
+        Confirm Order <i class="fa fa-arrow-circle-right"></i>
+    </button>
 </div>

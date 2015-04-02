@@ -55,6 +55,9 @@ namespace thewall9.data.Models
         public DbSet<ProductCategory> ProductCategories{ get; set; }
         public DbSet<ProductGallery> ProductGalleries { get; set; }
         public DbSet<ProductCurrency> ProductCurrencies { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderProduct> OrderProducts { get; set; }
         
     }
 }

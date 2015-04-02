@@ -111,6 +111,8 @@
         @RenderBody()
     </div>
     <script>
+        var _ServiceBase = '@thewall9.web.parent.APP._API_URL';
+        var _SiteID = @thewall9.web.parent.APP._SiteID;
         var _Active = '@ViewBag.Active';
         var _Currencies=@Html.Raw(Json.Encode(Html.GetSite().Currencies));
         var _CurrentCurrencyID=@Html.GetCurrentCurrencyID();

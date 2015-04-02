@@ -113,6 +113,19 @@
     <Compile Include="Migrations\201503312038267_add-money-symbol-products.Designer.cs">
       <DependentUpon>201503312038267_add-money-symbol-products.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504022029473_add-orders.cs" />
+    <Compile Include="Migrations\201504022029473_add-orders.Designer.cs">
+      <DependentUpon>201504022029473_add-orders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504022103525_add-currency-in-orders.cs" />
+    <Compile Include="Migrations\201504022103525_add-currency-in-orders.Designer.cs">
+      <DependentUpon>201504022103525_add-currency-in-orders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504022105591_add-site-in-orders.cs" />
+    <Compile Include="Migrations\201504022105591_add-site-in-orders.Designer.cs">
+      <DependentUpon>201504022105591_add-site-in-orders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Order.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Culture.cs" />
@@ -294,6 +307,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503312038267_add-money-symbol-products.resx">
       <DependentUpon>201503312038267_add-money-symbol-products.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504022029473_add-orders.resx">
+      <DependentUpon>201504022029473_add-orders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504022103525_add-currency-in-orders.resx">
+      <DependentUpon>201504022103525_add-currency-in-orders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504022105591_add-site-in-orders.resx">
+      <DependentUpon>201504022105591_add-site-in-orders.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

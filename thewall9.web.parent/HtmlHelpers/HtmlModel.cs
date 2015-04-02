@@ -91,15 +91,19 @@ namespace thewall9.web.parent.HtmlHelpers
         }
         public static MvcHtmlString LinkCart(this HtmlHelper helper)
         {
-            return new MvcHtmlString(APP._Site.Menu.Where(m=>m.PageAlias=="cart").FirstOrDefault().FriendlyUrl);
+            return new MvcHtmlString(APP._Site.EcommercePages.Where(m=>m.PageAlias=="cart").FirstOrDefault().FriendlyUrl);
         }
         public static MvcHtmlString LinkCheckout(this HtmlHelper helper)
         {
-            return new MvcHtmlString(APP._Site.Menu.Where(m => m.PageAlias == "checkout").FirstOrDefault().FriendlyUrl);
+            return new MvcHtmlString(APP._Site.EcommercePages.Where(m => m.PageAlias == "checkout").FirstOrDefault().FriendlyUrl);
         }
         public static MvcHtmlString LinkCatalog(this HtmlHelper helper)
         {
-            return new MvcHtmlString(APP._Site.Menu.Where(m => m.PageAlias == "catalog").FirstOrDefault().FriendlyUrl);
+            return new MvcHtmlString(APP._Site.EcommercePages.Where(m => m.PageAlias == "catalog").FirstOrDefault().FriendlyUrl);
+        }
+        public static MvcHtmlString LinkOrderSent(this HtmlHelper helper)
+        {
+            return new MvcHtmlString(APP._Site.EcommercePages.Where(m => m.PageAlias == "order-sent").FirstOrDefault().FriendlyUrl);
         }
         public static int GetCurrentCurrencyID(this HtmlHelper helper)
         {

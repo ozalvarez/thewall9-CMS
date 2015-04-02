@@ -1,7 +1,8 @@
 ﻿'use strict';
-app.factory('productService', ["$http", "$q", 'localStorageService',
+app.factory('productService', ["$myhttp", "$q", 'localStorageService',
     function ($http, $q, localStorageService) {
         var uri = 'api/product';
+        var uriOrder = 'api/order';
         var productFactory = {};
 
         productFactory.cart = [];
@@ -25,7 +26,7 @@ app.factory('productService', ["$http", "$q", 'localStorageService',
                     ProductName: model.ProductName,
                     Number: number,
                     Price: model.Price,
-                    IconPath:model.IconPath
+                    IconPath: model.IconPath
                 });
             }
             localStorageService.set('_cart', productFactory.cart);
@@ -47,6 +48,19 @@ app.factory('productService', ["$http", "$q", 'localStorageService',
                 item.Number += number;
                 localStorageService.set('_cart', productFactory.cart);
             }
+        }
+        productFactory.sendOrder = function () {
+            var deferred = $q.defer();
+            $http.post(_ServiceBase + uriOrder, {
+                CurrencyID: _CurrentCurrencyID,
+                SiteID:_SiteID,
+                Products: productFactory.cart
+            }).then(function (data) {
+                productFactory.cart = [];
+                localStorageService.remove('_cart');
+                deferred.resolve(data);
+            });
+            return deferred.promise;
         }
         return productFactory;
     }

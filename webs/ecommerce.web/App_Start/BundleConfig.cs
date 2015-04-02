@@ -39,6 +39,8 @@ namespace thewall9.web
                       , "~/app/app.js"
 
                       //SERVICES
+                      , "~/app/services/utilService.js"
+                      , "~/app/services/myHttpService.js"
                       , "~/app/services/toastrService.js"
                       , "~/app/services/productService.js"
 
@@ -47,6 +49,7 @@ namespace thewall9.web
                       , "~/app/controllers/productsController.js"
                       , "~/app/controllers/productController.js"
                       , "~/app/controllers/cartController.js"
+                      , "~/app/controllers/checkoutController.js"
                       ));
 
             // Set EnableOptimizations to false for debugging. For more information,
