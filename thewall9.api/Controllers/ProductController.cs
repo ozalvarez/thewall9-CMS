@@ -21,6 +21,11 @@ namespace thewall9.api.Controllers
         {
             return Ok(_ProductService.Get(SiteID, Url, Lang, FriendlyUrl, CurrencyID, CategoryID, Take, Page));
         }
+        [AllowAnonymous]
+        public IHttpActionResult Get(int SiteID, string Url, string FriendlyUrl, int CurrencyID)
+        {
+            return Ok(_ProductService.Get(SiteID, Url,FriendlyUrl, CurrencyID));
+        }
         #endregion
 
         #region Customers

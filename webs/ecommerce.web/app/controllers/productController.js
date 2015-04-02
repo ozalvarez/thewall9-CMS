@@ -1,14 +1,15 @@
 ﻿'use strict';
 app.controller('productController', ['$scope', '$rootScope', 'productService', 'toastrService',
     function ($scope, $rootScope, productService, toastrService) {
-        $scope.data = _Products;
-        $scope.data.NumberPagesArray = [];
-        for (var i = 0; i < $scope.data.NumberPages; i++) {
-            $scope.data.NumberPagesArray.push(i);
+        $scope.data = _Product;
+        $scope.number = 1;
+
+        $scope.updateNumber = function (number) {
+            $scope.number += number;
         }
         $scope.addProduct = function (item) {
-            productService.add(item);
-            toastrService.success(item.ProductName +" "+ _Message.AddedCart)
+            productService.add(item, $scope.number);
+            toastrService.success(item.ProductName + " " + _Message.AddedCart)
         };
     }
 ]);

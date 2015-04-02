@@ -82,6 +82,20 @@ namespace thewall9.web.parent.Controllers
         {
             return Index(FriendlyUrl);
         }
+        public ActionResult Product(string FriendlyUrl)
+        {
+            var _Model = ProductService.Get(APP._SiteID, Request.Url.Authority,FriendlyUrl, APP._CurrentCurrencyID);
+            if (_Model == null)
+                throw new HttpException(404, "Page Not Found");
+            else
+            {
+                ViewBag.Title = _Model.ProductName;
+                ViewBag.MetaDescription = _Model.ProductName+" "+_Model.Price;
+                //ViewBag.Active = "page-" + FriendlyUrl;
+                APP._CurrentLang = _Model.CultureName;
+                return View(_Model);
+            }
+        }
         public PartialViewResult GetProducts(int CategoryID = 0, int Page = 1)
         {
             var _P = ProductService.Get(APP._SiteID, Request.Url.Authority, APP._CurrentLang, null, APP._CurrentCurrencyID, CategoryID, PAGE_SIZE, Page);

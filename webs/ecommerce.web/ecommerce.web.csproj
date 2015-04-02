@@ -163,6 +163,7 @@
     <Content Include="app\controllers\checkoutController.js" />
     <Content Include="app\controllers\cartController.js" />
     <Content Include="app\controllers\productController.js" />
+    <Content Include="app\controllers\productsController.js" />
     <Content Include="app\controllers\appController.js" />
     <Content Include="app\services\productService.js" />
     <Content Include="app\services\toastrService.js" />
@@ -237,6 +238,7 @@
     <Content Include="Views\Page\Checkout.cshtml" />
     <Content Include="Views\Page\Products.cshtml" />
     <Content Include="Views\Page\_Products.cshtml" />
+    <Content Include="Views\Page\Product.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\directives\" />

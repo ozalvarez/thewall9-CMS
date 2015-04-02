@@ -1,0 +1,51 @@
+﻿@model thewall9.data.binding.ProductWeb
+<script>
+    var _Product=@Html.Raw(Json.Encode(Model));
+</script>
+<div ng-controller="productController">
+    <div class="subtitle">
+        {{data.ProductName}}
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <img ng-src="{{data.IconPath}}" />
+            </div>
+        </div>
+        <div class="col-md-8">
+            <p class="lead">
+                {{data.ProductName}}
+            </p>
+            <hr />
+            <p>
+                {{data.Description}}
+            </p>
+            <hr />
+            <p class="lead">
+                {{moneySymbol}} {{data.Price}}
+            </p>
+            <div class="input-group" style="max-width:130px;">
+                <span class="input-group-btn">
+                    <button class="btn btn-default btn-info" data-dir="dwn" ng-click="updateNumber(-1)" ng-disabled="number<=1">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                </span>
+                <input type="text" class="form-control text-center" ng-model="number">
+                <span class="input-group-btn">
+                    <button class="btn btn-default btn-info" data-dir="up" ng-click="updateNumber(1)">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </span>
+            </div>
+            <br />
+            <p>
+                <button type="button" class="btn btn-primary" ng-click="addProduct(data)">
+                    <i class="fa fa-shopping-cart"></i> Add to Cart
+                </button>
+            </p>
+        </div>
+    </div>
+    <p>
+        {{data.AdditionalInformation}}
+    </p>
+</div>

@@ -23,6 +23,11 @@ namespace thewall9.web
 
             //PRODUCTS
             routes.MapRoute(
+                name: "Product",
+                url: "p/{FriendlyUrl}",
+                defaults: new { controller = "Page", action = "Product" }
+            );
+            routes.MapRoute(
                 name: "GetProductsPartialView",
                 url: "get-products/{CategoryFriendlyUrl}/{CategoryID}/{Page}",
                 defaults: new { controller = "Page", action = "GetProducts", CategoryFriendlyUrl = UrlParameter.Optional, CategoryID = UrlParameter.Optional, Page = UrlParameter.Optional }

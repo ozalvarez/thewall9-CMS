@@ -36,7 +36,7 @@ namespace thewall9.bll
                  orderby m.Product.Priority
                  select m);
         }
-        private IQueryable<ProductWeb> Get(int SiteID, int CultureID, int CurrencyID, int CategoryID, int Take, int Page, ApplicationDbContext _c)
+        private IQueryable<ProductWeb> Get(int SiteID, int CultureID, int CurrencyID, int CategoryID, ApplicationDbContext _c)
         {
             return Get(SiteID, CultureID, CategoryID, _c).Select(m => new ProductWeb
             {
@@ -45,7 +45,7 @@ namespace thewall9.bll
                 FriendlyUrl = m.FriendlyUrl,
                 IconPath = m.IconPath,
                 ProductName = m.ProductName,
-                ProductID=m.ProductID,
+                ProductID = m.ProductID,
 
                 //TO-DO OPTIMIZE ME
                 Price = (CurrencyID == 0 || !m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).Any())
@@ -62,7 +62,7 @@ namespace thewall9.bll
                 if (SiteID == 0)
                     SiteID = new SiteBLL().Get(Url, _c).SiteID;
                 var _Culture = new CategoryBLL().GetCulture(SiteID, Lang, FriendlyUrl, _c);
-                var _Q = Get(SiteID, _Culture.CultureID, CurrencyID, CategoryID, Take, Page, _c);
+                var _Q = Get(SiteID, _Culture.CultureID, CurrencyID, CategoryID, _c);
                 var _PW = new ProductsWeb();
                 _PW.Products = _Q.Skip(Take * (Page - 1)).Take(Take).ToList();
                 _PW.NumberPages = _Q.Count() / Take;
@@ -70,6 +70,33 @@ namespace thewall9.bll
                 _PW.CultureID = _Culture.CultureID;
                 _PW.CultureName = _Culture.Name;
                 return _PW;
+            }
+        }
+        public ProductWeb Get(int SiteID, string Url, string FriendlyUrl, int CurrencyID)
+        {
+            using (var _c = db)
+            {
+                if (SiteID == 0)
+                    SiteID = new SiteBLL().Get(Url, _c).SiteID;
+                return (from m in _c.ProductCultures
+                        where m.Product.SiteID == SiteID && m.FriendlyUrl.ToLower().Equals(FriendlyUrl.ToLower())
+                        select new ProductWeb
+                         {
+                             AdditionalInformation = m.AdditionalInformation,
+                             Description = m.Description,
+                             FriendlyUrl = m.FriendlyUrl,
+                             IconPath = m.IconPath,
+                             ProductName = m.ProductName,
+                             ProductID = m.ProductID,
+                             CultureName = m.Culture.Name,
+
+                             //TO-DO OPTIMIZE ME
+                             Price = (CurrencyID == 0 || !m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).Any())
+                             ? (m.Product.ProductCurrencies.Any()
+                                 ? m.Product.ProductCurrencies.FirstOrDefault().Price
+                                 : 0)
+                             : m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).FirstOrDefault().Price
+                         }).FirstOrDefault();
             }
         }
 

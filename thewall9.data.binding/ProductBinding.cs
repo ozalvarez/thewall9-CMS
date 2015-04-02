@@ -41,6 +41,7 @@ namespace thewall9.data.binding
     {
         public int ProductID { get; set; }
         public double Price { get; set; }
+        public string CultureName { get; set; }
     }
     public class ProductsWeb
     {

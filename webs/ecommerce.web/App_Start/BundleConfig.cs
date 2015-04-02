@@ -44,6 +44,7 @@ namespace thewall9.web
 
                       //CONTROLLERS
                       , "~/app/controllers/appController.js"
+                      , "~/app/controllers/productsController.js"
                       , "~/app/controllers/productController.js"
                       , "~/app/controllers/cartController.js"
                       ));

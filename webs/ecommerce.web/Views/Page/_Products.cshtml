@@ -2,7 +2,7 @@
 <script>
     var _Products=@Html.Raw(Json.Encode(Model));
 </script>
-<div class="row" ng-controller="productController">
+<div class="row" ng-controller="productsController">
     <div class="col-md-3">
         <div class="subtitle">
             Categories
@@ -27,11 +27,11 @@
         </div>
         <div class="col-md-4" ng-repeat-start="item in data.Products">
             <div class="thumbnail">
-                <a href="" ng-href="/product/{{item.FriendlyUrl}}">
+                <a href="" ng-href="/p/{{item.FriendlyUrl}}">
                     <img ng-src="{{item.IconPath}}" />
                 </a>
                 <div class="text-center">
-                    <a href="" ng-href="/product/{{item.FriendlyUrl}}">
+                    <a href="" ng-href="/p/{{item.FriendlyUrl}}">
                         {{item.ProductName}}
                     </a>
                     <div class="small">

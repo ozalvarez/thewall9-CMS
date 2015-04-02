@@ -11,11 +11,11 @@ app.factory('productService', ["$http", "$q", 'localStorageService',
             productFactory.cart = _Cart == null ? [] : _Cart;
         }
 
-        productFactory.add = function (model) {
+        productFactory.add = function (model, number) {
             var added = false;
             angular.forEach(productFactory.cart, function (item) {
                 if (item.ProductID == model.ProductID) {
-                    item.Number++;
+                    item.Number += number;
                     added = true;
                 }
             });
@@ -23,7 +23,7 @@ app.factory('productService', ["$http", "$q", 'localStorageService',
                 productFactory.cart.push({
                     ProductID: model.ProductID,
                     ProductName: model.ProductName,
-                    Number: 1,
+                    Number: number,
                     Price: model.Price,
                     IconPath:model.IconPath
                 });
