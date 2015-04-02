@@ -72,7 +72,14 @@ namespace thewall9.web.parent.ActionFilter
             if (!filterContext.RouteData.Values.ContainsKey("NoFilterBase"))
             {
                 if (!filterContext.IsChildAction && !filterContext.HttpContext.Request.IsAjaxRequest())
+                {
                     APP._Site = SiteService.Get(APP._SiteID, filterContext.HttpContext.Request.Url.Authority, APP._CurrentLang, APP._CurrentCurrencyID);
+                    if (APP._Site.Site.ECommerce)
+                    {
+                        if (APP._CurrentCurrencyID == 0)
+                            APP._CurrentCurrencyID = APP._Site.Currencies[0].CurrencyID;
+                    }
+                }
             }
         }
     }

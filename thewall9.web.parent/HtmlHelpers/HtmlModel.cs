@@ -76,7 +76,6 @@ namespace thewall9.web.parent.HtmlHelpers
         {
             return new MvcHtmlString(GetFriendlyUrlByAlias(helper, Alias).Replace("#", ""));
         }
-        #region LANG
         public static List<CultureRoutes> GetLangs(this HtmlHelper helper)
         {
             return APP._Langs;
@@ -102,6 +101,10 @@ namespace thewall9.web.parent.HtmlHelpers
         {
             return new MvcHtmlString(APP._Site.Menu.Where(m => m.PageAlias == "catalog").FirstOrDefault().FriendlyUrl);
         }
+        public static int GetCurrentCurrencyID(this HtmlHelper helper)
+        {
+            return APP._CurrentCurrencyID;
+        }
 
         /*
          * SOCIAL METHODS
@@ -126,6 +129,5 @@ namespace thewall9.web.parent.HtmlHelpers
         {
             return new MvcHtmlString("http://instagram.com/" + APP._Langs.Where(m => m.Name == APP._CurrentLang).FirstOrDefault().Instagram);
         }
-        #endregion
     }
 }

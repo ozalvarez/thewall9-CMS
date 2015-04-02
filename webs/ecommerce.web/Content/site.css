@@ -5,28 +5,27 @@ body {
 header.header {
   padding: 10px 0px;
 }
-header.header .col-md-6.mtop,
-header.header .col-md-3.mtop {
+header.header .mtop {
   margin-top: 30px;
 }
-header.header .btn-group-cart {
+header.header .btn-group-header {
   width: 100%;
 }
-header.header .btn-group-cart .btn {
+header.header .btn-group-header .btn {
   width: 100%;
 }
-header.header .btn-group-cart .icon-cart {
+header.header .btn-group-header .icon-header {
   margin-right: 5px;
 }
-header.header .btn-group-cart .dropdown-menu {
+header.header .btn-group-header .dropdown-menu {
   z-index: 1001;
   left: inherit;
   right: 0;
 }
-header.header .btn-group-cart ul.cart-content {
+header.header .btn-group-header ul.header-content {
   min-width: 250px;
 }
-header.header .btn-group-cart ul.cart-content b {
+header.header .btn-group-header ul.header-content b {
   font-weight: normal;
   display: block;
   color: #428BCA;

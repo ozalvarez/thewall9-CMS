@@ -72,7 +72,15 @@ namespace thewall9.web.parent
             {
                 try
                 {
-                    return Convert.ToInt32(HttpContext.Current.Request.Cookies["_CurrentCurrencyID"]);
+                    var _Value = (int)HttpContext.Current.Session["_CurrentCurrencyID"];
+                    if (_Value != 0)
+                        return _Value;
+                    else
+                    {
+                        var _Cookie = HttpContext.Current.Request.Cookies["_CurrentCurrencyID"];
+                        HttpContext.Current.Session["_CurrentCurrencyID"] = Convert.ToInt32(_Cookie.Value);
+                        return Convert.ToInt32(_Cookie.Value);
+                    }
                 }
                 catch (Exception)
                 {
@@ -81,7 +89,10 @@ namespace thewall9.web.parent
             }
             set
             {
-                HttpContext.Current.Request.Cookies.Add(new HttpCookie(value.ToString()));
+                var _Cookie = new HttpCookie("_CurrentCurrencyID", value.ToString());
+                _Cookie.Expires = DateTime.Now.AddYears(1);
+                HttpContext.Current.Request.Cookies.Add(_Cookie);
+                HttpContext.Current.Session["_CurrentCurrencyID"] = value;
             }
         }
     }

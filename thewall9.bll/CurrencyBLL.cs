@@ -17,12 +17,12 @@ namespace thewall9.bll
             return (SiteID != 0
                     ? from c in _c.Currencies
                       where c.SiteID == SiteID
-                      orderby c.Default
+                      orderby c.Default descending
                       select c
                      : from c in _c.Currencies
                        join u in _c.SiteUrls on c.SiteID equals u.SiteID
                        where u.Url.Equals(Url)
-                       orderby c.Default
+                       orderby c.Default descending
                        select c);
         }
         public List<CurrencyBinding> Get(int SiteID, string Url)

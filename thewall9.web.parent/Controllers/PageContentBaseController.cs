@@ -76,6 +76,12 @@ namespace thewall9.web.parent.Controllers
             var _UrlRedirect = "/" + PageService.GetPageFriendlyUrl(APP._SiteID, Request.Url.Authority, FriendlyUrl, Lang);
             return Redirect(_UrlRedirect);
         }
+        [Route("change-currency")]
+        public ActionResult ChangeCurrency(int CurrencyID, string Url)
+        {
+            APP._CurrentCurrencyID = CurrencyID;
+            return Redirect(Url);
+        }
 
         #region Products
         public ActionResult Products(string FriendlyUrl, string CategoryFriendlyUrl, int CategoryID = 0, int Page = 1)
