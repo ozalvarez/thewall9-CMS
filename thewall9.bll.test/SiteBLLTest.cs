@@ -22,13 +22,13 @@ namespace thewall9.bll.test
         //    });
         //}
         [TestMethod]
-        public void ExportSiteTest()
+        public void SiteExportTest()
         {
             var _URL=new SiteBLL().Export(_SiteID);
             Assert.IsNotNull(_URL);
         }
         [TestMethod]
-        public void ImportSiteTest()
+        public void SiteImportTest()
         {
             var _URL = new SiteBLL().Export(_SiteID);
             string _Content = new WebClient().DownloadString(_URL);

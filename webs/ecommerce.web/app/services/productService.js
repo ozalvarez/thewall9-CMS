@@ -24,7 +24,8 @@ app.factory('productService', ["$http", "$q", 'localStorageService',
                     ProductID: model.ProductID,
                     ProductName: model.ProductName,
                     Number: 1,
-                    Price: model.Price
+                    Price: model.Price,
+                    IconPath:model.IconPath
                 });
             }
             localStorageService.set('_cart', productFactory.cart);
@@ -36,8 +37,17 @@ app.factory('productService', ["$http", "$q", 'localStorageService',
             });
             return _Total;
         }
-
-
+        productFactory.removeCart = function (item) {
+            var index = productFactory.cart.indexOf(item);
+            productFactory.cart.splice(index, 1);
+            localStorageService.set('_cart', productFactory.cart);
+        }
+        productFactory.updateNumber = function (item, number) {
+            if (item.Number > 0) {
+                item.Number += number;
+                localStorageService.set('_cart', productFactory.cart);
+            }
+        }
         return productFactory;
     }
 ]);

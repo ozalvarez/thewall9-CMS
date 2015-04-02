@@ -47,7 +47,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="cart.html">Total: {{moneySymbol}} {{totalCart()}}</a>
+                            <a href="@Html.LinkCart()">Total: {{moneySymbol}} {{totalCart()}}</a>
                         </li>
                     </ul>
                 </div>
@@ -70,35 +70,22 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li ng-class="{'active':active=='page-@Html.LinkHome()'}">
-                        <a href="/@Html.LinkHome()">
-                            @Html.FindValue(_LayoutContent, "home-text")
-                        </a>
-                    </li>
-                    <li ng-class="{'active':active=='products'}">
-                        <a href="@Url.Action("Index", "Product")">
-                            @Html.FindValue(_LayoutContent, "catalogue-text")
-                        </a>
-                    </li>
-                    <li ng-class="{'active':active=='cart'}">
-                        <a href="#">
-                            @Html.FindValue(_LayoutContent, "shooping-cart-text")
-                        </a>
-                    </li>
-                    <li ng-class="{'active':active=='checkout'}">
-                        <a href="#">
-                            @Html.FindValue(_LayoutContent, "checkout-text")
-                        </a>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
+                    @{var cont=0;}
                     @foreach (var item in _Menu)
                     {
+                        if(cont==1){
+                            <li ng-class="{'active':active=='products'}">
+                                <a href="@Url.Action("Index", "Product")">
+                                    @Html.FindValue(_LayoutContent, "catalogue-text")
+                                </a>
+                            </li>
+                        }
                         <li ng-class="{'active':active=='page-@item.FriendlyUrl'}">
                             <a href="@(item.RedirectUrl!=null ? item.RedirectUrl : '/' + item.FriendlyUrl)">
                                 @item.Name
                             </a>
                         </li>
+                        cont++;
                     }
                 </ul>
             </div><!--/.nav-collapse -->
@@ -110,6 +97,12 @@
     <script>
         var _Active = '@ViewBag.Active';
         var _MoneySymbol = @Html.Raw(Json.Encode(Html.GetSite().Currencies[0]));
+        @{
+            var _Messages=Html.Find(_LayoutContent, "messages");
+        }
+        var _Message={
+            AddedCart:'@Html.FindValue(_Messages, "added-cart")'
+        }
     </script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

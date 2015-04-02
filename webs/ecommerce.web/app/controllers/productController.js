@@ -8,7 +8,7 @@ app.controller('productController', ['$scope', '$rootScope', 'productService', '
         }
         $scope.addProduct = function (item) {
             productService.add(item);
-            toastrService.success(item.ProductName + " en el Carrito")
+            toastrService.success(item.ProductName +" "+ _Message.AddedCart)
         };
     }
 ]);

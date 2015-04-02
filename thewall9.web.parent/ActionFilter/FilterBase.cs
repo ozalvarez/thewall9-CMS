@@ -56,13 +56,13 @@ namespace thewall9.web.parent.ActionFilter
                         APP._Langs = SiteService.GetLang(APP._SiteID, filterContext.HttpContext.Request.Url.Authority);
                         APP._CurrentLang = APP._Langs[0].Name;
                         APP._CurrentFriendlyUrl = APP._Langs[0].FriendlyUrl;
-                        var _CultureName = GetCulture(filterContext.HttpContext.Request);
-                        var _SavedLang= APP._Langs.Where(m => _CultureName.Contains(m.Name)).FirstOrDefault();
-                        if (_SavedLang != null)
-                        {
-                            APP._CurrentLang = _SavedLang.Name;
-                            APP._CurrentFriendlyUrl = _SavedLang.FriendlyUrl;
-                        }
+                    }
+                    var _CultureName = GetCulture(filterContext.HttpContext.Request);
+                    var _SavedLang = APP._Langs.Where(m => _CultureName.Contains(m.Name)).FirstOrDefault();
+                    if (_SavedLang != null)
+                    {
+                        APP._CurrentLang = _SavedLang.Name;
+                        APP._CurrentFriendlyUrl = _SavedLang.FriendlyUrl;
                     }
                 }
             }

@@ -44,6 +44,10 @@ namespace thewall9.web.parent.HtmlHelpers
             return new MvcHtmlString(Model.ContentCultures.ToList()[0].ContentPropertyValue);
 
         }
+        public static ContentBindingList Find(this HtmlHelper helper, ContentBindingList Model, string Value)
+        {
+            return Model.Items.Where(m => m.ContentPropertyAlias.Equals(Value)).SingleOrDefault();
+        }
         public static ContentBindingList Find(this HtmlHelper helper, PageWeb Model, string Value)
         {
             return Model.Content.Items.Where(m => m.ContentPropertyAlias.Equals(Value)).SingleOrDefault();
@@ -86,6 +90,15 @@ namespace thewall9.web.parent.HtmlHelpers
         {
             return new MvcHtmlString(APP._Langs.Where(m=>m.Name==APP._CurrentLang).FirstOrDefault().FriendlyUrl);
         }
+        public static MvcHtmlString LinkCart(this HtmlHelper helper)
+        {
+            return new MvcHtmlString(APP._Site.Menu.Where(m=>m.PageAlias=="cart").FirstOrDefault().FriendlyUrl);
+        }
+        public static MvcHtmlString LinkCheckout(this HtmlHelper helper)
+        {
+            return new MvcHtmlString(APP._Site.Menu.Where(m => m.PageAlias == "checkout").FirstOrDefault().FriendlyUrl);
+        }
+
 
         /*
          * SOCIAL METHODS

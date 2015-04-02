@@ -41,14 +41,14 @@ namespace thewall9.bll.test
 
         }
         [TestMethod]
-        public void GetPage()
+        public void PageGetPage()
         {
             SettingUp();
             var _Page = new PageBLL().GetPage(_SiteID, null, "");
             Assert.IsNotNull(_Page);
         }
         [TestMethod]
-        public void GetPageFriendlyUrl()
+        public void PageGetPageFriendlyUrl()
         {
             SettingUp();
             var _Page = new PageBLL().GetWithCultures(_SiteID);

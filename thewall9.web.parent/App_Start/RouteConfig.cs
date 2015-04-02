@@ -37,6 +37,14 @@ namespace thewall9.web
                 url: "products/{Page}",
                 defaults: new { controller = "Product", action = "Index",  Page = UrlParameter.Optional }
             );
+
+            //CART
+            routes.MapRoute(
+                name: "Cart",
+                url: "cart",
+                defaults: new { controller = "Cart", action = "Index" }
+            );
+
             //DEFAULT ROUTE
             routes.MapRoute(
                 name: "Default",

@@ -44,7 +44,9 @@ namespace thewall9.web
 
                       //CONTROLLERS
                       , "~/app/controllers/appController.js"
-                      , "~/app/controllers/productController.js"));
+                      , "~/app/controllers/productController.js"
+                      , "~/app/controllers/cartController.js"
+                      ));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862
