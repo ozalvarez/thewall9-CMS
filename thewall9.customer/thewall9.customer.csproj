@@ -141,6 +141,7 @@
     <Content Include="app\controllers\appController.js" />
     <Content Include="app\controllers\productsController.js" />
     <Content Include="app\controllers\productController.js" />
+    <Content Include="app\controllers\ordersController.js" />
     <Content Include="app\controllers\tagController.js" />
     <Content Include="app\controllers\currencyController.js" />
     <Content Include="app\controllers\configurationController.js" />
@@ -155,9 +156,11 @@
     <Content Include="app\directives\autoFillSync.js" />
     <Content Include="app\directives\fileread.js" />
     <Content Include="app\directives\tab.js" />
+    <Content Include="app\filters\fromnow.js" />
     <Content Include="app\services\authInterceptorService.js" />
     <Content Include="app\services\authService.js" />
     <Content Include="app\services\productService.js" />
+    <Content Include="app\services\orderService.js" />
     <Content Include="app\services\tagService.js" />
     <Content Include="app\services\currencyService.js" />
     <Content Include="app\services\cultureService.js" />
@@ -171,6 +174,7 @@
     <Content Include="app\views\associate.html" />
     <Content Include="app\views\product.html" />
     <Content Include="app\views\products.html" />
+    <Content Include="app\views\orders.html" />
     <Content Include="app\views\tags.html" />
     <Content Include="app\views\currencies.html" />
     <Content Include="app\views\categories.html" />
@@ -261,6 +265,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\plugins\dataTables\dataTables.bootstrap.js" />
     <Content Include="Scripts\plugins\dataTables\jquery.dataTables.js" />
@@ -302,7 +310,6 @@
     <Content Include="Views\Home\Intern.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="app\filters\" />
     <Folder Include="App_Data\" />
     <Folder Include="Content\themes\base\images\" />
   </ItemGroup>

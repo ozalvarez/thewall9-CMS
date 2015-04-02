@@ -66,6 +66,7 @@ namespace thewall9.customer
                       "~/Scripts/toastr.js",
                       "~/scripts/plugins/metisMenu/metisMenu.min.js",
                       "~/scripts/sb-admin-2.js"
+                      , "~/Scripts/moment-with-locales.min.js"
                       ));
 
             bundles.Add(new ScriptBundle("~/bundles/intern/angular").Include(
@@ -73,23 +74,24 @@ namespace thewall9.customer
                       "~/Scripts/angular-route.min.js",
                       "~/Scripts/angular-local-storage.min.js",
                       "~/Scripts/angular-block-ui.min.js",
-
                       "~/Scripts/angular-ui-tree.min.js"
+                      , "~/app/app.js"
 
-                      , "~/app/app.js",
-                        "~/app/services/myHttpService.js",
+                      , "~/app/filters/fromnow.js"
+
+                       , "~/app/services/myHttpService.js",
                 "~/app/services/authService.js",
                 "~/app/services/authInterceptorService.js",
                 "~/app/services/siteService.js",
                 "~/app/services/pageService.js",
                 "~/app/services/contentService.js",
-
                 "~/app/services/cultureService.js",
                 "~/app/services/toastrService.js",
                 "~/app/services/utilService.js",
 
                 "~/app/directives/fileread.js"
                 , "~/app/directives/tab.js"
+
 
                 , "~/app/controllers/appController.js",
                 "~/app/controllers/homeController.js",
@@ -113,12 +115,14 @@ namespace thewall9.customer
                 , "~/app/controllers/productController.js"
                 , "~/app/controllers/productsController.js"
 
+                , "~/app/services/orderService.js"
+                , "~/app/controllers/ordersController.js"
 
                 ));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862
-            //BundleTable.EnableOptimizations = true;
+            BundleTable.EnableOptimizations = true;
         }
     }
 }

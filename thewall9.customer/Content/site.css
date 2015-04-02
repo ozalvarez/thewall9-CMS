@@ -52,6 +52,9 @@ div.page-header h1 {
   background: #ffe8e8;
   border-color: #ffe8e8;
 }
+.tbl-details tbody tr td:nth-child(odd) {
+  background: #f8f8f8;
+}
 /*TREE*/
 .angular-ui-tree-handle {
   background: #fafafa;

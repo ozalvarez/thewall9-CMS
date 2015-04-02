@@ -17,11 +17,13 @@ namespace thewall9.data.binding
         public string Phone { get; set; }
         public string City { get; set; }
         public string Comment { get; set; }
+        public DateTime DateCreated { get; set; }
 
     }
     public class OrderBinding : OrderBase
     {
         public List<OrderProductBinding> Products { get; set; }
+        public string CurrencyName { get; set; }
     }
     public class OrderProductBase
     {
@@ -31,5 +33,6 @@ namespace thewall9.data.binding
     {
         public int ProductID { get; set; }
         public int OrderID { get; set; }
+        public string ProductAlias{ get; set; }
     }
 }

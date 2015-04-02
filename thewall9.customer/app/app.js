@@ -51,6 +51,10 @@ app.config(["$routeProvider", "blockUIConfig", function ($routeProvider, blockUI
         controller: 'productController',
         templateUrl: '/app/views/product.html'
     });
+    $routeProvider.when('/orders', {
+        controller: 'ordersController',
+        templateUrl: '/app/views/orders.html'
+    });
 
     $routeProvider.otherwise({ redirectTo: "/" });
 

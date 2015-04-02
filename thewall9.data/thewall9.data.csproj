@@ -125,6 +125,10 @@
     <Compile Include="Migrations\201504022105591_add-site-in-orders.Designer.cs">
       <DependentUpon>201504022105591_add-site-in-orders.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504022206372_add-datecreated-to-order.cs" />
+    <Compile Include="Migrations\201504022206372_add-datecreated-to-order.Designer.cs">
+      <DependentUpon>201504022206372_add-datecreated-to-order.cs</DependentUpon>
+    </Compile>
     <Compile Include="Order.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Category.cs" />
@@ -316,6 +320,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504022105591_add-site-in-orders.resx">
       <DependentUpon>201504022105591_add-site-in-orders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504022206372_add-datecreated-to-order.resx">
+      <DependentUpon>201504022206372_add-datecreated-to-order.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

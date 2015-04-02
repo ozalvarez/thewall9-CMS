@@ -1,7 +1,7 @@
-﻿app.controller('tagController', ['$scope', 'tagService', 'siteService', 'toastrService',
-    function ($scope, tagService, siteService, toastrService) {
+﻿app.controller('ordersController', ['$scope', 'orderService', 'siteService', 'toastrService',
+    function ($scope, orderService,siteService, toastrService) {
         $scope.get = function () {
-            tagService.get().then(function (data) {
+            orderService.get().then(function (data) {
                 $scope.data = data;
             });
         }
@@ -15,17 +15,11 @@
                 backdrop: true
             });
         };
-        $scope.save = function () {
-            tagService.save($scope.model).then(function (data) {
-                $scope.get();
-            });
-            $('#modal-new').modal('hide');
-        };
         $scope.delete = function (item) {
-            if (confirm("¿Estas seguro que deseas eliminar este Tag?")) {
-                tagService.remove(item.TagID).then(function (data) {
+            if (confirm("¿Estas seguro que deseas eliminar esta Orden?")) {
+                orderService.remove(item.OrderID).then(function (data) {
                     $scope.get();
-                    toastrService.success("Tag Eliminado");
+                    toastrService.success("Orden Eliminada");
                 });
             }
         };

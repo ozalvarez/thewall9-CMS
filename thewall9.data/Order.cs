@@ -27,6 +27,7 @@ namespace thewall9.data
             this.Phone = Model.Phone;
             this.SiteID = Model.SiteID;
             this.CurrencyID = Model.CurrencyID;
+            this.DateCreated = DateTime.Now;
 
             this.OrderProducts = new List<OrderProduct>();
             foreach (var item in Model.Products)

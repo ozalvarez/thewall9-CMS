@@ -9,40 +9,55 @@ using thewall9.data.Models;
 
 namespace thewall9.bll
 {
-    public class OrderBLL:BaseBLL
+    public class OrderBLL : BaseBLL
     {
-        private Tag GetByID(int TagID, ApplicationDbContext _c)
+        private Order GetByID(int OrderID, ApplicationDbContext _c)
         {
-            return _c.Tags.Where(m => m.TagID == TagID).SingleOrDefault();
+            return _c.Orders.Where(m => m.OrderID == OrderID).SingleOrDefault();
         }
-        public List<TagBinding> Get(int SiteID)
+        public List<OrderBinding> Get(int SiteID)
         {
-            using (var _c=db)
+            using (var _c = db)
             {
-                return _c.Tags.Where(m => m.SiteID == SiteID).Select(m=>new TagBinding
+                return _c.Orders.Where(m => m.SiteID == SiteID).Select(m => new OrderBinding
                 {
-                    TagID=m.TagID,
-                    TagName=m.TagName,
-                    SiteID=m.SiteID
+                    OrderID=m.OrderID,
+                    SiteID = m.SiteID,
+                    Address = m.Address,
+                    City = m.City,
+                    Comment = m.Comment,
+                    Email = m.Email,
+                    Name = m.Name,
+                    Phone = m.Phone,
+                    CurrencyID = m.CurrencyID,
+                    CurrencyName=m.Currency.CurrencyName,
+                    DateCreated=m.DateCreated,
+                    Products = m.OrderProducts.Select(op=>new OrderProductBinding
+                    {
+                        Number=op.Number,
+                        OrderID=op.OrderID,
+                        ProductID=op.ProductID,
+                        ProductAlias=op.Product.ProductAlias
+                    }).ToList()
                 }).ToList();
             }
         }
         public void Save(OrderBinding Model)
         {
-            using (var _c=db)
+            using (var _c = db)
             {
                 var _Order = new Order(Model);
                 _c.Orders.Add(_Order);
                 _c.SaveChanges();
             }
         }
-        public void Delete(int TagID, string UserID)
+        public void Delete(int OrderID, string UserID)
         {
             using (var _c = db)
             {
-                var _Tag = GetByID(TagID, _c);
-                Can(_Tag.SiteID, UserID, _c);
-                _c.Tags.Remove(_Tag);
+                var _Order = GetByID(OrderID, _c);
+                Can(_Order.SiteID, UserID, _c);
+                _c.Orders.Remove(_Order);
                 _c.SaveChanges();
             }
         }
