@@ -40,11 +40,18 @@ header.header {
         }
     }
 }
-.tbl-cart thead {
-  background: #f8f8f8;
+
+.list-group-autocomplete {
+    position: fixed;
+    z-index: 100;
 }
+
+.tbl-cart thead {
+    background: #f8f8f8;
+}
+
 .tbl-checkout tbody tr td:nth-child(odd) {
-  background: #f8f8f8;
+    background: #f8f8f8;
 }
 
 .navbar {
@@ -65,22 +72,25 @@ header.header {
     }
 }
 
-footer.footer{
-    background-color:#313131;
-    padding:10px;
-    h4{
-        margin:0px 0px 10px 0px;
-        padding:10px 0;
-        color:#eee;
-        border-bottom:1px solid #5d5d5d;
-    }
-    ul{
-        li{
-            color: #a09f9f;
-            a{
-                color: #a09f9f;
-                &:hover{
+footer.footer {
+    background-color: #313131;
+    padding: 10px;
 
+    h4 {
+        margin: 0px 0px 10px 0px;
+        padding: 10px 0;
+        color: #eee;
+        border-bottom: 1px solid #5d5d5d;
+    }
+
+    ul {
+        li {
+            color: #a09f9f;
+
+            a {
+                color: #a09f9f;
+
+                &:hover {
                 }
             }
         }

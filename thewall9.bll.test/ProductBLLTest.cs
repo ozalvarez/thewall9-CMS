@@ -233,5 +233,13 @@ namespace thewall9.bll.test
             Assert.IsNotNull(_P);
             Assert.IsTrue(_P.Categories.Count == 1);
         }
+        [TestMethod]
+        public void ProductGetByQuery()
+        {
+            SettingUp();
+            var _P = new ProductBLL().GetByQuery(_SiteID, _Cultures[0].Name, _ProductCurrencies[0].CurrencyID,"lazos",50,1);
+            Assert.IsNotNull(_P);
+            Assert.IsTrue(_P.Count>0);
+        }
     }
 }

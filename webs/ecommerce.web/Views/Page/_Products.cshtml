@@ -1,11 +1,14 @@
 ﻿@model thewall9.data.binding.ProductsWeb
+@{
+    var _PageModel = TempData["PageModel"] as thewall9.data.binding.PageWeb;
+}
 <script>
     var _Products=@Html.Raw(Json.Encode(Model));
 </script>
 <div class="row" ng-controller="productsController">
     <div class="col-md-3">
         <div class="subtitle">
-            Categories
+            @Html.FindValue(_PageModel, "categories")
         </div>
         <script type="text/ng-template" id="_categories.html">
             <a ng-href="/@Html.LinkCatalog()/{{item.FriendlyUrl}}/{{item.CategoryID}}" href="">
@@ -23,7 +26,7 @@
     </div>
     <div class="col-md-9">
         <div class="subtitle">
-            Products
+            @Html.FindValue(_PageModel, "products")
         </div>
         <div class="col-md-4" ng-repeat-start="item in data.Products">
             <div class="thumbnail">

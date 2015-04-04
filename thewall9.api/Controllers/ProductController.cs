@@ -10,7 +10,7 @@ using thewall9.data.binding;
 namespace thewall9.api.Controllers
 {
     [Authorize]
-    [RoutePrefix("api/Product")]
+    [RoutePrefix("api/product")]
     public class ProductController : ApiController
     {
         ProductBLL _ProductService = new ProductBLL();

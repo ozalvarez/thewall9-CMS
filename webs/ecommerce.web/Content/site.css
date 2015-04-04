@@ -30,6 +30,10 @@ header.header .btn-group-header ul.header-content b {
   display: block;
   color: #428BCA;
 }
+.list-group-autocomplete {
+  position: fixed;
+  z-index: 100;
+}
 .tbl-cart thead {
   background: #f8f8f8;
 }

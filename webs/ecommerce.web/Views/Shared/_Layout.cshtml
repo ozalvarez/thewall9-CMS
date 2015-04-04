@@ -13,6 +13,22 @@
     @RenderSection("styles", required: false)
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script>
+        var _ServiceBase = '@thewall9.web.parent.APP._API_URL';
+        var _SiteID = @thewall9.web.parent.APP._SiteID;
+        var _Active = '@ViewBag.Active';
+        var _Currencies=@Html.Raw(Json.Encode(Html.GetSite().Currencies));
+        var _CurrentCurrencyID=@Html.GetCurrentCurrencyID();
+        var _MoneySymbol = @Html.Raw(Json.Encode(Html.GetSite().Currencies[0]));
+        var _Lang='@thewall9.web.parent.APP._CurrentLang';
+        @{
+            var _Messages=Html.Find(_LayoutContent, "messages");
+        }
+        var _Message={
+            AddedCart:'@Html.FindValue(_Messages, "added-cart")'
+        }
+        var _SearchPage=1;
+    </script>
 </head>
 <body ng-controller="appController">
     <header class="container header">
@@ -25,7 +41,12 @@
             </div>
             @*SEARCH*@
             <div class="col-md-4 mtop">
-                <input type="text" class="form-control form-search" placeholder="@Html.FindValue(_LayoutContent, "search-text")" />
+                <input type="text" class="form-control form-search" placeholder="@Html.FindValue(_LayoutContent, "search-text")" ng-change="search(querySearch)" ng-model="querySearch" ng-keypress="enter($event)" />
+                <div class="list-group list-group-autocomplete" ng-show="searchData!=null && searchData.length>0">
+                    <a href="" ng-href="/p/{{item.FriendlyUrl}}" class="list-group-item" ng-repeat="item in searchData">
+                        {{item.ProductName}}
+                    </a>
+                </div>
             </div>
             @*CURRRENCIES*@
             <div class="col-md-2 mtop">
@@ -165,20 +186,7 @@
             </div>
         </div>
     </footer>
-    <script>
-        var _ServiceBase = '@thewall9.web.parent.APP._API_URL';
-        var _SiteID = @thewall9.web.parent.APP._SiteID;
-        var _Active = '@ViewBag.Active';
-        var _Currencies=@Html.Raw(Json.Encode(Html.GetSite().Currencies));
-        var _CurrentCurrencyID=@Html.GetCurrentCurrencyID();
-        var _MoneySymbol = @Html.Raw(Json.Encode(Html.GetSite().Currencies[0]));
-        @{
-            var _Messages=Html.Find(_LayoutContent, "messages");
-        }
-        var _Message={
-            AddedCart:'@Html.FindValue(_Messages, "added-cart")'
-        }
-    </script>
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/angularjs")

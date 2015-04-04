@@ -142,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseBLL.cs" />
+    <Compile Include="SearchBLL.cs" />
     <Compile Include="ProductBLL.cs" />
     <Compile Include="CategoryBLL.cs" />
     <Compile Include="OrderBLL.cs" />

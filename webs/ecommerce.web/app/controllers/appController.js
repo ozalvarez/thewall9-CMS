@@ -1,6 +1,6 @@
 ﻿'use strict';
-app.controller('appController', ['$scope', '$rootScope', 'productService',
-    function ($scope, $rootScope, productService) {
+app.controller('appController', ['$scope', '$rootScope', 'productService', 'searchService',
+    function ($scope, $rootScope, productService, searchService) {
         $scope.active = _Active;
 
         productService.initCart();
@@ -23,6 +23,21 @@ app.controller('appController', ['$scope', '$rootScope', 'productService',
                     $scope.currentCurrency = item;
                 }
             });
+        }
+
+        $scope.search = function (query) {
+            if (query.length > 3) {
+                searchService.get(query, 6).then(function (data) {
+                    $scope.searchData = data;
+                });
+            }
+        };
+        $scope.enter = function (keyEvent) {
+            if (keyEvent.which === 13) {
+                if ($scope.searchData.length > 0) {
+                    window.location="/p/" + $scope.searchData[0].FriendlyUrl;
+                }
+            }
         }
     }
 ]);

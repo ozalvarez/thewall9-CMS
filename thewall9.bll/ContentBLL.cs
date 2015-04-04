@@ -389,33 +389,6 @@ namespace thewall9.bll
                 return Save(Model);
             }
         }
-        public void Save(ContentEditBinding Model, string UserID)
-        {
-            using (var _c = db)
-            {
-                Can(Model.SiteID, UserID, _c);
-                foreach (var item in Model.Items)
-                {
-                    if (item.Edit || !string.IsNullOrEmpty(item.FileName))
-                    {
-                        var _ContentCulture = _c.ContentPropertyCultures.Where(m => m.ContentPropertyID == item.ContentPropertyID && m.CultureID == Model.CultureID).SingleOrDefault();
-                        if (_ContentCulture == null)
-                        {
-                            _ContentCulture = new ContentPropertyCulture();
-                            _ContentCulture.CultureID = Model.CultureID;
-                            _ContentCulture.ContentPropertyID = item.ContentPropertyID;
-                            _c.ContentPropertyCultures.Add(_ContentCulture);
-                        }
-                        _ContentCulture.Hint = item.Hint;
-                        if (item.ContentPropertyType == ContentPropertyType.IMG)
-                            _ContentCulture.ContentPropertyValue = SaveFile(item.ContentPropertyID, Model.CultureID, item.FileName, item.FileContent);
-                        else if (item.ContentPropertyType == ContentPropertyType.TXT || item.ContentPropertyType == ContentPropertyType.HTML)
-                            _ContentCulture.ContentPropertyValue = item.ContentPropertyValue;
-                        _c.SaveChanges();
-                    }
-                }
-            }
-        }
         public void SaveCulture(List<ContentCultureBinding> Model, string UserID)
         {
             using (var _c = db)
