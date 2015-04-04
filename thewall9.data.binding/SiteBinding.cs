@@ -30,6 +30,7 @@ namespace thewall9.data.binding
         public SiteBinding  Site { get; set; }
         public List<PageCultureBinding> Menu { get; set; }
         public List<PageCultureBinding> EcommercePages { get; set; }
+        public List<PageCultureBinding> OtherPages { get; set; }
         public ContentBindingList ContentLayout { get; set; }
         public List<CurrencyBinding> Currencies { get; set; }
     }

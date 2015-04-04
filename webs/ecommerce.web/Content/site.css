@@ -51,6 +51,22 @@ header.header .btn-group-header ul.header-content b {
   color: #4c7ed3;
   text-transform: uppercase;
 }
+footer.footer {
+  background-color: #313131;
+  padding: 10px;
+}
+footer.footer h4 {
+  margin: 0px 0px 10px 0px;
+  padding: 10px 0;
+  color: #eee;
+  border-bottom: 1px solid #5d5d5d;
+}
+footer.footer ul li {
+  color: #a09f9f;
+}
+footer.footer ul li a {
+  color: #a09f9f;
+}
 /*MISC*/
 .margin-top-10 {
   margin-top: 10px;

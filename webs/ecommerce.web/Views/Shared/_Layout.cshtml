@@ -1,6 +1,7 @@
 ﻿@{
     var _LayoutContent = Html.GetSite().ContentLayout;
     var _Menu = Html.GetMenu();
+    var _OtherPages = Html.GetSite().OtherPages;
 }
 <!DOCTYPE html>
 <html lang="@Html.Lang()" ng-app="app">
@@ -43,7 +44,7 @@
                     <ul class="dropdown-menu header-content" role="menu">
                         <li ng-repeat="item in currencies">
                             <a href="/change-currency?CurrencyID={{item.CurrencyID}}&Url=@Request.Url.AbsolutePath">
-                                <b>{{item.CurrencyName}}</b>
+                                <b><i class="fa fa-money"></i> {{item.CurrencyName}}</b>
                             </a>
                         </li>
                     </ul>
@@ -56,7 +57,7 @@
                         <span class="pull-left">
                             <i class="fa fa-shopping-cart icon-header"></i>
                         </span>
-                        <span class="pull-left">Shopping Cart: {{cart.length}} item(s)</span>
+                        <span class="pull-left">@Html.FindValue(_LayoutContent, "shopping-cart"): {{cart.length}} @Html.FindValue(_LayoutContent, "items")</span>
                         <span class="pull-right">
                             <i class="fa fa-caret-down"></i>
                         </span>
@@ -70,7 +71,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="/@Html.LinkCart()">Total: {{moneySymbol}} {{totalCart()}}</a>
+                            <a href="/@Html.LinkCart()">@Html.FindValue(_LayoutContent, "total"): {{moneySymbol}} {{totalCart()}}</a>
                         </li>
                     </ul>
                 </div>
@@ -110,6 +111,60 @@
     <div class="body container">
         @RenderBody()
     </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>@Html.FindValue(_LayoutContent, "other-pages")</h4>
+                    <ul class="list-unstyled">
+                        @{cont = 0;}
+                        @foreach (var item in _OtherPages)
+                        {
+                            <li>
+                                <a href="@(item.RedirectUrl!=null ? item.RedirectUrl : '/' + item.FriendlyUrl)">
+                                    @item.Name
+                                </a>
+                            </li>
+                            cont++;
+                        }
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h4>@Html.FindValue(_LayoutContent, "contact")</h4>
+                    <ul class="list-unstyled">
+                        <li>
+                            Email: <a href="mailto:info@nazcaboutique.com">info@nazcaboutique.com</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h4>@Html.FindValue(_LayoutContent, "follow")</h4>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="@Html.LinkFacebook()" target="_blank">
+                                <i class="fa fa-facebook-square"></i> Facebook
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Html.LinkTwitter()" target="_blank">
+                                <i class="fa fa-twitter-square"></i> Twitter
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Html.LinkInstagram()" target="_blank">
+                                <i class="fa fa-instagram"></i> Instagram
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Html.LinkTumblr()" target="_blank">
+                                <i class="fa fa-tumblr-square"></i> Tumblr
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
     <script>
         var _ServiceBase = '@thewall9.web.parent.APP._API_URL';
         var _SiteID = @thewall9.web.parent.APP._SiteID;

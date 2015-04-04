@@ -106,7 +106,32 @@ namespace thewall9.bll
                         }).ToList();
             }
         }
-
+        public List<PageCultureBinding> GetOtherPages(int SiteID, string Url, string Lang)
+        {
+            var _PageAlias = new string[4] { "cart", "checkout", "catalog", "order-sent" };
+            using (var _c = db)
+            {
+                var _Q = SiteID != 0
+                    ? from p in _c.PageCultures
+                      where p.Page.SiteID == SiteID && !p.Page.InMenu
+                      select p
+                     : from m in _c.PageCultures
+                       join u in _c.SiteUrls on m.Page.Site.SiteID equals u.SiteID
+                       where u.Url.Equals(Url) && !m.Page.InMenu
+                       select m;
+                return (from p in _Q
+                        where p.Culture.Name.Equals(Lang) && !_PageAlias.Contains(p.Page.Alias)
+                        orderby p.Page.Priority
+                        select new PageCultureBinding
+                        {
+                            CultureID = p.CultureID,
+                            FriendlyUrl = p.FriendlyUrl,
+                            RedirectUrl = p.RedirectUrl,
+                            Name = p.Name,
+                            PageAlias = p.Page.Alias
+                        }).ToList();
+            }
+        }
         public List<PageCultureBinding> GetSitemap(int SiteID, string Url)
         {
             using (var _c = db)

@@ -67,6 +67,7 @@ namespace thewall9.bll
                         Lang = _Site.Site.DefaultLang;
                     _Site.Menu = new PageBLL().GetMenu(SiteID, Url, Lang);
                     _Site.ContentLayout = new ContentBLL().GetContent(SiteID, Url, "layout", Lang);
+                    _Site.OtherPages = new PageBLL().GetOtherPages(SiteID, Url, Lang);
                     if (_Site.Site.ECommerce)
                     {
                         _Site.Currencies = new CurrencyBLL().Get(SiteID, Url);
