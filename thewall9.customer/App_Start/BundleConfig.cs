@@ -67,6 +67,8 @@ namespace thewall9.customer
                       "~/scripts/plugins/metisMenu/metisMenu.min.js",
                       "~/scripts/sb-admin-2.js"
                       , "~/Scripts/moment-with-locales.min.js"
+
+
                       ));
 
             bundles.Add(new ScriptBundle("~/bundles/intern/angular").Include(
@@ -75,6 +77,7 @@ namespace thewall9.customer
                       "~/Scripts/angular-local-storage.min.js",
                       "~/Scripts/angular-block-ui.min.js",
                       "~/Scripts/angular-ui-tree.min.js"
+                      , "~/Scripts/angular-file-upload-all.min.js"
                       , "~/app/app.js"
 
                       , "~/app/filters/fromnow.js"

@@ -84,3 +84,16 @@ div.page-header h1 {
   position: fixed;
   z-index: 100;
 }
+/*FILE UPLOAD*/
+.drop-box {
+  background: #F8F8F8;
+  border: 5px dashed #DDD;
+  text-align: center;
+  padding: 25px;
+}
+.drop-box.dragover {
+  border: 5px dashed blue;
+}
+.drop-box.dragover-err {
+  border: 5px dashed red;
+}

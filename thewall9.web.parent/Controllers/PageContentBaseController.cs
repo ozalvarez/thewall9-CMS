@@ -90,16 +90,17 @@ namespace thewall9.web.parent.Controllers
         }
         public ActionResult Product(string FriendlyUrl)
         {
-            var _Model = ProductService.Get(APP._SiteID, Request.Url.Authority,FriendlyUrl, APP._CurrentCurrencyID);
-            if (_Model == null)
+            var _Product = ProductService.Get(APP._SiteID, Request.Url.Authority,FriendlyUrl, APP._CurrentCurrencyID);
+            if (_Product == null)
                 throw new HttpException(404, "Page Not Found");
             else
             {
-                ViewBag.Title = _Model.ProductName;
-                ViewBag.MetaDescription = _Model.ProductName+" "+_Model.Price;
-                //ViewBag.Active = "page-" + FriendlyUrl;
-                APP._CurrentLang = _Model.CultureName;
-                return View(_Model);
+                ViewBag.Title = _Product.ProductName;
+                ViewBag.MetaDescription = _Product.ProductName+" "+_Product.Price;
+                ViewBag.Product = _Product;
+                var _Model= PageService.GetByAlias(APP._SiteID, Request.Url.Authority,"product",_Product.CultureName);
+                APP._CurrentLang = _Product.CultureName;
+                return View(_Model.Page.ViewRender, _Model);
             }
         }
         public PartialViewResult GetProducts(int CategoryID = 0, int Page = 1)

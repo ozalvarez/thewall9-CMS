@@ -1,5 +1,5 @@
 ﻿var app = angular.module('app',
-    ['ngRoute', 'LocalStorageModule', 'blockUI', 'ui.tree']);
+    ['ngRoute', 'LocalStorageModule', 'blockUI', 'ui.tree','angularFileUpload']);
 
 app.config(["$routeProvider", "blockUIConfig", function ($routeProvider, blockUIConfig) {
 

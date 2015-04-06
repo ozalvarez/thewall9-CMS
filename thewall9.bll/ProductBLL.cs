@@ -9,6 +9,7 @@ using thewall9.data;
 using thewall9.data.binding;
 using thewall9.data.Models;
 using thewall9.bll.Utils;
+using System.IO;
 namespace thewall9.bll
 {
     public class ProductBLL : BaseBLL
@@ -38,6 +39,12 @@ namespace thewall9.bll
                 ProductName = m.ProductName,
                 ProductID = m.ProductID,
                 CultureName = m.Culture.Name,
+
+                Galleries = m.Product.ProductGalleries.Select(m2 => new ProductGalleryBinding
+                {
+                    PhotoPath = m2.PhotoPath
+                }).ToList(),
+
                 //TO-DO OPTIMIZE ME
                 Price = (CurrencyID == 0 || !m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).Any())
                 ? (m.Product.ProductCurrencies.Any()
@@ -410,6 +417,48 @@ namespace thewall9.bll
                             TagID = cc.TagID,
                             TagName = cc.TagName
                         }).Distinct().ToList();
+            }
+        }
+        //Gallery
+        public ProductGalleryBinding AddGallery(int ProductID, string TempPath, string FileName, string UserID)
+        {
+            using (var _c = db)
+            {
+                var _Gallery = new ProductGallery(ProductID, null);
+                _c.ProductGalleries.Add(_Gallery);
+                _c.SaveChanges();
+
+                Can(GetByID(ProductID, _c).SiteID, UserID, _c);
+                FileStream stream = new FileStream(TempPath, FileMode.Open);
+                var _Container = "product-gallery";
+                var _ContainerReference = _Gallery.ProductGalleryID + "/" + FileName;
+                new Utils.FileUtil().UploadImage(stream, _Container, _ContainerReference);
+                var _Path = StorageUrl + "/" + _Container + "/" + _ContainerReference;
+
+                var _Model = _c.ProductGalleries.Where(m => m.ProductGalleryID == _Gallery.ProductGalleryID).FirstOrDefault();
+                _Model.PhotoPath = _Path;
+                _c.SaveChanges();
+                return new ProductGalleryBinding
+                {
+                    PhotoPath = _Path,
+                    ProductGalleryID = _Gallery.ProductGalleryID,
+                    ProductID = ProductID
+                };
+
+            }
+        }
+        public void DeleteGallery(int GalleryID, string UserID)
+        {
+            using (var _c = db)
+            {
+                var _Model = _c.ProductGalleries.Where(m => m.ProductGalleryID == GalleryID).FirstOrDefault();
+                Can(_Model.Product.SiteID, UserID, _c);
+                _c.ProductGalleries.Remove(_Model);
+                _c.SaveChanges();
+
+                var _Container = "product-gallery";
+                var _ContainerReference = GalleryID;
+                new Utils.FileUtil().DeleteFolder(_Container, GalleryID + "/");
             }
         }
         #endregion

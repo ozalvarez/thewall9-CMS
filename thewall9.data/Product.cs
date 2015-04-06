@@ -59,6 +59,11 @@ namespace thewall9.data
     {
         [ForeignKey("ProductID")]
         public virtual Product Product { get; set; }
+        public ProductGallery() { }
+        public ProductGallery(int ProductID, string Path) {
+            this.ProductID = ProductID;
+            this.PhotoPath = Path;
+        }
     }
     public class ProductCurrency : ProductCurrencyBase
     {

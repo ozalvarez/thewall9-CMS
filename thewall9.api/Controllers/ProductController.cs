@@ -10,7 +10,7 @@ using thewall9.data.binding;
 namespace thewall9.api.Controllers
 {
     [Authorize]
-    [RoutePrefix("api/product")]
+    [RoutePrefix("api/Product")]
     public class ProductController : ApiController
     {
         ProductBLL _ProductService = new ProductBLL();
@@ -24,7 +24,7 @@ namespace thewall9.api.Controllers
         [AllowAnonymous]
         public IHttpActionResult Get(int SiteID, string Url, string FriendlyUrl, int CurrencyID)
         {
-            return Ok(_ProductService.Get(SiteID, Url,FriendlyUrl, CurrencyID));
+            return Ok(_ProductService.Get(SiteID, Url, FriendlyUrl, CurrencyID));
         }
         #endregion
 
@@ -41,6 +41,12 @@ namespace thewall9.api.Controllers
         public IHttpActionResult PostSave(ProductBinding Model)
         {
             return Ok(_ProductService.Save(Model, User.Identity.GetUserId()));
+        }
+        [Route("gallery")]
+        public IHttpActionResult DeleteGallery(int GalleryID)
+        {
+            _ProductService.DeleteGallery(GalleryID, User.Identity.GetUserId());
+            return Ok();
         }
         [Route("move")]
         public IHttpActionResult PostMove(ProductUpdatePriorities Model)

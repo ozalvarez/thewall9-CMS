@@ -17,6 +17,10 @@ namespace thewall9.web.parent.BLL
         {
             return DownloadObject<PageWeb>("api/page?SiteID=" + SiteID + "&Url=" + Url + "&FriendlyUrl=" + FriendlyUrl);
         }
+        public PageWeb GetByAlias(int SiteID, string Url, string Alias, string Lang)
+        {
+            return DownloadObject<PageWeb>("api/page?SiteID=" + SiteID + "&Url=" + Url + "&Alias=" + Alias + "&Lang=" + Lang);
+        }
         public string GetPageFriendlyUrl(int SiteID, string Url, string FriendlyUrl, string TargetLang)
         {
             return DownloadObject<string>("api/page?SiteID=" + SiteID + "&Url=" + Url + "&FriendlyUrl=" + FriendlyUrl+"&TargetLang="+TargetLang);

@@ -13,6 +13,47 @@ namespace thewall9.bll
     public class PageBLL : BaseBLL
     {
         #region WEB
+        public PageWeb GetPageByAlias(int SiteID, string Url, string Alias, string Lang)
+        {
+            var _Page = new PageWeb();
+            _Page.Page = GetPageCultureBindingByAlias(SiteID, Url, Alias,Lang);
+            _Page.Content = new ContentBLL().GetContent(SiteID, Url, Alias, Lang);
+            return _Page;
+        }
+        private PageCultureBinding GetPageCultureBindingByAlias(int SiteID, string Url, string Alias, string Lang)
+        {
+            using (var _c = db)
+            {
+                var _Q = SiteID != 0
+                    ? from p in _c.PageCultures
+                      where p.Page.SiteID == SiteID
+                      select p
+                     : from m in _c.PageCultures
+                       join u in _c.SiteUrls on m.Page.Site.SiteID equals u.SiteID
+                       where u.Url.Equals(Url)
+                       select m;
+
+                var _Pages = (from p in _Q
+                              where p.Page.Alias.ToLower().Equals(Alias) && p.Culture.Name.ToLower().Equals(Lang)
+                              select new PageCultureBinding
+                              {
+                                  CultureID = p.CultureID,
+                                  FriendlyUrl = p.FriendlyUrl,
+                                  MetaDescription = p.MetaDescription,
+                                  PageID = p.PageID,
+                                  Published = p.Published,
+                                  TitlePage = p.TitlePage,
+                                  ViewRender = p.ViewRender,
+                                  RedirectUrl = p.RedirectUrl,
+                                  Name = p.Name,
+                                  CultureName = p.Culture.Name,
+                                  PageAlias = p.Page.Alias
+                              }).FirstOrDefault();
+                if (_Pages == null)
+                    throw new RuleException("No existe página con ese Alias en ese Lang no existe", "0x000");
+                return _Pages;
+            }
+        }
         public PageWeb GetPage(int SiteID, string Url, string FriendlyUrl)
         {
             var _Page = new PageWeb();
@@ -20,6 +61,7 @@ namespace thewall9.bll
             _Page.Content = new ContentBLL().GetContent(SiteID, Url, _Page.Page.PageAlias, _Page.Page.CultureName);
             return _Page;
         }
+
         private PageCultureBinding GetPageCultureBinding(int SiteID, string Url, string FriendlyUrl)
         {
             using (var _c = db)

@@ -232,6 +232,7 @@
     <Content Include="robot.txt" />
     <Content Include="Scripts\angular-block-ui.js" />
     <Content Include="Scripts\angular-block-ui.min.js" />
+    <Content Include="Scripts\angular-file-upload-all.min.js" />
     <Content Include="Scripts\angular-local-storage.min.js" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular-route.js" />
@@ -311,7 +312,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\themes\base\images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
