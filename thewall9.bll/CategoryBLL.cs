@@ -14,12 +14,12 @@ namespace thewall9.bll
     {
 
         #region Web
-        public Culture GetCulture(int SiteID, string Lang,string FriendlyUrl, ApplicationDbContext _c)
+        public Culture GetCulture(int SiteID, string Lang, string FriendlyUrl, ApplicationDbContext _c)
         {
             if (!string.IsNullOrEmpty(Lang))
                 return new CultureBLL().GetByName(SiteID, Lang);
             else if (!string.IsNullOrEmpty(FriendlyUrl))
-                return _c.CategoryCultures.Where(m => m.Category.SiteID == SiteID && m.FriendlyUrl.ToLower().Equals(FriendlyUrl.ToLower())).Select(m=>m.Culture).FirstOrDefault();
+                return _c.CategoryCultures.Where(m => m.Category.SiteID == SiteID && m.FriendlyUrl.ToLower().Equals(FriendlyUrl.ToLower())).Select(m => m.Culture).FirstOrDefault();
             else throw new RuleException("Friendly URL & Lang NULL");
         }
         private IQueryable<CategoryCulture> Get(int SiteID, int CultureID, int CategoryID, ApplicationDbContext _c)
@@ -53,12 +53,25 @@ namespace thewall9.bll
             {
                 if (SiteID == 0)
                     SiteID = new SiteBLL().Get(Url, _c).SiteID;
-                int CultureID=GetCulture(SiteID,Lang,FriendlyUrl,_c).CultureID;
+                int CultureID = GetCulture(SiteID, Lang, FriendlyUrl, _c).CultureID;
                 var _Category = Get(SiteID, CultureID, CategoryID, _c).ToList();
                 return GetTree(_Category, SiteID, CultureID, CategoryID, _c);
             }
         }
-
+        public CategoryWeb Get(int CategoryID, int CultureID)
+        {
+            using (var _c = db)
+            {
+                return (from m in _c.CategoryCultures
+                        where m.CategoryID == CategoryID
+                         && m.Culture.CultureID == CultureID
+                        select new CategoryWeb
+                     {
+                         CategoryName = m.CategoryName,
+                         CategoryID = m.CategoryID
+                     }).FirstOrDefault();
+            }
+        }
         #endregion
 
         #region Customer

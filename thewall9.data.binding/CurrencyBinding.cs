@@ -13,6 +13,7 @@ namespace thewall9.data.binding
         public bool Default { get; set; }
         public int SiteID { get; set; }
         public string MoneySymbol { get; set; }
+        public double ShippingPrice { get; set; }
     }
     public class CurrencyBinding:CurrencyBase
     {

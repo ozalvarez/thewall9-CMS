@@ -6,7 +6,7 @@ app.controller('appController', ['$scope', '$rootScope', 'productService', 'sear
         productService.initCart();
 
         $scope.totalCart = function () {
-            return productService.totalCart();
+            return productService.totalCart($scope.currentCurrency.ShippingPrice);
         }
         $scope.cart = productService.cart;
 

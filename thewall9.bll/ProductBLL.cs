@@ -65,6 +65,10 @@ namespace thewall9.bll
                 _PW.Categories = new CategoryBLL().Get(SiteID, null, CategoryID, Lang, FriendlyUrl);
                 _PW.CultureID = _Culture.CultureID;
                 _PW.CultureName = _Culture.Name;
+                if (CategoryID != 0)
+                {
+                    _PW.Category = new CategoryBLL().Get(CategoryID, _Culture.CultureID);
+                }
                 return _PW;
             }
         }

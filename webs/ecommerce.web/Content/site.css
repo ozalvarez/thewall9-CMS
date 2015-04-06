@@ -30,6 +30,12 @@ header.header .btn-group-header ul.header-content b {
   display: block;
   color: #428BCA;
 }
+.thumbnail-products {
+  height: 400px;
+}
+.thumbnail-products .description {
+  height: 90px;
+}
 .list-group-autocomplete {
   position: fixed;
   z-index: 100;

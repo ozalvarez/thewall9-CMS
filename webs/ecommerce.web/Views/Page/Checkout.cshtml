@@ -1,38 +1,39 @@
-﻿<div ng-controller="checkoutController">
+﻿@model thewall9.data.binding.PageWeb
+<div ng-controller="checkoutController">
     <div class="subtitle">
-        Checkout
+        @Html.FindValue(Model, "title")
     </div>
     <form ng-submit="sendOrder('@Html.LinkOrderSent()')">
         <table class="table table-bordered tbl-checkout">
             <tbody>
                 <tr>
-                    <td>First Name</td>
+                    <td>@Html.FindValue(Model, "name")</td>
                     <td>
                         <input type="text" name="" class="form-control" required/>
                     </td>
-                    <td>Email</td>
+                    <td>@Html.FindValue(Model, "email")</td>
                     <td>
                         <input type="text" name="" class="form-control" required />
                     </td>
                 </tr>
                 <tr>
-                    <td>Telephone</td>
+                    <td>@Html.FindValue(Model, "phone")</td>
                     <td>
                         <input type="text" name="" class="form-control" required />
                     </td>
-                    <td>City</td>
+                    <td>@Html.FindValue(Model, "city")</td>
                     <td>
                         <input type="text" name="" class="form-control" />
                     </td>
                 </tr>
                 <tr>
-                    <td>Address</td>
+                    <td>@Html.FindValue(Model, "address")</td>
                     <td colspan="3">
                         <textarea name="" class="form-control" required></textarea>
                     </td>
                 </tr>
                 <tr>
-                    <td>Comment</td>
+                    <td>@Html.FindValue(Model, "comment")</td>
                     <td colspan="3">
                         <textarea name="" class="form-control"></textarea>
                     </td>
@@ -42,12 +43,13 @@
         <table class="table table-bordered tbl-cart">
             <thead>
                 <tr>
-                    <td class="hidden-xs">Image</td>
-                    <td>Product Name</td>
-                    <td class="td-qty">Quantity</td>
-                    <td>Unit Price</td>
-                    <td>Sub Total</td>
-                    <td>Remove</td>
+                    <td class="hidden-xs">@Html.FindValue(Model, "header-image")</td>
+                    <td>@Html.FindValue(Model, "header-product-name")</td>
+                    <td class="td-qty">@Html.FindValue(Model, "header-quantity")</td>
+                    <td>@Html.FindValue(Model, "header-unit-price")</td>
+                    <td>@Html.FindValue(Model, "header-subtotal")</td>
+                    <td>@Html.FindValue(Model, "header-remove")</td>
+                </tr>
                 </tr>
             </thead>
             <tbody>
@@ -88,17 +90,17 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4">Shipping Rate</td>
-                    <td colspan="2">{{moneySymbol}} 5</td>
+                    <td colspan="4">@Html.FindValue(Model, "shipping")</td>
+                    <td colspan="2">{{moneySymbol}} {{currentCurrency.ShippingPrice}}</td>
                 </tr>
                 <tr>
-                    <td colspan="4">Total</td>
+                    <td colspan="4">@Html.FindValue(Model, "total")</td>
                     <td colspan="2">{{moneySymbol}} {{totalCart()}}</td>
                 </tr>
             </tbody>
         </table>
         <button type="submit" class="btn btn-primary">
-            Confirm Order <i class="fa fa-arrow-circle-right"></i>
+            @Html.FindValue(Model, "confirm") <i class="fa fa-arrow-circle-right"></i>
         </button>
     </form>
 </div>

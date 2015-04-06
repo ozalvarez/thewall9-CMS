@@ -33,7 +33,8 @@ namespace thewall9.bll
                 {
                     CurrencyID = m.CurrencyID,
                     CurrencyName = m.CurrencyName,
-                    MoneySymbol = m.MoneySymbol
+                    MoneySymbol = m.MoneySymbol,
+                    ShippingPrice=m.ShippingPrice
                 }).ToList();
             }
         }
@@ -54,7 +55,8 @@ namespace thewall9.bll
                     CurrencyName = m.CurrencyName,
                     Default = m.Default,
                     SiteID = m.SiteID,
-                    MoneySymbol = m.MoneySymbol
+                    MoneySymbol = m.MoneySymbol,
+                    ShippingPrice = m.ShippingPrice
                 }).ToList();
             }
         }
@@ -66,7 +68,6 @@ namespace thewall9.bll
                 Currency _C = new Currency();
                 if (Model.CurrencyID == 0)
                 {
-                    _C.CurrencyName = Model.CurrencyName;
                     _C.Default = false;
                     _C.SiteID = Model.SiteID;
                     _c.Currencies.Add(_C);
@@ -77,6 +78,7 @@ namespace thewall9.bll
                 }
                 _C.CurrencyName = Model.CurrencyName;
                 _C.MoneySymbol = Model.MoneySymbol;
+                _C.ShippingPrice = Model.ShippingPrice;
                 _c.SaveChanges();
                 return _C.CurrencyID;
             }

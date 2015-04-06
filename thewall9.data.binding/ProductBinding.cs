@@ -50,6 +50,7 @@ namespace thewall9.data.binding
         public int NumberPages { get; set; }
         public int CultureID { get; set; }
         public string CultureName { get; set; }
+        public CategoryWeb Category { get; set; }
     }
 
     public class ProductTagBinding

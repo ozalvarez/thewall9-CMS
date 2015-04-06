@@ -129,6 +129,10 @@
     <Compile Include="Migrations\201504022206372_add-datecreated-to-order.Designer.cs">
       <DependentUpon>201504022206372_add-datecreated-to-order.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504061549424_add-shipping-price.cs" />
+    <Compile Include="Migrations\201504061549424_add-shipping-price.Designer.cs">
+      <DependentUpon>201504061549424_add-shipping-price.cs</DependentUpon>
+    </Compile>
     <Compile Include="Order.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Category.cs" />
@@ -323,6 +327,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504022206372_add-datecreated-to-order.resx">
       <DependentUpon>201504022206372_add-datecreated-to-order.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504061549424_add-shipping-price.resx">
+      <DependentUpon>201504061549424_add-shipping-price.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

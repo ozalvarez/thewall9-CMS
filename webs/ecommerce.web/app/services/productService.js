@@ -1,6 +1,6 @@
 ﻿'use strict';
-app.factory('productService', ["$myhttp", "$q", 'localStorageService',
-    function ($http, $q, localStorageService) {
+app.factory('productService', ["$myhttp", "$q", 'localStorageService','toastrService',
+    function ($http, $q, localStorageService, toastrService) {
         var uri = 'api/product';
         var uriOrder = 'api/order';
         var productFactory = {};
@@ -31,12 +31,12 @@ app.factory('productService', ["$myhttp", "$q", 'localStorageService',
             }
             localStorageService.set('_cart', productFactory.cart);
         };
-        productFactory.totalCart = function () {
+        productFactory.totalCart = function (shippingPrice) {
             var _Total = 0;
             angular.forEach(productFactory.cart, function (item) {
                 _Total += (item.Number * item.Price);
             });
-            return _Total;
+            return _Total + shippingPrice;
         }
         productFactory.removeCart = function (item) {
             var index = productFactory.cart.indexOf(item);
@@ -51,15 +51,20 @@ app.factory('productService', ["$myhttp", "$q", 'localStorageService',
         }
         productFactory.sendOrder = function () {
             var deferred = $q.defer();
-            $http.post(_ServiceBase + uriOrder, {
-                CurrencyID: _CurrentCurrencyID,
-                SiteID:_SiteID,
-                Products: productFactory.cart
-            }).then(function (data) {
-                productFactory.cart = [];
-                localStorageService.remove('_cart');
-                deferred.resolve(data);
-            });
+            if (productFactory.cart.length <= 0) {
+                toastrService.error('Cart is Empty');
+                deferred.reject();
+            } else {
+                $http.post(_ServiceBase + uriOrder, {
+                    CurrencyID: _CurrentCurrencyID,
+                    SiteID: _SiteID,
+                    Products: productFactory.cart
+                }).then(function (data) {
+                    productFactory.cart = [];
+                    localStorageService.remove('_cart');
+                    deferred.resolve(data);
+                });
+            }
             return deferred.promise;
         }
         return productFactory;

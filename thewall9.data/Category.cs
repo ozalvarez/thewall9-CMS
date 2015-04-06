@@ -14,6 +14,7 @@ namespace thewall9.data
         [ForeignKey("SiteID")]
         public virtual Site Site { get; set; }
         public virtual List<CategoryCulture> CategoryCultures { get; set; }
+        public virtual List<ProductCategory> ProductCategories { get; set; }
     }
     public class CategoryCulture : CategoryCultureBase
     {

@@ -1,16 +1,17 @@
-﻿<div ng-controller="cartController">
+﻿@model thewall9.data.binding.PageWeb
+<div ng-controller="cartController">
     <div class="subtitle">
-        Shopping Cart
+        @Html.FindValue(Model, "title")
     </div>
     <table class="table table-bordered tbl-cart">
         <thead>
             <tr>
-                <td class="hidden-xs">Image</td>
-                <td>Product Name</td>
-                <td class="td-qty">Quantity</td>
-                <td>Unit Price</td>
-                <td>Sub Total</td>
-                <td>Remove</td>
+                <td class="hidden-xs">@Html.FindValue(Model, "header-image")</td>
+                <td>@Html.FindValue(Model, "header-product-name")</td>
+                <td class="td-qty">@Html.FindValue(Model, "header-quantity")</td>
+                <td>@Html.FindValue(Model, "header-unit-price")</td>
+                <td>@Html.FindValue(Model, "header-subtotal")</td>
+                <td>@Html.FindValue(Model, "header-remove")</td>
             </tr>
         </thead>
         <tbody>
@@ -53,10 +54,10 @@
     </table>
     <div class="btn-group btns-cart">
         <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("Index","Product")'">
-            <i class="fa fa-arrow-circle-left"></i> Continue Shopping
+            <i class="fa fa-arrow-circle-left"></i> @Html.FindValue(Model, "continue-shopping")
         </button>
         <button type="button" class="btn btn-primary" onclick="window.location='@Html.LinkCheckout()'">
-            Checkout <i class="fa fa-arrow-circle-right"></i>
+            @Html.FindValue(Model, "checkout") <i class="fa fa-arrow-circle-right"></i>
         </button>
     </div>
 </div>
