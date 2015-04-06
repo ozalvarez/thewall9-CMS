@@ -169,6 +169,7 @@
     <Content Include="app\services\searchService.js" />
     <Content Include="app\services\productService.js" />
     <Content Include="app\services\toastrService.js" />
+    <Content Include="app\services\messagesService.js" />
     <Content Include="app\services\utilService.js" />
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Content\angular-block-ui.css" />

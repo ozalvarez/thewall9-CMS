@@ -1,6 +1,6 @@
 ﻿'use strict';
-app.factory('productService', ["$myhttp", "$q", 'localStorageService','toastrService',
-    function ($http, $q, localStorageService, toastrService) {
+app.factory('productService', ["$myhttp", "$q", 'localStorageService','toastrService','messagesService',
+    function ($http, $q, localStorageService, toastrService,messagesService) {
         var uri = 'api/product';
         var uriOrder = 'api/order';
         var productFactory = {};
@@ -52,7 +52,7 @@ app.factory('productService', ["$myhttp", "$q", 'localStorageService','toastrSer
         productFactory.sendOrder = function () {
             var deferred = $q.defer();
             if (productFactory.cart.length <= 0) {
-                toastrService.error('Cart is Empty');
+                toastrService.error(messagesService.get('cart-empty'));
                 deferred.reject();
             } else {
                 $http.post(_ServiceBase + uriOrder, {

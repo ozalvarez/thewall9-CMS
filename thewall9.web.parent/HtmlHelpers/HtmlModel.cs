@@ -133,5 +133,26 @@ namespace thewall9.web.parent.HtmlHelpers
         {
             return new MvcHtmlString("http://instagram.com/" + APP._Langs.Where(m => m.Name == APP._CurrentLang).FirstOrDefault().Instagram);
         }
+
+        //MESSAGES
+        public static MvcHtmlString MessagesJson(this HtmlHelper helper)
+        {
+            var _List = new List<MessageModel>();
+            var _CL = FindItems(helper, APP._Site.ContentLayout, "messages");
+            foreach (var item in _CL)
+            {
+                _List.Add(new MessageModel
+                {
+                    Alias = item.ContentPropertyAlias,
+                    Value = item.ContentCultures.ToList()[0].ContentPropertyValue
+                });
+            }
+            return new MvcHtmlString(Newtonsoft.Json.JsonConvert.SerializeObject(_List));
+        }
+    }
+    public class MessageModel
+    {
+        public string Alias { get; set; }
+        public string Value { get; set; }
     }
 }

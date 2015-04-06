@@ -361,6 +361,10 @@ namespace thewall9.bll
                 Can(_Category.SiteID, UserID, _c);
                 _c.Products.Remove(_Category);
                 _c.SaveChanges();
+
+                var _Container = "product-gallery";
+                var _ContainerReference = ProductID + "/";
+                new Utils.FileUtil().DeleteFolder(_Container, _ContainerReference);
             }
         }
         public void UpdatePriorities(ProductUpdatePriorities Model, string UserID)
@@ -431,7 +435,7 @@ namespace thewall9.bll
                 Can(GetByID(ProductID, _c).SiteID, UserID, _c);
                 FileStream stream = new FileStream(TempPath, FileMode.Open);
                 var _Container = "product-gallery";
-                var _ContainerReference = _Gallery.ProductGalleryID + "/" + FileName;
+                var _ContainerReference = ProductID + "/"+ _Gallery.ProductGalleryID + "/" + FileName;
                 new Utils.FileUtil().UploadImage(stream, _Container, _ContainerReference);
                 var _Path = StorageUrl + "/" + _Container + "/" + _ContainerReference;
 
@@ -457,8 +461,8 @@ namespace thewall9.bll
                 _c.SaveChanges();
 
                 var _Container = "product-gallery";
-                var _ContainerReference = GalleryID;
-                new Utils.FileUtil().DeleteFolder(_Container, GalleryID + "/");
+                var _ContainerReference = _Model.ProductID + "/" + GalleryID;
+                new Utils.FileUtil().DeleteFolder(_Container, _ContainerReference);
             }
         }
         #endregion

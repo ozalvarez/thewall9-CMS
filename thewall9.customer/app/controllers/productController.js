@@ -101,16 +101,20 @@
         $scope.save = function () {
             if ($scope.model.ProductCategories != null && $scope.model.ProductCategories.length > 0) {
                 productService.save($scope.model).then(function (data) {
-                    var _ProductID = $scope.model.ProductID == 0 ? data : $scope.model.ProductID;
+                    $scope.model.ProductID = $scope.model.ProductID == null ? data : $scope.model.ProductID;
+                    console.log(_ProductID);
                     //UPLOAD FILES
                     if ($scope.model.Files && $scope.model.Files.length) {
                         for (var i = 0; i < $scope.model.Files.length; i++) {
                             var file = $scope.model.Files[i];
-                            productService.uploadGallery(_ProductID, file).progress(function (evt) {
+                            productService.uploadGallery($scope.model.ProductID, file).progress(function (evt) {
                                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                                 //console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
                             }).success(function (data, status, headers, config) {
                                 //console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+                                if ($scope.model.ProductGalleries == null) {
+                                    $scope.model.ProductGalleries = [];
+                                }
                                 $scope.model.ProductGalleries.push(data);
                                 $scope.model.Files = [];
                             });
@@ -124,7 +128,7 @@
         };
         $scope.delete = function (item) {
             if (confirm("¿Estas seguro que deseas eliminar este producto?")) {
-                productService.remove(item.productID).then(function (data) {
+                productService.remove(item.ProductID).then(function (data) {
                     $scope.get();
                     toastrService.success("Producto Eliminado");
                 });

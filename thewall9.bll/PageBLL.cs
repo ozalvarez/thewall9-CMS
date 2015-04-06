@@ -12,7 +12,9 @@ namespace thewall9.bll
 {
     public class PageBLL : BaseBLL
     {
+
         #region WEB
+        string[] _EcommercePageAlias = new string[5] { "cart", "checkout", "catalog", "order-sent","product" };
         public PageWeb GetPageByAlias(int SiteID, string Url, string Alias, string Lang)
         {
             var _Page = new PageWeb();
@@ -124,7 +126,6 @@ namespace thewall9.bll
         }
         public List<PageCultureBinding> GetEcommercePages(int SiteID, string Url, string Lang)
         {
-            var _PageAlias = new string[4] { "cart", "checkout", "catalog", "order-sent" };
             using (var _c = db)
             {
                 var _Q = SiteID != 0
@@ -136,7 +137,7 @@ namespace thewall9.bll
                        where u.Url.Equals(Url)
                        select m;
                 return (from p in _Q
-                        where p.Culture.Name.Equals(Lang) && _PageAlias.Contains(p.Page.Alias)
+                        where p.Culture.Name.Equals(Lang) && _EcommercePageAlias.Contains(p.Page.Alias)
                         orderby p.Page.Priority
                         select new PageCultureBinding
                         {
@@ -150,7 +151,6 @@ namespace thewall9.bll
         }
         public List<PageCultureBinding> GetOtherPages(int SiteID, string Url, string Lang)
         {
-            var _PageAlias = new string[4] { "cart", "checkout", "catalog", "order-sent" };
             using (var _c = db)
             {
                 var _Q = SiteID != 0
@@ -162,7 +162,7 @@ namespace thewall9.bll
                        where u.Url.Equals(Url) && !m.Page.InMenu
                        select m;
                 return (from p in _Q
-                        where p.Culture.Name.Equals(Lang) && !_PageAlias.Contains(p.Page.Alias)
+                        where p.Culture.Name.Equals(Lang) && !_EcommercePageAlias.Contains(p.Page.Alias)
                         orderby p.Page.Priority
                         select new PageCultureBinding
                         {

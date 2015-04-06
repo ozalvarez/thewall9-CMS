@@ -86,6 +86,7 @@ footer.footer ul li a {
   margin-right: 5px;
 }
 .navbar-default {
+  border-width: 0px;
   border-radius: 0px;
   background-color: #535252;
   border-color: #428bca;

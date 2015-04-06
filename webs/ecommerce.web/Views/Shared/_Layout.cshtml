@@ -21,16 +21,12 @@
         var _CurrentCurrencyID=@Html.GetCurrentCurrencyID();
         var _MoneySymbol = @Html.Raw(Json.Encode(Html.GetSite().Currencies[0]));
         var _Lang='@thewall9.web.parent.APP._CurrentLang';
-        @{
-            var _Messages=Html.Find(_LayoutContent, "messages");
-        }
-        var _Message={
-            AddedCart:'@Html.FindValue(_Messages, "added-cart")'
-        }
+        var _Messages=@Html.MessagesJson();
         var _SearchPage=1;
     </script>
 </head>
 <body ng-controller="appController">
+
     <header class="container header">
         <div class="row">
             @*LOGO*@

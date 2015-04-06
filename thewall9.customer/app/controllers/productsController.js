@@ -7,7 +7,7 @@
         }
         $scope.delete = function (item) {
             if (confirm("¿Estas seguro que deseas eliminar este producto?")) {
-                productService.remove(item.productID).then(function (data) {
+                productService.remove(item.ProductID).then(function (data) {
                     $scope.get();
                     toastrService.success("Producto Eliminado");
                 });
