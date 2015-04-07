@@ -25,9 +25,9 @@ namespace thewall9.web.parent.BLL
         {
             return DownloadObject<string>("api/page?SiteID=" + SiteID + "&Url=" + Url + "&FriendlyUrl=" + FriendlyUrl+"&TargetLang="+TargetLang);
         }
-        public List<PageCultureBinding> GetSitemap(int SiteID, string Url)
+        public SiteMapModel GetSitemap(int SiteID, string Url)
         {
-            return DownloadObject<List<PageCultureBinding>>("api/page/sitemap?SiteID=" + SiteID + "&Url=" + Url);
+            return DownloadObject<SiteMapModel>("api/page/sitemap?SiteID=" + SiteID + "&Url=" + Url);
         }
     }
 }

@@ -174,10 +174,11 @@ namespace thewall9.bll
                         }).ToList();
             }
         }
-        public List<PageCultureBinding> GetSitemap(int SiteID, string Url)
+        public SiteMapModel GetSitemap(int SiteID, string Url)
         {
             using (var _c = db)
             {
+                var _S = new SiteMapModel();
                 var _Q = SiteID != 0
                     ? from p in _c.PageCultures
                       where p.Page.SiteID == SiteID
@@ -187,7 +188,7 @@ namespace thewall9.bll
                        where u.Url.Equals(Url)
                        select m;
 
-                return (from p in _Q
+                _S.Pages=(from p in _Q
                         where p.Published && p.Page.Published && string.IsNullOrEmpty(p.RedirectUrl)
                         select new PageCultureBinding
                         {
@@ -197,6 +198,9 @@ namespace thewall9.bll
                             Name = p.Name,
                             PageAlias = p.Page.Alias
                         }).ToList();
+                _S.Products=new ProductBLL().GetSitemap(SiteID,Url);
+                _S.Categories = new CategoryBLL().GetSitemap(SiteID, Url);
+                return _S;
             }
         }
         public string GetPageFriendlyUrl(int SiteID, string Url, string FriendlyUrl, string TargetLang)

@@ -35,6 +35,7 @@ namespace thewall9.data.binding
     {
         public int CategoryID { get; set; }
         public List<CategoryWeb> CategoryItems { get; set; }
+        public string CatalogFriendlyUrl { get; set; }
     }
 
     public class UpOrDown

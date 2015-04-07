@@ -72,6 +72,23 @@ namespace thewall9.bll
                      }).FirstOrDefault();
             }
         }
+        public List<CategoryWeb> GetSitemap(int SiteID, string Url)
+        {
+            using (var _c = db)
+            {
+                if (SiteID == 0)
+                    SiteID = new SiteBLL().Get(Url, _c).SiteID;
+                var _Q = from m in _c.CategoryCultures
+                         where m.Category.SiteID == SiteID
+                         select new CategoryWeb
+                         {
+                             FriendlyUrl = m.FriendlyUrl,
+                             CategoryID=m.CategoryID,
+                             CatalogFriendlyUrl=_c.PageCultures.Where(m2=>m2.Page.Alias.Equals("catalog") && m2.CultureID==m.CultureID).FirstOrDefault().FriendlyUrl
+                         };
+                return _Q.ToList();
+            }
+        }
         #endregion
 
         #region Customer

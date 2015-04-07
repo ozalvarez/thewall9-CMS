@@ -94,6 +94,7 @@ namespace thewall9.bll
         {
             using (var _c = db)
             {
+                
                 var _Q = from m in _c.ProductCultures
                          where m.Product.SiteID == SiteID
                          && m.ProductName.ToLower().Contains(Query)
@@ -103,7 +104,21 @@ namespace thewall9.bll
                 return Select(_Q, CurrencyID, _c).Skip(Take * (Page - 1)).Take(Take).ToList();
             }
         }
-
+        public List<ProductWeb> GetSitemap(int SiteID, string Url)
+        {
+            using (var _c = db)
+            {
+                if (SiteID == 0)
+                    SiteID = new SiteBLL().Get(Url, _c).SiteID;
+                var _Q = from m in _c.ProductCultures
+                         where m.Product.SiteID == SiteID
+                         select new ProductWeb
+                         {
+                             FriendlyUrl=m.FriendlyUrl
+                         };
+                return _Q.ToList();
+            }
+        }
         #endregion
 
         #region Customer
@@ -435,7 +450,7 @@ namespace thewall9.bll
                 Can(GetByID(ProductID, _c).SiteID, UserID, _c);
                 FileStream stream = new FileStream(TempPath, FileMode.Open);
                 var _Container = "product-gallery";
-                var _ContainerReference = ProductID + "/"+ _Gallery.ProductGalleryID + "/" + FileName;
+                var _ContainerReference = ProductID + "/" + _Gallery.ProductGalleryID + "/" + FileName;
                 new Utils.FileUtil().UploadImage(stream, _Container, _ContainerReference);
                 var _Path = StorageUrl + "/" + _Container + "/" + _ContainerReference;
 
