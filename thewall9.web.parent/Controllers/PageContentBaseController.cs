@@ -46,34 +46,31 @@ namespace thewall9.web.parent.Controllers
         public ActionResult SiteMap()
         {
             var _Pages = PageService.GetSitemap(APP._SiteID, Request.Url.Authority);
-
             XNamespace ns = "http://www.sitemaps.org/schemas/sitemap/0.9";
-            var sitemap = new XDocument(
-            new XDeclaration("1.0", "utf-8", "yes"),
-            new XElement(ns + "urlset",
-                (from i in _Pages.Pages
-                 select
-                 new XElement(ns + "url",
-                     new XElement(ns + "loc", Request.Url.Scheme + "://" + Request.Url.Authority + "/" + i.FriendlyUrl),
-                     new XElement(ns + "lastmod", String.Format("{0:yyyy-MM-dd}", DateTime.Now)),
-                     new XElement(ns + "changefreq", "always"),
-                     new XElement(ns + "priority", "0.5"))
-            ).Union((from i in _Pages.Products
+            var _Q = from i in _Pages.Pages
                      select
                      new XElement(ns + "url",
-                         new XElement(ns + "loc", Request.Url.Scheme + "://" + Request.Url.Authority + "/p/" + i.FriendlyUrl),
+                         new XElement(ns + "loc", Request.Url.Scheme + "://" + Request.Url.Authority + "/" + i.FriendlyUrl),
                          new XElement(ns + "lastmod", String.Format("{0:yyyy-MM-dd}", DateTime.Now)),
                          new XElement(ns + "changefreq", "always"),
-                         new XElement(ns + "priority", "0.5"))
-            )).Union((from i in _Pages.Categories
-                      select
-                      new XElement(ns + "url",
-                          new XElement(ns + "loc", Request.Url.Scheme + "://" + Request.Url.Authority + "/" + i.CatalogFriendlyUrl+ "/" + i.FriendlyUrl + "/" + i.CategoryID),
-                          new XElement(ns + "lastmod", String.Format("{0:yyyy-MM-dd}", DateTime.Now)),
-                          new XElement(ns + "changefreq", "always"),
-                          new XElement(ns + "priority", "0.5"))
-            ))
-            ));
+                         new XElement(ns + "priority", "0.5"));
+            if (_Pages.Ecommerce)
+            {
+               _Q= _Q.Union((from i in _Pages.Products
+                          select
+                          new XElement(ns + "url",
+                              new XElement(ns + "loc", Request.Url.Scheme + "://" + Request.Url.Authority + "/d/" + i.FriendlyUrl),
+                              new XElement(ns + "lastmod", String.Format("{0:yyyy-MM-dd}", DateTime.Now)),
+                              new XElement(ns + "changefreq", "always"),
+                              new XElement(ns + "priority", "0.5")))).Union((from i in _Pages.Categories
+                                                                             select
+                                                                             new XElement(ns + "url",
+                                                                                 new XElement(ns + "loc", Request.Url.Scheme + "://" + Request.Url.Authority + "/p/" + i.CatalogFriendlyUrl + "/" + i.FriendlyUrl + "/" + i.CategoryID),
+                                                                                 new XElement(ns + "lastmod", String.Format("{0:yyyy-MM-dd}", DateTime.Now)),
+                                                                                 new XElement(ns + "changefreq", "always"),
+                                                                                 new XElement(ns + "priority", "0.5"))));
+            }
+            var sitemap = new XDocument(new XDeclaration("1.0", "utf-8", "yes"),new XElement(ns + "urlset",_Q));
             return Content("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + sitemap.ToString(), "text/xml");
         }
         [Route("change-lang")]

@@ -24,7 +24,7 @@ namespace thewall9.web
             //PRODUCTS
             routes.MapRoute(
                 name: "Product",
-                url: "p/{FriendlyUrl}",
+                url: "d/{FriendlyUrl}",
                 defaults: new { controller = "Page", action = "Product" }
             );
             routes.MapRoute(
@@ -34,12 +34,12 @@ namespace thewall9.web
             );
             routes.MapRoute(
                 name: "ProductsInCategory",
-                url: "{FriendlyUrl}/{CategoryFriendlyUrl}/{CategoryID}/{Page}",
+                url: "p/{FriendlyUrl}/{CategoryFriendlyUrl}/{CategoryID}/{Page}",
                 defaults: new { controller = "Page", action = "Products", Page = UrlParameter.Optional }
             );
             routes.MapRoute(
                 name: "Products",
-                url: "{FriendlyUrl}/{Page}",
+                url: "p/{FriendlyUrl}/{Page}",
                 defaults: new { controller = "Page", action = "Products", Page = UrlParameter.Optional }
             );
 

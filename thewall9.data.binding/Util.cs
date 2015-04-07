@@ -13,6 +13,7 @@ namespace thewall9.data.binding
     }
     public class SiteMapModel
     {
+        public bool Ecommerce { get; set; }
         public List<PageCultureBinding> Pages { get; set; }
         public List<ProductWeb> Products { get; set; }
         public List<CategoryWeb> Categories { get; set; }

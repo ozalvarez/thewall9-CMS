@@ -178,17 +178,21 @@ namespace thewall9.bll
         {
             using (var _c = db)
             {
+                bool _ECommerce = false;
+                if (SiteID == 0)
+                {
+                    var _Site=new SiteBLL().Get(Url, _c);
+                    SiteID = _Site.SiteID;
+                    _ECommerce = _Site.ECommerce;
+                }
+                else
+                {
+                    var _Site = new SiteBLL().Get(SiteID);
+                    _ECommerce = _Site.ECommerce;
+                }
                 var _S = new SiteMapModel();
-                var _Q = SiteID != 0
-                    ? from p in _c.PageCultures
-                      where p.Page.SiteID == SiteID
-                      select p
-                     : from m in _c.PageCultures
-                       join u in _c.SiteUrls on m.Page.Site.SiteID equals u.SiteID
-                       where u.Url.Equals(Url)
-                       select m;
-
-                _S.Pages=(from p in _Q
+                _S.Pages = (from p in _c.PageCultures
+                            where p.Page.SiteID == SiteID
                         where p.Published && p.Page.Published && string.IsNullOrEmpty(p.RedirectUrl)
                         select new PageCultureBinding
                         {
@@ -198,8 +202,12 @@ namespace thewall9.bll
                             Name = p.Name,
                             PageAlias = p.Page.Alias
                         }).ToList();
-                _S.Products=new ProductBLL().GetSitemap(SiteID,Url);
-                _S.Categories = new CategoryBLL().GetSitemap(SiteID, Url);
+                _S.Ecommerce = _ECommerce;
+                if (_ECommerce)
+                {
+                    _S.Products = new ProductBLL().GetSitemap(SiteID);
+                    _S.Categories = new CategoryBLL().GetSitemap(SiteID);
+                }
                 return _S;
             }
         }

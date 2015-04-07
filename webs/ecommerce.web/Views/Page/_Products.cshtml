@@ -11,7 +11,7 @@
             @Html.FindValue(_PageModel, "categories")
         </div>
         <script type="text/ng-template" id="_categories.html">
-            <a ng-href="/@Html.LinkCatalog()/{{item.FriendlyUrl}}/{{item.CategoryID}}" href="">
+            <a ng-href="/p/@Html.LinkCatalog()/{{item.FriendlyUrl}}/{{item.CategoryID}}" href="">
                 {{item.CategoryName}}
             </a>
             <ul ng-if="item.CategoryItems">
@@ -40,11 +40,11 @@
         </div>
         <div class="col-md-4 " ng-repeat-start="item in data.Products">
             <div class="thumbnail thumbnail-products">
-                <a href="" ng-href="/p/{{item.FriendlyUrl}}">
+                <a href="" ng-href="/d/{{item.FriendlyUrl}}">
                     <img ng-src="{{item.IconPath}}" />
                 </a>
                 <div class="text-center">
-                    <a href="" ng-href="/p/{{item.FriendlyUrl}}">
+                    <a href="" ng-href="/d/{{item.FriendlyUrl}}">
                         {{item.ProductName}}
                     </a>
                     <div class="small description">

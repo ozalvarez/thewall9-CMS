@@ -72,12 +72,10 @@ namespace thewall9.bll
                      }).FirstOrDefault();
             }
         }
-        public List<CategoryWeb> GetSitemap(int SiteID, string Url)
+        public List<CategoryWeb> GetSitemap(int SiteID)
         {
             using (var _c = db)
             {
-                if (SiteID == 0)
-                    SiteID = new SiteBLL().Get(Url, _c).SiteID;
                 var _Q = from m in _c.CategoryCultures
                          where m.Category.SiteID == SiteID
                          select new CategoryWeb

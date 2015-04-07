@@ -104,12 +104,10 @@ namespace thewall9.bll
                 return Select(_Q, CurrencyID, _c).Skip(Take * (Page - 1)).Take(Take).ToList();
             }
         }
-        public List<ProductWeb> GetSitemap(int SiteID, string Url)
+        public List<ProductWeb> GetSitemap(int SiteID)
         {
             using (var _c = db)
             {
-                if (SiteID == 0)
-                    SiteID = new SiteBLL().Get(Url, _c).SiteID;
                 var _Q = from m in _c.ProductCultures
                          where m.Product.SiteID == SiteID
                          select new ProductWeb
