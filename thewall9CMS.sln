@@ -23,6 +23,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "webs", "webs", "{F221A52E-0296-4849-B391-B202B4A2B8C0}"
 	ProjectSection(SolutionItems) = preProject
 		webs\SITE.json = webs\SITE.json
+		webs\SITEeCOMMERCE.json = webs\SITEeCOMMERCE.json
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "thewall9.admin", "thewall9.admin\thewall9.admin.csproj", "{A3F8C792-E3D3-4945-A5A1-B999141C8980}"
