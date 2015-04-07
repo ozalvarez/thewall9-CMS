@@ -89,6 +89,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BLL\BaseBLL.cs" />
     <Compile Include="BLL\ContentBLL.cs" />
+    <Compile Include="BLL\ProductBLL.cs" />
     <Compile Include="BLL\PageBLL.cs" />
     <Compile Include="BLL\SiteBLL.cs" />
     <Compile Include="Controllers\PageContentBaseController.cs" />

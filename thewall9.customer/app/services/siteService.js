@@ -9,18 +9,21 @@ app.factory('siteService', ["$myhttp", "$q", "ngAuthSettings", 'localStorageServ
         siteServiceFactory.getSites = function () {
             var deferred = $q.defer();
             $http.get(ngAuthSettings.apiServiceBaseUri + 'api/site').then(function (data) {
-
-                var _site = localStorageService.get('site');
-                if (_site == null) {
+                var defaultSite = localStorageService.get('site');
+                var go = false;
+                angular.forEach(data, function (item) {
+                    if (item.SiteID == defaultSite.SiteID) {
+                        go = true;
+                    }
+                });
+                if (!go) {
                     siteServiceFactory.site = data[0];
                 } else {
-                    siteServiceFactory.site = _site;
+                    siteServiceFactory.site = defaultSite;
                 }
                 siteServiceFactory.sites = data;
                 siteServiceFactory.sitesLoaded = true
-
                 localStorageService.set('site', siteServiceFactory.site);
-
                 deferred.resolve(data);
             });
             return deferred.promise;

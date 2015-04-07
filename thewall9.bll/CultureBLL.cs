@@ -5,11 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using thewall9.data;
 using thewall9.data.binding;
+using thewall9.data.Models;
 
 namespace thewall9.bll
 {
     public class CultureBLL : BaseBLL
     {
+        private Culture GetByID(int CultureID, ApplicationDbContext _c){
+            return _c.Cultures.Where(m => m.CultureID == CultureID).SingleOrDefault();
+        }
         public List<CultureBase> Get(int SiteID)
         {
             using (var _c = db)
@@ -18,7 +22,13 @@ namespace thewall9.bll
                 {
                     CultureID = m.CultureID,
                     Name = m.Name,
-                    SiteID = m.SiteID
+                    SiteID = m.SiteID,
+
+                    Facebook=m.Facebook,
+                    GPlus=m.GPlus,
+                    Instagram=m.Instagram,
+                    Tumblr=m.Tumblr,
+                    Twitter=m.Twitter
                 }).ToList();
             }
         }
@@ -39,8 +49,35 @@ namespace thewall9.bll
                     CultureID = m.CultureID,
                     Name = m.Name,
                     SiteID = m.SiteID,
-                    FriendlyUrl = m.PageCulture.Where(m2 => m2.Page.Alias.Equals("home")).FirstOrDefault().FriendlyUrl
+                    FriendlyUrl = m.PageCulture.Where(m2 => m2.Page.Alias.Equals("home")).FirstOrDefault().FriendlyUrl,
+
+                    Facebook = m.Facebook,
+                    GPlus = m.GPlus,
+                    Instagram = m.Instagram,
+                    Tumblr = m.Tumblr,
+                    Twitter = m.Twitter
                 }).ToList();
+            }
+        }
+        public Culture GetByName(int SiteID, string Name)
+        {
+            using (var _c = db)
+            {
+                return _c.Cultures.Where(m => m.SiteID == SiteID && m.Name.ToLower().Equals(Name)).FirstOrDefault();
+            }
+        }
+        public void Save(CultureBinding Model, string UserID)
+        {
+            using (var _c=db)
+            {
+                Can(Model.SiteID, UserID, _c);
+                var _Culture = GetByID(Model.CultureID, _c);
+                _Culture.Facebook = Model.Facebook;
+                _Culture.GPlus = Model.GPlus;
+                _Culture.Instagram = Model.Instagram;
+                _Culture.Tumblr = Model.Tumblr;
+                _Culture.Twitter = Model.Twitter;
+                _c.SaveChanges();
             }
         }
     }

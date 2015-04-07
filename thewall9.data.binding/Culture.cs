@@ -11,6 +11,11 @@ namespace thewall9.data.binding
         public int CultureID { get; set; }
         public int SiteID { get; set; }
         public string Name { get; set; }
+        public string Twitter { get; set; }
+        public string Facebook { get; set; }
+        public string GPlus { get; set; }
+        public string Tumblr { get; set; }
+        public string Instagram { get; set; }
     }
     public class CultureBinding: CultureBase
     {

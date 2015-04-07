@@ -1,0 +1,91 @@
+﻿<div class="page-header">
+    <ul class="list-inline pull-right">
+        <li>
+            <button class="btn btn-primary" role="button" ng-click="openNew(null)">
+                <span class="glyphicon glyphicon-plus"></span> Nueva Categoría
+            </button>
+        </li>
+    </ul>
+    <h1>Categorias</h1>
+</div>
+<script type="text/ng-template" id="nodes_renderer.html">
+    <div ui-tree-handle ng-attr-data-nodrag="{{true}}">
+        {{item.CategoryAlias}}
+        <ul class="list-inline pull-right">
+            <li>
+                <button class="btn btn-default btn-sm" role="button" ng-click="up(item,false)">
+                    <span class="fa fa-arrow-circle-down"></span>
+                </button>
+            </li>
+            <li>
+                <button class="btn btn-default btn-sm" role="button" ng-click="up(item,true)">
+                    <span class="fa fa-arrow-circle-up"></span>
+                </button>
+            </li>
+            <li>
+                <button class="btn btn-default btn-sm" role="button" ng-click="edit(item)">
+                    <span class="glyphicon glyphicon-edit"></span> Editar
+                </button>
+            </li>
+            <li>
+                <button class="btn btn-primary btn-sm" role="button" ng-click="openNew(item)">
+                    <span class="glyphicon glyphicon-plus"></span> Nueva Categoría
+                </button>
+            </li>
+            <li>
+                <button class="btn btn-danger btn-sm" role="button" ng-click="delete(item)">
+                    <span class="glyphicon glyphicon-remove"></span> Eliminar
+                </button>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <ol ui-tree-nodes="options" ng-model="item.CategoryItems">
+        <li ng-repeat="item in item.CategoryItems" ui-tree-node ng-include="'nodes_renderer.html'">
+
+        </li>
+    </ol>
+</script>
+<div ui-tree="options" class="ui-tree-tw ui-tree-tw-no-drag">
+    <ol ui-tree-nodes="" ng-model="data" id="tree-root">
+        <li ng-repeat="item in data" ui-tree-node ng-include="'nodes_renderer.html'" data-collapsed="false"></li>
+    </ol>
+</div>
+<div class="modal fade" id="modal-new" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Datos de la Categoría</h4>
+            </div>
+            <div class="modal-body">
+                <form ng-submit="save()">
+                    <div class="form-group" ng-if="selectedCategory">
+                        <label>Categoría Padre</label>
+                        <select ng-options="category as category.CategoryAlias for category in categories"
+                                ng-model="selectedCategory"
+                                ng-change="model.CategoryParentID=selectedCategory.CategoryID"
+                                class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre de la Categoría</label>
+                        <input type="text" class="form-control" ng-model="model.CategoryAlias" required />
+                    </div>
+                    <div ng-repeat="item in model.CategoryCultures">
+                        <div class="form-group">
+                            <label>Nombre de la Categoría [{{item.CultureName}}]</label>
+                            <input type="text" class="form-control" ng-model="item.CategoryName" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Friendly Url [{{item.CultureName}}]</label>
+                            <input type="text" class="form-control" ng-model="item.FriendlyUrl" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Guardar Categoría" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

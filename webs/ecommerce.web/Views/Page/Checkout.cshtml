@@ -1,0 +1,106 @@
+﻿@model thewall9.data.binding.PageWeb
+<div ng-controller="checkoutController">
+    <div class="subtitle">
+        @Html.FindValue(Model, "title")
+    </div>
+    <form ng-submit="sendOrder('@Html.LinkOrderSent()')">
+        <table class="table table-bordered tbl-checkout">
+            <tbody>
+                <tr>
+                    <td>@Html.FindValue(Model, "name")</td>
+                    <td>
+                        <input type="text" name="" class="form-control" required/>
+                    </td>
+                    <td>@Html.FindValue(Model, "email")</td>
+                    <td>
+                        <input type="text" name="" class="form-control" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>@Html.FindValue(Model, "phone")</td>
+                    <td>
+                        <input type="text" name="" class="form-control" required />
+                    </td>
+                    <td>@Html.FindValue(Model, "city")</td>
+                    <td>
+                        <input type="text" name="" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>@Html.FindValue(Model, "address")</td>
+                    <td colspan="3">
+                        <textarea name="" class="form-control" required></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>@Html.FindValue(Model, "comment")</td>
+                    <td colspan="3">
+                        <textarea name="" class="form-control"></textarea>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered tbl-cart">
+            <thead>
+                <tr>
+                    <td class="hidden-xs">@Html.FindValue(Model, "header-image")</td>
+                    <td>@Html.FindValue(Model, "header-product-name")</td>
+                    <td class="td-qty">@Html.FindValue(Model, "header-quantity")</td>
+                    <td>@Html.FindValue(Model, "header-unit-price")</td>
+                    <td>@Html.FindValue(Model, "header-subtotal")</td>
+                    <td>@Html.FindValue(Model, "header-remove")</td>
+                </tr>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in cart">
+                    <td class="hidden-xs">
+                        <a href="detail.html">
+                            <img ng-src="{{item.IconPath}}" alt="{{item.ProductName}}" title="" width="47" height="47" />
+                        </a>
+                    </td>
+                    <td>
+                        <a href="detail.html">
+                            {{item.ProductName}}>
+                        </a>
+                    </td>
+                    <td>
+                        <div class="input-group" style="max-width:130px;">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default btn-info" data-dir="dwn" ng-click="updateNumber(item,-1)" ng-disabled="item.Number<=1">
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                </button>
+                            </span>
+                            <input type="text" class="form-control text-center" value="1" min="1" max="1000" ng-model="item.Number">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default btn-info" data-dir="up" ng-click="updateNumber(item,1)">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </td>
+                    <td class="price">
+                        {{moneySymbol}} {{item.Price}}
+                    </td>
+                    <td>{{moneySymbol}} {{item.Price*item.Number}}</td>
+                    <td class="text-center">
+                        <button class="btn btn-danger btn-sm" ng-click="removeCart(item)">
+                            <i class="fa fa-trash-o"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">@Html.FindValue(Model, "shipping")</td>
+                    <td colspan="2">{{moneySymbol}} {{currentCurrency.ShippingPrice}}</td>
+                </tr>
+                <tr>
+                    <td colspan="4">@Html.FindValue(Model, "total")</td>
+                    <td colspan="2">{{moneySymbol}} {{totalCart()}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary">
+            @Html.FindValue(Model, "confirm") <i class="fa fa-arrow-circle-right"></i>
+        </button>
+    </form>
+</div>

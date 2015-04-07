@@ -44,6 +44,20 @@ namespace thewall9.data.Models
         public DbSet<ContentProperty> ContentProperties { get; set; }
         public DbSet<ContentPropertyCulture> ContentPropertyCultures { get; set; }
         public DbSet<SiteUrl> SiteUrls { get; set; }
+
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<CategoryCulture> CategoryCultures { get; set; }
+        public DbSet<Currency> Currencies { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductCulture> ProductCultures { get; set; }
+        public DbSet<ProductTag> ProductTags { get; set; }
+        public DbSet<ProductCategory> ProductCategories{ get; set; }
+        public DbSet<ProductGallery> ProductGalleries { get; set; }
+        public DbSet<ProductCurrency> ProductCurrencies { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderProduct> OrderProducts { get; set; }
         
     }
 }

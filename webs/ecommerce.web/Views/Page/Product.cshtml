@@ -1,0 +1,72 @@
+﻿@model thewall9.data.binding.PageWeb
+@{
+    var _Model = ViewBag.Product as thewall9.data.binding.ProductWeb;
+}
+<script>
+    var _Product=@Html.Raw(Json.Encode(_Model));
+</script>
+<div ng-controller="productController">
+    <div class="subtitle">
+        {{data.ProductName}}
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <img ng-src="{{data.IconPath}}" />
+            </div>
+        </div>
+        <div class="col-md-8">
+            <p class="lead">
+                {{data.ProductName}}
+            </p>
+            <hr />
+            <p>
+                {{data.Description}}
+            </p>
+            <hr />
+            <p class="lead">
+                {{moneySymbol}} {{data.Price}}
+            </p>
+            <div class="input-group" style="max-width:130px;">
+                <span class="input-group-btn">
+                    <button class="btn btn-default btn-info" data-dir="dwn" ng-click="updateNumber(-1)" ng-disabled="number<=1">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                </span>
+                <input type="text" class="form-control text-center" ng-model="number">
+                <span class="input-group-btn">
+                    <button class="btn btn-default btn-info" data-dir="up" ng-click="updateNumber(1)">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </span>
+            </div>
+            <br />
+            <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+                <a class="addthis_button_preferred_1"></a>
+                <a class="addthis_button_preferred_2"></a>
+                <a class="addthis_button_preferred_3"></a>
+                <a class="addthis_button_preferred_4"></a>
+                <a class="addthis_button_compact"></a>
+            </div>
+            <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=xa-4f0c254f1302adf8"></script>
+            <br />
+            <p>
+                <button type="button" class="btn btn-primary" ng-click="addProduct(data)">
+                    <i class="fa fa-shopping-cart"></i> @Html.FindValue(Model, "add-to-cart")
+                </button>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2" ng-repeat-start="itemG in data.Galleries">
+            <div class="thumbnail">
+                <img ng-src="{{itemG.PhotoPath}}" />
+            </div>
+        </div>
+        <div class="clearfix" ng-if="$index%12==5"></div>
+        <div ng-repeat-end=""></div>
+    </div>
+    <p>
+        {{data.AdditionalInformation}}
+    </p>
+</div>

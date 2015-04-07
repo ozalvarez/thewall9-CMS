@@ -1,0 +1,222 @@
+﻿html, body {
+    background-color: #F1F1F1;
+}
+
+header.header {
+    padding: 10px 0px;
+
+    .mtop {
+        margin-top: 30px;
+    }
+
+    .btn-group-header {
+        width: 100%;
+
+        .btn {
+            width: 100%;
+        }
+
+        .icon-header {
+            margin-right: 5px;
+        }
+
+        .dropdown-menu {
+            z-index: 1001;
+            left: inherit;
+            right: 0;
+        }
+
+        ul.header-content {
+            min-width: 250px;
+
+            b {
+                font-weight: normal;
+                display: block;
+                color: #428BCA;
+            }
+        }
+    }
+}
+
+.thumbnail-products {
+    height: 400px;
+
+    .description {
+        height: 90px;
+    }
+}
+
+.list-group-autocomplete {
+    position: fixed;
+    z-index: 100;
+}
+
+.tbl-cart thead {
+    background: #f8f8f8;
+}
+
+.tbl-checkout tbody tr td:nth-child(odd) {
+    background: #f8f8f8;
+}
+
+.navbar {
+    margin-bottom: 0px;
+}
+
+.body {
+    background: #fff;
+    padding: 20px;
+
+    div.subtitle {
+        font-size: 18px;
+        border-bottom: 3px solid #eee;
+        padding-bottom: 8px;
+        margin-bottom: 20px;
+        color: #4c7ed3;
+        text-transform: uppercase;
+    }
+}
+
+footer.footer {
+    background-color: #313131;
+    padding: 10px;
+
+    h4 {
+        margin: 0px 0px 10px 0px;
+        padding: 10px 0;
+        color: #eee;
+        border-bottom: 1px solid #5d5d5d;
+    }
+
+    ul {
+        li {
+            color: #a09f9f;
+
+            a {
+                color: #a09f9f;
+
+                &:hover {
+                }
+            }
+        }
+    }
+}
+/*MISC*/
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+/*BOOSTRAP*/
+@bgDefault: #535252;
+@bgHighlight: #428bca;
+@colDefault: #fff;
+@colHighlight: #fff;
+
+
+.navbar-toggle {
+    margin-right: 5px;
+}
+
+.navbar-default {
+    border-width: 0px;
+    border-radius: 0px;
+    background-color: @bgDefault;
+    border-color: @bgHighlight;
+
+
+    .navbar-brand {
+        color: @colDefault;
+        padding: 5px;
+
+        &:hover, &:focus {
+            color: @colHighlight;
+        }
+    }
+
+    .navbar-text {
+        color: @colDefault;
+    }
+
+    .navbar-nav {
+
+        > li {
+            > a {
+                color: @colDefault;
+
+                &:hover, &:focus {
+                    color: @colHighlight;
+                }
+            }
+        }
+
+        > .active {
+            > a, > a:hover, > a:focus {
+                color: @colHighlight;
+                background-color: @bgHighlight;
+            }
+        }
+
+        > .open {
+            > a, > a:hover, > a:focus {
+                color: @colHighlight;
+                background-color: @bgHighlight;
+            }
+        }
+    }
+
+    .navbar-toggle {
+        border-color: @bgHighlight;
+
+        &:hover, &:focus {
+            background-color: @colHighlight;
+        }
+
+        .icon-bar {
+            background-color: @colDefault;
+        }
+    }
+
+    .navbar-collapse,
+    .navbar-form {
+        border-color: @colDefault;
+    }
+
+    .navbar-link {
+        color: @colDefault;
+
+        &:hover {
+            color: @colHighlight;
+        }
+    }
+}
+
+
+/*YOUR CUSTOM BOOTSTRAP*/
+/*Tablet Portrait*/
+@media only screen and (max-width : 992px) {
+}
+/*Phone Portrait*/
+@media only screen and (max-width : 768px) {
+    header.header {
+        .col-md-6.mtop, .col-md-3.mtop {
+            margin-top: 5px;
+        }
+    }
+    /*BOOSTRAP*/
+    .navbar-default .navbar-nav .open .dropdown-menu {
+        > li > a {
+            color: @colDefault;
+
+            &:hover, &:focus {
+                color: @colHighlight;
+            }
+        }
+
+        > .active {
+            > a, > a:hover, > a:focus {
+                color: @colHighlight;
+                background-color: @bgHighlight;
+            }
+        }
+    }
+}

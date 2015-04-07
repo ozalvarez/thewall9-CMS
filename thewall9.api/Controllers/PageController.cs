@@ -20,11 +20,15 @@ namespace thewall9.api.Controllers
 
         #region WEB
         [AllowAnonymous]
-        public IHttpActionResult Get(int SiteID,string Url, string FriendlyUrl)
+        public IHttpActionResult Get(int SiteID, string Url, string FriendlyUrl)
         {
             return Ok(_PageService.GetPage(SiteID, Url, FriendlyUrl));
         }
-
+        [AllowAnonymous]
+        public IHttpActionResult GetByAlias(int SiteID, string Url, string Alias, string Lang)
+        {
+            return Ok(_PageService.GetPageByAlias(SiteID, Url, Alias, Lang));
+        }
         [AllowAnonymous]
         [Route("menu")]
         public IHttpActionResult GetMenu(int SiteID, string Url, string DefaultLang)
@@ -35,7 +39,7 @@ namespace thewall9.api.Controllers
         [Route("sitemap")]
         public IHttpActionResult GetSitemap(int SiteID, string Url)
         {
-            return Ok(_PageService.GetSitemap(SiteID,Url));
+            return Ok(_PageService.GetSitemap(SiteID, Url));
         }
         [AllowAnonymous]
         public IHttpActionResult GetPageFriendlyUrl(int SiteID, string Url, string FriendlyUrl, string TargetLang)

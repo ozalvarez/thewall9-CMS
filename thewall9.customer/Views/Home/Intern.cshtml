@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" data-ng-app="AngularAuthApp">
+<html lang="en" data-ng-app="app">
 
 <head>
     <meta charset="utf-8">
@@ -91,7 +91,6 @@
                                 <i class="fa fa-edit fa-fw"></i> Contenido
                             </a>
                         </li>
-
                         <li>
                             <a href="#">
                                 <i class="fa fa-question  fa-fw"></i>
@@ -113,8 +112,40 @@
                                         <i class="fa fa-thumbs-o-up fa-fw"></i> ¿Cómo te parece thewall9?
                                     </a>
                                 </li>
+                            </ul>                        
+                        </li>
+                        <li ng-show="site.ECommerce">
+                            <a href="#">
+                                <i class="fa fa-shopping-cart fa-fw"></i>
+                                E-Commerce <span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="#/categories">
+                                        <i class="fa fa-flag fa-fw"></i> Categorias
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#/currencies">
+                                        <i class="fa fa-usd fa-fw"></i> Monedas
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#/tags">
+                                        <i class="fa fa-tags fa-fw"></i> Tags
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#/products">
+                                        <i class="fa fa-shopping-cart fa-fw"></i> Products
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#/orders">
+                                        <i class="fa fa-paper-plane fa-fw"></i> Orders
+                                    </a>
+                                </li>
                             </ul>
-                            
                         </li>
                     </ul>
                 </div>

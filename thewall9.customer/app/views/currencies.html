@@ -1,0 +1,73 @@
+﻿<div class="page-header">
+    <ul class="list-inline pull-right">
+        <li>
+            <button class="btn btn-primary" role="button" ng-click="open()">
+                <span class="glyphicon glyphicon-plus"></span> Nueva Moneda
+            </button>
+        </li>
+    </ul>
+    <h1>Monedas</h1>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+            <tr>
+                <td>Moneda</td>
+                <td>Símbolo</td>
+                <td>Shipping Price</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in data">
+                <td>{{item.CurrencyName}}</td>
+                <td>{{item.MoneySymbol}}</td>
+                <td>{{item.ShippingPrice}}</td>
+                <td>
+                    <button class="btn btn-sm btn-success" ng-disabled="true" ng-show="item.Default">
+                        <span class="glyphicon glyphicon-check"></span> Default
+                    </button>
+                    <button class="btn btn-sm btn-default" ng-click="default(item)" ng-hide="item.Default">
+                        <span class="glyphicon glyphicon-unchecked"></span> Marcar como Default
+                    </button>
+                    <button class="btn btn-sm btn-default" ng-click="open(item)">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </button>
+                    <button class="btn btn-sm btn-danger" ng-click="delete(item)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+        
+    </table>
+</div>
+<div class="modal fade" id="modal-new" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Datos de la Moneda</h4>
+            </div>
+            <div class="modal-body">
+                <form ng-submit="save()">
+                    <div class="form-group">
+                        <label>Nombre de la Moneda</label>
+                        <input type="text" class="form-control" ng-model="model.CurrencyName" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Símbolo de la Moneda</label>
+                        <input type="text" class="form-control" ng-model="model.MoneySymbol" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Shipping Price</label>
+                        <input type="text" class="form-control" ng-model="model.ShippingPrice" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Guardar Tag" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

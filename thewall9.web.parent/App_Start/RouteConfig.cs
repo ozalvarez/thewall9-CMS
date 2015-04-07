@@ -14,12 +14,36 @@ namespace thewall9.web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.IgnoreRoute("robots.txt");
             routes.MapMvcAttributeRoutes();
+
             routes.MapRoute(
                 name: "Error",
                 url: "error",
-                defaults: new { controller = "Page", action = "Error"}
+                defaults: new { controller = "Page", action = "Error" }
             );
 
+            //PRODUCTS
+            routes.MapRoute(
+                name: "Product",
+                url: "d/{FriendlyUrl}",
+                defaults: new { controller = "Page", action = "Product" }
+            );
+            routes.MapRoute(
+                name: "GetProductsPartialView",
+                url: "get-products/{CategoryFriendlyUrl}/{CategoryID}/{Page}",
+                defaults: new { controller = "Page", action = "GetProducts", CategoryFriendlyUrl = UrlParameter.Optional, CategoryID = UrlParameter.Optional, Page = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+                name: "ProductsInCategory",
+                url: "p/{FriendlyUrl}/{CategoryFriendlyUrl}/{CategoryID}/{Page}",
+                defaults: new { controller = "Page", action = "Products", Page = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+                name: "Products",
+                url: "p/{FriendlyUrl}/{Page}",
+                defaults: new { controller = "Page", action = "Products", Page = UrlParameter.Optional }
+            );
+
+            //DEFAULT ROUTE
             routes.MapRoute(
                 name: "Default",
                 url: "{FriendlyUrl}",

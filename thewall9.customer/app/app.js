@@ -1,5 +1,5 @@
-﻿var app = angular.module('AngularAuthApp',
-    ['ngRoute', 'LocalStorageModule', 'blockUI', 'ui.tree']);
+﻿var app = angular.module('app',
+    ['ngRoute', 'LocalStorageModule', 'blockUI', 'ui.tree','angularFileUpload']);
 
 app.config(["$routeProvider", "blockUIConfig", function ($routeProvider, blockUIConfig) {
 
@@ -30,6 +30,30 @@ app.config(["$routeProvider", "blockUIConfig", function ($routeProvider, blockUI
     $routeProvider.when('/edit-content', {
         controller: 'editContentController',
         templateUrl: '/app/views/edit-content.html'
+    });
+    $routeProvider.when('/categories', {
+        controller: 'categoryController',
+        templateUrl: '/app/views/categories.html'
+    });
+    $routeProvider.when('/currencies', {
+        controller: 'currencyController',
+        templateUrl: '/app/views/currencies.html'
+    });
+    $routeProvider.when('/tags', {
+        controller: 'tagController',
+        templateUrl: '/app/views/tags.html'
+    });
+    $routeProvider.when('/products', {
+        controller: 'productsController',
+        templateUrl: '/app/views/products.html'
+    });
+    $routeProvider.when('/product/:productID?', {
+        controller: 'productController',
+        templateUrl: '/app/views/product.html'
+    });
+    $routeProvider.when('/orders', {
+        controller: 'ordersController',
+        templateUrl: '/app/views/orders.html'
     });
 
     $routeProvider.otherwise({ redirectTo: "/" });

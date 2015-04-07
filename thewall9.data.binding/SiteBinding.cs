@@ -19,6 +19,7 @@ namespace thewall9.data.binding
         public string GAID { get; set; }
         public bool Enabled { get; set; }
         public DateTime DateCreated { get; set; }
+        public bool ECommerce { get; set; }
     }
     public class SiteBinding : SiteBase
     {
@@ -26,10 +27,12 @@ namespace thewall9.data.binding
     }
     public class SiteFullBinding
     {
-       
         public SiteBinding  Site { get; set; }
         public List<PageCultureBinding> Menu { get; set; }
+        public List<PageCultureBinding> EcommercePages { get; set; }
+        public List<PageCultureBinding> OtherPages { get; set; }
         public ContentBindingList ContentLayout { get; set; }
+        public List<CurrencyBinding> Currencies { get; set; }
     }
     public class SiteAllBinding : SiteBinding
     {
@@ -43,7 +46,12 @@ namespace thewall9.data.binding
             {
                 _Cultures.Add(new CultureBinding
                 {
-                    Name = item.Name
+                    Name = item.Name,
+                    Facebook = item.Facebook,
+                    GPlus = item.GPlus,
+                    Instagram = item.Instagram,
+                    Tumblr = item.Tumblr,
+                    Twitter = item.Twitter
                 });
             }
             this.Cultures = _Cultures;

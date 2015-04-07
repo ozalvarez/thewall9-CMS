@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using thewall9.bll;
+using thewall9.data.binding;
+using Microsoft.AspNet.Identity;
 
 namespace thewall9.api.Controllers
 {
@@ -16,6 +18,11 @@ namespace thewall9.api.Controllers
         public IHttpActionResult Get(int SiteID)
         {
             return Ok(_CultureService.Get(SiteID));
+        }
+        public IHttpActionResult Save(CultureBinding Model)
+        {
+            _CultureService.Save(Model, User.Identity.GetUserId());
+            return Ok();
         }
     }
 }

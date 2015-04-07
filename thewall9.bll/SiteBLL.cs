@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using thewall9.bll.Exceptions;
 using thewall9.data;
 using thewall9.data.binding;
+using thewall9.data.Models;
 
 namespace thewall9.bll
 {
@@ -26,24 +27,29 @@ namespace thewall9.bll
                     DefaultLang = m.DefaultLang,
                     GAID = m.GAID,
                     SiteID = m.SiteID,
-                    SiteName = m.SiteName
+                    SiteName = m.SiteName,
+                    ECommerce = m.ECommerce
                 }).SingleOrDefault();
             }
         }
 
         #region WEB
-        public SiteFullBinding Get(int SiteID, string Url, string Lang)
+        public Site Get(string Url, ApplicationDbContext _c)
+        {
+            return (from m in _c.Sites
+                    join u in _c.SiteUrls on m.SiteID equals u.SiteID
+                    where u.Url.Equals(Url)
+                    select m).FirstOrDefault();
+        }
+        public SiteFullBinding Get(int SiteID, string Url, string Lang, int CurrencyID)
         {
             using (var _c = db)
             {
-                var _Q = SiteID != 0
-                    ? from m in _c.Sites
-                      where m.SiteID == SiteID
-                      select m
-                     : from m in _c.Sites
-                       join u in _c.SiteUrls on m.SiteID equals u.SiteID
-                       where u.Url.Equals(Url)
-                       select m;
+                if (SiteID == 0)
+                    SiteID = Get(Url, _c).SiteID;
+                var _Q = from m in _c.Sites
+                         where m.SiteID == SiteID
+                         select m;
                 var _Site = _Q.Select(m => new SiteFullBinding
                          {
                              Site = new SiteBinding
@@ -51,7 +57,8 @@ namespace thewall9.bll
                                  DefaultLang = m.DefaultLang,
                                  GAID = m.GAID,
                                  SiteID = m.SiteID,
-                                 SiteName = m.SiteName
+                                 SiteName = m.SiteName,
+                                 ECommerce = m.ECommerce
                              }
                          }).SingleOrDefault();
                 if (_Site != null)
@@ -60,6 +67,12 @@ namespace thewall9.bll
                         Lang = _Site.Site.DefaultLang;
                     _Site.Menu = new PageBLL().GetMenu(SiteID, Url, Lang);
                     _Site.ContentLayout = new ContentBLL().GetContent(SiteID, Url, "layout", Lang);
+                    _Site.OtherPages = new PageBLL().GetOtherPages(SiteID, Url, Lang);
+                    if (_Site.Site.ECommerce)
+                    {
+                        _Site.Currencies = new CurrencyBLL().Get(SiteID, Url);
+                        _Site.EcommercePages = new PageBLL().GetEcommercePages(SiteID, Url, Lang);
+                    }
                     return _Site;
                 }
                 throw new RuleException("Site not found", SiteExceptionMessages.SITE_NOT_FOUNT);
@@ -77,7 +90,8 @@ namespace thewall9.bll
                     DefaultLang = m.Site.DefaultLang,
                     GAID = m.Site.GAID,
                     SiteID = m.Site.SiteID,
-                    SiteName = m.Site.SiteName
+                    SiteName = m.Site.SiteName,
+                    ECommerce = m.Site.ECommerce
                 }).ToList();
             }
         }
@@ -107,6 +121,7 @@ namespace thewall9.bll
                     Enabled = m.Enabled,
                     DateCreated = m.DateCreated,
                     Url = string.Join(",", m.SiteUrls.Select(m2 => m2.Url)),
+                    ECommerce = m.ECommerce,
                     Cultures = m.Cultures.Select(m2 => new CultureBinding
                     {
                         CultureID = m2.CultureID,
@@ -121,7 +136,7 @@ namespace thewall9.bll
             using (var _c = db)
             {
                 Site _Model;
-                var _SiteUrls = Model.Url.Split(',');
+                var _SiteUrls = string.IsNullOrEmpty(Model.Url) ? new string[0] : Model.Url.Split(',');
                 if (Model.SiteID == 0)
                 {
                     _Model = new Site
@@ -132,12 +147,21 @@ namespace thewall9.bll
                         DefaultLang = Model.DefaultLang,
                         GAID = Model.GAID
                     };
+                    if (Model.Cultures == null || Model.Cultures.Count() == 0)
+                        throw new RuleException("Cultures is Empty");
+
                     //ADD CULTURES
                     foreach (var item in Model.Cultures)
                     {
                         _Model.Cultures.Add(new Culture
                         {
-                            Name = item.Name
+                            Name = item.Name,
+
+                            Facebook = item.Facebook,
+                            GPlus = item.GPlus,
+                            Instagram = item.Instagram,
+                            Tumblr = item.Tumblr,
+                            Twitter = item.Twitter
                         });
                     }
                     //ADD SITES
@@ -214,6 +238,15 @@ namespace thewall9.bll
             {
                 var _Model = _c.Sites.Where(m => m.SiteID == Model.SiteID).SingleOrDefault();
                 _Model.Enabled = Model.Enabled;
+                _c.SaveChanges();
+            }
+        }
+        public void EnableEcommerce(SiteEnabledBinding Model)
+        {
+            using (var _c = db)
+            {
+                var _Model = _c.Sites.Where(m => m.SiteID == Model.SiteID).SingleOrDefault();
+                _Model.ECommerce = Model.Enabled;
                 _c.SaveChanges();
             }
         }
@@ -305,6 +338,7 @@ namespace thewall9.bll
             }
         }
 
+
         #region IMPORT / EXPORT / DUPLICATE
         private SiteExport ExportObject(int SiteID)
         {
@@ -338,10 +372,10 @@ namespace thewall9.bll
             ImportSaveContent(SiteContent.Content, _SiteID, 0);
             return _SiteID;
         }
-        public void Import(FileRead _FileRead)
+        public int Import(FileRead _FileRead)
         {
             byte[] binary = Convert.FromBase64String(_FileRead.FileContent.Split(',')[1]);
-            ImportObject(JsonConvert.DeserializeObject<SiteExport>(Encoding.UTF8.GetString(binary)));
+            return ImportObject(JsonConvert.DeserializeObject<SiteExport>(Encoding.UTF8.GetString(binary)));
         }
         private void ImportSavePages(ICollection<PageBindingListWithCultures> Pages, int SiteID, int PageParentID)
         {
@@ -384,6 +418,7 @@ namespace thewall9.bll
         {
             using (var _c = db)
             {
+                _c.Products.RemoveRange(_c.Products.Where(m => m.Site.SiteName.Contains(Prefix)).ToList());
                 _c.Sites.RemoveRange(_c.Sites.Where(m => m.SiteName.Contains(Prefix)).ToList());
                 _c.SaveChanges();
             }

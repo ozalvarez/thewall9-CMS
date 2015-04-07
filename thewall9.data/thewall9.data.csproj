@@ -89,7 +89,64 @@
   <ItemGroup>
     <Compile Include="AccountBindingModels.cs" />
     <Compile Include="AccountViewModels.cs" />
+    <Compile Include="Migrations\201503242013269_add-product-to-ecommerce.cs" />
+    <Compile Include="Migrations\201503242013269_add-product-to-ecommerce.Designer.cs">
+      <DependentUpon>201503242013269_add-product-to-ecommerce.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503261922334_add-product-currency.cs" />
+    <Compile Include="Migrations\201503261922334_add-product-currency.Designer.cs">
+      <DependentUpon>201503261922334_add-product-currency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503261943096_add-product-currency-price.cs" />
+    <Compile Include="Migrations\201503261943096_add-product-currency-price.Designer.cs">
+      <DependentUpon>201503261943096_add-product-currency-price.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503311708550_add-friendly-url-in-categoryculture.cs" />
+    <Compile Include="Migrations\201503311708550_add-friendly-url-in-categoryculture.Designer.cs">
+      <DependentUpon>201503311708550_add-friendly-url-in-categoryculture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503311959149_add-priority-on-products.cs" />
+    <Compile Include="Migrations\201503311959149_add-priority-on-products.Designer.cs">
+      <DependentUpon>201503311959149_add-priority-on-products.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503312038267_add-money-symbol-products.cs" />
+    <Compile Include="Migrations\201503312038267_add-money-symbol-products.Designer.cs">
+      <DependentUpon>201503312038267_add-money-symbol-products.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504022029473_add-orders.cs" />
+    <Compile Include="Migrations\201504022029473_add-orders.Designer.cs">
+      <DependentUpon>201504022029473_add-orders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504022103525_add-currency-in-orders.cs" />
+    <Compile Include="Migrations\201504022103525_add-currency-in-orders.Designer.cs">
+      <DependentUpon>201504022103525_add-currency-in-orders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504022105591_add-site-in-orders.cs" />
+    <Compile Include="Migrations\201504022105591_add-site-in-orders.Designer.cs">
+      <DependentUpon>201504022105591_add-site-in-orders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504022206372_add-datecreated-to-order.cs" />
+    <Compile Include="Migrations\201504022206372_add-datecreated-to-order.Designer.cs">
+      <DependentUpon>201504022206372_add-datecreated-to-order.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504061549424_add-shipping-price.cs" />
+    <Compile Include="Migrations\201504061549424_add-shipping-price.Designer.cs">
+      <DependentUpon>201504061549424_add-shipping-price.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Order.cs" />
+    <Compile Include="Product.cs" />
+    <Compile Include="Category.cs" />
     <Compile Include="Culture.cs" />
+    <Compile Include="Migrations\201503241647500_add-tag.cs" />
+    <Compile Include="Migrations\201503241647500_add-tag.Designer.cs">
+      <DependentUpon>201503241647500_add-tag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503241706439_add-global-social-accounts.cs" />
+    <Compile Include="Migrations\201503241706439_add-global-social-accounts.Designer.cs">
+      <DependentUpon>201503241706439_add-global-social-accounts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tag.cs" />
+    <Compile Include="Currency.cs" />
     <Compile Include="IdentityModels.cs" />
     <Compile Include="Migrations\201410031827156_InitialCreate.cs" />
     <Compile Include="Migrations\201410031827156_InitialCreate.Designer.cs">
@@ -155,6 +212,18 @@
     <Compile Include="Migrations\201412221931208_RemoveSiteUrl.Designer.cs">
       <DependentUpon>201412221931208_RemoveSiteUrl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503201916341_add-e-commerce.cs" />
+    <Compile Include="Migrations\201503201916341_add-e-commerce.Designer.cs">
+      <DependentUpon>201503201916341_add-e-commerce.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503202004521_add-category-to-e-commerce.cs" />
+    <Compile Include="Migrations\201503202004521_add-category-to-e-commerce.Designer.cs">
+      <DependentUpon>201503202004521_add-category-to-e-commerce.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503232057106_add-currency.cs" />
+    <Compile Include="Migrations\201503232057106_add-currency.Designer.cs">
+      <DependentUpon>201503232057106_add-currency.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="ContentProperty.cs" />
@@ -213,6 +282,54 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412221931208_RemoveSiteUrl.resx">
       <DependentUpon>201412221931208_RemoveSiteUrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503201916341_add-e-commerce.resx">
+      <DependentUpon>201503201916341_add-e-commerce.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503202004521_add-category-to-e-commerce.resx">
+      <DependentUpon>201503202004521_add-category-to-e-commerce.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503232057106_add-currency.resx">
+      <DependentUpon>201503232057106_add-currency.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503241647500_add-tag.resx">
+      <DependentUpon>201503241647500_add-tag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503241706439_add-global-social-accounts.resx">
+      <DependentUpon>201503241706439_add-global-social-accounts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503242013269_add-product-to-ecommerce.resx">
+      <DependentUpon>201503242013269_add-product-to-ecommerce.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503261922334_add-product-currency.resx">
+      <DependentUpon>201503261922334_add-product-currency.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503261943096_add-product-currency-price.resx">
+      <DependentUpon>201503261943096_add-product-currency-price.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503311708550_add-friendly-url-in-categoryculture.resx">
+      <DependentUpon>201503311708550_add-friendly-url-in-categoryculture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503311959149_add-priority-on-products.resx">
+      <DependentUpon>201503311959149_add-priority-on-products.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503312038267_add-money-symbol-products.resx">
+      <DependentUpon>201503312038267_add-money-symbol-products.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504022029473_add-orders.resx">
+      <DependentUpon>201504022029473_add-orders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504022103525_add-currency-in-orders.resx">
+      <DependentUpon>201504022103525_add-currency-in-orders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504022105591_add-site-in-orders.resx">
+      <DependentUpon>201504022105591_add-site-in-orders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504022206372_add-datecreated-to-order.resx">
+      <DependentUpon>201504022206372_add-datecreated-to-order.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504061549424_add-shipping-price.resx">
+      <DependentUpon>201504061549424_add-shipping-price.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

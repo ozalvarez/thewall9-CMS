@@ -6,12 +6,13 @@
         margin-top: 0px;
     }
 }
-#content{
-    .btn-save{
-        position:fixed;
-        top:10px;
-        left:48%;
-        z-index:2000;
+
+#content {
+    .btn-save {
+        position: fixed;
+        top: 10px;
+        left: 48%;
+        z-index: 2000;
     }
 }
 
@@ -68,6 +69,10 @@
         }
     }
 }
+
+.tbl-details tbody tr td:nth-child(odd) {
+    background: #f8f8f8;
+}
 /*TREE*/
 .angular-ui-tree-handle {
     background: #fafafa;
@@ -89,4 +94,29 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+}
+
+.twitter-typeahead {
+    width: 100%;
+    position: relative;
+}
+/*TYPEAHEAD*/
+.list-group-autocomplete {
+    position: fixed;
+    z-index: 100;
+}
+/*FILE UPLOAD*/
+.drop-box {
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    text-align: center;
+    padding: 25px;
+
+    &.dragover {
+        border: 5px dashed blue;
+    }
+
+    &.dragover-err {
+        border: 5px dashed red;
+    }
 }

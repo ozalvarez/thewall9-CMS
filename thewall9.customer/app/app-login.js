@@ -1,5 +1,5 @@
 ﻿
-var app = angular.module('AngularAuthApp', ['LocalStorageModule', 'blockUI']);
+var app = angular.module('app', ['LocalStorageModule', 'blockUI']);
 
 app.config([ "blockUIConfig", function ( blockUIConfig) {
     // Change the default overlay message

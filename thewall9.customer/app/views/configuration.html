@@ -20,3 +20,62 @@
     </div>
     <p><button type="submit" class="btn btn-default" ng-click="saveSite()">Guardar</button></p>
 </form>
+<tabs>
+    <pane title="{{item.Name}}" ng-repeat="item in cultures">
+        <br />
+        <form role="form">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Facebook</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">/</span>
+                            <input type="text" class="form-control" ng-model="item.Facebook">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Twitter</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">@</span>
+                            <input type="text" class="form-control" ng-model="item.Twitter">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Tumblr</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">http://</span>
+                            <input type="text" class="form-control" ng-model="item.Tumblr">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Instagram</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">@</span>
+                            <input type="text" class="form-control" ng-model="item.Instagram">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Google Plus</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">+/</span>
+                            <input type="text" class="form-control" ng-model="item.GPlus">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p><button type="submit" class="btn btn-default" ng-click="save(item)">Guardar {{item.Name}}</button></p>
+        </form>
+    </pane>
+</tabs>

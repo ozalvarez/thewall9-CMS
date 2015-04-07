@@ -44,6 +44,17 @@ namespace thewall9.web.parent
                 HttpContext.Current.Items["CurrentLang"] = value;
             }
         }
+        public static string _CurrentFriendlyUrl
+        {
+            get
+            {
+                return HttpContext.Current.Items["CurrentFriendlyUrl"] as string;
+            }
+            set
+            {
+                HttpContext.Current.Items["CurrentFriendlyUrl"] = value;
+            }
+        }
         public static List<CultureRoutes> _Langs
         {
             get
@@ -55,6 +66,34 @@ namespace thewall9.web.parent
                 HttpContext.Current.Session["Langs"] = value;
             }
         }
-
+        public static int _CurrentCurrencyID
+        {
+            get
+            {
+                try
+                {
+                    var _Value = (int)HttpContext.Current.Session["_CurrentCurrencyID"];
+                    if (_Value != 0)
+                        return _Value;
+                    else
+                    {
+                        var _Cookie = HttpContext.Current.Request.Cookies["_CurrentCurrencyID"];
+                        HttpContext.Current.Session["_CurrentCurrencyID"] = Convert.ToInt32(_Cookie.Value);
+                        return Convert.ToInt32(_Cookie.Value);
+                    }
+                }
+                catch (Exception)
+                {
+                    return 0;
+                }
+            }
+            set
+            {
+                var _Cookie = new HttpCookie("_CurrentCurrencyID", value.ToString());
+                _Cookie.Expires = DateTime.Now.AddYears(1);
+                HttpContext.Current.Request.Cookies.Add(_Cookie);
+                HttpContext.Current.Session["_CurrentCurrencyID"] = value;
+            }
+        }
     }
 }
