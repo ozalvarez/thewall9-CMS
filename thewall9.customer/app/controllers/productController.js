@@ -102,7 +102,6 @@
             if ($scope.model.ProductCategories != null && $scope.model.ProductCategories.length > 0) {
                 productService.save($scope.model).then(function (data) {
                     $scope.model.ProductID = $scope.model.ProductID == null ? data : $scope.model.ProductID;
-                    console.log(_ProductID);
                     //UPLOAD FILES
                     if ($scope.model.Files && $scope.model.Files.length) {
                         for (var i = 0; i < $scope.model.Files.length; i++) {
