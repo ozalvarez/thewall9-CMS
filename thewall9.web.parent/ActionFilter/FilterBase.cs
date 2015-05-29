@@ -14,28 +14,34 @@ namespace thewall9.web.parent.ActionFilter
         SiteBLL SiteService = new SiteBLL();
         PageBLL PageService = new PageBLL();
         ContentBLL ContentService = new ContentBLL();
+        List<string> _Bots = new List<string>() { "googlebot", "bingbot" };
 
         private string GetCulture(HttpRequestBase Request)
         {
-            string CultureName = null;
-            // Attempt to read the culture cookie from Request
-            HttpCookie cultureCookie = Request.Cookies["_Culture"];
-            if (cultureCookie != null)
-                CultureName = cultureCookie.Value;
-            else
+            var _UA=Request.UserAgent.ToLower();
+            if (!_UA.Contains(_Bots[0]) && !_UA.Contains(_Bots[1]))
             {
-                CultureName = Request.UserLanguages != null && Request.UserLanguages.Length > 0 ?
-                        Request.UserLanguages[0] :  // obtain it from HTTP header AcceptLanguages
-                        null;
-                // Validate culture name
-                // cultureName = "es";
-            }
-            CultureName = CultureHelper.GetImplementedCulture(CultureName); // This is safe
+                string CultureName = null;
+                // Attempt to read the culture cookie from Request
+                HttpCookie cultureCookie = Request.Cookies["_Culture"];
+                if (cultureCookie != null)
+                    CultureName = cultureCookie.Value;
+                else
+                {
+                    CultureName = Request.UserLanguages != null && Request.UserLanguages.Length > 0 ?
+                            Request.UserLanguages[0] :  // obtain it from HTTP header AcceptLanguages
+                            null;
+                    // Validate culture name
+                    // cultureName = "es";
+                }
+                CultureName = CultureHelper.GetImplementedCulture(CultureName); // This is safe
 
-            // Modify current thread's cultures            
-            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(CultureName);
-            Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
-            return CultureName;
+                // Modify current thread's cultures            
+                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(CultureName);
+                Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
+                return CultureName;
+            }
+            return string.Empty;
         }
 
 
