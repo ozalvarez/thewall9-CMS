@@ -1,7 +1,7 @@
 ﻿<package >
   <metadata>
     <id>thewall9CMS</id>
-    <version>1.0.15-alpha</version>
+    <version>1.0.16-alpha</version>
     <title>thewall9.web.parent</title>
     <authors>Oswaldo Alvarez</authors>
     <owners>Oswaldo Alvarez</owners>
@@ -11,7 +11,7 @@
     <summary>thewall9 CMS</summary>
     <description>thewall9 CMS Libraries.</description>
     <releaseNotes>
-      *
+      * LinkHome Fixed
     </releaseNotes>
     <copyright>Copyright © thewall9 2015</copyright>
     <tags>
