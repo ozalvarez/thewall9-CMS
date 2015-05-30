@@ -16,32 +16,25 @@ namespace thewall9.web.parent.ActionFilter
         ContentBLL ContentService = new ContentBLL();
         List<string> _Bots = new List<string>() { "googlebot", "bingbot" };
 
-        private string GetCulture(HttpRequestBase Request)
+        private string GetCulture(HttpRequestBase Request, string DefaultCulture)
         {
-            var _UA=Request.UserAgent.ToLower();
-            if (!_UA.Contains(_Bots[0]) && !_UA.Contains(_Bots[1]))
+            string CultureName = null;
+            // Attempt to read the culture cookie from Request
+            HttpCookie cultureCookie = Request.Cookies["_Culture"];
+            if (cultureCookie != null)
+                CultureName = cultureCookie.Value;
+            else
             {
-                string CultureName = null;
-                // Attempt to read the culture cookie from Request
-                HttpCookie cultureCookie = Request.Cookies["_Culture"];
-                if (cultureCookie != null)
-                    CultureName = cultureCookie.Value;
-                else
-                {
-                    CultureName = Request.UserLanguages != null && Request.UserLanguages.Length > 0 ?
-                            Request.UserLanguages[0] :  // obtain it from HTTP header AcceptLanguages
-                            null;
-                    // Validate culture name
-                    // cultureName = "es";
-                }
-                CultureName = CultureHelper.GetImplementedCulture(CultureName); // This is safe
-
-                // Modify current thread's cultures            
-                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(CultureName);
-                Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
-                return CultureName;
+                CultureName = Request.UserLanguages != null && Request.UserLanguages.Length > 0 ?
+                        Request.UserLanguages[0] :  // obtain it from HTTP header AcceptLanguages
+                        null;
             }
-            return string.Empty;
+            CultureName = CultureHelper.GetImplementedCulture(CultureName, DefaultCulture); // This is safe
+
+            // Modify current thread's cultures            
+            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(CultureName);
+            Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
+            return CultureName;
         }
 
 
@@ -63,7 +56,7 @@ namespace thewall9.web.parent.ActionFilter
                         APP._CurrentLang = APP._Langs[0].Name;
                         APP._CurrentFriendlyUrl = APP._Langs[0].FriendlyUrl;
                     }
-                    var _CultureName = GetCulture(filterContext.HttpContext.Request);
+                    var _CultureName = GetCulture(filterContext.HttpContext.Request, APP._CurrentLang);
                     var _SavedLang = APP._Langs.Where(m => _CultureName.Contains(m.Name)).FirstOrDefault();
                     if (_SavedLang != null)
                     {

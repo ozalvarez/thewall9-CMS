@@ -80,6 +80,10 @@ namespace thewall9.web.parent.HtmlHelpers
         {
             return APP._Langs;
         }
+        public static MvcHtmlString CurrentLang(this HtmlHelper helper)
+        {
+            return new MvcHtmlString(APP._CurrentLang);
+        }
         public static MvcHtmlString LinkUrl(this HtmlHelper helper, CultureRoutes Culture)
         {
             var _Request = helper.ViewContext.RequestContext.HttpContext.Request;

@@ -25,6 +25,7 @@ namespace thewall9.web.parent.HtmlHelpers
     </script>";
             return new MvcHtmlString(_Script.ToString());
         }
+        //DELETE ME
         public static MvcHtmlString Lang(this HtmlHelper helper)
         {
             return new MvcHtmlString(string.IsNullOrEmpty(thewall9.web.parent.APP._Site.Site.DefaultLang) ? "es" : APP._Site.Site.DefaultLang);
