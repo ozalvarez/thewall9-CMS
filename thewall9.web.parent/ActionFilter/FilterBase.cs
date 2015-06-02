@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Threading;
 using thewall9.web.parent.BLL;
 using thewall9.web.parent.HtmlHelpers;
+
 namespace thewall9.web.parent.ActionFilter
 {
     public class FilterBase : ActionFilterAttribute
@@ -30,19 +31,22 @@ namespace thewall9.web.parent.ActionFilter
                         null;
             }
             CultureName = CultureHelper.GetImplementedCulture(CultureName, DefaultCulture); // This is safe
-
-            // Modify current thread's cultures            
-            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(CultureName);
-            Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
+            if (!string.IsNullOrEmpty(CultureName))
+            {
+                // Modify current thread's cultures            
+                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(CultureName);
+                Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
+            }
             return CultureName;
         }
 
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            var _Request = filterContext.HttpContext.Request;
             if (!filterContext.RouteData.Values.ContainsKey("NoFilterBase"))
             {
-                if (!filterContext.IsChildAction && !filterContext.HttpContext.Request.IsAjaxRequest())
+                if (!filterContext.IsChildAction && !_Request.IsAjaxRequest())
                 {
                     /*
                      * MICROSOFT BUG
@@ -50,21 +54,38 @@ namespace thewall9.web.parent.ActionFilter
                      * https://katanaproject.codeplex.com/workitem/197
                      */
                     filterContext.HttpContext.Session["Workaround"] = 0;
-                    if (APP._Langs == null || filterContext.HttpContext.Request.IsLocal)
+
+                    //SET REFFERAL
+                    if (_Request.UrlReferrer != null && APP._Referer == null)
+                        APP._Referer = _Request.UrlReferrer.AbsoluteUri;
+
+                    APP._Langs = SiteService.GetLang(APP._SiteID, filterContext.HttpContext.Request.Url.Authority);
+                    APP._CurrentLang = APP._Langs[0].Name;
+                    APP._CurrentFriendlyUrl = APP._Langs[0].FriendlyUrl;
+
+                    if (APP._Langs != null)
                     {
-                        APP._Langs = SiteService.GetLang(APP._SiteID, filterContext.HttpContext.Request.Url.Authority);
-                        APP._CurrentLang = APP._Langs[0].Name;
-                        APP._CurrentFriendlyUrl = APP._Langs[0].FriendlyUrl;
+                        var _CultureName = GetCulture(filterContext.HttpContext.Request, APP._CurrentLang);
+                        var _SavedLang = APP._Langs.Where(m => _CultureName.Contains(m.Name)).FirstOrDefault();
+                        if (_SavedLang != null)
+                        {
+                            APP._CurrentLang = _SavedLang.Name;
+                            APP._CurrentFriendlyUrl = _SavedLang.FriendlyUrl;
+                        }
                     }
-                    var _CultureName = GetCulture(filterContext.HttpContext.Request, APP._CurrentLang);
-                    var _SavedLang = APP._Langs.Where(m => _CultureName.Contains(m.Name)).FirstOrDefault();
-                    if (_SavedLang != null)
+                    else
                     {
-                        APP._CurrentLang = _SavedLang.Name;
-                        APP._CurrentFriendlyUrl = _SavedLang.FriendlyUrl;
+                        _Request.Cookies.Clear();
+                        if (APP._Langs == null)
+                            Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception("APP._Langs never can be null"));
+                        if (APP._CurrentLang == null)
+                            Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception("APP._CurrentLang never can be null"));
+                        filterContext.Result = new RedirectResult("/error");
+                        filterContext.Result.ExecuteResult(filterContext);
                     }
                 }
             }
+            base.OnActionExecuting(filterContext);
         }
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {

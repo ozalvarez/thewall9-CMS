@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,7 +8,17 @@ namespace thewall9.web.parent
 {
     public static class APP
     {
-
+        public static String _Referer
+        {
+            get
+            {
+                return HttpContext.Current.Session["Referer"] as String;
+            }
+            set
+            {
+                HttpContext.Current.Session["Referer"] = value;
+            }
+        }
         public static SiteFullBinding _Site
         {
             get

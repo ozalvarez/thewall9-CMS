@@ -91,7 +91,6 @@ namespace thewall9.web.parent.HtmlHelpers
         }
         public static MvcHtmlString LinkHome(this HtmlHelper helper)
         {
-
             return new MvcHtmlString("/"+APP._Langs.Where(m=>m.Name==APP._CurrentLang).FirstOrDefault().FriendlyUrl);
         }
         public static MvcHtmlString LinkCart(this HtmlHelper helper)

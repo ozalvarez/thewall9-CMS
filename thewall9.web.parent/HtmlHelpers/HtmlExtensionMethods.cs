@@ -58,5 +58,13 @@ var _gaq = _gaq || [];
                 return null;
             return new MvcHtmlString(helper.ViewBag.Title);
         }
+        public static MvcHtmlString GetSourceMedium(this HtmlHelper helper)
+        {
+            if (thewall9.web.parent.APP._Referer != null)
+            {
+                return new MvcHtmlString( thewall9.web.parent.APP._Referer);
+            }
+            return new MvcHtmlString(string.Empty);
+        }
     }
 }
