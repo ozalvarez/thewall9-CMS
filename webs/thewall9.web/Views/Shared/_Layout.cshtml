@@ -13,7 +13,10 @@
     @Styles.Render("~/Content/css")
     <link href='http://fonts.googleapis.com/css?family=Exo:400,800' rel='stylesheet' type='text/css'>
     @Scripts.Render("~/bundles/modernizr")
-    <script type="text/javascript" src="https://mylivechat.com/chatinline.aspx?hccid=51184327"></script>
+    @if (!Request.IsLocal)
+    {
+        <script type="text/javascript" src="https://mylivechat.com/chatinline.aspx?hccid=51184327"></script>
+    }
 </head>
 <body class="light">
     @Html.Partial("_SidebarPage")

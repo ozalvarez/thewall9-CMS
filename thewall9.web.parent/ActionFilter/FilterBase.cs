@@ -60,11 +60,10 @@ namespace thewall9.web.parent.ActionFilter
                         APP._Referer = _Request.UrlReferrer.AbsoluteUri;
 
                     APP._Langs = SiteService.GetLang(APP._SiteID, filterContext.HttpContext.Request.Url.Authority);
-                    APP._CurrentLang = APP._Langs[0].Name;
-                    APP._CurrentFriendlyUrl = APP._Langs[0].FriendlyUrl;
-
-                    if (APP._Langs != null)
+                    if (APP._Langs != null && APP._Langs.Count != 0)
                     {
+                        APP._CurrentLang = APP._Langs[0].Name;
+                        APP._CurrentFriendlyUrl = APP._Langs[0].FriendlyUrl;
                         var _CultureName = GetCulture(filterContext.HttpContext.Request, APP._CurrentLang);
                         var _SavedLang = APP._Langs.Where(m => _CultureName.Contains(m.Name)).FirstOrDefault();
                         if (_SavedLang != null)
@@ -74,15 +73,7 @@ namespace thewall9.web.parent.ActionFilter
                         }
                     }
                     else
-                    {
-                        _Request.Cookies.Clear();
-                        if (APP._Langs == null)
-                            Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception("APP._Langs never can be null"));
-                        if (APP._CurrentLang == null)
-                            Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception("APP._CurrentLang never can be null"));
-                        filterContext.Result = new RedirectResult("/error");
-                        filterContext.Result.ExecuteResult(filterContext);
-                    }
+                        Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception("APP._Langs never can be null"));
                 }
             }
             base.OnActionExecuting(filterContext);
