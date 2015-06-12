@@ -53,6 +53,7 @@ namespace thewall9.bll
                         ContentPropertyType = p.ContentPropertyType,
                         Lock = p.Lock,
                         ShowInContent = p.ShowInContent,
+                        Enabled = p.Enabled,
                         ContentCultures = p.ContentPropertyCultures.Select(m => new ContentCultureBinding
                         {
                             ContentPropertyID = p.ContentPropertyID,
@@ -79,6 +80,7 @@ namespace thewall9.bll
                             SiteID = p.SiteID,
                             ContentPropertyType = p.ContentPropertyType,
                             Lock = p.Lock,
+                            Enabled = p.Enabled,
                             ContentCultures = p.ContentPropertyCultures.Select(m => new ContentCultureBinding
                             {
                                 ContentPropertyID = p.ContentPropertyID,
@@ -128,6 +130,7 @@ namespace thewall9.bll
                             Priority = p.Priority,
                             SiteID = p.SiteID,
                             ContentPropertyType = p.ContentPropertyType,
+                            Enabled = p.Enabled,
                             ContentCultures = p.ContentPropertyCultures.Where(m => m.Culture.Name.ToLower().Equals(Lang.ToLower()) && m.Culture.SiteID == p.SiteID).Select(m => new ContentCultureBinding
                             {
                                 ContentPropertyID = p.ContentPropertyID,
@@ -175,6 +178,7 @@ namespace thewall9.bll
                         : true,
 
                         ShowInContent = p.ShowInContent,
+                        Enabled = p.Enabled,
 
                         Hint = p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Any()
                         ? p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Select(m => m.Hint).FirstOrDefault()
@@ -369,6 +373,7 @@ namespace thewall9.bll
                     _Model.SiteID = Model.SiteID;
                     _Model.Priority = _IQParent.Any() ? _IQParent.Select(m => m.Priority).Max() + 1 : 0;
                     _Model.Lock = Model.Lock;
+                    _Model.Enabled = true;
                     _c.ContentProperties.Add(_Model);
                 }
                 else
@@ -469,7 +474,8 @@ namespace thewall9.bll
                     ContentPropertyAlias = Model.ContentPropertyAlias,
                     Priority = Model.Priority,
                     Lock = Model.Lock,
-                    ShowInContent = Model.ShowInContent
+                    ShowInContent = Model.ShowInContent,
+                    Enabled = true
                 };
                 _c.ContentProperties.Add(_CP);
                 _c.SaveChanges();
@@ -523,6 +529,7 @@ namespace thewall9.bll
                     SiteID = _CP.SiteID,
                     ContentPropertyType = _CP.ContentPropertyType,
                     Priority = _IQParent.Any() ? _IQParent.Select(m => m.Priority).Max() + 1 : 0,
+                    Enabled = _CP.Enabled
 
                 };
                 if (ShowInContent)
@@ -612,7 +619,6 @@ WHERE SiteID={0} AND ContentPropertyParentID={1} AND Priority>={2} AND ContentPr
         }
 
 
-
         public void Lock(ContentBoolean Model, string UserID)
         {
             using (var _c = db)
@@ -620,6 +626,16 @@ WHERE SiteID={0} AND ContentPropertyParentID={1} AND Priority>={2} AND ContentPr
                 var _CP = _c.ContentProperties.Where(m => m.ContentPropertyID == Model.ContentPropertyID).SingleOrDefault();
                 Can(_CP.SiteID, UserID, _c);
                 _CP.Lock = Model.Boolean;
+                _c.SaveChanges();
+            }
+        }
+        public void Enable(ContentBoolean Model, string UserID)
+        {
+            using (var _c = db)
+            {
+                var _CP = _c.ContentProperties.Where(m => m.ContentPropertyID == Model.ContentPropertyID).SingleOrDefault();
+                Can(_CP.SiteID, UserID, _c);
+                _CP.Enabled = Model.Boolean;
                 _c.SaveChanges();
             }
         }

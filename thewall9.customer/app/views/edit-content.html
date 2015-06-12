@@ -20,7 +20,17 @@
     </div>
     <script type="text/ng-template" id="nodes_renderer.html">
         <div ui-tree-handle ng-attr-data-nodrag="{{true}}" ng-class="{'leaf':item.ContentPropertyType==3}">
-            <ul class=" list-inline pull-right" ng-if="item.IsEditable || item.ShowInContent">
+            <ul class="list-inline pull-right">
+                <li>
+                    <button class="btn btn-danger btn-xs" ng-click="enable(item,true)" ng-hide="item.Enabled">
+                        <span class="fa fa-remove"></span> Desabilitado
+                    </button>
+                    <button class="btn btn-success btn-xs" ng-click="enable(item,false)" ng-show="item.Enabled">
+                        <span class="fa fa-check"></span> Habilitado
+                    </button>
+                </li>
+            </ul>
+            <ul class="list-inline pull-right" ng-if="item.IsEditable || item.ShowInContent">
                 <li ng-if="item.IsEditable">
                     <button class="btn btn-danger btn-xs" ng-click="delete(item)">
                         <span class="fa fa-remove"></span> Eliminar {{item.Hint}}

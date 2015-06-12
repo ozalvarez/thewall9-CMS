@@ -133,6 +133,10 @@
     <Compile Include="Migrations\201504061549424_add-shipping-price.Designer.cs">
       <DependentUpon>201504061549424_add-shipping-price.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506121913239_AddEnabledToContent.cs" />
+    <Compile Include="Migrations\201506121913239_AddEnabledToContent.Designer.cs">
+      <DependentUpon>201506121913239_AddEnabledToContent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Order.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Category.cs" />
@@ -330,6 +334,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504061549424_add-shipping-price.resx">
       <DependentUpon>201504061549424_add-shipping-price.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506121913239_AddEnabledToContent.resx">
+      <DependentUpon>201506121913239_AddEnabledToContent.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

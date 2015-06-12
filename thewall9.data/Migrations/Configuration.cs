@@ -35,7 +35,8 @@ namespace thewall9.data.Migrations
                 userRoot = new ApplicationUser
                 {
                     UserName = EmailRoot,
-                    Name = NameRoot
+                    Name = NameRoot,
+                    Email=EmailRoot
                 };
                 userManager.Create(userRoot, "123456");
 

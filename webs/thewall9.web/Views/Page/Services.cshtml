@@ -19,22 +19,25 @@
                 @{int _Cont = 0;}
                 @foreach (var item in Html.FindItems(Model, "list-service"))
                 {
-                    <div class="col-md-4">
-                        <h2 class="text-center">
-                            @Html.FindValue(item, "title")
-                        </h2>
-                        @foreach (var item2 in Html.FindItems(item, "list"))
-                        {
-                            <h4 class="text-center">
-                                @Html.GetValue(item2)
-                            </h4>
-                        }
-                    </div>
-                    if (_Cont % 3 == 2)
+                    if (item.Enabled)
                     {
-                        <div class="clearfix"></div>
+                        <div class="col-md-4">
+                            <h2 class="text-center">
+                                @Html.FindValue(item, "title")
+                            </h2>
+                            @foreach (var item2 in Html.FindItems(item, "list"))
+                            {
+                                <h4 class="text-center">
+                                    @Html.GetValue(item2)
+                                </h4>
+                            }
+                        </div>
+                        if (_Cont % 3 == 2)
+                        {
+                            <div class="clearfix"></div>
+                        }
+                        _Cont++;
                     }
-                    _Cont++;
                 }
             </div>
         </div>

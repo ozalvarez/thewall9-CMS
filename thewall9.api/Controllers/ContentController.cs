@@ -92,6 +92,13 @@ namespace thewall9.api.Controllers
             return Ok();
         }
         [Authorize(Roles = "admin")]
+        [Route("enable")]
+        public IHttpActionResult Enabled(ContentBoolean Model)
+        {
+            _ContentService.Enable(Model, User.Identity.GetUserId());
+            return Ok();
+        }
+        [Authorize(Roles = "admin")]
         [Route("lock-all")]
         public IHttpActionResult Lock([FromBody]int SiteID)
         {

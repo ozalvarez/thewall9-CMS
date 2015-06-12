@@ -47,6 +47,11 @@
             cultureService.currentCulture = $scope.selectedCulture;
             $scope.init();
         }
+        $scope.enable = function (item, enabled) {
+            contentService.enable(item.ContentPropertyID, enabled).then(function (response) {
+                item.Enabled = enabled;
+            });
+        };
         /*INIT*/
         $scope.init = function () {
             $scope.get();

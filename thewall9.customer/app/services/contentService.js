@@ -51,6 +51,12 @@ app.factory('contentService', ["$myhttp", "$q", "ngAuthSettings", "siteService",
                     Boolean: enabled
                 })
             },
+            enable: function (contentPropertyID, enabled) {
+                return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/content/enable', {
+                    ContentPropertyID: contentPropertyID,
+                    Boolean: enabled
+                })
+            },
             lockAll: function () {
                 return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/content/lock-all', siteService.site.SiteID);
             },

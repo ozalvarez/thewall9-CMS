@@ -23,6 +23,7 @@ namespace thewall9.data.binding
         public int Priority { get; set; }
         public bool Lock { get; set; }
         public bool ShowInContent { get; set; }
+        public bool Enabled { get; set; }
     }
     public class ContentBinding : ContentBase
     {
@@ -32,6 +33,7 @@ namespace thewall9.data.binding
     {
         public string ContentPropertyValue { get; set; }
         public string Hint { get; set; }
+
     }
     public class ContentCultureBinding : ContentCultureBase
     {
@@ -107,6 +109,7 @@ namespace thewall9.data.binding
         public string FileName { get; set; }
         public bool ShowInContent { get; set; }
         public bool IsEditable { get; set; }
+        public bool Enabled { get; set; }
         public List<ContentTree> Items { get; set; }
     }
     public class ImportBinding

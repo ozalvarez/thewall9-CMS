@@ -134,6 +134,7 @@
                 item.Lock = enabled;
             });
         };
+        
         $scope.lockAll = function () {
             contentService.lockAll().then(function (response) {
                 $scope.get();

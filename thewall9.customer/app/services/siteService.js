@@ -11,13 +11,16 @@ app.factory('siteService', ["$myhttp", "$q", "ngAuthSettings", 'localStorageServ
             $http.get(ngAuthSettings.apiServiceBaseUri + 'api/site').then(function (data) {
                 var defaultSite = localStorageService.get('site');
                 var go = false;
-                angular.forEach(data, function (item) {
-                    if (item.SiteID == defaultSite.SiteID) {
-                        go = true;
-                    }
-                });
+                if (defaultSite != null) {
+                    angular.forEach(data, function (item) {
+                        if (item.SiteID == defaultSite.SiteID) {
+                            go = true;
+                        }
+                    });
+                }
                 if (!go) {
                     siteServiceFactory.site = data[0];
+                    defaultSite = siteServiceFactory.site;
                 } else {
                     siteServiceFactory.site = defaultSite;
                 }
