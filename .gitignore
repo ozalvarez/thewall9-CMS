@@ -3,6 +3,13 @@
 
 !NuGet.exe
 
+#Bower
+bower_components/
+lib/
+
+#Grunt
+node_modules/
+
 # User-specific files
 *.suo
 *.user

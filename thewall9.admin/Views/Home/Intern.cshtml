@@ -8,8 +8,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>thewall9 - ADMIN</title>
-    @Styles.Render("~/content/app")
-    @Scripts.Render("~/bundles/modernizr")
+    @*@Styles.Render("~/content/app")*@
+    @*@Scripts.Render("~/bundles/modernizr")*@
+    <link href='~/content/min/app.css' rel='stylesheet' type='text/css'>
+    <script src="~/scripts/min/modernizr.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -65,8 +67,10 @@
     <script>
         var APIURL = '@APP._API_URL';
     </script>
-    @Scripts.Render("~/bundles/app")
-    @Scripts.Render("~/bundles/app/angular")
+    @*@Scripts.Render("~/bundles/app")
+    @Scripts.Render("~/bundles/app/angular")*@
+    <script src="~/scripts/min/app.js"></script>
+    <script src="~/scripts/min/app-angular.js"></script>
 </body>
 
 </html>
