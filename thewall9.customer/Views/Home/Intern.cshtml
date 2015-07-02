@@ -9,8 +9,8 @@
     <meta name="author" content="">
 
     <title>thewall9 - Portal clientes</title>
-    @Styles.Render("~/content/intern")
-    @Scripts.Render("~/bundles/modernizr")
+    <link href='~/content/min/app.css' rel='stylesheet' type='text/css'>
+    <script src="~/scripts/min/modernizr.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -158,8 +158,8 @@
     <script>
         var serviceBase = '@APP._API_URL';
     </script>
-    @Scripts.Render("~/bundles/intern")
-    @Scripts.Render("~/bundles/intern/angular")
+    <script src="~/scripts/min/app.js"></script>
+    <script src="~/scripts/min/app-angular.js"></script>
     <script>
     // Include the UserVoice JavaScript SDK (only needed once on a page)
     UserVoice = window.UserVoice || []; (function () { var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true; uv.src = '//widget.uservoice.com/JAdtrFpKZQwctVVJQrW8Rw.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s) })();

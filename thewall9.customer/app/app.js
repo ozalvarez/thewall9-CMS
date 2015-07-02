@@ -61,7 +61,7 @@ app.config(["$routeProvider", "blockUIConfig", function ($routeProvider, blockUI
     // Change the default overlay message
     blockUIConfig.message = 'Cargando...';
 
-    // Change the default delay to 100ms before the blocking is visible
+    //// Change the default delay to 100ms before the blocking is visible
     blockUIConfig.delay = 100;
 }]);
 
