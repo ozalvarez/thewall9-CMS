@@ -10,12 +10,11 @@ using thewall9.data.Models;
 
 namespace thewall9.data
 {
+    //POST
     public class BlogPost : BlogPostBase
     {
         [ForeignKey("SiteID")]
         public virtual Site Site { get; set; }
-        [ForeignKey("UserIDCreator")]
-        public virtual ApplicationUser User { get; set; }
     }
     public class BlogPostCulture : BlogPostCultureBase
     {
@@ -23,6 +22,37 @@ namespace thewall9.data
         public virtual BlogPost BlogPost { get; set; }
         [ForeignKey("CultureID")]
         public virtual Culture Culture { get; set; }
-        
+    }
+    //TAG
+    public class BlogTag : BlogTagBase
+    {
+
+    }
+    public class BlogPostTag : BlogPostTagBase
+    {
+        [ForeignKey("BlogPostID,CultureID")]
+        public virtual BlogPostCulture BlogPostCulture { get; set; }
+        [ForeignKey("BlogTagID")]
+        public virtual BlogTag BlogTag { get; set; }
+    }
+
+    //CATEGORY
+    public class BlogCategory : BlogCategoryBase
+    {
+
+    }
+    public class BlogCategoryCulture : BlogCategoryCultureBase
+    {
+        [ForeignKey("BlogCategoryID")]
+        public BlogCategory BlogCategory { get; set; }
+        [ForeignKey("CultureID")]
+        public virtual Culture Culture { get; set; }
+    }
+    public class BlogPostCategory : BlogPostCategoryBase
+    {
+        [ForeignKey("BlogPostID")]
+        public virtual BlogPost BlogPost { get; set; }
+        [ForeignKey("BlogCategoryID")]
+        public BlogCategory BlogCategory { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace thewall9.data.binding
 {
     #region Base
+    //POST
     public class BlogPostBase
     {
         public int BlogPostID { get; set; }
@@ -24,10 +25,36 @@ namespace thewall9.data.binding
         public string Title { get; set; }
         public DateTime DateCreated { get; set; }
     }
-    public class BlogTags
+    //TAG
+    public class BlogTagBase
     {
-
+        public int BlogTagID { get; set; }
+        public string BlogTagName { get; set; }
     }
+    public class BlogPostTagBase
+    {
+        public int BlogTagID { get; set; }
+        public int CultureID { get; set; }
+        public int BlogPostID { get; set; }
+    }
+    //CATEGORY
+    public class BlogCategoryBase
+    {
+        public int BlogCategoryID { get; set; }
+    }
+    public class BlogCategoryCultureBase
+    {
+        public int BlogCategoryID { get; set; }
+        public int CultureID { get; set; }
+        public int BlogCategoryName { get; set; }
+    }
+    public class BlogPostCategoryBase
+    {
+        public int BlogPostID { get; set; }
+        public int BlogCategoryID { get; set; }
+    }
+    //FEATURE IMAGE
+    //MEDIA
     #endregion
 
     #region Binding

@@ -35,11 +35,21 @@ namespace thewall9.data.Models
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            //BLOG
             modelBuilder.Entity<BlogPostCulture>()
                 .HasKey(m => new { m.BlogPostID, m.CultureID })
                 .HasRequired(a => a.Culture)
                 .WithMany(m => m.BlogPostCultures)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<BlogPostTag>()
+                .HasKey(m => new { m.BlogTagID, m.BlogPostID, m.CultureID });
+
+            modelBuilder.Entity<BlogCategoryCulture>()
+                .HasKey(m => new { m.BlogCategoryID, m.CultureID });
+
+            modelBuilder.Entity<BlogPostCategory>()
+                .HasKey(m => new { m.BlogPostID, m.BlogCategoryID });
 
             base.OnModelCreating(modelBuilder);
         }
@@ -69,8 +79,13 @@ namespace thewall9.data.Models
         public DbSet<OrderProduct> OrderProducts { get; set; }
 
         //BLOG
-        public DbSet<BlogPost> BlogPosts { get; set; }
-        public DbSet<BlogPostCulture> BlogPostCultures { get; set; }
+        //public DbSet<BlogPost> BlogPosts { get; set; }
+        //public DbSet<BlogPostCulture> BlogPostCultures { get; set; }
+        //public DbSet<BlogTag> BlogTags { get; set; }
+        //public DbSet<BlogPostTag> BlogPostTags { get; set; }
+        //public DbSet<BlogCategory> BlogCategories { get; set; }
+        //public DbSet<BlogCategoryCulture> BlogCategoryCultures { get; set; }
+        //public DbSet<BlogPostCategory> BlogPostCategories { get; set; }
 
     }
 }
