@@ -21,7 +21,7 @@ namespace thewall9.data.Migrations
             AutomaticMigrationsEnabled = false;
             ContextKey = "thewall9.data.Models.ApplicationDbContext";
         }
-
+        
         protected override void Seed(thewall9.data.Models.ApplicationDbContext context)
         {
             var roleStore = new RoleStore<IdentityRole>(context);

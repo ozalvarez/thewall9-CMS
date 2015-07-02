@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlogBinding.cs" />
     <Compile Include="ProductBinding.cs" />
     <Compile Include="CategoryBinding.cs" />
     <Compile Include="Content.cs" />

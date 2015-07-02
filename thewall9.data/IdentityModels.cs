@@ -20,7 +20,6 @@ namespace thewall9.data.Models
             // Add custom user claims here
             return userIdentity;
         }
-        //public virtual List<Site> Sites { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -29,10 +28,20 @@ namespace thewall9.data.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
-        
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
+        }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<BlogPostCulture>()
+                .HasKey(m => new { m.BlogPostID, m.CultureID })
+                .HasRequired(a => a.Culture)
+                .WithMany(m => m.BlogPostCultures)
+                .WillCascadeOnDelete(false);
+
+            base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Site> Sites { get; set; }
@@ -52,12 +61,16 @@ namespace thewall9.data.Models
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductCulture> ProductCultures { get; set; }
         public DbSet<ProductTag> ProductTags { get; set; }
-        public DbSet<ProductCategory> ProductCategories{ get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<ProductGallery> ProductGalleries { get; set; }
         public DbSet<ProductCurrency> ProductCurrencies { get; set; }
 
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
-        
+
+        //BLOG
+        public DbSet<BlogPost> BlogPosts { get; set; }
+        public DbSet<BlogPostCulture> BlogPostCultures { get; set; }
+
     }
 }

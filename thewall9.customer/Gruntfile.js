@@ -30,10 +30,10 @@ module.exports = function (grunt) {
                         'lib/font-awesome/font-awesome.css',
                         'lib/toastr/toastr.min.css',
                         "Content/sb-admin-2.css",
-                         "Content/plugins/metisMenu/metisMenu.min.css",
-                         "Content/plugins/timeline.css",
-                          "Content/plugins/morris.css",
-                          "Content/angular-block-ui.min.css",
+                        "Content/plugins/metisMenu/metisMenu.min.css",
+                        "Content/plugins/timeline.css",
+                        "Content/plugins/morris.css",
+                        "Content/angular-block-ui.min.css",
                         'Content/site.css'
                     ]
                 }
@@ -71,7 +71,7 @@ module.exports = function (grunt) {
                         'lib/moment/moment.js',
                         "scripts/plugins/metisMenu/metisMenu.min.js",
                         "scripts/sb-admin-2.js",
-                        
+
                     ]
                 }
             },
@@ -90,14 +90,14 @@ module.exports = function (grunt) {
                         "app/filters/*.js",
                         "app/services/*.js",
                         "app/controllers/*.js",
-                        "app/directives/*.js" 
+                        "app/directives/*.js"
                     ]
                 }
             }
         },
         watch: {
             intern: {
-                files: ['app/*.js','app/*/*.js'],
+                files: ['app/*.js', 'app/*/*.js'],
                 tasks: ['uglify:appAngular']
             },
             css: {
@@ -150,7 +150,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
 
     // Default task.
-    grunt.registerTask('build', ['bower', 'less', 'uglify', 'cssmin','copy', 'watch']);
+    grunt.registerTask('build', ['bower', 'less', 'uglify', 'cssmin', 'copy', 'watch']);
     grunt.registerTask('no-watch', ['bower', 'less', 'uglify', 'copy', 'cssmin']);
 
 };
