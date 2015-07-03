@@ -67,8 +67,8 @@
             $scope.init();
         }
         $scope.init = function () {
-            $scope.getCategories();
             $scope.selectedCulture = cultureService.currentCulture;
+            $scope.getCategories();
         };
         $scope.$on('initDone', function (event) {
             $scope.init();
