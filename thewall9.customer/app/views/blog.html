@@ -1,0 +1,30 @@
+﻿<div class="page-header">
+    <ul class="list-inline pull-right">
+        <li>
+            <a class="btn btn-primary" role="button" ng-href="#/blog/post">
+                <span class="glyphicon glyphicon-plus"></span> Nuevo Post
+            </a>
+        </li>
+        <li>
+            <select ng-options="culture as culture.Name for culture in cultures"
+                    ng-model="selectedCulture"
+                    ng-change="updateCulture()"
+                    class="form-control"></select>
+        </li>
+    </ul>
+    <h1>Blog</h1>
+</div>
+<table class="table table-bordered">
+    <tr ng-repeat="item in data">
+        <td>
+            {{item.BlogPostID}}
+            <span ng-show="item.CultureInfo">{{item.CultureInfo.Title}}</span>
+            <span ng-show="item.CultureInfo==null">UNTITLED</span>
+        </td>
+        <td>
+            <a href="" class="btn btn-default btn-sm" role="button" ng-href="#/blog/post/{{item.BlogPostID}}">
+                <span class="glyphicon glyphicon-edit"></span>
+            </a>
+        </td>
+    </tr>
+</table>

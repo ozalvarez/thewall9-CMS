@@ -26,18 +26,22 @@ namespace thewall9.bll
 
                               CultureInfo = bp.BlogPostCultures
                               .Where(m => m.CultureID == CultureID)
+                              .Select(m => new BlogPostListCultureBinding
+                              {
+                                  Title = m.Title
+                              })
                               .FirstOrDefault()
                           };
                 return _BP.ToList();
             }
         }
-        public BlogPostDetailBinding GetDetail(int BlogPostID, int CultureID)
+        public BlogPostModelBinding GetDetail(int BlogPostID, int CultureID)
         {
             using (var _c = db)
             {
                 var _BP = from bpc in _c.BlogPostCultures
                           where (bpc.BlogPostID == BlogPostID && bpc.CultureID == CultureID)
-                          select new BlogPostDetailBinding
+                          select new BlogPostModelBinding
                           {
                               Title = bpc.Title,
                               Content = bpc.Content,
@@ -47,13 +51,17 @@ namespace thewall9.bll
                               CultureID = bpc.CultureID,
                               Tags = bpc.BlogPostTags.Select(m => new BlogTagModelBinding
                               {
-                                  BlogTagName=m.BlogTag.BlogTagName
+                                  BlogTagName = m.BlogTag.BlogTagName
+                              }).ToList(),
+                              Categories = bpc.BlogPost.BlogPostCategories.Select(m => new BlogPostCategorieModelBinding { 
+                                  BlogCategoryID=m.BlogCategoryID
                               }).ToList()
+
                           };
                 return _BP.FirstOrDefault();
             }
         }
-        
+
         public int Save(BlogPostModelBinding Model, string UserID)
         {
             using (var _c = db)
@@ -73,8 +81,8 @@ namespace thewall9.bll
                         {
                             _BlogPostCulture.BlogPostTags.Add(new BlogPostTag
                             {
-                                BlogTagID=GetTagID(item.BlogTagName),
-                                CultureID=Model.CultureID
+                                BlogTagID = GetTagID(item.BlogTagName),
+                                CultureID = Model.CultureID
                             });
                         }
                     }
@@ -91,7 +99,7 @@ namespace thewall9.bll
                         {
                             _BlogPost.BlogPostCategories.Add(new BlogPostCategory
                             {
-                                BlogCategoryID = item.BlogCategorieID
+                                BlogCategoryID = item.BlogCategoryID
                             });
                         }
                     }
@@ -113,11 +121,11 @@ namespace thewall9.bll
                             .Where(m => m.Adding)
                             .Select(m => new BlogPostCategory
                             {
-                                BlogCategoryID = m.BlogCategorieID
+                                BlogCategoryID = m.BlogCategoryID
                             }));
 
                         var _CToDelete = Model.Categories
-                            .Where(m => m.Deleting).Select(m => m.BlogCategorieID);
+                            .Where(m => m.Deleting).Select(m => m.BlogCategoryID);
                         _c.BlogPostCategories.RemoveRange(
                         _c.BlogPostCategories
                             .Where(m => _CToDelete.Contains(m.BlogCategoryID))
@@ -131,12 +139,12 @@ namespace thewall9.bll
                             var _BTID = GetTagID(item.BlogTagName);
 
                             var _BPT = _c.BlogPostTags
-                                .Where(m => m.BlogTagID == _BTID 
+                                .Where(m => m.BlogTagID == _BTID
                             && m.BlogPostID == Model.BlogPostID
                             && m.CultureID == Model.CultureID)
                             .FirstOrDefault();
 
-                            if (item.Adding && _BPT==null)
+                            if (item.Adding && _BPT == null)
                             {
                                 _BPT = new BlogPostTag(item, _BTID, Model.CultureID);
                                 _BP.BlogPostTags.Add(_BPT);
@@ -177,8 +185,13 @@ namespace thewall9.bll
                           select new BlogCategoryListBinding
                           {
                               BlogCategoryID = bp.BlogCategoryID,
+
                               CultureInfo = bp.BlogCategoryCultures
                               .Where(m => m.CultureID == CultureID)
+                              .Select(m => new BlogCategoryCultureBase
+                              {
+                                  BlogCategoryName = m.BlogCategoryName
+                              })
                               .FirstOrDefault()
                           };
                 return _BP.ToList();

@@ -20,6 +20,7 @@ namespace thewall9.data.binding
         public bool Enabled { get; set; }
         public DateTime DateCreated { get; set; }
         public bool ECommerce { get; set; }
+        public bool Blog { get; set; }
     }
     public class SiteBinding : SiteBase
     {

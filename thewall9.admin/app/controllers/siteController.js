@@ -64,6 +64,16 @@ app.controller('siteController', ['$scope', 'siteService', 'toastrService',
                     toastrService.success("Disabled");
             });
         };
+        $scope.enableBlog = function (item, enable) {
+            siteService.enableBlog(item.SiteID, enable).then(function (data) {
+                item.Blog= enable;
+                $scope.get();
+                if (item.Blog)
+                    toastrService.success("Enabled");
+                else
+                    toastrService.success("Disabled");
+            });
+        };
         $scope.openAddUser = function (item) {
             $scope.u = {
                 SiteID: item.SiteID

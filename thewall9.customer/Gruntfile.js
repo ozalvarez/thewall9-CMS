@@ -28,7 +28,7 @@ module.exports = function (grunt) {
                         'lib/angular-loading-bar/loading-bar.css',
                         'lib/angular-ui-tree/angular-ui-tree.min.css',
                         'lib/font-awesome/font-awesome.css',
-                        'lib/toastr/toastr.min.css',
+                        'lib/toastr/toastr.css',
                         "Content/sb-admin-2.css",
                         "Content/plugins/metisMenu/metisMenu.min.css",
                         "Content/plugins/timeline.css",
@@ -70,8 +70,22 @@ module.exports = function (grunt) {
                         'lib/toastr/toastr.js',
                         'lib/moment/moment.js',
                         "scripts/plugins/metisMenu/metisMenu.min.js",
-                        "scripts/sb-admin-2.js",
-
+                        "scripts/sb-admin-2.js"
+                    ]
+                }
+            },
+            angular: {
+                files: {
+                    'Scripts/min/angular.js':
+                    [
+                        'lib/angular/angular.js',
+                        'lib/angular-route/angular-route.js',
+                        'lib/angular-local-storage/angular-local-storage.js',
+                        'lib/angular-loading-bar/loading-bar.js',
+                        'lib/angular-ui-tree/angular-ui-tree.min.js',
+                        'lib/angular-ui-tinymce/tinymce.js',
+                        "scripts/angular-block-ui.min.js",
+                        "scripts/angular-file-upload.min.js",
                     ]
                 }
             },
@@ -79,13 +93,6 @@ module.exports = function (grunt) {
                 files: {
                     'Scripts/min/app-angular.js':
                     [
-                        'lib/angular/angular.js',
-                        'lib/angular-route/angular-route.js',
-                        'lib/angular-local-storage/angular-local-storage.js',
-                        'lib/angular-loading-bar/loading-bar.js',
-                        'lib/angular-ui-tree/angular-ui-tree.min.js',
-                        "scripts/angular-block-ui.min.js",
-                        "scripts/angular-file-upload.min.js",
                         "app/app.js",
                         "app/filters/*.js",
                         "app/services/*.js",
@@ -135,10 +142,34 @@ module.exports = function (grunt) {
                       cwd: 'bower_components/bootstrap/fonts',
                       src: '**/*',
                       dest: 'content/fonts',
-                      expand: true
+                      expand: true,
+
                   },
                 ],
             },
+            tinymce: {
+                files: [{
+                      cwd: 'lib/tinymce-dist/',
+                      src: 'tinymce.min.js',
+                      dest: 'scripts/min/',
+                      expand: true
+                  },{
+                      cwd: 'bower_components/tinymce-dist/skins',
+                      src: '**/*',
+                      dest: 'scripts/min/skins',
+                      expand: true
+                  },{
+                      cwd: 'bower_components/tinymce-dist/themes',
+                      src: '**/*',
+                      dest: 'scripts/min/themes',
+                      expand: true
+                  }, {
+                      cwd: 'bower_components/tinymce-dist/plugins',
+                      src: '**/*',
+                      dest: 'scripts/min/plugins',
+                      expand: true
+                  }]
+            }
         }
     });
 

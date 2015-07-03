@@ -12,6 +12,7 @@
         "toastr": "^2.1.1",
         "font-awesome": "^4.3.0",
         "angular-ui-tree": "^2.5.0",
-        "moment": ""
+        "moment": "^2.10.3",
+        "angular-ui-tinymce": "^0.0.9"
     }
 }

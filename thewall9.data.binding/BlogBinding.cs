@@ -63,14 +63,11 @@ namespace thewall9.data.binding
     /// </summary>
     public class BlogPostListBinding : BlogPostBase
     {
-        public BlogPostCultureBase CultureInfo { get; set; }
+        public BlogPostListCultureBinding CultureInfo { get; set; }
     }
-    /// <summary>
-    /// Used for show detail of post
-    /// </summary>
-    public class BlogPostDetailBinding : BlogPostCultureBase
+    public class BlogPostListCultureBinding
     {
-        public List<BlogTagModelBinding> Tags { get; set; }
+        public string Title { get; set; }
     }
     /// <summary>
     /// Is the Model to Save the Post (Create/Update)
@@ -86,7 +83,7 @@ namespace thewall9.data.binding
     /// </summary>
     public class BlogPostCategorieModelBinding
     {
-        public int BlogCategorieID { get; set; }
+        public int BlogCategoryID { get; set; }
         public bool Adding { get; set; }
         public bool Deleting { get; set; }
     }

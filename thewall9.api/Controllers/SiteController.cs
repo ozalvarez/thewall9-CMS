@@ -81,6 +81,13 @@ namespace thewall9.api.Controllers
             return Ok();
         }
         [Authorize(Roles = "admin")]
+        [Route("enable-blog")]
+        public IHttpActionResult PostEnableBlog(SiteEnabledBinding Model)
+        {
+            SiteService.EnableBlog(Model);
+            return Ok();
+        }
+        [Authorize(Roles = "admin")]
         [Route("user")]
         public IHttpActionResult PostAddUser(AddUserInSiteBinding Model)
         {

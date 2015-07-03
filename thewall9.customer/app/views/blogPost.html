@@ -1,0 +1,42 @@
+﻿
+<div class="page-header">
+    <ul class="list-inline pull-right">
+        <li>
+            <select ng-options="culture as culture.Name for culture in cultures"
+                    ng-model="selectedCulture"
+                    ng-change="updateCulture()"
+                    class="form-control"></select>
+        </li>
+    </ul>
+    <h1 ng-show="model.Title==null">Nuevo Post</h1>
+    <h1 ng-show="model.Title">{{model.Title}}</h1>
+</div>
+<form role="form">
+    <div class="form-group">
+        <label>Título</label>
+        <input class="form-control" ng-model="model.Title" placeholder="Título" required>
+    </div>
+    <div class="form-group">
+        <textarea ui-tinymce="tinymceOptions" name="content" ng-model="model.Content" style="width:100%"></textarea>
+    </div>
+    <tabs>
+        <pane title="Tags & Categorías">
+            Categorías
+            <div class="checkbox">
+                <label ng-repeat="item in categories">
+                    <input type="checkbox" ng-click="selectCategory(item)" ng-checked="item.Enabled" >
+                    {{item.CultureInfo.BlogCategoryName}} &nbsp;
+                </label>
+            </div>
+            Tags
+
+        </pane>
+        <pane title="Imagen Principal">
+
+        </pane>
+    </tabs>
+    <p>
+        <button type="submit" class="btn btn-primary" ng-click="save()">Guardar</button>
+        <a href="" class="btn btn-default" ng-href="#/blog"> Ir al Listado</a>
+    </p>
+</form>

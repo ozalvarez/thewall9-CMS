@@ -24,6 +24,12 @@ app.factory('siteService', ["$myhttp",
                     Enabled: enable
                 });
             },
+            enableBlog: function (id, enable) {
+                return $http.post(_Url + '/enable-blog', {
+                    SiteID: id,
+                    Enabled: enable
+                });
+            },
             addUser: function (object) {
                 return $http.post(_Url + '/user', object);
             },

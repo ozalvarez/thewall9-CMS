@@ -41,6 +41,7 @@ namespace thewall9.api.Controllers
         }
 
         //CATEGORIES
+        [Route("category")]
         public IHttpActionResult GetCategories(int SiteID, int CultureID)
         {
             return Ok(_BlogService.GetCategories(SiteID, CultureID));

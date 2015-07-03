@@ -158,6 +158,10 @@
     <Compile Include="Migrations\201507022138351_BlogCategoryAddSiteID2.Designer.cs">
       <DependentUpon>201507022138351_BlogCategoryAddSiteID2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507031719061_AddBlogToSite.cs" />
+    <Compile Include="Migrations\201507031719061_AddBlogToSite.Designer.cs">
+      <DependentUpon>201507031719061_AddBlogToSite.cs</DependentUpon>
+    </Compile>
     <Compile Include="Order.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Category.cs" />
@@ -373,6 +377,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507022138351_BlogCategoryAddSiteID2.resx">
       <DependentUpon>201507022138351_BlogCategoryAddSiteID2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507031719061_AddBlogToSite.resx">
+      <DependentUpon>201507031719061_AddBlogToSite.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
