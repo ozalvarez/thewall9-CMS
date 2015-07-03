@@ -12,7 +12,6 @@ namespace thewall9.data.binding
     {
         public int BlogPostID { get; set; }
         public int SiteID { get; set; }
-        public bool Published { get; set; }
         public DateTime DateCreated { get; set; }
     }
     public class BlogPostCultureBase
@@ -41,12 +40,13 @@ namespace thewall9.data.binding
     public class BlogCategoryBase
     {
         public int BlogCategoryID { get; set; }
+        public int SiteID { get; set; }
     }
     public class BlogCategoryCultureBase
     {
         public int BlogCategoryID { get; set; }
         public int CultureID { get; set; }
-        public int BlogCategoryName { get; set; }
+        public string BlogCategoryName { get; set; }
     }
     public class BlogPostCategoryBase
     {
@@ -58,8 +58,47 @@ namespace thewall9.data.binding
     #endregion
 
     #region Binding
-    public class BlogPostBinding : BlogPostBase
+    /// <summary>
+    /// Used for listing post in Customer
+    /// </summary>
+    public class BlogPostListBinding : BlogPostBase
     {
+        public BlogPostCultureBase CultureInfo { get; set; }
+    }
+    /// <summary>
+    /// Used for show detail of post
+    /// </summary>
+    public class BlogPostDetailBinding : BlogPostCultureBase
+    {
+    }
+    /// <summary>
+    /// Is the Model to Save the Post (Create/Update)
+    /// </summary>
+    public class BlogPostModelBinding : BlogPostCultureBase
+    {
+        public int SiteID { get; set; }
+        public List<BlogPostCategorieModelBinding> Categories { get; set; }
+    }
+    /// <summary>
+    /// Used to Set categories on creating BlogPost
+    /// </summary>
+    public class BlogPostCategorieModelBinding
+    {
+        public int BlogCategorieID { get; set; }
+        public bool Adding { get; set; }
+        public bool Deleting { get; set; }
+    }
+
+    //CATEGORY
+    public class BlogCategoryListBinding : BlogCategoryBase
+    {
+        public BlogCategoryCultureBase CultureInfo { get; set; }
+    }
+    public class BlogCategoryModelBinding
+    {
+        public List<BlogCategoryCultureBase> Categories { get; set; }
+        public int SiteID { get; set; }
+        public int BlogCategoryID { get; set; }
     }
     #endregion
 }

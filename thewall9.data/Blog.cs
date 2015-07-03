@@ -13,11 +13,40 @@ namespace thewall9.data
     //POST
     public class BlogPost : BlogPostBase
     {
+        public BlogPost()
+        {
+            this.DateCreated = DateTime.Now;
+        }
+        public BlogPost(int SiteID):this()
+        {
+            this.SiteID = SiteID;
+        }
+
         [ForeignKey("SiteID")]
         public virtual Site Site { get; set; }
+        public virtual List<BlogPostCulture> BlogPostCultures { get; set; }
+        public virtual List<BlogPostCategory> BlogPostCategories { get; set; }
     }
     public class BlogPostCulture : BlogPostCultureBase
     {
+         public BlogPostCulture()
+        {
+            this.DateCreated = DateTime.Now;
+        }
+         public BlogPostCulture(BlogPostModelBinding Model)
+             : this()
+        {
+            this.CultureID = Model.CultureID;
+            this.FriendlyUrl =Model.FriendlyUrl;
+            UpdateContent(Model);
+        }
+         public void UpdateContent(BlogPostModelBinding Model)
+         {
+             this.Title = Model.Title;
+             this.Published = Model.Published;
+             this.Content = Model.Content;
+         }
+
         [ForeignKey("BlogPostID")]
         public virtual BlogPost BlogPost { get; set; }
         [ForeignKey("CultureID")]
@@ -39,7 +68,9 @@ namespace thewall9.data
     //CATEGORY
     public class BlogCategory : BlogCategoryBase
     {
-
+        [ForeignKey("SiteID")]
+        public virtual Site Site { get; set; }
+        public virtual List<BlogCategoryCulture> BlogCategoryCultures { get; set; }
     }
     public class BlogCategoryCulture : BlogCategoryCultureBase
     {

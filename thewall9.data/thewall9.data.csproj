@@ -138,6 +138,26 @@
     <Compile Include="Migrations\201506121913239_AddEnabledToContent.Designer.cs">
       <DependentUpon>201506121913239_AddEnabledToContent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507021736246_AddBlog.cs" />
+    <Compile Include="Migrations\201507021736246_AddBlog.Designer.cs">
+      <DependentUpon>201507021736246_AddBlog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507021834598_RemovePublishedOnBlogPost.cs" />
+    <Compile Include="Migrations\201507021834598_RemovePublishedOnBlogPost.Designer.cs">
+      <DependentUpon>201507021834598_RemovePublishedOnBlogPost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507022108498_BlogCategoryNameAsString.cs" />
+    <Compile Include="Migrations\201507022108498_BlogCategoryNameAsString.Designer.cs">
+      <DependentUpon>201507022108498_BlogCategoryNameAsString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507022118335_BlogCategoryAddSiteID.cs" />
+    <Compile Include="Migrations\201507022118335_BlogCategoryAddSiteID.Designer.cs">
+      <DependentUpon>201507022118335_BlogCategoryAddSiteID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507022138351_BlogCategoryAddSiteID2.cs" />
+    <Compile Include="Migrations\201507022138351_BlogCategoryAddSiteID2.Designer.cs">
+      <DependentUpon>201507022138351_BlogCategoryAddSiteID2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Order.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Category.cs" />
@@ -338,6 +358,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506121913239_AddEnabledToContent.resx">
       <DependentUpon>201506121913239_AddEnabledToContent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507021736246_AddBlog.resx">
+      <DependentUpon>201507021736246_AddBlog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507021834598_RemovePublishedOnBlogPost.resx">
+      <DependentUpon>201507021834598_RemovePublishedOnBlogPost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507022108498_BlogCategoryNameAsString.resx">
+      <DependentUpon>201507022108498_BlogCategoryNameAsString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507022118335_BlogCategoryAddSiteID.resx">
+      <DependentUpon>201507022118335_BlogCategoryAddSiteID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507022138351_BlogCategoryAddSiteID2.resx">
+      <DependentUpon>201507022138351_BlogCategoryAddSiteID2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
