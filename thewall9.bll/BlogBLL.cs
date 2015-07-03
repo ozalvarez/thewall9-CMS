@@ -11,6 +11,7 @@ namespace thewall9.bll
 {
     public class BlogBLL : BaseBLL
     {
+        //POST
         public List<BlogPostListBinding> Get(int SiteID, int CultureID)
         {
             using (var _c = db)
