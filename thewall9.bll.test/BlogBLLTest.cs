@@ -30,12 +30,24 @@ namespace thewall9.bll.test
                 Categories=_Categories
             };
             _Category.BlogCategoryID=new BlogBLL().SaveCategory(_Category, _CustomerUser.Id);
+
+            //CREATING TAGS
+            var _Tags = new List<BlogTagModelBinding>();
+            _Tags.Add(new BlogTagModelBinding
+            {
+                BlogTagName="t1"
+            });
+            _Tags.Add(new BlogTagModelBinding
+            {
+                BlogTagName = "t2"
+            });
             //CREATING POSTS
             _BlogPost = new BlogPostModelBinding
             {
                 SiteID = _SiteID,
                 CultureID = _Cultures[0].CultureID,
-                Title="b1"
+                Title="b1",
+                Tags=_Tags
             };
             _BlogPost.BlogPostID = new BlogBLL().Save(_BlogPost, _CustomerUser.Id);
             Assert.IsTrue(_BlogPost.BlogPostID != 0);
@@ -176,6 +188,40 @@ namespace thewall9.bll.test
             new BlogBLL().DeleteCategory(_Category.BlogCategoryID, _CustomerUser.Id);
             var _Cs = new BlogBLL().GetCategories(_SiteID, _Cultures[0].CultureID);
             Assert.IsTrue(_Cs.Count==0);
+        }
+        #endregion
+
+        #region TAGS
+        [TestMethod]
+        public void BlogTagCreateTest()
+        {
+            SettingUp();
+            var _B = new BlogBLL().GetDetail(_BlogPost.BlogPostID, _Cultures[0].CultureID);
+            Assert.AreEqual(2, _B.Tags.Count);
+            Assert.AreEqual(_BlogPost.Tags[0].BlogTagName,_B.Tags[0].BlogTagName);
+        }
+        [TestMethod]
+        public void BlogTagUpdateTest()
+        {
+            SettingUp();
+            //CREATING TAGS
+            var _Tags = new List<BlogTagModelBinding>();
+            _Tags.Add(new BlogTagModelBinding
+            {
+                BlogTagName = "t3",
+                Adding=true
+            });
+            _Tags.Add(new BlogTagModelBinding
+            {
+                BlogTagName = "t2",
+                Deleting=true
+            });
+            _BlogPost.Tags = _Tags;
+            _BlogPost.BlogPostID = new BlogBLL().Save(_BlogPost, _CustomerUser.Id);
+            var _B = new BlogBLL().GetDetail(_BlogPost.BlogPostID, _Cultures[0].CultureID);
+            Assert.AreEqual(2, _B.Tags.Count);
+            Assert.AreEqual("t1", _B.Tags[0].BlogTagName);
+            Assert.AreEqual(_Tags[0].BlogTagName, _B.Tags[1].BlogTagName);
         }
         #endregion
     }

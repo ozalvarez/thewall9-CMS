@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using thewall9.data;
 using thewall9.data.binding;
 using thewall9.bll.Utils;
+using thewall9.data.Models;
 namespace thewall9.bll
 {
     public class BlogBLL : BaseBLL
@@ -43,10 +44,15 @@ namespace thewall9.bll
                               FriendlyUrl = bpc.FriendlyUrl,
                               BlogPostID = bpc.BlogPostID,
                               CultureID = bpc.CultureID,
+                              Tags = bpc.BlogPostTags.Select(m => new BlogTagModelBinding
+                              {
+                                  BlogTagName=m.BlogTag.BlogTagName
+                              }).ToList()
                           };
                 return _BP.FirstOrDefault();
             }
         }
+        
         public int Save(BlogPostModelBinding Model, string UserID)
         {
             using (var _c = db)
@@ -56,9 +62,24 @@ namespace thewall9.bll
                 {
                     var _BlogPost = new BlogPost(Model.SiteID);
 
-                    _BlogPost.BlogPostCultures = new List<BlogPostCulture>();
                     Model.FriendlyUrl = Model.Title.CleanUrl();
-                    _BlogPost.BlogPostCultures.Add(new BlogPostCulture(Model));
+                    var _BlogPostCulture = new BlogPostCulture(Model);
+                    //ADD TAGS
+                    if (Model.Tags != null)
+                    {
+                        _BlogPostCulture.BlogPostTags = new List<BlogPostTag>();
+                        foreach (var item in Model.Tags)
+                        {
+                            _BlogPostCulture.BlogPostTags.Add(new BlogPostTag
+                            {
+                                BlogTagID=GetTagID(item.BlogTagName),
+                                CultureID=Model.CultureID
+                            });
+                        }
+                    }
+
+                    _BlogPost.BlogPostCultures = new List<BlogPostCulture>();
+                    _BlogPost.BlogPostCultures.Add(_BlogPostCulture);
                     _c.BlogPosts.Add(_BlogPost);
 
                     //CATEGORIES
@@ -100,6 +121,31 @@ namespace thewall9.bll
                         _c.BlogPostCategories
                             .Where(m => _CToDelete.Contains(m.BlogCategoryID))
                             .ToList());
+                    }
+                    //ADD TAGS
+                    if (Model.Tags != null)
+                    {
+                        foreach (var item in Model.Tags)
+                        {
+                            var _BTID = GetTagID(item.BlogTagName);
+
+                            var _BPT = _c.BlogPostTags
+                                .Where(m => m.BlogTagID == _BTID 
+                            && m.BlogPostID == Model.BlogPostID
+                            && m.CultureID == Model.CultureID)
+                            .FirstOrDefault();
+
+                            if (item.Adding && _BPT==null)
+                            {
+                                _BPT = new BlogPostTag(item, _BTID, Model.CultureID);
+                                _BP.BlogPostTags.Add(_BPT);
+                            }
+                            else if (item.Deleting && _BPT != null)
+                            {
+                                _c.BlogPostTags.Remove(_BPT);
+                            }
+
+                        }
                     }
 
                     _c.SaveChanges();
@@ -201,5 +247,24 @@ namespace thewall9.bll
                 _c.SaveChanges();
             }
         }
+
+        //TAGS
+        private int GetTagID(string BlogTagName)
+        {
+            using (var _c = db)
+            {
+                var _BT = _c.BlogTags
+                                .Where(m => m.BlogTagName.ToLower().Equals(BlogTagName.ToLower()))
+                                .FirstOrDefault();
+                if (_BT == null)
+                {
+                    _BT = new BlogTag(BlogTagName);
+                    _c.BlogTags.Add(_BT);
+                    _c.SaveChanges();
+                }
+                return _BT.BlogTagID;
+            }
+        }
+
     }
 }

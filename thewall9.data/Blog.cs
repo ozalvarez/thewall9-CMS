@@ -51,18 +51,33 @@ namespace thewall9.data
         public virtual BlogPost BlogPost { get; set; }
         [ForeignKey("CultureID")]
         public virtual Culture Culture { get; set; }
+        public virtual List<BlogPostTag> BlogPostTags { get; set; }
     }
     //TAG
     public class BlogTag : BlogTagBase
     {
-
+        public BlogTag(){}
+        public BlogTag(string BlogTagName)
+            : this()
+        {
+            this.BlogTagName = BlogTagName;
+        }
     }
     public class BlogPostTag : BlogPostTagBase
     {
+        public BlogPostTag(){}
+        public BlogPostTag(BlogTagModelBinding Model, int BlogTagID, int CultureID)
+            : this()
+        {
+            this.BlogTagID = BlogTagID;
+            this.BlogPostID = Model.BlogPostID;
+            this.CultureID = CultureID;
+        }
         [ForeignKey("BlogPostID,CultureID")]
         public virtual BlogPostCulture BlogPostCulture { get; set; }
         [ForeignKey("BlogTagID")]
         public virtual BlogTag BlogTag { get; set; }
+
     }
 
     //CATEGORY

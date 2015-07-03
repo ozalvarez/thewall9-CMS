@@ -70,6 +70,7 @@ namespace thewall9.data.binding
     /// </summary>
     public class BlogPostDetailBinding : BlogPostCultureBase
     {
+        public List<BlogTagModelBinding> Tags { get; set; }
     }
     /// <summary>
     /// Is the Model to Save the Post (Create/Update)
@@ -78,6 +79,7 @@ namespace thewall9.data.binding
     {
         public int SiteID { get; set; }
         public List<BlogPostCategorieModelBinding> Categories { get; set; }
+        public List<BlogTagModelBinding> Tags { get; set; }
     }
     /// <summary>
     /// Used to Set categories on creating BlogPost
@@ -99,6 +101,15 @@ namespace thewall9.data.binding
         public List<BlogCategoryCultureBase> Categories { get; set; }
         public int SiteID { get; set; }
         public int BlogCategoryID { get; set; }
+    }
+
+    //TAGS
+    public class BlogTagModelBinding
+    {
+        public int BlogPostID { get; set; }
+        public string BlogTagName { get; set; }
+        public bool Adding { get; set; }
+        public bool Deleting { get; set; }
     }
     #endregion
 }
