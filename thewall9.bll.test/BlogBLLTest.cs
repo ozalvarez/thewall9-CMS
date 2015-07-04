@@ -119,7 +119,7 @@ namespace thewall9.bll.test
             _Category.Categories[0].BlogCategoryName = "newCAT";
             new BlogBLL().SaveCategory(_Category, _CustomerUser.Id);
             var _C = new BlogBLL().GetCategories(_SiteID, _Cultures[0].CultureID);
-            Assert.AreEqual(_Category.Categories[0].BlogCategoryName, _C[0].CultureInfo.BlogCategoryName);
+            Assert.AreEqual(_Category.Categories[0].BlogCategoryName, _C[0].BlogCategoryName);
         }
         [TestMethod]
         public void BlogCategoryUpdatingNewLangTest()
@@ -153,9 +153,9 @@ namespace thewall9.bll.test
             _Category2.BlogCategoryID = new BlogBLL().SaveCategory(_Category2, _CustomerUser.Id);
 
             var _C = new BlogBLL().GetCategories(_SiteID, _Cultures[0].CultureID);
-            Assert.AreEqual(_Category1.Categories[0].BlogCategoryName, _C[1].CultureInfo.BlogCategoryName);
+            Assert.AreEqual(_Category1.Categories[0].BlogCategoryName, _C[1].BlogCategoryName);
             var _C2 = new BlogBLL().GetCategories(_SiteID, _Cultures[1].CultureID);
-            Assert.AreEqual(_Category2.Categories[0].BlogCategoryName, _C2[1].CultureInfo.BlogCategoryName);
+            Assert.AreEqual(_Category2.Categories[0].BlogCategoryName, _C2[1].BlogCategoryName);
         }
         [TestMethod]
         public void BlogCategoryGetOneLangTest()
@@ -176,11 +176,10 @@ namespace thewall9.bll.test
 
             var _C = new BlogBLL().GetCategories(_SiteID, _Cultures[0].CultureID);
             Assert.IsTrue(_C.Count == 2);
-            Assert.IsNotNull(_C[0].CultureInfo);
-            Assert.IsNotNull(_C[1].CultureInfo);
+            Assert.IsNotNull(_C[0].CategoryCultures);
+            Assert.IsNotNull(_C[1].CategoryCultures);
             _C = new BlogBLL().GetCategories(_SiteID, _Cultures[1].CultureID);
-            Assert.IsNotNull(_C[0].CultureInfo);
-            Assert.IsNull(_C[1].CultureInfo);
+            Assert.IsNotNull(_C[0].CategoryCultures);
             Assert.IsTrue(_C.Count == 2);
         }
         [TestMethod]

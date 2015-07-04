@@ -1,20 +1,20 @@
-﻿app.controller('blogController', ['$scope', '$routeParams', '$location', 'blogService'
+﻿app.controller('blogCategorySaveController', ['$scope', '$routeParams', '$location', 'blogService'
     , 'siteService', 'toastrService', 'cultureService',
     function ($scope, $routeParams, $location, blogService, siteService, toastrService
         , cultureService) {
-        $scope.get = function () {
-            blogService.get().then(function (data) {
-                $scope.data = data;
+        $scope.save = function () {
+            blogService.saveCategory($scope.itemToSave).then(function (data) {
+                toastrService.success("Post Guardado");
+                $('#modal-new').modal('hide');
+                $scope.getCategories();
             });
-        };
-
+        }
         /*INIT*/
         $scope.updateCulture = function () {
             cultureService.currentCulture = $scope.selectedCulture;
             $scope.init();
         }
         $scope.init = function () {
-            $scope.get();
             $scope.selectedCulture = cultureService.currentCulture;
         };
         $scope.$on('initDone', function (event) {

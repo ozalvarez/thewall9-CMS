@@ -196,13 +196,20 @@ namespace thewall9.bll
                           {
                               BlogCategoryID = bp.BlogCategoryID,
 
-                              CultureInfo = bp.BlogCategoryCultures
+                              BlogCategoryName = bp.BlogCategoryCultures
                               .Where(m => m.CultureID == CultureID)
-                              .Select(m => new BlogCategoryCultureBase
+                              .Select(m => m.BlogCategoryName)
+                              .FirstOrDefault(),
+
+                              CategoryCultures = bp.BlogCategoryCultures
+                              .Select(m => new BlogCategoryCultureBinding
                               {
-                                  BlogCategoryName = m.BlogCategoryName
+                                  BlogCategoryName = m.BlogCategoryName,
+                                  BlogCategoryID=m.BlogCategoryID,
+                                  CultureName=m.Culture.Name,
+                                  CultureID=m.CultureID
                               })
-                              .FirstOrDefault()
+                              .ToList()
                           };
                 return _BP.ToList();
             }
@@ -225,7 +232,7 @@ namespace thewall9.bll
                     _C = _c.BlogCategories.Where(m => m.BlogCategoryID == Model.BlogCategoryID)
                         .FirstOrDefault();
                 }
-                foreach (var item in Model.Categories)
+                foreach (var item in Model.CategoryCultures)
                 {
                     if (Model.BlogCategoryID == 0)
                     {

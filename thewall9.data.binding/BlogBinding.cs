@@ -48,6 +48,10 @@ namespace thewall9.data.binding
         public int CultureID { get; set; }
         public string BlogCategoryName { get; set; }
     }
+    public class BlogCategoryCultureBinding: BlogCategoryCultureBase
+    {
+        public string CultureName { get; set; }
+    }
     public class BlogPostCategoryBase
     {
         public int BlogPostID { get; set; }
@@ -91,11 +95,12 @@ namespace thewall9.data.binding
     //CATEGORY
     public class BlogCategoryListBinding : BlogCategoryBase
     {
-        public BlogCategoryCultureBase CultureInfo { get; set; }
+        public string BlogCategoryName { get; set; }
+        public List<BlogCategoryCultureBinding> CategoryCultures { get; set; }
     }
     public class BlogCategoryModelBinding
     {
-        public List<BlogCategoryCultureBase> Categories { get; set; }
+        public List<BlogCategoryCultureBase> CategoryCultures { get; set; }
         public int SiteID { get; set; }
         public int BlogCategoryID { get; set; }
     }

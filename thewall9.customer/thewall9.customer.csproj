@@ -125,6 +125,8 @@
     <Content Include="app\app-login.js" />
     <Content Include="app\app.js" />
     <Content Include="app\controllers\appController.js" />
+    <Content Include="app\controllers\blogCategorySaveController.js" />
+    <Content Include="app\controllers\blogCategoryController.js" />
     <Content Include="app\controllers\blogPostController.js" />
     <Content Include="app\controllers\blogController.js" />
     <Content Include="app\controllers\productsController.js" />
@@ -163,6 +165,7 @@
     <Content Include="app\services\toastrService.js" />
     <Content Include="app\services\utilService.js" />
     <Content Include="app\views\associate.html" />
+    <Content Include="app\views\blogCategory.html" />
     <Content Include="app\views\blogPost.html" />
     <Content Include="app\views\product.html" />
     <Content Include="app\views\blog.html" />
@@ -180,6 +183,7 @@
     <Content Include="app\views\password.html" />
     <Content Include="app\views\refresh.html" />
     <Content Include="app\views\tokens.html" />
+    <Content Include="app\views\_BlogCategory.html" />
     <Content Include="Content\angular-block-ui.css" />
     <Content Include="Content\angular-block-ui.min.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />

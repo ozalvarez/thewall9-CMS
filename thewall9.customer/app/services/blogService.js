@@ -29,47 +29,42 @@ app.factory('blogService', ["$myhttp", "$q", "ngAuthSettings", "siteService", 'c
                 + '/category?SiteID=' + siteService.site.SiteID
                 + "&CultureID=" + cultureService.currentCulture.CultureID);
         }
+        blogFactory.editCategory = function (item, $scope) {
+            if (item == null) {
+                $scope.itemToSave = {
+                    CategoryCultures: []
+                };
+            } else {
+                $scope.itemToSave = item;
+            }
+
+            angular.forEach(cultureService.cultures, function (allCulture) {
+                var _containCulture = false;
+                angular.forEach($scope.itemToSave.CategoryCultures, function (itemCulture) {
+                    if (allCulture.CultureID == itemCulture.CultureID) {
+                        _containCulture = true;
+                    }
+                });
+                if (!_containCulture) {
+                    $scope.itemToSave.CategoryCultures.push({
+                        CultureID: allCulture.CultureID,
+                        CultureName: allCulture.Name
+                    });
+                }
+            });
+            $('#modal-new').modal({
+                backdrop: true
+            });
+        };
+        blogFactory.saveCategory = function (model) {
+            model.SiteID = siteService.site.SiteID;
+            return $http.post(ngAuthSettings.apiServiceBaseUri + uri + '/category', model);
+        };
 
         //TAGS
         blogFactory.getTags = function ($query) {
             return $http.get(ngAuthSettings.apiServiceBaseUri + uri
-                + '/tag?Query='+$query);
+                + '/tag?Query=' + $query);
         }
-        //blogFactory.getByID = function (productID) {
-        //    return $http.get(ngAuthSettings.apiServiceBaseUri + uri + '/byID?ProductID=' + productID);
-        //};
-        //blogFactory.save = function (model) {
-        //    model.SiteID = siteService.site.SiteID;
-        //    return $http.post(ngAuthSettings.apiServiceBaseUri + uri, model);
-        //};
-        //blogFactory.remove = function (productID) {
-        //    return $http.delete(ngAuthSettings.apiServiceBaseUri + uri + '?ProductID=' + productID);
-        //};
-        //blogFactory.removeGallery = function (galleryID) {
-        //    return $http.delete(ngAuthSettings.apiServiceBaseUri + uri + '/gallery?GalleryID=' + galleryID);
-        //};
-        //blogFactory.move = function (productID, index) {
-        //    return $http.post(ngAuthSettings.apiServiceBaseUri + uri + '/move', {
-        //        ProductID: productID,
-        //        Index: index
-        //    });
-        //};
-        //blogFactory.uploadGallery = function (productID, file) {
-        //    return $upload.upload({
-        //        url: ngAuthSettings.apiServiceBaseUri + uriGallery + "/upload",
-        //        fields: {
-        //            'ProductID': productID
-        //        },
-        //        file: file
-        //    });
-        //};
-        
-        //blogFactory.getCategoriesUrl = function () {
-        //    return ngAuthSettings.apiServiceBaseUri + uri + '/categories?SiteID=' + siteService.site.SiteID + "&Query=%QUERY";
-        //}
-        ////TAGS
-        //blogFactory.getTags = function (query) {
-        //    return $http.get(ngAuthSettings.apiServiceBaseUri + uri + '/tags?SiteID=' + siteService.site.SiteID + "&Query=" + query);
-        //}
         return blogFactory;
     }]);
