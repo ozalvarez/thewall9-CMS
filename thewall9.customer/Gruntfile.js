@@ -109,7 +109,7 @@ module.exports = function (grunt) {
             },
             css: {
                 files: ['Content/site.less'],
-                tasks: ['less']
+                tasks: ['less','cssmin']
             }
         },
         bower: {

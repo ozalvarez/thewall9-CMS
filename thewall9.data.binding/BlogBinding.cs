@@ -103,7 +103,8 @@ namespace thewall9.data.binding
     //TAGS
     public class BlogTagModelBinding
     {
-        public int BlogPostID { get; set; }
+        public int BlogTagID { get; set; }
+        //public int BlogPostID { get; set; }
         public string BlogTagName { get; set; }
         public bool Adding { get; set; }
         public bool Deleting { get; set; }

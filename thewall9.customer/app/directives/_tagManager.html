@@ -1,0 +1,16 @@
+﻿<div class="tags">
+    <button ng-repeat="item in tags | filter:{Deleting:false}" class="btn btn-default btn-tag" ng-click="remove(item)">
+        {{getValue(item)}} <i class="fa fa-trash-o"></i>
+    </button>
+</div>
+<div class="input-group">
+    <input type="text" class="form-control" placeholder="Add Tag" ng-model="new_value" ng-change="change()">
+    <span class="input-group-btn">
+        <button class="btn btn-default" type="button" ng-click="add(null)">Add</button>
+    </span>
+</div>
+<div class="list-group list-group-autocomplete" ng-show="tagList!=null && tagList.length>0">
+    <a ng-click="add(item)" href="" class="list-group-item" ng-repeat="item in tagList">
+        {{getValue(item)}}
+    </a>
+</div>

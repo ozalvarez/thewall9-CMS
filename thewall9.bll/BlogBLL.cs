@@ -51,10 +51,12 @@ namespace thewall9.bll
                               CultureID = bpc.CultureID,
                               Tags = bpc.BlogPostTags.Select(m => new BlogTagModelBinding
                               {
-                                  BlogTagName = m.BlogTag.BlogTagName
+                                  BlogTagName = m.BlogTag.BlogTagName,
+                                  BlogTagID=m.BlogTagID
                               }).ToList(),
-                              Categories = bpc.BlogPost.BlogPostCategories.Select(m => new BlogPostCategorieModelBinding { 
-                                  BlogCategoryID=m.BlogCategoryID
+                              Categories = bpc.BlogPost.BlogPostCategories.Select(m => new BlogPostCategorieModelBinding
+                              {
+                                  BlogCategoryID = m.BlogCategoryID
                               }).ToList()
 
                           };
@@ -117,18 +119,25 @@ namespace thewall9.bll
                     //CATEGORIES
                     if (Model.Categories != null)
                     {
-                        _BP.BlogPost.BlogPostCategories.
-                            AddRange(Model.Categories
+                        var _C = Model.Categories
                             .Where(m => m.Adding)
                             .Select(m => new BlogPostCategory
                             {
-                                BlogCategoryID = m.BlogCategoryID
-                            }));
-
+                                BlogCategoryID = m.BlogCategoryID,
+                                BlogPostID=Model.BlogPostID
+                            });
+                        foreach (var item in _C.ToList())
+                        {
+                            if(!_c.BlogPostCategories
+                                .Where(m=>m.BlogCategoryID==item.BlogCategoryID
+                                && m.BlogPostID == item.BlogPostID).Any())
+                            {
+                                _BP.BlogPost.BlogPostCategories.Add(item);
+                            }
+                        }
                         var _CToDelete = Model.Categories
                             .Where(m => m.Deleting).Select(m => m.BlogCategoryID);
-                        _c.BlogPostCategories.RemoveRange(
-                        _c.BlogPostCategories
+                        _c.BlogPostCategories.RemoveRange(_c.BlogPostCategories
                             .Where(m => _CToDelete.Contains(m.BlogCategoryID))
                             .ToList());
                     }
@@ -280,6 +289,22 @@ namespace thewall9.bll
                 return _BT.BlogTagID;
             }
         }
-
+        public List<BlogTagModelBinding> GetTags(string Query)
+        {
+            using (var _c = db)
+            {
+                return _c.BlogTags
+                    .Where(m => m.BlogTagName.ToLower().Contains(Query))
+                    .Select(m => new BlogTagModelBinding
+                    {
+                        BlogTagID = m.BlogTagID,
+                        BlogTagName = m.BlogTagName,
+                        Adding=true,
+                        Deleting=false
+                    })
+                    .Take(20)
+                    .ToList();
+            }
+        }
     }
 }

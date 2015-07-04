@@ -15,27 +15,29 @@ namespace thewall9.bll.test
         private void SettingUp()
         {
             //CREATING CATEGORIES
-            var _Categories=new List<BlogCategoryCultureBase>();
-            _Categories.Add(new BlogCategoryCultureBase{
-                BlogCategoryName="c1-es",
-                CultureID=_Cultures[0].CultureID,
+            var _Categories = new List<BlogCategoryCultureBase>();
+            _Categories.Add(new BlogCategoryCultureBase
+            {
+                BlogCategoryName = "c1-es",
+                CultureID = _Cultures[0].CultureID,
             });
-            _Categories.Add(new BlogCategoryCultureBase{
-                BlogCategoryName="c1-en",
-                CultureID=_Cultures[1].CultureID
+            _Categories.Add(new BlogCategoryCultureBase
+            {
+                BlogCategoryName = "c1-en",
+                CultureID = _Cultures[1].CultureID
             });
-            _Category=new BlogCategoryModelBinding
+            _Category = new BlogCategoryModelBinding
             {
                 SiteID = _SiteID,
-                Categories=_Categories
+                Categories = _Categories
             };
-            _Category.BlogCategoryID=new BlogBLL().SaveCategory(_Category, _CustomerUser.Id);
+            _Category.BlogCategoryID = new BlogBLL().SaveCategory(_Category, _CustomerUser.Id);
 
             //CREATING TAGS
             var _Tags = new List<BlogTagModelBinding>();
             _Tags.Add(new BlogTagModelBinding
             {
-                BlogTagName="t1"
+                BlogTagName = "t1"
             });
             _Tags.Add(new BlogTagModelBinding
             {
@@ -46,8 +48,8 @@ namespace thewall9.bll.test
             {
                 SiteID = _SiteID,
                 CultureID = _Cultures[0].CultureID,
-                Title="b1",
-                Tags=_Tags
+                Title = "b1",
+                Tags = _Tags
             };
             _BlogPost.BlogPostID = new BlogBLL().Save(_BlogPost, _CustomerUser.Id);
             Assert.IsTrue(_BlogPost.BlogPostID != 0);
@@ -56,7 +58,7 @@ namespace thewall9.bll.test
             {
                 SiteID = _SiteID,
                 CultureID = _Cultures[0].CultureID,
-                Title="b2"
+                Title = "b2"
             };
             _BlogPost2.BlogPostID = new BlogBLL().Save(_BlogPost2, _CustomerUser.Id);
             Assert.IsTrue(_BlogPost2.BlogPostID != 0);
@@ -96,7 +98,7 @@ namespace thewall9.bll.test
         public void BlogPostRemoveTest()
         {
             SettingUp();
-            new BlogBLL().Delete(_BlogPost3.BlogPostID,_CustomerUser.Id);
+            new BlogBLL().Delete(_BlogPost3.BlogPostID, _CustomerUser.Id);
             var _Post = new BlogBLL().GetDetail(_BlogPost3.BlogPostID, _BlogPost3.CultureID);
             Assert.IsNull(_Post);
         }
@@ -107,7 +109,7 @@ namespace thewall9.bll.test
         public void BlogCategoryCreateTest()
         {
             SettingUp();
-            var _C=new BlogBLL().GetCategories(_SiteID, _Cultures[0].CultureID);
+            var _C = new BlogBLL().GetCategories(_SiteID, _Cultures[0].CultureID);
             Assert.IsTrue(_C.Count == 1);
         }
         [TestMethod]
@@ -117,7 +119,7 @@ namespace thewall9.bll.test
             _Category.Categories[0].BlogCategoryName = "newCAT";
             new BlogBLL().SaveCategory(_Category, _CustomerUser.Id);
             var _C = new BlogBLL().GetCategories(_SiteID, _Cultures[0].CultureID);
-            Assert.AreEqual(_Category.Categories[0].BlogCategoryName ,_C[0].CultureInfo.BlogCategoryName);
+            Assert.AreEqual(_Category.Categories[0].BlogCategoryName, _C[0].CultureInfo.BlogCategoryName);
         }
         [TestMethod]
         public void BlogCategoryUpdatingNewLangTest()
@@ -187,7 +189,21 @@ namespace thewall9.bll.test
             SettingUp();
             new BlogBLL().DeleteCategory(_Category.BlogCategoryID, _CustomerUser.Id);
             var _Cs = new BlogBLL().GetCategories(_SiteID, _Cultures[0].CultureID);
-            Assert.IsTrue(_Cs.Count==0);
+            Assert.IsTrue(_Cs.Count == 0);
+        }
+        [TestMethod]
+        public void BlogCategoryAddingExistingTest()
+        {
+            SettingUp();
+            _BlogPost.Categories = new List<BlogPostCategorieModelBinding>();
+            _BlogPost.Categories.Add(new BlogPostCategorieModelBinding
+            {
+                BlogCategoryID = _Category.BlogCategoryID,
+                Adding = true
+            });
+            _BlogPost.BlogPostID = new BlogBLL().Save(_BlogPost, _CustomerUser.Id);
+            _BlogPost.BlogPostID = new BlogBLL().Save(_BlogPost, _CustomerUser.Id);
+            Assert.IsNotNull(_BlogPost.BlogPostID);
         }
         #endregion
 
@@ -198,7 +214,7 @@ namespace thewall9.bll.test
             SettingUp();
             var _B = new BlogBLL().GetDetail(_BlogPost.BlogPostID, _Cultures[0].CultureID);
             Assert.AreEqual(2, _B.Tags.Count);
-            Assert.AreEqual(_BlogPost.Tags[0].BlogTagName,_B.Tags[0].BlogTagName);
+            Assert.AreEqual(_BlogPost.Tags[0].BlogTagName, _B.Tags[0].BlogTagName);
         }
         [TestMethod]
         public void BlogTagUpdateTest()
@@ -209,12 +225,12 @@ namespace thewall9.bll.test
             _Tags.Add(new BlogTagModelBinding
             {
                 BlogTagName = "t3",
-                Adding=true
+                Adding = true
             });
             _Tags.Add(new BlogTagModelBinding
             {
                 BlogTagName = "t2",
-                Deleting=true
+                Deleting = true
             });
             _BlogPost.Tags = _Tags;
             _BlogPost.BlogPostID = new BlogBLL().Save(_BlogPost, _CustomerUser.Id);

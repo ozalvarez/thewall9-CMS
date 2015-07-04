@@ -64,6 +64,9 @@
         }
 
         //TAGS
+        $scope.getTags = function ($query) {
+            return blogService.getTags($query)
+        };
 
         /*INIT*/
         $scope.updateCulture = function () {

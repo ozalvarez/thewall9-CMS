@@ -58,6 +58,13 @@ namespace thewall9.api.Controllers
             _BlogService.DeleteCategory(BlogCategoryID, User.Identity.GetUserId());
             return Ok();
         }
+
+        //TAGS
+        [Route("tag")]
+        public IHttpActionResult GetTags(string Query)
+        {
+            return Ok(_BlogService.GetTags(Query));
+        }
         #endregion
     }
 }

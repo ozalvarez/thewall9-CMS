@@ -29,6 +29,12 @@ app.factory('blogService', ["$myhttp", "$q", "ngAuthSettings", "siteService", 'c
                 + '/category?SiteID=' + siteService.site.SiteID
                 + "&CultureID=" + cultureService.currentCulture.CultureID);
         }
+
+        //TAGS
+        blogFactory.getTags = function ($query) {
+            return $http.get(ngAuthSettings.apiServiceBaseUri + uri
+                + '/tag?Query='+$query);
+        }
         //blogFactory.getByID = function (productID) {
         //    return $http.get(ngAuthSettings.apiServiceBaseUri + uri + '/byID?ProductID=' + productID);
         //};

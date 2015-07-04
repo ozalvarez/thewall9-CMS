@@ -21,20 +21,41 @@
     </div>
     <tabs>
         <pane title="Tags & Categorías">
-            Categorías
-            <div class="checkbox">
-                <label ng-repeat="item in categories">
-                    <input type="checkbox" ng-click="selectCategory(item)" ng-checked="item.Enabled">
-                    {{item.CultureInfo.BlogCategoryName}} &nbsp;
-                </label>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Categorías</div>
+                        <div class="panel-body">
+                            <div class="checkbox">
+                                <label ng-repeat="item in categories">
+                                    <input type="checkbox" ng-click="selectCategory(item)" ng-checked="item.Enabled">
+                                    {{item.CultureInfo.BlogCategoryName}} &nbsp;
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Tags</div>
+                        <div class="panel-body">
+                            <tag-manager tags="model.Tags" 
+                                         keyproperty="BlogTagID" 
+                                         valueproperty="BlogTagName"
+                                         autocomplete="getTags"></tag-manager>
+                        </div>
+                        
+                    </div>
+                </div>
             </div>
-            Tags
-            <tag-manager tags="model.Tags" keyproperty="BlogTagID" valueproperty="BlogTagName"></tag-manager>
-            <code>{{model.Tags}}</code>
+            <!--<code>
+                {{model.Tags}}
+            </code>-->
         </pane>
         <pane title="Imagen Principal">
         </pane>
     </tabs>
+    <hr />
     <p>
         <button type="submit" class="btn btn-primary" ng-click="save()">Guardar</button>
         <a href="" class="btn btn-default" ng-href="#/blog"> Ir al Listado</a>

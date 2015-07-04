@@ -1,33 +1,59 @@
 ﻿app.directive('tagManager', function () {
     return {
         restrict: 'E',
-        scope: { tags: '=' },
-        template:
-            '<div>' +
-                '<a ng-repeat="item in tags" class="" ng-click="remove(item)">'
-                    + '{{item}}</a>' +
-            '</div>' 
-           +'<div class="input-group">'
-            + '<input type="text" class="form-control" placeholder="Add Tag" ng-model="new_value">'
-            + '<span class="input-group-btn">'
-                + '<button class="btn btn-default" type="button" ng-click="add()">Add</button>'
-            + '</span>'
-           +'</div>',
+        scope: { tags: '=', autocomplete: '=' },
+        templateUrl: '/app/directives/_tagManager.html',
         link: function ($scope, $element, $attributes) {
             // FIXME: this is lazy and error-prone
             var input = angular.element($element.children()[1]);
-            console.log($attributes.keyvalue);
             // This adds the new tag to the tags array
-            $scope.add = function () {
-                eval('$scope.tags.push({'
-                    + $attributes.valueproperty + ': $scope.new_value'
-                + '});');
+            $scope.add = function (value) {
+                if (value == null) {
+                    eval('value = {' + $attributes.keyproperty + ':0}');
+                } else {
+                    $scope.new_value = eval('value.' + $attributes.valueproperty);
+                }
+                var _item = null;
+                angular.forEach($scope.tags, function (item) {
+                    if (eval('item.' + $attributes.valueproperty) == $scope.new_value) {
+                        _item = item
+                    }
+                });
+                if (_item == null) {
+                    eval('$scope.tags.push({'
+                        + $attributes.valueproperty + ': $scope.new_value,'
+                        + 'Adding:true,'
+                        + 'Deleting:false,'
+                        + $attributes.keyproperty + ':value.' + $attributes.keyproperty
+                    + '})');
+                } else {
+                    _item.Adding = true;
+                    _item.Deleting = false;
+                }
                 $scope.new_value = "";
+                $scope.tagList = null;
             };
+            $scope.getValue = function (item) {
+                return eval('item.' + $attributes.valueproperty);
+            }
 
+            $scope.change = function () {
+                if ($scope.new_value.length > 1) {
+                    $scope.autocomplete($scope.new_value).then(function (data) {
+                        $scope.tagList = data;
+                    });
+                }
+            }
             // This is the ng-click handler to remove an item
             $scope.remove = function (item) {
-                $scope.tags.splice(item, 1);
+                //$scope.tags.splice(item, 1);
+                if (item.Deleting == null) {
+                    item.Deleting = true;
+                    item.Adding = false;
+                } else {
+                    item.Deleting = !item.Deleting;
+                    item.Adding = !item.Adding;
+                }
             };
 
             // Capture all keypresses
@@ -35,7 +61,8 @@
                 // But we only care when Enter was pressed
                 if (event.keyCode == 13) {
                     // There's probably a better way to handle this...
-                    $scope.$apply($scope.add);
+                    $scope.$apply($scope.add(null));
+                    event.preventDefault();
                 }
             });
         }

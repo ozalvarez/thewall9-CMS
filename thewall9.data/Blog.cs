@@ -70,7 +70,7 @@ namespace thewall9.data
             : this()
         {
             this.BlogTagID = BlogTagID;
-            this.BlogPostID = Model.BlogPostID;
+            //this.BlogPostID = Model.BlogPostID;
             this.CultureID = CultureID;
         }
         [ForeignKey("BlogPostID,CultureID")]

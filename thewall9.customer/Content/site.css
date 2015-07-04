@@ -97,3 +97,11 @@ div.page-header h1 {
 .drop-box.dragover-err {
   border: 5px dashed red;
 }
+/*TABS*/
+.tab-content {
+  padding-top: 5px;
+}
+/*TAGS*/
+.tags .btn-tag {
+  margin: 5px 5px 5px 0px;
+}

@@ -145,6 +145,7 @@
     <Content Include="app\directives\fileread.js" />
     <Content Include="app\directives\tab.js" />
     <Content Include="app\directives\tagManager.js" />
+    <Content Include="app\directives\_tagManager.html" />
     <Content Include="app\filters\fromnow.js" />
     <Content Include="app\services\authInterceptorService.js" />
     <Content Include="app\services\authService.js" />
