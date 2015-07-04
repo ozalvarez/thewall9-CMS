@@ -79,6 +79,7 @@ namespace thewall9.bll
                         _BlogPostCulture.BlogPostTags = new List<BlogPostTag>();
                         foreach (var item in Model.Tags)
                         {
+                            var _BTID = GetTagID(item.BlogTagName);
                             _BlogPostCulture.BlogPostTags.Add(new BlogPostTag
                             {
                                 BlogTagID = GetTagID(item.BlogTagName),

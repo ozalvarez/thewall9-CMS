@@ -24,15 +24,15 @@
             Categorías
             <div class="checkbox">
                 <label ng-repeat="item in categories">
-                    <input type="checkbox" ng-click="selectCategory(item)" ng-checked="item.Enabled" >
+                    <input type="checkbox" ng-click="selectCategory(item)" ng-checked="item.Enabled">
                     {{item.CultureInfo.BlogCategoryName}} &nbsp;
                 </label>
             </div>
             Tags
-            <input class="form-control" id="tags">
+            <tag-manager tags="model.Tags" keyproperty="BlogTagID" valueproperty="BlogTagName"></tag-manager>
+            <code>{{model.Tags}}</code>
         </pane>
         <pane title="Imagen Principal">
-
         </pane>
     </tabs>
     <p>

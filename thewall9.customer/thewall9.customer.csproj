@@ -144,6 +144,7 @@
     <Content Include="app\directives\autoFillSync.js" />
     <Content Include="app\directives\fileread.js" />
     <Content Include="app\directives\tab.js" />
+    <Content Include="app\directives\tagManager.js" />
     <Content Include="app\filters\fromnow.js" />
     <Content Include="app\services\authInterceptorService.js" />
     <Content Include="app\services\authService.js" />

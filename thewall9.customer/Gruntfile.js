@@ -181,7 +181,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
 
     // Default task.
-    grunt.registerTask('build', ['bower', 'less', 'uglify', 'cssmin', 'copy', 'watch']);
+    grunt.registerTask('build', ['bower', 'less', 'uglify', 'cssmin', 'watch']);
     grunt.registerTask('no-watch', ['bower', 'less', 'uglify', 'copy', 'cssmin']);
 
 };
