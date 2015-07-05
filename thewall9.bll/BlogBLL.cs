@@ -11,6 +11,44 @@ namespace thewall9.bll
 {
     public class BlogBLL : BaseBLL
     {
+        #region WEB
+        public List<BlogListWeb> Get(int SiteID
+            , string Url
+            , string Lang
+            , int BlogCategoryID
+            , int Take
+            , int Page)
+        {
+            using (var _c = db)
+            {
+                if (SiteID == 0)
+                    SiteID = new SiteBLL().Get(Url, _c).SiteID;
+
+                var _Query = from bpc in _c.BlogPostCultures
+                             where bpc.BlogPost.SiteID == SiteID
+                             && bpc.Culture.Name.ToLower().Equals(Lang.ToLower())
+                             && bpc.Published
+                             select bpc;
+                if (BlogCategoryID != 0)
+                {
+                    _Query = from q in _Query
+                             join c in _c.BlogPostCategories on q.BlogPost.BlogPostID equals c.BlogPostID
+                             where c.BlogCategoryID == BlogCategoryID
+                             select q;
+                }
+
+                return _Query.OrderByDescending(m=>m.DateCreated).Select(m => new BlogListWeb
+                {
+                    BlogPostID = m.BlogPostID,
+                    FriendlyUrl = m.FriendlyUrl,
+                    Title = m.Title
+                })
+                .Skip(Take * (Page - 1)).Take(Take).ToList();
+            }
+        }
+        #endregion
+
+        #region CUSTOMER
         //POST
         public List<BlogPostListBinding> Get(int SiteID, int CultureID)
         {
@@ -52,7 +90,7 @@ namespace thewall9.bll
                               Tags = bpc.BlogPostTags.Select(m => new BlogTagModelBinding
                               {
                                   BlogTagName = m.BlogTag.BlogTagName,
-                                  BlogTagID=m.BlogTagID
+                                  BlogTagID = m.BlogTagID
                               }).ToList(),
                               Categories = bpc.BlogPost.BlogPostCategories.Select(m => new BlogPostCategorieModelBinding
                               {
@@ -124,12 +162,12 @@ namespace thewall9.bll
                             .Select(m => new BlogPostCategory
                             {
                                 BlogCategoryID = m.BlogCategoryID,
-                                BlogPostID=Model.BlogPostID
+                                BlogPostID = Model.BlogPostID
                             });
                         foreach (var item in _C.ToList())
                         {
-                            if(!_c.BlogPostCategories
-                                .Where(m=>m.BlogCategoryID==item.BlogCategoryID
+                            if (!_c.BlogPostCategories
+                                .Where(m => m.BlogCategoryID == item.BlogCategoryID
                                 && m.BlogPostID == item.BlogPostID).Any())
                             {
                                 _BP.BlogPost.BlogPostCategories.Add(item);
@@ -205,9 +243,9 @@ namespace thewall9.bll
                               .Select(m => new BlogCategoryCultureBinding
                               {
                                   BlogCategoryName = m.BlogCategoryName,
-                                  BlogCategoryID=m.BlogCategoryID,
-                                  CultureName=m.Culture.Name,
-                                  CultureID=m.CultureID
+                                  BlogCategoryID = m.BlogCategoryID,
+                                  CultureName = m.Culture.Name,
+                                  CultureID = m.CultureID
                               })
                               .ToList()
                           };
@@ -306,12 +344,13 @@ namespace thewall9.bll
                     {
                         BlogTagID = m.BlogTagID,
                         BlogTagName = m.BlogTagName,
-                        Adding=true,
-                        Deleting=false
+                        Adding = true,
+                        Deleting = false
                     })
                     .Take(20)
                     .ToList();
             }
         }
+        #endregion
     }
 }

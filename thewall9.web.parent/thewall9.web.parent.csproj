@@ -89,9 +89,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BLL\BaseBLL.cs" />
     <Compile Include="BLL\ContentBLL.cs" />
+    <Compile Include="BLL\BlogBLL.cs" />
     <Compile Include="BLL\ProductBLL.cs" />
     <Compile Include="BLL\PageBLL.cs" />
     <Compile Include="BLL\SiteBLL.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\PageContentBaseController.cs" />
     <Compile Include="HtmlHelpers\CultureHelper.cs" />
     <Compile Include="HtmlHelpers\HtmlExtensionMethods.cs" />

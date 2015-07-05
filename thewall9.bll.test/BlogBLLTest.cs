@@ -29,7 +29,7 @@ namespace thewall9.bll.test
             _Category = new BlogCategoryModelBinding
             {
                 SiteID = _SiteID,
-                Categories = _Categories
+                CategoryCultures = _Categories
             };
             _Category.BlogCategoryID = new BlogBLL().SaveCategory(_Category, _CustomerUser.Id);
 
@@ -49,7 +49,8 @@ namespace thewall9.bll.test
                 SiteID = _SiteID,
                 CultureID = _Cultures[0].CultureID,
                 Title = "b1",
-                Tags = _Tags
+                Tags = _Tags,
+                Published=true
             };
             _BlogPost.BlogPostID = new BlogBLL().Save(_BlogPost, _CustomerUser.Id);
             Assert.IsTrue(_BlogPost.BlogPostID != 0);
@@ -58,7 +59,8 @@ namespace thewall9.bll.test
             {
                 SiteID = _SiteID,
                 CultureID = _Cultures[0].CultureID,
-                Title = "b2"
+                Title = "b2",
+                Published = true
             };
             _BlogPost2.BlogPostID = new BlogBLL().Save(_BlogPost2, _CustomerUser.Id);
             Assert.IsTrue(_BlogPost2.BlogPostID != 0);
@@ -74,6 +76,16 @@ namespace thewall9.bll.test
         }
 
         #region POST
+        [TestMethod]
+        public void BlogWebGetTest()
+        {
+            SettingUp();
+            var _Posts = new BlogBLL().Get(_SiteID, null, _Cultures[0].Name, 0, 10, 1);
+            Assert.IsTrue(_Posts.Count == 2);
+        }
+        #region WEB
+
+        #endregion
         [TestMethod]
         public void BlogUpdateTest()
         {
@@ -116,10 +128,10 @@ namespace thewall9.bll.test
         public void BlogCategoryUpdatingTest()
         {
             SettingUp();
-            _Category.Categories[0].BlogCategoryName = "newCAT";
+            _Category.CategoryCultures[0].BlogCategoryName = "newCAT";
             new BlogBLL().SaveCategory(_Category, _CustomerUser.Id);
             var _C = new BlogBLL().GetCategories(_SiteID, _Cultures[0].CultureID);
-            Assert.AreEqual(_Category.Categories[0].BlogCategoryName, _C[0].BlogCategoryName);
+            Assert.AreEqual(_Category.CategoryCultures[0].BlogCategoryName, _C[0].BlogCategoryName);
         }
         [TestMethod]
         public void BlogCategoryUpdatingNewLangTest()
@@ -134,7 +146,7 @@ namespace thewall9.bll.test
             var _Category1 = new BlogCategoryModelBinding
             {
                 SiteID = _SiteID,
-                Categories = _Categories
+                CategoryCultures = _Categories
             };
             _Category1.BlogCategoryID = new BlogBLL().SaveCategory(_Category1, _CustomerUser.Id);
 
@@ -147,15 +159,15 @@ namespace thewall9.bll.test
             var _Category2 = new BlogCategoryModelBinding
             {
                 SiteID = _SiteID,
-                Categories = _Categories2,
+                CategoryCultures = _Categories2,
                 BlogCategoryID = _Category1.BlogCategoryID
             };
             _Category2.BlogCategoryID = new BlogBLL().SaveCategory(_Category2, _CustomerUser.Id);
 
             var _C = new BlogBLL().GetCategories(_SiteID, _Cultures[0].CultureID);
-            Assert.AreEqual(_Category1.Categories[0].BlogCategoryName, _C[1].BlogCategoryName);
+            Assert.AreEqual(_Category1.CategoryCultures[0].BlogCategoryName, _C[1].BlogCategoryName);
             var _C2 = new BlogBLL().GetCategories(_SiteID, _Cultures[1].CultureID);
-            Assert.AreEqual(_Category2.Categories[0].BlogCategoryName, _C2[1].BlogCategoryName);
+            Assert.AreEqual(_Category2.CategoryCultures[0].BlogCategoryName, _C2[1].BlogCategoryName);
         }
         [TestMethod]
         public void BlogCategoryGetOneLangTest()
@@ -170,7 +182,7 @@ namespace thewall9.bll.test
             var _Category1 = new BlogCategoryModelBinding
             {
                 SiteID = _SiteID,
-                Categories = _Categories
+                CategoryCultures = _Categories
             };
             _Category1.BlogCategoryID = new BlogBLL().SaveCategory(_Category1, _CustomerUser.Id);
 

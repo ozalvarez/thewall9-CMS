@@ -32,6 +32,7 @@
         };
 
         $scope.save = function () {
+            $scope.model.Published = true;
             blogService.save($scope.model).then(function (data) {
                 toastrService.success("Post Guardado")
             });

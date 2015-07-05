@@ -16,13 +16,22 @@ namespace thewall9.api.Controllers
         BlogBLL _BlogService = new BlogBLL();
 
         #region Web
-
+        [AllowAnonymous]
+        public IHttpActionResult Get(int SiteID
+            , string Url
+            , string Lang
+            , int BlogCategoryID
+            , int Take
+            , int Page)
+        {
+            return Ok(_BlogService.Get(SiteID, Url, Lang, BlogCategoryID, Take, Page));
+        }
         #endregion
 
         #region Customers
         public IHttpActionResult Get(int SiteID, int CultureID)
         {
-            return Ok(_BlogService.Get(SiteID,CultureID));
+            return Ok(_BlogService.Get(SiteID, CultureID));
         }
         [Route("byID")]
         public IHttpActionResult GetByID(int BlogPostID, int CultureID)

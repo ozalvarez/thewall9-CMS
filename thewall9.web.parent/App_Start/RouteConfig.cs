@@ -20,6 +20,7 @@ namespace thewall9.web
                 url: "error",
                 defaults: new { controller = "Page", action = "Error" }
             );
+            //BLOG
 
             //PRODUCTS
             routes.MapRoute(

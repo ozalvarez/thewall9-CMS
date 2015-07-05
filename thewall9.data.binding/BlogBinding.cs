@@ -48,10 +48,7 @@ namespace thewall9.data.binding
         public int CultureID { get; set; }
         public string BlogCategoryName { get; set; }
     }
-    public class BlogCategoryCultureBinding: BlogCategoryCultureBase
-    {
-        public string CultureName { get; set; }
-    }
+
     public class BlogPostCategoryBase
     {
         public int BlogPostID { get; set; }
@@ -62,6 +59,7 @@ namespace thewall9.data.binding
     #endregion
 
     #region Binding
+    //POST
     /// <summary>
     /// Used for listing post in Customer
     /// </summary>
@@ -93,6 +91,10 @@ namespace thewall9.data.binding
     }
 
     //CATEGORY
+    public class BlogCategoryCultureBinding : BlogCategoryCultureBase
+    {
+        public string CultureName { get; set; }
+    }
     public class BlogCategoryListBinding : BlogCategoryBase
     {
         public string BlogCategoryName { get; set; }
@@ -109,10 +111,16 @@ namespace thewall9.data.binding
     public class BlogTagModelBinding
     {
         public int BlogTagID { get; set; }
-        //public int BlogPostID { get; set; }
         public string BlogTagName { get; set; }
         public bool Adding { get; set; }
         public bool Deleting { get; set; }
+    }
+    #endregion
+
+    #region WEB
+    public class BlogListWeb: BlogPostCultureBase
+    {
+        
     }
     #endregion
 }
