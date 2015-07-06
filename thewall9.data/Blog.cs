@@ -17,7 +17,8 @@ namespace thewall9.data
         {
             this.DateCreated = DateTime.Now;
         }
-        public BlogPost(int SiteID):this()
+        public BlogPost(int SiteID)
+            : this()
         {
             this.SiteID = SiteID;
         }
@@ -29,34 +30,35 @@ namespace thewall9.data
     }
     public class BlogPostCulture : BlogPostCultureBase
     {
-         public BlogPostCulture()
+        public BlogPostCulture()
         {
             this.DateCreated = DateTime.Now;
         }
-         public BlogPostCulture(BlogPostModelBinding Model)
-             : this()
+        public BlogPostCulture(BlogPostModelBinding Model)
+            : this()
         {
             this.CultureID = Model.CultureID;
-            this.FriendlyUrl =Model.FriendlyUrl;
+            this.FriendlyUrl = Model.FriendlyUrl;
             UpdateContent(Model);
         }
-         public void UpdateContent(BlogPostModelBinding Model)
-         {
-             this.Title = Model.Title;
-             this.Published = Model.Published;
-             this.Content = Model.Content;
-         }
+        public void UpdateContent(BlogPostModelBinding Model)
+        {
+            this.Title = Model.Title;
+            this.Published = Model.Published;
+            this.Content = Model.Content;
+        }
 
         [ForeignKey("BlogPostID")]
         public virtual BlogPost BlogPost { get; set; }
         [ForeignKey("CultureID")]
         public virtual Culture Culture { get; set; }
         public virtual List<BlogPostTag> BlogPostTags { get; set; }
+        public virtual BlogPostFeatureImage BlogPostFeatureImage { get; set; }
     }
     //TAG
     public class BlogTag : BlogTagBase
     {
-        public BlogTag(){}
+        public BlogTag() { }
         public BlogTag(string BlogTagName)
             : this()
         {
@@ -65,7 +67,7 @@ namespace thewall9.data
     }
     public class BlogPostTag : BlogPostTagBase
     {
-        public BlogPostTag(){}
+        public BlogPostTag() { }
         public BlogPostTag(BlogTagModelBinding Model, int BlogTagID, int CultureID)
             : this()
         {
@@ -101,4 +103,14 @@ namespace thewall9.data
         [ForeignKey("BlogCategoryID")]
         public BlogCategory BlogCategory { get; set; }
     }
+
+    #region FeatureImage
+    public class BlogPostFeatureImage : BlogPostFeatureImageBase
+    {
+        [ForeignKey("BlogPostID,CultureID")]
+        public virtual BlogPostCulture BlogPostCulture { get; set; }
+        [ForeignKey("MediaID")]
+        public Media Media { get; set; }
+    }
+    #endregion
 }

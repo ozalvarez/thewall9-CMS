@@ -85,9 +85,15 @@ namespace thewall9.bll.test
             Assert.IsTrue(_Posts.Pages == 1);
             Assert.IsTrue(_Posts.Data.Count == 2);
         }
-        #region WEB
-
-        #endregion
+        [TestMethod]
+        public void BlogSaveFeatureImageTest()
+        {
+            SettingUp();
+            _BlogPost.FeatureImageFileRead = GetImgFileRead();
+            _BlogPost.BlogPostID = new BlogBLL().Save(_BlogPost, _CustomerUser.Id);
+            var _Post = new BlogBLL().GetDetail(_BlogPost.BlogPostID, _BlogPost.CultureID);
+            Assert.IsNotNull(_Post.FeatureImageUrl);
+        }
         [TestMethod]
         public void BlogUpdateTest()
         {

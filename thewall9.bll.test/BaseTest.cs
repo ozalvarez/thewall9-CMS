@@ -22,7 +22,7 @@ namespace thewall9.bll.test
             //CREATING USERCUSTOMER
             _CustomerUser = new UserBLL().Find(EMAIL);
             if (_CustomerUser == null)
-                _CustomerUser = new UserBLL().Create("Oz in Test",EMAIL, "123456");
+                _CustomerUser = new UserBLL().Create("Oz in Test", EMAIL, "123456");
 
             //CREATING A WEBSITE
             var _C = new List<CultureBinding>();
@@ -39,23 +39,23 @@ namespace thewall9.bll.test
                 SiteName = PREFIX + DateTime.Now.ToShortTimeString(),
                 Cultures = _C
             };
-            _SiteID=new SiteBLL().Save(_W);
+            _SiteID = new SiteBLL().Save(_W);
             new SiteBLL().AddUserToAllRoles(new AddUserInSiteBinding
             {
                 Email = EMAIL,
                 SiteID = _SiteID
             });
 
-            _Cultures=new CultureBLL().Get(_SiteID);
+            _Cultures = new CultureBLL().Get(_SiteID);
             new CultureBLL().Save(new CultureBinding
             {
                 CultureID = _Cultures[0].CultureID,
-                SiteID=_SiteID,
+                SiteID = _SiteID,
                 Facebook = "f" + _Cultures[0].Name,
                 GPlus = "g" + _Cultures[0].Name,
                 Instagram = "i" + _Cultures[0].Name,
                 Tumblr = "t" + _Cultures[0].Name
-            },_CustomerUser.Id);
+            }, _CustomerUser.Id);
             new CultureBLL().Save(new CultureBinding
             {
                 CultureID = _Cultures[1].CultureID,
@@ -64,7 +64,7 @@ namespace thewall9.bll.test
                 Instagram = "i" + _Cultures[1].Name,
                 Tumblr = "t" + _Cultures[1].Name,
                 SiteID = _SiteID,
-            },_CustomerUser.Id);
+            }, _CustomerUser.Id);
         }
         [TestCleanup()]
         public void Cleanup()
@@ -75,6 +75,15 @@ namespace thewall9.bll.test
         public BaseTest()
         {
 
+        }
+
+        public FileRead GetImgFileRead()
+        {
+            return new FileRead
+            {
+                FileContent = "64base," + System.Convert.ToBase64String(System.IO.File.ReadAllBytes("logo.png")),
+                FileName = "logo.png"
+            };
         }
     }
 }

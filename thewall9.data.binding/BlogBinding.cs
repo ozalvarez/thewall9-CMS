@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace thewall9.data.binding
 {
     #region Base
-    //POST
+
+    #region Post
     public class BlogPostBase
     {
         public int BlogPostID { get; set; }
@@ -24,7 +25,9 @@ namespace thewall9.data.binding
         public string Title { get; set; }
         public DateTime DateCreated { get; set; }
     }
-    //TAG
+    #endregion
+
+    #region Tag
     public class BlogTagBase
     {
         public int BlogTagID { get; set; }
@@ -36,7 +39,9 @@ namespace thewall9.data.binding
         public int CultureID { get; set; }
         public int BlogPostID { get; set; }
     }
-    //CATEGORY
+    #endregion
+
+    #region Category
     public class BlogCategoryBase
     {
         public int BlogCategoryID { get; set; }
@@ -55,7 +60,17 @@ namespace thewall9.data.binding
         public int BlogPostID { get; set; }
         public int BlogCategoryID { get; set; }
     }
-    //FEATURE IMAGE
+    #endregion
+
+    #region FEATURE_IMAGE
+    public class BlogPostFeatureImageBase
+    {
+        public int BlogPostID { get; set; }
+        public int CultureID { get; set; }
+        public int MediaID { get; set; }
+    }
+
+    #endregion
     //MEDIA
     #endregion
 
@@ -80,6 +95,8 @@ namespace thewall9.data.binding
         public int SiteID { get; set; }
         public List<BlogPostCategorieModelBinding> Categories { get; set; }
         public List<BlogTagModelBinding> Tags { get; set; }
+        public FileRead FeatureImageFileRead { get; set; }
+        public string FeatureImageUrl { get; set; }
     }
     /// <summary>
     /// Used to Set categories on creating BlogPost
@@ -122,11 +139,12 @@ namespace thewall9.data.binding
     public class BlogListWeb
     {
         public int Pages { get; set; }
-        public List<BlogPostCultureBase> Data { get; set; }
+        public List<BlogPostWeb> Data { get; set; }
         public List<BlogCategoryCultureBase> Categories { get; set; }
     }
-    public class BlogPostWeb:BlogPostCultureBase
+    public class BlogPostWeb : BlogPostCultureBase
     {
+        public string FeatureImageUrl { get; set; }
         public int SiteID { get; set; }
         public List<BlogCategoryCultureBase> Categories { get; set; }
     }

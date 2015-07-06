@@ -42,6 +42,7 @@ namespace thewall9.data.Models
                 .WithMany(m => m.BlogPostCultures)
                 .WillCascadeOnDelete(false);
 
+
             modelBuilder.Entity<BlogPostTag>()
                 .HasKey(m => new { m.BlogTagID, m.BlogPostID, m.CultureID });
 
@@ -55,6 +56,13 @@ namespace thewall9.data.Models
                 .HasRequired(a => a.Culture)
                 .WithMany(m => m.BlogCategoryCultures)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<BlogPostFeatureImage>()
+                .HasKey(m => new { m.BlogPostID, m.CultureID })
+                .HasRequired(m => m.BlogPostCulture)
+                .WithOptional(m => m.BlogPostFeatureImage)
+                .WillCascadeOnDelete(true);
+
 
             base.OnModelCreating(modelBuilder);
         }
@@ -91,6 +99,10 @@ namespace thewall9.data.Models
         public DbSet<BlogCategory> BlogCategories { get; set; }
         public DbSet<BlogCategoryCulture> BlogCategoryCultures { get; set; }
         public DbSet<BlogPostCategory> BlogPostCategories { get; set; }
+        public DbSet<BlogPostFeatureImage> BlogPostFeatureImages { get; set; }
+
+        //Media
+        public DbSet<Media> Medias { get; set; }
 
     }
 }

@@ -90,6 +90,7 @@
     <Compile Include="AccountBindingModels.cs" />
     <Compile Include="AccountViewModels.cs" />
     <Compile Include="Blog.cs" />
+    <Compile Include="Media.cs" />
     <Compile Include="Migrations\201503242013269_add-product-to-ecommerce.cs" />
     <Compile Include="Migrations\201503242013269_add-product-to-ecommerce.Designer.cs">
       <DependentUpon>201503242013269_add-product-to-ecommerce.cs</DependentUpon>
@@ -165,6 +166,10 @@
     <Compile Include="Migrations\201507051915318_AddFriendlyUrlToCategory.cs" />
     <Compile Include="Migrations\201507051915318_AddFriendlyUrlToCategory.Designer.cs">
       <DependentUpon>201507051915318_AddFriendlyUrlToCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507061701176_AddMedia.cs" />
+    <Compile Include="Migrations\201507061701176_AddMedia.Designer.cs">
+      <DependentUpon>201507061701176_AddMedia.cs</DependentUpon>
     </Compile>
     <Compile Include="Order.cs" />
     <Compile Include="Product.cs" />
@@ -387,6 +392,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507051915318_AddFriendlyUrlToCategory.resx">
       <DependentUpon>201507051915318_AddFriendlyUrlToCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507061701176_AddMedia.resx">
+      <DependentUpon>201507061701176_AddMedia.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

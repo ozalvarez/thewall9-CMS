@@ -429,6 +429,7 @@ namespace thewall9.bll
         {
             using (var _c = db)
             {
+               // _c.BlogPostCultures.RemoveRange(_c.BlogPostCultures.Where(m => m.BlogPost.Site.SiteName.Contains(Prefix)).ToList());
                 _c.BlogCategories.RemoveRange(_c.BlogCategories.Where(m => m.Site.SiteName.Contains(Prefix)).ToList());
                 _c.Products.RemoveRange(_c.Products.Where(m => m.Site.SiteName.Contains(Prefix)).ToList());
                 _c.Sites.RemoveRange(_c.Sites.Where(m => m.SiteName.Contains(Prefix)).ToList());

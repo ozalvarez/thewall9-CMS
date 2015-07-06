@@ -53,6 +53,9 @@
             </code>-->
         </pane>
         <pane title="Imagen Principal">
+            <img ng-src="{{model.FeatureImageUrl}}" ng-show="model.FeatureImageUrl && !model.FeatureImageFileRead.FileContent" class="img-responsive img-thumbnail" />
+            <img ng-src="{{model.FeatureImageFileRead.FileContent}}" ng-show="model.FeatureImageFileRead.FileContent" class="img-responsive img-thumbnail" />
+            <input type="file" data-fileread="model.FeatureImageFileRead" />
         </pane>
     </tabs>
     <hr />
