@@ -82,10 +82,6 @@ namespace thewall9.bll.test
         {
             SettingUp();
             var _Posts = new BlogBLL().Get(_SiteID, null, _Cultures[0].Name, null, 1);
-            Assert.IsTrue(_Posts.Pages == 2);
-            Assert.IsTrue(_Posts.Data.Count == 1);
-
-            _Posts = new BlogBLL().Get(_SiteID, null, _Cultures[0].Name, null, 1);
             Assert.IsTrue(_Posts.Pages == 1);
             Assert.IsTrue(_Posts.Data.Count == 2);
         }

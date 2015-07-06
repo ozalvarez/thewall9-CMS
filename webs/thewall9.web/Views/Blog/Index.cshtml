@@ -12,6 +12,13 @@
     <title>Index</title>
 </head>
 <body>
+    @foreach (var item in Model.Categories)
+    {
+        <p>
+            <a href="@Url.Action("index", "blog", new { BlogCategoryFriendlyUrl = item.FriendlyUrl })">@item.BlogCategoryName</a>
+        </p>
+        
+    }
     <table class="table">
         @foreach (var item in Model.Data)
         {
@@ -43,6 +50,6 @@
             </tr>
         }
     </table>
-    @Html.PageLinks((int?)ViewBag.Page ?? 1, Model.Pages, i => Url.Action("index", "blog", new { Page = i, FriendlyUrl = ViewBag.BlogCategoryFriendlyUrl }))
+    @Html.PageLinks((int?)ViewBag.Page ?? 1, Model.Pages, i => Url.Action("index", "blog", new { Page = i, BlogCategoryFriendlyUrl = ViewBag.BlogCategoryFriendlyUrl }))
 </body>
 </html>

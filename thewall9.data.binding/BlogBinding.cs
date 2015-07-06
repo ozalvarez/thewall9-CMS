@@ -123,9 +123,12 @@ namespace thewall9.data.binding
     {
         public int Pages { get; set; }
         public List<BlogPostCultureBase> Data { get; set; }
+        public List<BlogCategoryCultureBase> Categories { get; set; }
     }
     public class BlogPostWeb:BlogPostCultureBase
     {
+        public int SiteID { get; set; }
+        public List<BlogCategoryCultureBase> Categories { get; set; }
     }
     #endregion
 }

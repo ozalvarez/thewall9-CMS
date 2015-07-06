@@ -12,6 +12,31 @@ namespace thewall9.bll
     public class BlogBLL : BaseBLL
     {
         #region WEB
+        private List<BlogCategoryCultureBase> GetCategoriesUsed(int SiteID, string Lang)
+        {
+            using (var _c = db)
+            {
+                var _CultureID = new CultureBLL().GetByName(SiteID, Lang).CultureID;
+                return GetCategoriesUsed(SiteID, _CultureID);
+            }
+        }
+        private List<BlogCategoryCultureBase> GetCategoriesUsed(int SiteID, int CultureID)
+        {
+            using (var _c = db)
+            {
+                return (from bpc in _c.BlogPostCategories
+                        join bc in _c.BlogCategories on bpc.BlogCategoryID equals bc.BlogCategoryID
+                        join bcc in _c.BlogCategoryCultures on bc.BlogCategoryID equals bcc.BlogCategoryID
+                        where bcc.CultureID == CultureID && bc.SiteID == SiteID
+                        select new BlogCategoryCultureBase
+                        {
+                            BlogCategoryName = bcc.BlogCategoryName,
+                            FriendlyUrl = bcc.FriendlyUrl,
+                            BlogCategoryID = bcc.BlogCategoryID
+                        }).Distinct()
+                        .ToList();
+            }
+        }
         public BlogListWeb Get(int SiteID
             , string Url
             , string Lang
@@ -47,6 +72,8 @@ namespace thewall9.bll
                     Title = m.Title
                 })
                 .Skip(_Take * (Page - 1)).Take(_Take).ToList();
+
+                _Model.Categories = GetCategoriesUsed(SiteID, Lang);
                 return _Model;
             }
         }
@@ -55,18 +82,20 @@ namespace thewall9.bll
         {
             using (var _c = db)
             {
-                var _BP = from bpc in _c.BlogPostCultures
-                          where (bpc.BlogPostID == BlogPostID && bpc.FriendlyUrl == FriendlyUrl)
-                          select new BlogPostWeb
-                          {
-                              Title = bpc.Title,
-                              Content = bpc.Content,
-                              Published = bpc.Published,
-                              FriendlyUrl = bpc.FriendlyUrl,
-                              BlogPostID = bpc.BlogPostID,
-                              CultureID = bpc.CultureID
-                          };
-                return _BP.FirstOrDefault();
+                var _Model = (from bpc in _c.BlogPostCultures
+                              where (bpc.BlogPostID == BlogPostID && bpc.FriendlyUrl == FriendlyUrl)
+                              select new BlogPostWeb
+                              {
+                                  Title = bpc.Title,
+                                  Content = bpc.Content,
+                                  Published = bpc.Published,
+                                  FriendlyUrl = bpc.FriendlyUrl,
+                                  BlogPostID = bpc.BlogPostID,
+                                  CultureID = bpc.CultureID,
+                                  SiteID=bpc.BlogPost.SiteID
+                              }).FirstOrDefault();
+                _Model.Categories = GetCategoriesUsed(_Model.SiteID, _Model.CultureID);
+                return _Model;
             }
         }
         #endregion
@@ -270,7 +299,7 @@ namespace thewall9.bll
                                   BlogCategoryID = m.BlogCategoryID,
                                   CultureName = m.Culture.Name,
                                   CultureID = m.CultureID,
-                                  FriendlyUrl=m.FriendlyUrl
+                                  FriendlyUrl = m.FriendlyUrl
                               })
                               .ToList()
                           };
@@ -307,7 +336,7 @@ namespace thewall9.bll
                         {
                             BlogCategoryName = item.BlogCategoryName,
                             CultureID = item.CultureID,
-                            FriendlyUrl=item.FriendlyUrl
+                            FriendlyUrl = item.FriendlyUrl
                         });
                         _c.BlogCategories.Add(_C);
                     }

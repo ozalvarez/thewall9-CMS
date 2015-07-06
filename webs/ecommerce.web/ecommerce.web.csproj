@@ -246,6 +246,7 @@
     <Content Include="Views\Page\Product.cshtml" />
     <Content Include="Views\Page\OrderSent.cshtml" />
     <Content Include="Views\Page\Contact.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\directives\" />

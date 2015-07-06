@@ -12,6 +12,13 @@
     <title>Detail</title>
 </head>
 <body>
+    @foreach (var item in Model.Categories)
+    {
+        <p>
+            <a href="@Url.Action("index", "blog", new { BlogCategoryFriendlyUrl = item.FriendlyUrl })">@item.BlogCategoryName</a>
+        </p>
+
+    }
     <div>
         <h4>BlogPostWeb</h4>
         <hr />
