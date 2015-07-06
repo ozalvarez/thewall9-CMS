@@ -96,7 +96,6 @@ namespace thewall9.data.binding
         public List<BlogPostCategorieModelBinding> Categories { get; set; }
         public List<BlogTagModelBinding> Tags { get; set; }
         public FileRead FeatureImageFileRead { get; set; }
-        public string FeatureImageUrl { get; set; }
     }
     /// <summary>
     /// Used to Set categories on creating BlogPost

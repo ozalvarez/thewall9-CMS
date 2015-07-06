@@ -39,12 +39,12 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">Tags</div>
                         <div class="panel-body">
-                            <tag-manager tags="model.Tags" 
-                                         keyproperty="BlogTagID" 
+                            <tag-manager tags="model.Tags"
+                                         keyproperty="BlogTagID"
                                          valueproperty="BlogTagName"
                                          autocomplete="getTags"></tag-manager>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -53,9 +53,26 @@
             </code>-->
         </pane>
         <pane title="Imagen Principal">
-            <img ng-src="{{model.FeatureImageUrl}}" ng-show="model.FeatureImageUrl && !model.FeatureImageFileRead.FileContent" class="img-responsive img-thumbnail" />
-            <img ng-src="{{model.FeatureImageFileRead.FileContent}}" ng-show="model.FeatureImageFileRead.FileContent" class="img-responsive img-thumbnail" />
-            <input type="file" data-fileread="model.FeatureImageFileRead" />
+            <div class="row">
+                <div class="col-md-4">
+                    <input type="file" data-fileread="model.FeatureImageFileRead" />
+                    <button class="btn btn-danger"
+                            ng-show="!model.FeatureImageFileRead.Deleting"
+                            ng-click="model.FeatureImageFileRead.Deleting=true;">
+                        Delete Feature Image
+                    </button>
+                </div>
+                <div class="col-md-8">
+                    <img ng-src="{{model.FeatureImageFileRead.MediaUrl}}"
+                         ng-show="model.FeatureImageFileRead.MediaUrl
+                         && !model.FeatureImageFileRead.FileContent
+                         && !model.FeatureImageFileRead.Deleting" class="img-responsive img-thumbnail" />
+                    <img ng-src="{{model.FeatureImageFileRead.FileContent}}"
+                         ng-show="model.FeatureImageFileRead.FileContent
+                         && !model.FeatureImageFileRead.Deleting"
+                         class="img-responsive img-thumbnail" />
+                </div>
+            </div>
         </pane>
     </tabs>
     <hr />

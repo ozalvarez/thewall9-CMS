@@ -92,7 +92,20 @@ namespace thewall9.bll.test
             _BlogPost.FeatureImageFileRead = GetImgFileRead();
             _BlogPost.BlogPostID = new BlogBLL().Save(_BlogPost, _CustomerUser.Id);
             var _Post = new BlogBLL().GetDetail(_BlogPost.BlogPostID, _BlogPost.CultureID);
-            Assert.IsNotNull(_Post.FeatureImageUrl);
+            Assert.IsNotNull(_Post.FeatureImageFileRead.MediaUrl);
+        }
+        [TestMethod]
+        public void BlogDeleteFeatureImageTest()
+        {
+            SettingUp();
+            _BlogPost.FeatureImageFileRead = GetImgFileRead();
+            _BlogPost.BlogPostID = new BlogBLL().Save(_BlogPost, _CustomerUser.Id);
+            var _Post = new BlogBLL().GetDetail(_BlogPost.BlogPostID, _BlogPost.CultureID);
+            _BlogPost.FeatureImageFileRead.MediaID = _Post.FeatureImageFileRead.MediaID;
+            _BlogPost.FeatureImageFileRead.Deleting = true;
+            _BlogPost.BlogPostID = new BlogBLL().Save(_BlogPost, _CustomerUser.Id);
+            _Post = new BlogBLL().GetDetail(_BlogPost.BlogPostID, _BlogPost.CultureID);
+            Assert.IsNull(_Post.FeatureImageFileRead);
         }
         [TestMethod]
         public void BlogUpdateTest()
