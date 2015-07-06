@@ -20,7 +20,13 @@
             {{item.BlogPostID}}
             <span ng-show="item.CultureInfo">{{item.CultureInfo.Title}}</span>
             <span ng-show="item.CultureInfo==null">UNTITLED</span>
-        </td>
+            <label ng-show="item.CultureInfo.Published" class="label label-success">
+                <i class="fa fa-check"></i>
+            </label>
+            <label ng-show="!item.CultureInfo.Published" class="label label-danger">
+                (Draft) <i class="fa fa-remove"></i>
+            </label>
+</td>
         <td>
             <a href="" class="btn btn-default btn-sm" role="button" ng-href="#/blog/post/{{item.BlogPostID}}">
                 <span class="glyphicon glyphicon-edit"></span>

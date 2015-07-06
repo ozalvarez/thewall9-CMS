@@ -32,8 +32,8 @@
             }
         };
 
-        $scope.save = function () {
-            $scope.model.Published = true;
+        $scope.save = function (Published) {
+            $scope.model.Published = Published;
             blogService.save($scope.model).then(function (data) {
                 toastrService.success("Post Guardado");
                 if ($scope.blogPostID == null) {

@@ -119,7 +119,8 @@ namespace thewall9.bll
                               .Where(m => m.CultureID == CultureID)
                               .Select(m => new BlogPostListCultureBinding
                               {
-                                  Title = m.Title
+                                  Title = m.Title,
+                                  Published=m.Published
                               })
                               .FirstOrDefault()
                           };

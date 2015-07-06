@@ -83,9 +83,8 @@ namespace thewall9.data.binding
     {
         public BlogPostListCultureBinding CultureInfo { get; set; }
     }
-    public class BlogPostListCultureBinding
+    public class BlogPostListCultureBinding:BlogPostCultureBase
     {
-        public string Title { get; set; }
     }
     /// <summary>
     /// Is the Model to Save the Post (Create/Update)
