@@ -13,12 +13,24 @@ namespace thewall9.web.parent.Controllers
     public class BlogController : Controller
     {
         BlogBLL _BlogService = new BlogBLL();
-        [Route("blog")]
-        public ActionResult Index(int? BlogCategoryID, int? Page)
+        ContentBLL _ContentService = new ContentBLL();
+
+        [Route("blog/{BlogCategoryFriendlyUrl?}")]
+        public ActionResult Index(string BlogCategoryFriendlyUrl, int Page = 1)
         {
+            ViewBag.Page = Page;
+            ViewBag.BlogCategoryFriendlyUrl = BlogCategoryFriendlyUrl;
+
+            ViewBag.BlogContent = _ContentService.Get(Request.Url.Authority, "blog");
+
             return View(_BlogService.Get(APP._SiteID
                 , Request.Url.Authority
-                , APP._CurrentLang, 0, 10, 1));
+                , APP._CurrentLang, BlogCategoryFriendlyUrl, Page));
+        }
+        [Route("post/{BlogPostID}/{FriendlyUrl}")]
+        public ActionResult Detail(int BlogPostID, string FriendlyUrl)
+        {
+            return View(_BlogService.GetDetail(BlogPostID, FriendlyUrl));
         }
     }
 }

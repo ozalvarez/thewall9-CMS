@@ -229,7 +229,7 @@ namespace thewall9.bll.test
         {
             SettingUp();
             var _Pr = new ProductBLL().Get(_SiteID, _CustomerUser.Id);
-            var _P = new ProductBLL().Get(_SiteID, null, null, _Category.CategoryCultures[0].FriendlyUrl, _ProductCurrencies[0].CurrencyID, 0, 50, 1);
+            var _P = new ProductBLL().Get(_SiteID, null, null, _ProductCurrencies[0].CurrencyID, _Category.CategoryCultures[0].FriendlyUrl, 1);
             Assert.IsNotNull(_P);
             Assert.IsTrue(_P.Categories.Count == 1);
         }

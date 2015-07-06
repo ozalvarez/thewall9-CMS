@@ -15,16 +15,18 @@ namespace thewall9.bll
     public class ProductBLL : BaseBLL
     {
         #region Web
-        private IQueryable<ProductCulture> Get(int SiteID, int CultureID, int CategoryID, ApplicationDbContext _c)
+        private IQueryable<ProductCulture> Get(int SiteID, int CultureID, string ProductCategoryFriendlyUrl, ApplicationDbContext _c)
         {
-            return (CategoryID == 0
+            return (string.IsNullOrEmpty(ProductCategoryFriendlyUrl)
                 ? from m in _c.ProductCultures
                   where m.Product.SiteID == SiteID && m.CultureID == CultureID
                   orderby m.Product.Priority
                   select m
                : from m in _c.ProductCultures
                  join u in _c.ProductCategories on m.ProductID equals u.ProductID
-                 where u.CategoryID == CategoryID && m.CultureID == CultureID
+                 join pc in _c.Categories on u.CategoryID equals pc.CategoryID
+                 join pcc in _c.CategoryCultures on pc.CategoryID equals pcc.CategoryID
+                 where pcc.FriendlyUrl == ProductCategoryFriendlyUrl && m.CultureID == CultureID
                  orderby m.Product.Priority
                  select m);
         }
@@ -53,29 +55,30 @@ namespace thewall9.bll
                 : m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).FirstOrDefault().Price
             });
         }
-        private IQueryable<ProductWeb> Get(int SiteID, int CultureID, int CurrencyID, int CategoryID, ApplicationDbContext _c)
+        private IQueryable<ProductWeb> Get(int SiteID, int CultureID, int CurrencyID, string ProductCategoryFriendlyUrl, ApplicationDbContext _c)
         {
-            return Select(Get(SiteID, CultureID, CategoryID, _c), CategoryID, _c);
+            return Select(Get(SiteID, CultureID, ProductCategoryFriendlyUrl, _c), CurrencyID, _c);
         }
 
-        public ProductsWeb Get(int SiteID, string Url, string Lang, string FriendlyUrl, int CurrencyID, int CategoryID, int Take, int Page)
+        public ProductsWeb Get(int SiteID, string Url, string Lang, int CurrencyID, string ProductCategoryFriendlyUrl, int Page)
         {
+            int Take = 10;//SHOULD BE FROM USER INPUT
             using (var _c = db)
             {
                 if (SiteID == 0)
                     SiteID = new SiteBLL().Get(Url, _c).SiteID;
-                var _Culture = new CategoryBLL().GetCulture(SiteID, Lang, FriendlyUrl, _c);
-                var _Q = Get(SiteID, _Culture.CultureID, CurrencyID, CategoryID, _c);
+                var _Culture = new CategoryBLL().GetCulture(SiteID, Lang, ProductCategoryFriendlyUrl, _c);
+                var _Q = Get(SiteID, _Culture.CultureID, CurrencyID, ProductCategoryFriendlyUrl, _c);
                 var _PW = new ProductsWeb();
                 _PW.Products = _Q.Skip(Take * (Page - 1)).Take(Take).ToList();
                 _PW.NumberPages = _Q.Count() / Take;
-                _PW.Categories = new CategoryBLL().Get(SiteID, null, CategoryID, Lang, FriendlyUrl);
+              //  _PW.Categories = new CategoryBLL().Get(SiteID, null, ProductCategoryFriendlyUrl, Lang, FriendlyUrl);
                 _PW.CultureID = _Culture.CultureID;
                 _PW.CultureName = _Culture.Name;
-                if (CategoryID != 0)
-                {
-                    _PW.Category = new CategoryBLL().Get(CategoryID, _Culture.CultureID);
-                }
+                //if (!string.IsNullOrEmpty(ProductCategoryFriendlyUrl))
+                //{
+                //    _PW.Category = new CategoryBLL().Get(ProductCategoryFriendlyUrl, _Culture.CultureID);
+                //}
                 return _PW;
             }
         }

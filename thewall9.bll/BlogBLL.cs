@@ -12,13 +12,13 @@ namespace thewall9.bll
     public class BlogBLL : BaseBLL
     {
         #region WEB
-        public List<BlogListWeb> Get(int SiteID
+        public BlogListWeb Get(int SiteID
             , string Url
             , string Lang
-            , int BlogCategoryID
-            , int Take
+            , string FriendlyUrl
             , int Page)
         {
+            var _Take = 10;//SHOULD BE CUSTOM BY USER
             using (var _c = db)
             {
                 if (SiteID == 0)
@@ -29,21 +29,44 @@ namespace thewall9.bll
                              && bpc.Culture.Name.ToLower().Equals(Lang.ToLower())
                              && bpc.Published
                              select bpc;
-                if (BlogCategoryID != 0)
+                if (!string.IsNullOrEmpty(FriendlyUrl))
                 {
                     _Query = from q in _Query
                              join c in _c.BlogPostCategories on q.BlogPost.BlogPostID equals c.BlogPostID
-                             where c.BlogCategoryID == BlogCategoryID
+                             join cc in _c.BlogCategoryCultures on c.BlogCategoryID equals cc.BlogCategoryID
+                             where cc.FriendlyUrl.Equals(FriendlyUrl)
                              select q;
                 }
-
-                return _Query.OrderByDescending(m=>m.DateCreated).Select(m => new BlogListWeb
+                var _Model = new BlogListWeb();
+                var _Count = _Query.Count();
+                _Model.Pages = _Count % _Take == 0 ? _Count / _Take : (_Count / _Take) + 1;
+                _Model.Data = _Query.OrderByDescending(m => m.DateCreated).Select(m => new BlogPostCultureBase
                 {
                     BlogPostID = m.BlogPostID,
                     FriendlyUrl = m.FriendlyUrl,
                     Title = m.Title
                 })
-                .Skip(Take * (Page - 1)).Take(Take).ToList();
+                .Skip(_Take * (Page - 1)).Take(_Take).ToList();
+                return _Model;
+            }
+        }
+
+        public BlogPostWeb GetDetail(int BlogPostID, string FriendlyUrl)
+        {
+            using (var _c = db)
+            {
+                var _BP = from bpc in _c.BlogPostCultures
+                          where (bpc.BlogPostID == BlogPostID && bpc.FriendlyUrl == FriendlyUrl)
+                          select new BlogPostWeb
+                          {
+                              Title = bpc.Title,
+                              Content = bpc.Content,
+                              Published = bpc.Published,
+                              FriendlyUrl = bpc.FriendlyUrl,
+                              BlogPostID = bpc.BlogPostID,
+                              CultureID = bpc.CultureID
+                          };
+                return _BP.FirstOrDefault();
             }
         }
         #endregion
@@ -92,9 +115,10 @@ namespace thewall9.bll
                                   BlogTagName = m.BlogTag.BlogTagName,
                                   BlogTagID = m.BlogTagID
                               }).ToList(),
-                              Categories = bpc.BlogPost.BlogPostCategories.Select(m => new BlogPostCategorieModelBinding
+                              Categories = bpc.BlogPost.BlogPostCategories
+                              .Select(m => new BlogPostCategorieModelBinding
                               {
-                                  BlogCategoryID = m.BlogCategoryID
+                                  BlogCategoryID = m.BlogCategoryID,
                               }).ToList()
 
                           };
@@ -245,7 +269,8 @@ namespace thewall9.bll
                                   BlogCategoryName = m.BlogCategoryName,
                                   BlogCategoryID = m.BlogCategoryID,
                                   CultureName = m.Culture.Name,
-                                  CultureID = m.CultureID
+                                  CultureID = m.CultureID,
+                                  FriendlyUrl=m.FriendlyUrl
                               })
                               .ToList()
                           };
@@ -272,12 +297,17 @@ namespace thewall9.bll
                 }
                 foreach (var item in Model.CategoryCultures)
                 {
+                    if (string.IsNullOrEmpty(item.FriendlyUrl))
+                    {
+                        item.FriendlyUrl = item.BlogCategoryName.CleanUrl();
+                    }
                     if (Model.BlogCategoryID == 0)
                     {
                         _C.BlogCategoryCultures.Add(new BlogCategoryCulture
                         {
                             BlogCategoryName = item.BlogCategoryName,
-                            CultureID = item.CultureID
+                            CultureID = item.CultureID,
+                            FriendlyUrl=item.FriendlyUrl
                         });
                         _c.BlogCategories.Add(_C);
                     }
@@ -287,14 +317,18 @@ namespace thewall9.bll
                             .Where(m => m.BlogCategoryID == Model.BlogCategoryID
                                 && m.CultureID == item.CultureID).FirstOrDefault();
                         if (_BCC != null)
+                        {
                             _BCC.BlogCategoryName = item.BlogCategoryName;
+                            _BCC.FriendlyUrl = item.FriendlyUrl;
+                        }
                         else
                         {
                             _BCC = new BlogCategoryCulture
                             {
                                 BlogCategoryID = Model.BlogCategoryID,
                                 BlogCategoryName = item.BlogCategoryName,
-                                CultureID = item.CultureID
+                                CultureID = item.CultureID,
+                                FriendlyUrl = item.FriendlyUrl
                             };
                             _C.BlogCategoryCultures.Add(_BCC);
                         }

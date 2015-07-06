@@ -9,8 +9,9 @@
                 "insertdatetime media table contextmenu paste"
             ],
             toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+            extended_valid_elements: "iframe[src|width|height|name|align]",
+            format:null
         };
-
         $scope.blogPostID = $routeParams.blogPostID;
         $scope.get = function () {
             if ($scope.blogPostID != null) {
@@ -34,7 +35,10 @@
         $scope.save = function () {
             $scope.model.Published = true;
             blogService.save($scope.model).then(function (data) {
-                toastrService.success("Post Guardado")
+                toastrService.success("Post Guardado");
+                if ($scope.blogPostID == null) {
+                    $location.path("/blog/post/" + data);
+                }
             });
         };
         //CATEGORIES
@@ -46,7 +50,7 @@
         };
         $scope.selectCategory = function (item) {
             var _myCAT = null;
-            angular.forEach($scope.model.Categories, function(myCAT) {
+            angular.forEach($scope.model.Categories, function (myCAT) {
                 if (myCAT.BlogCategoryID == item.BlogCategoryID) {
                     item.Enabled = !item.Enabled;
                     _myCAT = myCAT;
@@ -59,7 +63,7 @@
                 $scope.model.Categories.push({
                     BlogCategoryID: item.BlogCategoryID,
                     Adding: true,
-                    Deleting:false
+                    Deleting: false
                 });
             }
         }

@@ -50,7 +50,7 @@ namespace thewall9.bll.test
                 CultureID = _Cultures[0].CultureID,
                 Title = "b1",
                 Tags = _Tags,
-                Published=true
+                Published = true
             };
             _BlogPost.BlogPostID = new BlogBLL().Save(_BlogPost, _CustomerUser.Id);
             Assert.IsTrue(_BlogPost.BlogPostID != 0);
@@ -69,7 +69,8 @@ namespace thewall9.bll.test
             {
                 SiteID = _SiteID,
                 CultureID = _Cultures[1].CultureID,
-                Title = "b3"
+                Title = "b3",
+                Published = true
             };
             _BlogPost3.BlogPostID = new BlogBLL().Save(_BlogPost3, _CustomerUser.Id);
             Assert.IsTrue(_BlogPost3.BlogPostID != 0);
@@ -80,8 +81,13 @@ namespace thewall9.bll.test
         public void BlogWebGetTest()
         {
             SettingUp();
-            var _Posts = new BlogBLL().Get(_SiteID, null, _Cultures[0].Name, 0, 10, 1);
-            Assert.IsTrue(_Posts.Count == 2);
+            var _Posts = new BlogBLL().Get(_SiteID, null, _Cultures[0].Name, null, 1);
+            Assert.IsTrue(_Posts.Pages == 2);
+            Assert.IsTrue(_Posts.Data.Count == 1);
+
+            _Posts = new BlogBLL().Get(_SiteID, null, _Cultures[0].Name, null, 1);
+            Assert.IsTrue(_Posts.Pages == 1);
+            Assert.IsTrue(_Posts.Data.Count == 2);
         }
         #region WEB
 

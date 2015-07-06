@@ -247,6 +247,7 @@
     <Content Include="Views\Shared\_LayoutIntern.cshtml" />
     <Content Include="Views\Page\Pricing.cshtml" />
     <Content Include="Views\Blog\Index.cshtml" />
+    <Content Include="Views\Blog\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

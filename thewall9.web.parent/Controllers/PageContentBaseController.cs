@@ -97,30 +97,30 @@ namespace thewall9.web.parent.Controllers
         }
 
         #region Products
-        public ActionResult Products(string FriendlyUrl, string CategoryFriendlyUrl, int CategoryID = 0, int Page = 1)
-        {
-            return Index(FriendlyUrl);
-        }
-        public ActionResult Product(string FriendlyUrl)
-        {
-            var _Product = ProductService.Get(APP._SiteID, Request.Url.Authority, FriendlyUrl, APP._CurrentCurrencyID);
-            if (_Product == null)
-                throw new HttpException(404, "Page Not Found");
-            else
-            {
-                ViewBag.Title = _Product.ProductName;
-                ViewBag.MetaDescription = _Product.ProductName + " " + _Product.Price;
-                ViewBag.Product = _Product;
-                var _Model = PageService.GetByAlias(APP._SiteID, Request.Url.Authority, "product", _Product.CultureName);
-                APP._CurrentLang = _Product.CultureName;
-                return View(_Model.Page.ViewRender, _Model);
-            }
-        }
-        public PartialViewResult GetProducts(int CategoryID = 0, int Page = 1)
-        {
-            var _P = ProductService.Get(APP._SiteID, Request.Url.Authority, APP._CurrentLang, null, APP._CurrentCurrencyID, CategoryID, PAGE_SIZE, Page);
-            return PartialView("_Products", _P);
-        }
+        //public ActionResult Products(string FriendlyUrl, string CategoryFriendlyUrl, int CategoryID = 0, int Page = 1)
+        //{
+        //    return Index(FriendlyUrl);
+        //}
+        //public ActionResult Product(string FriendlyUrl)
+        //{
+        //    var _Product = ProductService.Get(APP._SiteID, Request.Url.Authority, FriendlyUrl, APP._CurrentCurrencyID);
+        //    if (_Product == null)
+        //        throw new HttpException(404, "Page Not Found");
+        //    else
+        //    {
+        //        ViewBag.Title = _Product.ProductName;
+        //        ViewBag.MetaDescription = _Product.ProductName + " " + _Product.Price;
+        //        ViewBag.Product = _Product;
+        //        var _Model = PageService.GetByAlias(APP._SiteID, Request.Url.Authority, "product", _Product.CultureName);
+        //        APP._CurrentLang = _Product.CultureName;
+        //        return View(_Model.Page.ViewRender, _Model);
+        //    }
+        //}
+        //public PartialViewResult GetProducts(int CategoryID = 0, int Page = 1)
+        //{
+        //    var _P = ProductService.Get(APP._SiteID, Request.Url.Authority, APP._CurrentLang, null, APP._CurrentCurrencyID, CategoryID, PAGE_SIZE, Page);
+        //    return PartialView("_Products", _P);
+        //}
         #endregion
 
     }

@@ -8,7 +8,7 @@
 <div class="row" ng-controller="productsController">
     <div class="col-md-3">
         <div class="subtitle">
-            @Html.FindValue(_PageModel, "categories")
+            @*@Html.FindValue(_PageModel, "categories")*@
         </div>
         <script type="text/ng-template" id="_categories.html">
             <a ng-href="/p/@Html.LinkCatalog()/{{item.FriendlyUrl}}/{{item.CategoryID}}" href="">
@@ -31,7 +31,7 @@
     </div>
     <div class="col-md-9">
         <div class="subtitle">
-            @Html.FindValue(_PageModel, "products") <span ng-show="data.Category">
+            @*@Html.FindValue(_PageModel, "products")*@ <span ng-show="data.Category">
                 - {{data.Category.CategoryName}}
                 <a href="@Html.LinkCatalog()" class="btn btn-primary btn-sm pull-right">
                     <i class="fa fa-arrow-circle-left"></i> Back

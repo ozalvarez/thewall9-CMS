@@ -1,4 +1,4 @@
-﻿@model IEnumerable<thewall9.data.binding.BlogListWeb>
+﻿@model thewall9.data.binding.BlogListWeb
 
 @{
     Layout = null;
@@ -12,66 +12,37 @@
     <title>Index</title>
 </head>
 <body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
     <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.BlogPostID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CultureID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Published)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Content)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FriendlyUrl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateCreated)
-            </th>
-            <th></th>
-        </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.BlogPostID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CultureID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Published)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Content)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FriendlyUrl)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateCreated)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-    }
-    
+        @foreach (var item in Model.Data)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BlogPostID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CultureID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Published)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Content)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FriendlyUrl)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateCreated)
+                </td>
+                <td>
+                    @Html.ActionLink("detail", "detail", "blog", new { BlogPostID = item.BlogPostID, FriendlyUrl = item.FriendlyUrl }, null)
+                </td>
+            </tr>
+        }
     </table>
+    @Html.PageLinks((int?)ViewBag.Page ?? 1, Model.Pages, i => Url.Action("index", "blog", new { Page = i, FriendlyUrl = ViewBag.BlogCategoryFriendlyUrl }))
 </body>
 </html>

@@ -13,23 +13,22 @@ namespace thewall9.web.parent.BLL
 {
     public class BlogBLL : BaseBLL
     {
-        public List<BlogListWeb> Get(int SiteID
+        public BlogListWeb Get(int SiteID
             , string Url
             , string Lang
-            , int BlogCategoryID
-            , int Take
+            , string FriendlyUrl
             , int Page)
         {
-            return DownloadObject<List<BlogListWeb>>("api/blog?SiteID=" + SiteID 
-                + "&Url=" + Url 
+            return DownloadObject<BlogListWeb>("api/blog?SiteID=" + SiteID
+                + "&Url=" + Url
                 + "&Lang=" + Lang
-                + "&BlogCategoryID=" + BlogCategoryID
-                + "&Take=" + Take 
+                + "&FriendlyUrl=" + FriendlyUrl
                 + "&Page=" + Page);
         }
-        public BlogPostModelBinding GetDetail(int SiteID, string Url, string FriendlyUrl, int CurrencyID)
+        public BlogPostWeb GetDetail(int BlogPostID, string FriendlyUrl)
         {
-            return DownloadObject<BlogPostModelBinding>("api/product?SiteID=" + SiteID + "&Url=" + Url + "&FriendlyUrl=" + FriendlyUrl + "&CurrencyID=" + CurrencyID);
+            return DownloadObject<BlogPostWeb>("api/blog?BlogPostID=" + BlogPostID
+                + "&FriendlyUrl=" + FriendlyUrl);
         }
     }
 }

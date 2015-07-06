@@ -151,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\PageController.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
@@ -241,7 +242,7 @@
     <Content Include="Views\Page\Cart.cshtml" />
     <Content Include="Views\Page\Checkout.cshtml" />
     <Content Include="Views\Page\Products.cshtml" />
-    <Content Include="Views\Page\_Products.cshtml" />
+    <Content Include="Views\Product\_Products.cshtml" />
     <Content Include="Views\Page\Product.cshtml" />
     <Content Include="Views\Page\OrderSent.cshtml" />
     <Content Include="Views\Page\Contact.cshtml" />

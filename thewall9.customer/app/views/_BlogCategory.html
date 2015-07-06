@@ -9,11 +9,14 @@
                 <form ng-submit="save()">
                     <div ng-repeat="item in itemToSave.CategoryCultures">
                         <div class="form-group">
-                            <label>Nombre de la Categoria [{{item.CultureName}}]</label>
+                            <label>Nombre de la Categoría [{{item.CultureName}}]</label>
                             <input type="text" class="form-control" ng-model="item.BlogCategoryName" required />
                         </div>
+                        <div class="form-group">
+                            <label>Url Amigable [{{item.CultureName}}]</label>
+                            <input type="text" class="form-control" ng-model="item.FriendlyUrl"/>
+                        </div>
                     </div>
-                        
                     <div class="form-group">
                         <input type="submit" value="Guardar Categoría" class="btn btn-primary" />
                     </div>

@@ -162,6 +162,10 @@
     <Compile Include="Migrations\201507031719061_AddBlogToSite.Designer.cs">
       <DependentUpon>201507031719061_AddBlogToSite.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507051915318_AddFriendlyUrlToCategory.cs" />
+    <Compile Include="Migrations\201507051915318_AddFriendlyUrlToCategory.Designer.cs">
+      <DependentUpon>201507051915318_AddFriendlyUrlToCategory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Order.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Category.cs" />
@@ -380,6 +384,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507031719061_AddBlogToSite.resx">
       <DependentUpon>201507031719061_AddBlogToSite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507051915318_AddFriendlyUrlToCategory.resx">
+      <DependentUpon>201507051915318_AddFriendlyUrlToCategory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

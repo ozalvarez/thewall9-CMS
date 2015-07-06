@@ -47,6 +47,7 @@ namespace thewall9.data.binding
         public int BlogCategoryID { get; set; }
         public int CultureID { get; set; }
         public string BlogCategoryName { get; set; }
+        public string FriendlyUrl { get; set; }
     }
 
     public class BlogPostCategoryBase
@@ -118,9 +119,13 @@ namespace thewall9.data.binding
     #endregion
 
     #region WEB
-    public class BlogListWeb: BlogPostCultureBase
+    public class BlogListWeb
     {
-        
+        public int Pages { get; set; }
+        public List<BlogPostCultureBase> Data { get; set; }
+    }
+    public class BlogPostWeb:BlogPostCultureBase
+    {
     }
     #endregion
 }

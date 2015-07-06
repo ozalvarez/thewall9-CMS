@@ -13,11 +13,22 @@ namespace thewall9.web.parent.BLL
 {
     public class ProductBLL : BaseBLL
     {
-        public ProductsWeb Get(int SiteID, string Url,string Lang, string FriendlyUrl, int CurrencyID, int CategoryID, int Take, int Page)
+        public ProductsWeb Get(int SiteID
+            , string Url
+            , string ProductCategoryFriendlyUrl
+            , int Page)
         {
-            return DownloadObject<ProductsWeb>("api/product?SiteID=" + SiteID + "&Url=" + Url + "&Lang=" + Lang + "&FriendlyUrl=" + FriendlyUrl + "&CurrencyID=" + CurrencyID + "&CategoryID=" + CategoryID + "&Take=" + Take + "&Page=" + Page);
+            return DownloadObject<ProductsWeb>("api/product?SiteID=" + SiteID
+                + "&Url=" + Url
+                + "&Lang=" + APP._CurrentLang
+                + "&CurrencyID=" + APP._CurrentCurrencyID
+                + "&ProductCategoryFriendlyUrl=" + ProductCategoryFriendlyUrl
+                + "&Page=" + Page);
         }
-        public ProductWeb Get(int SiteID, string Url, string FriendlyUrl, int CurrencyID)
+        public ProductWeb GetDetail(int SiteID
+            , string Url
+            , string FriendlyUrl
+            , int CurrencyID)
         {
             return DownloadObject<ProductWeb>("api/product?SiteID=" + SiteID + "&Url=" + Url + "&FriendlyUrl=" + FriendlyUrl + "&CurrencyID=" + CurrencyID);
         }

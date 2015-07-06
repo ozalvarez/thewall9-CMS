@@ -20,11 +20,16 @@ namespace thewall9.api.Controllers
         public IHttpActionResult Get(int SiteID
             , string Url
             , string Lang
-            , int BlogCategoryID
-            , int Take
+            , string FriendlyUrl
             , int Page)
         {
-            return Ok(_BlogService.Get(SiteID, Url, Lang, BlogCategoryID, Take, Page));
+            return Ok(_BlogService.Get(SiteID, Url, Lang, FriendlyUrl, Page));
+        }
+        [AllowAnonymous]
+        public IHttpActionResult GetDetail(int BlogPostID
+            , string FriendlyUrl)
+        {
+            return Ok(_BlogService.GetDetail(BlogPostID, FriendlyUrl));
         }
         #endregion
 
@@ -40,8 +45,7 @@ namespace thewall9.api.Controllers
         }
         public IHttpActionResult PostSave(BlogPostModelBinding Model)
         {
-            _BlogService.Save(Model, User.Identity.GetUserId());
-            return Ok();
+            return Ok(_BlogService.Save(Model, User.Identity.GetUserId()));
         }
         public IHttpActionResult Delete(int BlogPostID)
         {
