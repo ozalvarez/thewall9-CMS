@@ -7,7 +7,13 @@
                 $scope.data = data;
             });
         };
-
+        $scope.remove = function (item) {
+            if (confirm("¿Desea Eliminar el Post?")) {
+                blogService.remove(item.BlogPostID).then(function (data) {
+                    $scope.get();
+                });
+            }
+        }
         /*INIT*/
         $scope.updateCulture = function () {
             cultureService.currentCulture = $scope.selectedCulture;

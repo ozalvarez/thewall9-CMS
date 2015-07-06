@@ -22,7 +22,9 @@ app.factory('blogService', ["$myhttp", "$q", "ngAuthSettings", "siteService", 'c
             model.CultureID = cultureService.currentCulture.CultureID;
             return $http.post(ngAuthSettings.apiServiceBaseUri + uri, model);
         };
-
+        blogFactory.remove = function (BlogPostID) {
+            return $http.delete(ngAuthSettings.apiServiceBaseUri + uri+'?BlogPostID='+BlogPostID);
+        };
         //CATEGORIES
         blogFactory.getCategories = function () {
             return $http.get(ngAuthSettings.apiServiceBaseUri + uri

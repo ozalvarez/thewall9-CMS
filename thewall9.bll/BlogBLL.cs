@@ -312,14 +312,6 @@ namespace thewall9.bll
                 }
             }
         }
-        private string SaveFeatureImage(int ProductID, int CultureID, FileRead FileReadModel)
-        {
-            var _Container = "product-icon";
-            var _ContainerReference = ProductID + "/" + CultureID + "/" + FileReadModel.FileName;
-            new Utils.FileUtil().DeleteFolder(_Container, ProductID + "/" + CultureID + "/");
-            new Utils.FileUtil().UploadImage(Utils.ImageUtil.StringToStream(FileReadModel.FileContent), _Container, _ContainerReference);
-            return StorageUrl + "/" + _Container + "/" + _ContainerReference;
-        }
         public void Delete(int BlogPostID, string UserID)
         {
             using (var _c = db)
@@ -330,6 +322,8 @@ namespace thewall9.bll
                 Can(_BP.SiteID, UserID, _c);
                 _c.BlogPosts.Remove(_BP);
                 _c.SaveChanges();
+                new MediaBLL().DeleteFolder("blog"
+                            , BlogPostID + "/");
             }
         }
 

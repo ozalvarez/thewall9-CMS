@@ -57,7 +57,8 @@
                 <div class="col-md-4">
                     <input type="file" data-fileread="model.FeatureImageFileRead" />
                     <button class="btn btn-danger"
-                            ng-show="!model.FeatureImageFileRead.Deleting"
+                            ng-show="!model.FeatureImageFileRead.Deleting
+                             && model.FeatureImageFileRead!=null"
                             ng-click="model.FeatureImageFileRead.Deleting=true;">
                         Delete Feature Image
                     </button>

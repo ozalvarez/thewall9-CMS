@@ -10,6 +10,10 @@ namespace thewall9.bll
 {
     public class MediaBLL : BaseBLL
     {
+        public void DeleteFolder(string Container, string ContainerReference)
+        {
+            new Utils.FileUtil().DeleteFolder(Container, ContainerReference);
+        }
         public void DeleteMedia(string Container, string ContainerReference,int MediaID)
         {
             using (var _c = db)

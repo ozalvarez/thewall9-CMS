@@ -38,6 +38,8 @@
                 toastrService.success("Post Guardado");
                 if ($scope.blogPostID == null) {
                     $location.path("/blog/post/" + data);
+                } else {
+                    $scope.init();
                 }
             });
         };
