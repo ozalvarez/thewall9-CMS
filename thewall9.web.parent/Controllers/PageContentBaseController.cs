@@ -56,21 +56,45 @@ namespace thewall9.web.parent.Controllers
                          new XElement(ns + "priority", "0.5"));
             if (_Pages.Ecommerce)
             {
-               _Q= _Q.Union((from i in _Pages.Products
-                          select
-                          new XElement(ns + "url",
-                              new XElement(ns + "loc", Request.Url.Scheme + "://" + Request.Url.Authority + "/d/" + i.FriendlyUrl),
-                              new XElement(ns + "lastmod", String.Format("{0:yyyy-MM-dd}", DateTime.Now)),
-                              new XElement(ns + "changefreq", "always"),
-                              new XElement(ns + "priority", "0.5")))).Union((from i in _Pages.Categories
-                                                                             select
-                                                                             new XElement(ns + "url",
-                                                                                 new XElement(ns + "loc", Request.Url.Scheme + "://" + Request.Url.Authority + "/p/" + i.CatalogFriendlyUrl + "/" + i.FriendlyUrl + "/" + i.CategoryID),
-                                                                                 new XElement(ns + "lastmod", String.Format("{0:yyyy-MM-dd}", DateTime.Now)),
-                                                                                 new XElement(ns + "changefreq", "always"),
-                                                                                 new XElement(ns + "priority", "0.5"))));
+                _Q = _Q.Union((from i in _Pages.Products
+                               select
+                               new XElement(ns + "url",
+                                   new XElement(ns + "loc", Request.Url.Scheme + "://" + Request.Url.Authority + "/d/" + i.FriendlyUrl),
+                                   new XElement(ns + "lastmod", String.Format("{0:yyyy-MM-dd}", DateTime.Now)),
+                                   new XElement(ns + "changefreq", "always"),
+                                   new XElement(ns + "priority", "0.5")))).Union((from i in _Pages.Categories
+                                                                                  select
+                                                                                  new XElement(ns + "url",
+                                                                                      new XElement(ns + "loc", Request.Url.Scheme + "://" + Request.Url.Authority + "/p/" + i.CatalogFriendlyUrl + "/" + i.FriendlyUrl + "/" + i.CategoryID),
+                                                                                      new XElement(ns + "lastmod", String.Format("{0:yyyy-MM-dd}", DateTime.Now)),
+                                                                                      new XElement(ns + "changefreq", "always"),
+                                                                                      new XElement(ns + "priority", "0.5"))));
             }
-            var sitemap = new XDocument(new XDeclaration("1.0", "utf-8", "yes"),new XElement(ns + "urlset",_Q));
+            if (_Pages.Blog)
+            {
+                _Q = _Q.Union((from i in _Pages.Posts
+                               select
+                               new XElement(ns + "url",
+                                   new XElement(ns + "loc", Url.Action("detail", "blog", new { BlogPostID = i.BlogPostID, FriendlyUrl = i.FriendlyUrl }, Request.Url.Scheme)),
+                                   new XElement(ns + "lastmod", String.Format("{0:yyyy-MM-dd}", DateTime.Now)),
+                                   new XElement(ns + "changefreq", "always"),
+                                   new XElement(ns + "priority", "0.5"))))
+                                   .Union((from i in _Pages.BlogCategories
+                                           select
+                                           new XElement(ns + "url",
+                                               new XElement(ns + "loc", Url.Action("index", "blog", new { BlogCategoryFriendlyUrl = i.FriendlyUrl}, Request.Url.Scheme),
+                                               new XElement(ns + "lastmod", String.Format("{0:yyyy-MM-dd}", DateTime.Now)),
+                                               new XElement(ns + "changefreq", "always"),
+                                               new XElement(ns + "priority", "0.5")))))
+                                               .Union((from i in _Pages.BlogTags
+                                                       select
+                                                       new XElement(ns + "url",
+                                                           new XElement(ns + "loc", Url.Action("tag", "blog", new { BlogTagName = i.BlogTagName}, Request.Url.Scheme),
+                                                           new XElement(ns + "lastmod", String.Format("{0:yyyy-MM-dd}", DateTime.Now)),
+                                                           new XElement(ns + "changefreq", "always"),
+                                                           new XElement(ns + "priority", "0.5")))));
+            }
+            var sitemap = new XDocument(new XDeclaration("1.0", "utf-8", "yes"), new XElement(ns + "urlset", _Q));
             return Content("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + sitemap.ToString(), "text/xml");
         }
         [Route("change-lang")]

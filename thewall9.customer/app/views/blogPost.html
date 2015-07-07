@@ -20,6 +20,16 @@
         <textarea ui-tinymce="tinymceOptions" ng-model="model.Content" style="width:100%"></textarea>
     </div>
     <tabs>
+        <pane title="Subtítulo">
+            <div class="form-group">
+                <textarea ng-model="model.ContentPreview" class="form-control" rows="3"></textarea>
+            </div>
+        </pane>
+        <pane title="SEO">
+            <div class="form-group">
+                <input class="form-control" ng-model="model.FriendlyUrl" placeholder="Friendly Url">
+            </div>
+        </pane>
         <pane title="Tags & Categorías">
             <div class="row">
                 <div class="col-md-6">

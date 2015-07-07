@@ -28,7 +28,8 @@ namespace thewall9.bll
                     GAID = m.GAID,
                     SiteID = m.SiteID,
                     SiteName = m.SiteName,
-                    ECommerce = m.ECommerce
+                    ECommerce = m.ECommerce,
+                    Blog=m.Blog
                 }).SingleOrDefault();
             }
         }

@@ -97,7 +97,8 @@ namespace thewall9.bll
                     FriendlyUrl = m.FriendlyUrl,
                     Title = m.Title,
                     ContentPreview = m.ContentPreview,
-                    FeatureImageUrl = m.BlogPostFeatureImage != null ? m.BlogPostFeatureImage.Media.MediaUrl : null
+                    FeatureImageUrl = m.BlogPostFeatureImage != null ? m.BlogPostFeatureImage.Media.MediaUrl : null,
+                    DateCreated = m.DateCreated
                 })
                 .Skip(_Take * (Page - 1)).Take(_Take).ToList();
 
@@ -117,6 +118,8 @@ namespace thewall9.bll
                               {
                                   Title = bpc.Title,
                                   Content = bpc.Content,
+                                  ContentPreview = bpc.ContentPreview,
+                                  DateCreated = bpc.DateCreated,
                                   Published = bpc.Published,
                                   FriendlyUrl = bpc.FriendlyUrl,
                                   BlogPostID = bpc.BlogPostID,
@@ -127,6 +130,43 @@ namespace thewall9.bll
                 _Model.Categories = GetCategoriesUsed(_Model.SiteID, _Model.CultureID);
                 _Model.Tags = GetTagUsed(_Model.SiteID);
                 return _Model;
+            }
+        }
+
+        //SITEMAP
+        public List<BlogPostWeb> GetSitemap(int SiteID)
+        {
+            using (var _c = db)
+            {
+                var _Q = from bcc in _c.BlogPostCultures
+                         where bcc.BlogPost.SiteID == SiteID && bcc.Published
+                         select new BlogPostWeb
+                         {
+                             FriendlyUrl = bcc.FriendlyUrl,
+                             BlogPostID=bcc.BlogPostID
+                         };
+                return _Q.ToList();
+            }
+        }
+        public List<BlogTagBase> GetSitemapTags(int SiteID)
+        {
+            return GetTagUsed(SiteID);
+        }
+        public List<BlogCategoryCultureBase> GetSitemapCategories(int SiteID)
+        {
+            using (var _c = db)
+            {
+                var _Q = (from bpc in _c.BlogPostCategories
+                          join bc in _c.BlogCategories on bpc.BlogCategoryID equals bc.BlogCategoryID
+                          join bcc in _c.BlogCategoryCultures on bc.BlogCategoryID equals bcc.BlogCategoryID
+                          where bpc.BlogPost.SiteID == SiteID
+                          select new BlogCategoryCultureBase
+                          {
+                              BlogCategoryName = bcc.BlogCategoryName,
+                              FriendlyUrl = bcc.FriendlyUrl,
+                              BlogCategoryID = bcc.BlogCategoryID
+                          }).Distinct();
+                return _Q.ToList();
             }
         }
         #endregion
@@ -208,10 +248,12 @@ namespace thewall9.bll
             {
                 Can(Model.SiteID, UserID, _c);
                 var _BlogPost = new BlogPost(Model.SiteID);
+                if (string.IsNullOrEmpty(Model.FriendlyUrl))
+                    Model.FriendlyUrl = Model.Title.CleanUrl();
                 if (Model.BlogPostID == 0)
                 {
-                    Model.FriendlyUrl = Model.Title.CleanUrl();
                     var _BlogPostCulture = new BlogPostCulture(Model);
+                    _BlogPostCulture.DateCreated = DateTime.Now;
                     //ADD TAGS
                     if (Model.Tags != null)
                     {
@@ -228,7 +270,6 @@ namespace thewall9.bll
                     }
 
                     _BlogPost.BlogPostCultures = new List<BlogPostCulture>();
-                    _BlogPostCulture.ContentPreview = Utils.Util.GetPlainTextFromHtml(Model.Content);
                     _BlogPost.BlogPostCultures.Add(_BlogPostCulture);
                     _c.BlogPosts.Add(_BlogPost);
 
@@ -253,7 +294,6 @@ namespace thewall9.bll
                         .Where(m => m.CultureID == Model.CultureID && m.BlogPostID == Model.BlogPostID)
                         .FirstOrDefault();
                     _BP.UpdateContent(Model);
-                    _BP.ContentPreview = Utils.Util.GetPlainTextFromHtml(Model.Content);
 
                     //CATEGORIES
                     if (Model.Categories != null)

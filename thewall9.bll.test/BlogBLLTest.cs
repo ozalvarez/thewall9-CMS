@@ -81,7 +81,7 @@ namespace thewall9.bll.test
         public void BlogWebGetTest()
         {
             SettingUp();
-            var _Posts = new BlogBLL().Get(_SiteID, null, _Cultures[0].Name, null, 1);
+            var _Posts = new BlogBLL().Get(_SiteID, null, _Cultures[0].Name, null,null, 1);
             Assert.IsTrue(_Posts.Pages == 1);
             Assert.IsTrue(_Posts.Data.Count == 2);
         }
@@ -89,7 +89,7 @@ namespace thewall9.bll.test
         public void BlogWebGetByLangWithNoPostTest()
         {
             SettingUp();
-            var _Posts = new BlogBLL().Get(_SiteID, null, _Cultures[1].Name, null, 1);
+            var _Posts = new BlogBLL().Get(_SiteID, null, _Cultures[1].Name, null,null, 1);
             Assert.IsTrue(_Posts.Pages == 1);
             Assert.IsTrue(_Posts.Data.Count == 3);
         }

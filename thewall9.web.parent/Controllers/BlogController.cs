@@ -27,7 +27,7 @@ namespace thewall9.web.parent.Controllers
                 , Request.Url.Authority
                 , APP._CurrentLang, BlogCategoryFriendlyUrl, null, Page));
         }
-        [Route("blog/tag/{BlogTagName?}")]
+        [Route("blog/tag/{BlogTagName}")]
         public ActionResult Tag(string BlogTagName, int Page = 1)
         {
             ViewBag.Page = Page;

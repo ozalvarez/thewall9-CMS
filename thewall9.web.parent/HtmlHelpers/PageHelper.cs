@@ -15,20 +15,28 @@ namespace thewall9.web.parent.HtmlHelpers
             , int TotalPage
             , Func<int, String> PageUrl)
         {
-            StringBuilder result = new StringBuilder();
-            for (int i = 1; i <= TotalPage; i++)
+            if (CurrentPage < TotalPage)
             {
-                TagBuilder tag = new TagBuilder("a");
-                if (TotalPage != 1)
+                TagBuilder _ul = new TagBuilder("ul");
+                _ul.AddCssClass("pager");
+                for (int i = 1; i <= TotalPage; i++)
                 {
-                    tag.MergeAttribute("href", PageUrl(i));
-                    tag.InnerHtml = i.ToString();
-                    if (i == CurrentPage)
-                        tag.AddCssClass("selected");
-                    result.AppendLine(tag.ToString());
+                    TagBuilder _li = new TagBuilder("li");
+                    TagBuilder _a = new TagBuilder("a");
+                    if (TotalPage != 1)
+                    {
+                        _a.MergeAttribute("href", PageUrl(i));
+                        _a.InnerHtml = i.ToString();
+                        if (i == CurrentPage)
+                            _a.AddCssClass("disabled");
+
+                    }
+                    _li.InnerHtml += _a;
+                    _ul.InnerHtml += _li;
                 }
+                return MvcHtmlString.Create(_ul.ToString());
             }
-            return MvcHtmlString.Create(result.ToString());
+            return MvcHtmlString.Create(string.Empty);
         }
     }
 }

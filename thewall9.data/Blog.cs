@@ -31,15 +31,11 @@ namespace thewall9.data
     }
     public class BlogPostCulture : BlogPostCultureBase
     {
-        public BlogPostCulture()
-        {
-            this.DateCreated = DateTime.Now;
-        }
+        public BlogPostCulture(){}
         public BlogPostCulture(BlogPostModelBinding Model)
             : this()
         {
             this.CultureID = Model.CultureID;
-            this.FriendlyUrl = Model.FriendlyUrl;
             UpdateContent(Model);
         }
         public void UpdateContent(BlogPostModelBinding Model)
@@ -47,6 +43,8 @@ namespace thewall9.data
             this.Title = Model.Title;
             this.Published = Model.Published;
             this.Content = Model.Content;
+            this.ContentPreview = Model.ContentPreview;
+            this.FriendlyUrl = Model.FriendlyUrl;
         }
 
         [ForeignKey("BlogPostID")]
