@@ -37,7 +37,8 @@ namespace thewall9.bll.test
             var _W = new data.binding.SiteAllBinding
             {
                 SiteName = PREFIX + DateTime.Now.ToShortTimeString(),
-                Cultures = _C
+                Cultures = _C,
+                DefaultLang="es"
             };
             _SiteID = new SiteBLL().Save(_W);
             new SiteBLL().AddUserToAllRoles(new AddUserInSiteBinding

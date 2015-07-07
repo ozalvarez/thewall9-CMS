@@ -17,7 +17,7 @@
         <p>
             <a href="@Url.Action("index", "blog", new { BlogCategoryFriendlyUrl = item.FriendlyUrl })">@item.BlogCategoryName</a>
         </p>
-        
+
     }
     <table class="table">
         @foreach (var item in Model.Data)
@@ -50,6 +50,12 @@
             </tr>
         }
     </table>
-    @Html.PageLinks((int?)ViewBag.Page ?? 1, Model.Pages, i => Url.Action("index", "blog", new { Page = i, BlogCategoryFriendlyUrl = ViewBag.BlogCategoryFriendlyUrl }))
+    @if (ViewBag.BlogCategoryFriendlyUrl)
+    {
+        Html.PageLinks((int?)ViewBag.Page ?? 1, Model.Pages, i => Url.Action("index", "blog", new { Page = i, BlogCategoryFriendlyUrl = ViewBag.BlogCategoryFriendlyUrl }))
+    }else if (ViewBag.BlogTagName)
+    {
+        Html.PageLinks((int?)ViewBag.Page ?? 1, Model.Pages, i => Url.Action("tag", "blog", new { Page = i, BlogTagName = ViewBag.BlogTagName }))
+    }
 </body>
 </html>

@@ -16,13 +16,15 @@ namespace thewall9.web.parent.BLL
         public BlogListWeb Get(int SiteID
             , string Url
             , string Lang
-            , string FriendlyUrl
+            , string BlogCategoryFriendlyUrl
+            , string BlogTagName
             , int Page)
         {
             return DownloadObject<BlogListWeb>("api/blog?SiteID=" + SiteID
                 + "&Url=" + Url
                 + "&Lang=" + Lang
-                + "&FriendlyUrl=" + FriendlyUrl
+                + "&BlogCategoryFriendlyUrl=" + BlogCategoryFriendlyUrl
+                + "&BlogTagName=" + BlogTagName
                 + "&Page=" + Page);
         }
         public BlogPostWeb GetDetail(int BlogPostID, string FriendlyUrl)

@@ -37,10 +37,24 @@ namespace thewall9.bll
                         .ToList();
             }
         }
+        private List<BlogTagBase> GetTagUsed(int SiteID)
+        {
+            using (var _c = db)
+            {
+                return (from bt in _c.BlogPostTags
+                        where bt.BlogPostCulture.BlogPost.SiteID == SiteID
+                        select new BlogTagBase
+                        {
+                            BlogTagName = bt.BlogTag.BlogTagName
+                        }).Distinct()
+                        .ToList();
+            }
+        }
         public BlogListWeb Get(int SiteID
             , string Url
             , string Lang
-            , string FriendlyUrl
+            , string BlogCategoryFriendlyUrl
+            , string BlogTagName
             , int Page)
         {
             var _Take = 10;//SHOULD BE CUSTOM BY USER
@@ -48,18 +62,30 @@ namespace thewall9.bll
             {
                 if (SiteID == 0)
                     SiteID = new SiteBLL().Get(Url, _c).SiteID;
+                var _Site = new SiteBLL().Get(SiteID);
 
                 var _Query = from bpc in _c.BlogPostCultures
                              where bpc.BlogPost.SiteID == SiteID
-                             && bpc.Culture.Name.ToLower().Equals(Lang.ToLower())
+                                 //THIS CODE BRING ALL FROM REQUETED LANG & IF THERE IS OTHER POST IN THE DEFAULT LANG IT BRINGS AS WELL
+                             && (bpc.Culture.Name.ToLower().Equals(Lang.ToLower())
+                               ? bpc.Culture.Name.ToLower().Equals(Lang.ToLower())
+                               : bpc.Culture.Name.ToLower().Equals(_Site.DefaultLang))
                              && bpc.Published
                              select bpc;
-                if (!string.IsNullOrEmpty(FriendlyUrl))
+
+                if (!string.IsNullOrEmpty(BlogCategoryFriendlyUrl))
                 {
                     _Query = from q in _Query
-                             join c in _c.BlogPostCategories on q.BlogPost.BlogPostID equals c.BlogPostID
+                             join c in _c.BlogPostCategories on q.BlogPostID equals c.BlogPostID
                              join cc in _c.BlogCategoryCultures on c.BlogCategoryID equals cc.BlogCategoryID
-                             where cc.FriendlyUrl.Equals(FriendlyUrl)
+                             where cc.FriendlyUrl.Equals(BlogCategoryFriendlyUrl)
+                             select q;
+                }
+                if (!string.IsNullOrEmpty(BlogTagName))
+                {
+                    _Query = from q in _Query
+                             join t in _c.BlogPostTags on q.BlogPostID equals t.BlogPostID
+                             where t.BlogTag.BlogTagName.Equals(BlogTagName)
                              select q;
                 }
                 var _Model = new BlogListWeb();
@@ -69,11 +95,14 @@ namespace thewall9.bll
                 {
                     BlogPostID = m.BlogPostID,
                     FriendlyUrl = m.FriendlyUrl,
-                    Title = m.Title
+                    Title = m.Title,
+                    ContentPreview = m.ContentPreview,
+                    FeatureImageUrl = m.BlogPostFeatureImage != null ? m.BlogPostFeatureImage.Media.MediaUrl : null
                 })
                 .Skip(_Take * (Page - 1)).Take(_Take).ToList();
 
                 _Model.Categories = GetCategoriesUsed(SiteID, Lang);
+                _Model.Tags = GetTagUsed(SiteID);
                 return _Model;
             }
         }
@@ -96,6 +125,7 @@ namespace thewall9.bll
                                   FeatureImageUrl = bpc.BlogPostFeatureImage != null ? bpc.BlogPostFeatureImage.Media.MediaUrl : null
                               }).FirstOrDefault();
                 _Model.Categories = GetCategoriesUsed(_Model.SiteID, _Model.CultureID);
+                _Model.Tags = GetTagUsed(_Model.SiteID);
                 return _Model;
             }
         }
@@ -468,6 +498,7 @@ namespace thewall9.bll
         {
             using (var _c = db)
             {
+                BlogTagName = BlogTagName.CleanUrl();
                 var _BT = _c.BlogTags
                                 .Where(m => m.BlogTagName.ToLower().Equals(BlogTagName.ToLower()))
                                 .FirstOrDefault();

@@ -76,7 +76,7 @@ namespace thewall9.bll.test
             Assert.IsTrue(_BlogPost3.BlogPostID != 0);
         }
 
-        #region POST
+        #region WEB
         [TestMethod]
         public void BlogWebGetTest()
         {
@@ -85,6 +85,17 @@ namespace thewall9.bll.test
             Assert.IsTrue(_Posts.Pages == 1);
             Assert.IsTrue(_Posts.Data.Count == 2);
         }
+        [TestMethod]
+        public void BlogWebGetByLangWithNoPostTest()
+        {
+            SettingUp();
+            var _Posts = new BlogBLL().Get(_SiteID, null, _Cultures[1].Name, null, 1);
+            Assert.IsTrue(_Posts.Pages == 1);
+            Assert.IsTrue(_Posts.Data.Count == 3);
+        }
+        #endregion
+        #region POST
+       
         [TestMethod]
         public void BlogSaveFeatureImageTest()
         {
@@ -301,7 +312,7 @@ namespace thewall9.bll.test
             var _Tags = new List<BlogTagModelBinding>();
             _Tags.Add(new BlogTagModelBinding
             {
-                BlogTagName = "t3",
+                BlogTagName = "t3 canción",
                 Adding = true
             });
             _Tags.Add(new BlogTagModelBinding
@@ -314,7 +325,7 @@ namespace thewall9.bll.test
             var _B = new BlogBLL().GetDetail(_BlogPost.BlogPostID, _Cultures[0].CultureID);
             Assert.AreEqual(2, _B.Tags.Count);
             Assert.AreEqual("t1", _B.Tags[0].BlogTagName);
-            Assert.AreEqual(_Tags[0].BlogTagName, _B.Tags[1].BlogTagName);
+            Assert.AreEqual("t3-cancion", _B.Tags[1].BlogTagName);
         }
         #endregion
     }

@@ -149,12 +149,14 @@ namespace thewall9.data.binding
         public int Pages { get; set; }
         public List<BlogPostWeb> Data { get; set; }
         public List<BlogCategoryCultureBase> Categories { get; set; }
+        public List<BlogTagBase> Tags { get; set; }
     }
     public class BlogPostWeb : BlogPostCultureBase
     {
         public string FeatureImageUrl { get; set; }
         public int SiteID { get; set; }
         public List<BlogCategoryCultureBase> Categories { get; set; }
+        public List<BlogTagBase> Tags { get; set; }
     }
     #endregion
 }

@@ -25,7 +25,19 @@ namespace thewall9.web.parent.Controllers
 
             return View(_BlogService.Get(APP._SiteID
                 , Request.Url.Authority
-                , APP._CurrentLang, BlogCategoryFriendlyUrl, Page));
+                , APP._CurrentLang, BlogCategoryFriendlyUrl, null, Page));
+        }
+        [Route("blog/tag/{BlogTagName?}")]
+        public ActionResult Tag(string BlogTagName, int Page = 1)
+        {
+            ViewBag.Page = Page;
+            ViewBag.BlogTagName = BlogTagName;
+
+            ViewBag.BlogContent = _ContentService.Get(Request.Url.Authority, "blog");
+
+            return View("Index",_BlogService.Get(APP._SiteID
+                , Request.Url.Authority
+                , APP._CurrentLang, null, BlogTagName, Page));
         }
         [Route("post/{BlogPostID}/{FriendlyUrl}")]
         public ActionResult Detail(int BlogPostID, string FriendlyUrl)

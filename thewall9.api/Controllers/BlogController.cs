@@ -20,10 +20,11 @@ namespace thewall9.api.Controllers
         public IHttpActionResult Get(int SiteID
             , string Url
             , string Lang
-            , string FriendlyUrl
+            , string BlogCategoryFriendlyUrl
+            , string BlogTagName
             , int Page)
         {
-            return Ok(_BlogService.Get(SiteID, Url, Lang, FriendlyUrl, Page));
+            return Ok(_BlogService.Get(SiteID, Url, Lang, BlogCategoryFriendlyUrl,BlogTagName, Page));
         }
         [AllowAnonymous]
         public IHttpActionResult GetDetail(int BlogPostID
