@@ -19,7 +19,7 @@ namespace thewall9.api.Controllers
 
         public IHttpActionResult PostSave(FileReadSite Model)
         {
-            return Ok(_MediaService.SaveImage(Model, User.Identity.GetUserId()));
+            return Ok(_MediaService.SaveImage(Model,Model.SiteID, User.Identity.GetUserId()));
         }
         #endregion
     }

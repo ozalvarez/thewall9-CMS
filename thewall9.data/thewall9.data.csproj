@@ -175,6 +175,10 @@
     <Compile Include="Migrations\201507070120218_AddImagesToBlog.Designer.cs">
       <DependentUpon>201507070120218_AddImagesToBlog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507071431008_AddContentPreviewToPost.cs" />
+    <Compile Include="Migrations\201507071431008_AddContentPreviewToPost.Designer.cs">
+      <DependentUpon>201507071431008_AddContentPreviewToPost.cs</DependentUpon>
+    </Compile>
     <Compile Include="Order.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Category.cs" />
@@ -402,6 +406,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507070120218_AddImagesToBlog.resx">
       <DependentUpon>201507070120218_AddImagesToBlog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507071431008_AddContentPreviewToPost.resx">
+      <DependentUpon>201507071431008_AddContentPreviewToPost.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -21,6 +21,7 @@ namespace thewall9.data.binding
         public int CultureID { get; set; }
         public bool Published { get; set; }
         public string Content { get; set; }
+        public string ContentPreview { get; set; }
         public string FriendlyUrl { get; set; }
         public string Title { get; set; }
         public DateTime DateCreated { get; set; }
@@ -79,6 +80,7 @@ namespace thewall9.data.binding
         public int MediaID { get; set; }
     }
     #endregion
+
     #endregion
 
     #region Binding

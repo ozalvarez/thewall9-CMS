@@ -137,6 +137,7 @@ namespace thewall9.bll
                           {
                               Title = bpc.Title,
                               Content = bpc.Content,
+                              ContentPreview = bpc.ContentPreview,
                               Published = bpc.Published,
                               FriendlyUrl = bpc.FriendlyUrl,
                               BlogPostID = bpc.BlogPostID,
@@ -197,6 +198,7 @@ namespace thewall9.bll
                     }
 
                     _BlogPost.BlogPostCultures = new List<BlogPostCulture>();
+                    _BlogPostCulture.ContentPreview = Utils.Util.GetPlainTextFromHtml(Model.Content);
                     _BlogPost.BlogPostCultures.Add(_BlogPostCulture);
                     _c.BlogPosts.Add(_BlogPost);
 
@@ -221,6 +223,7 @@ namespace thewall9.bll
                         .Where(m => m.CultureID == Model.CultureID && m.BlogPostID == Model.BlogPostID)
                         .FirstOrDefault();
                     _BP.UpdateContent(Model);
+                    _BP.ContentPreview = Utils.Util.GetPlainTextFromHtml(Model.Content);
 
                     //CATEGORIES
                     if (Model.Categories != null)
@@ -277,49 +280,31 @@ namespace thewall9.bll
                     int _BlogPostID = Model.BlogPostID != 0 ? Model.BlogPostID : _BlogPost.BlogPostID;
 
                     //ADD FEATURE IMAGE
-                    if (Model.FeatureImageFileRead != null
-                        && Model.FeatureImageFileRead.Deleting)
+                    if (Model.FeatureImageFileRead != null)
                     {
-                        if (Model.FeatureImageFileRead.MediaID != 0)
+                        if (Model.FeatureImageFileRead.Deleting)
                         {
-                            new MediaBLL().DeleteMedia("blog"
-                                , _BlogPostID + "/" + Model.CultureID
-                                , Model.FeatureImageFileRead.MediaID);
-                        }
-                    }
-                    else
-                    {
-                        if (Model.FeatureImageFileRead != null && !string.IsNullOrEmpty(Model.FeatureImageFileRead.FileContent))
-                        {
-                            var _Media = new MediaBLL().SaveImage("blog"
-                                , _BlogPostID + "/" + Model.CultureID
-                                , Model.FeatureImageFileRead, true);
-
-                            var _Query = _c.BlogPostFeatureImages
-                                    .Where(m => m.BlogPostID == _BlogPostID
-                                    && m.CultureID == Model.CultureID);
-
-                            if (_Media != null)
+                            if (Model.FeatureImageFileRead.MediaID != 0)
                             {
-                                if (!_Query.Any())
+                                new MediaBLL().DeleteMedia(Model.FeatureImageFileRead.MediaID, Model.SiteID, UserID);
+                            }
+                        }
+                        else
+                        {
+                            if (Model.FeatureImageFileRead != null && !string.IsNullOrEmpty(Model.FeatureImageFileRead.FileContent))
+                            {
+                                new MediaBLL().DeleteMedia(Model.FeatureImageFileRead.MediaID, Model.SiteID, UserID);
+                                var _Media = new MediaBLL().SaveImage(Model.FeatureImageFileRead, Model.SiteID, UserID);
+                                _c.BlogPostFeatureImages.Add(new BlogPostFeatureImage
                                 {
-                                    _c.BlogPostFeatureImages.Add(new BlogPostFeatureImage
-                                    {
-                                        BlogPostID = _BlogPostID,
-                                        CultureID = Model.CultureID,
-                                        MediaID = _Media.MediaID
-                                    });
-                                }
-                                else
-                                {
-                                    var _ModelToUpdate = _Query.FirstOrDefault();
-                                    _ModelToUpdate.MediaID = _Media.MediaID;
-                                }
+                                    BlogPostID = _BlogPostID,
+                                    CultureID = Model.CultureID,
+                                    MediaID = _Media.MediaID
+                                });
                                 _c.SaveChanges();
                             }
                         }
                     }
-
                     //ADD IMAGES
                     if (Model.ImagesFileRead != null)
                     {
@@ -358,9 +343,19 @@ namespace thewall9.bll
                     .FirstOrDefault();
                 Can(_BP.SiteID, UserID, _c);
                 _c.BlogPosts.Remove(_BP);
+
+                //DELETE ALL MEDIA
+                var _M = _c.BlogPostFeatureImages.Where(m => m.BlogPostID == BlogPostID).FirstOrDefault();
+                if (_M != null)
+                    new MediaBLL().DeleteMedia(_M.MediaID, _BP.SiteID, UserID);
+
+                var _Images = _c.BlogPostImages.Where(m => m.BlogPostID == BlogPostID).ToList();
+                foreach (var item in _Images)
+                {
+                    new MediaBLL().DeleteMedia(item.MediaID, _BP.SiteID, UserID);
+                }
+
                 _c.SaveChanges();
-                new MediaBLL().DeleteFolder("blog"
-                            , BlogPostID + "/");
             }
         }
 
