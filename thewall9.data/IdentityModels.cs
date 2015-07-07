@@ -63,6 +63,9 @@ namespace thewall9.data.Models
                 .WithOptional(m => m.BlogPostFeatureImage)
                 .WillCascadeOnDelete(true);
 
+            modelBuilder.Entity<BlogPostImages>()
+                .HasKey(m => new { m.BlogPostID, m.CultureID, m.MediaID });
+
 
             base.OnModelCreating(modelBuilder);
         }
@@ -100,6 +103,7 @@ namespace thewall9.data.Models
         public DbSet<BlogCategoryCulture> BlogCategoryCultures { get; set; }
         public DbSet<BlogPostCategory> BlogPostCategories { get; set; }
         public DbSet<BlogPostFeatureImage> BlogPostFeatureImages { get; set; }
+        public DbSet<BlogPostImages> BlogPostImages { get; set; }
 
         //Media
         public DbSet<Media> Medias { get; set; }

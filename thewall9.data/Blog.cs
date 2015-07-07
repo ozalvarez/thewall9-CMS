@@ -54,6 +54,7 @@ namespace thewall9.data
         public virtual Culture Culture { get; set; }
         public virtual List<BlogPostTag> BlogPostTags { get; set; }
         public virtual BlogPostFeatureImage BlogPostFeatureImage { get; set; }
+        public virtual List<BlogPostImages> BlogPostImages { get; set; }
     }
     //TAG
     public class BlogTag : BlogTagBase
@@ -106,6 +107,16 @@ namespace thewall9.data
 
     #region FeatureImage
     public class BlogPostFeatureImage : BlogPostFeatureImageBase
+    {
+        [ForeignKey("BlogPostID,CultureID")]
+        public virtual BlogPostCulture BlogPostCulture { get; set; }
+        [ForeignKey("MediaID")]
+        public Media Media { get; set; }
+    }
+    #endregion
+
+    #region IMAGES
+    public class BlogPostImages : BlogPostImagesBase
     {
         [ForeignKey("BlogPostID,CultureID")]
         public virtual BlogPostCulture BlogPostCulture { get; set; }

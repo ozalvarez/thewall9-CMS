@@ -17,6 +17,7 @@
             if ($scope.blogPostID != null) {
                 blogService.getByID($scope.blogPostID).then(function (data) {
                     $scope.model = data;
+                    $scope.mediaList = data.ImagesFileRead;
                     angular.forEach($scope.model.Categories, function (myCAT) {
                         angular.forEach($scope.categories, function (allCAT) {
                             if (allCAT.BlogCategoryID == myCAT.BlogCategoryID) {

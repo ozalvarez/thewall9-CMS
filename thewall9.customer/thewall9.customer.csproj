@@ -125,6 +125,7 @@
     <Content Include="app\app-login.js" />
     <Content Include="app\app.js" />
     <Content Include="app\controllers\appController.js" />
+    <Content Include="app\controllers\mediaListController.js" />
     <Content Include="app\controllers\blogCategorySaveController.js" />
     <Content Include="app\controllers\blogCategoryController.js" />
     <Content Include="app\controllers\blogPostController.js" />
@@ -151,6 +152,7 @@
     <Content Include="app\filters\fromnow.js" />
     <Content Include="app\services\authInterceptorService.js" />
     <Content Include="app\services\authService.js" />
+    <Content Include="app\services\mediaService.js" />
     <Content Include="app\services\blogService.js" />
     <Content Include="app\services\productService.js" />
     <Content Include="app\services\orderService.js" />
@@ -184,6 +186,7 @@
     <Content Include="app\views\refresh.html" />
     <Content Include="app\views\tokens.html" />
     <Content Include="app\views\_BlogCategory.html" />
+    <Content Include="app\views\_MediaList.html" />
     <Content Include="Content\angular-block-ui.css" />
     <Content Include="Content\angular-block-ui.min.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />

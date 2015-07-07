@@ -6,11 +6,16 @@ using System.Threading.Tasks;
 
 namespace thewall9.data.binding
 {
-    public class FileRead : MediaBinding
+    public class FileRead : MediaBase
     {
         public string FileContent { get; set; }
         public string FileName { get; set; }
         public bool Deleting { get; set; }
+        public bool Adding { get; set; }
+    }
+    public class FileReadSite : FileRead
+    {
+        public int SiteID { get; set; }
     }
     public class SiteMapModel
     {

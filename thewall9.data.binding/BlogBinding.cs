@@ -69,9 +69,16 @@ namespace thewall9.data.binding
         public int CultureID { get; set; }
         public int MediaID { get; set; }
     }
-
     #endregion
-    //MEDIA
+
+    #region IMAGES
+    public class BlogPostImagesBase
+    {
+        public int BlogPostID { get; set; }
+        public int CultureID { get; set; }
+        public int MediaID { get; set; }
+    }
+    #endregion
     #endregion
 
     #region Binding
@@ -95,6 +102,7 @@ namespace thewall9.data.binding
         public List<BlogPostCategorieModelBinding> Categories { get; set; }
         public List<BlogTagModelBinding> Tags { get; set; }
         public FileRead FeatureImageFileRead { get; set; }
+        public List<FileRead> ImagesFileRead { get; set; }
     }
     /// <summary>
     /// Used to Set categories on creating BlogPost

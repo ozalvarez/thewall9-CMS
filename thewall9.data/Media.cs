@@ -7,7 +7,7 @@ using thewall9.data.binding;
 
 namespace thewall9.data
 {
-    public class Media : MediaBinding
+    public class Media : MediaBase
     {
     }
 }
