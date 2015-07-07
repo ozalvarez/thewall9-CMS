@@ -104,5 +104,12 @@ namespace thewall9.bll.Utils
             }
             return null;
         }
+        public static string GetPlainTextFromHtml(string htmlString)
+        {
+            if (string.IsNullOrEmpty(htmlString))
+                return null;
+
+            return Regex.Replace(htmlString, "<(.|\n)*?>", ""); ;
+        }
     }
 }

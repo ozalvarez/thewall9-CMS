@@ -56,21 +56,45 @@ namespace thewall9.web.parent.Controllers
                          new XElement(ns + "priority", "0.5"));
             if (_Pages.Ecommerce)
             {
-               _Q= _Q.Union((from i in _Pages.Products
-                          select
-                          new XElement(ns + "url",
-                              new XElement(ns + "loc", Request.Url.Scheme + "://" + Request.Url.Authority + "/d/" + i.FriendlyUrl),
-                              new XElement(ns + "lastmod", String.Format("{0:yyyy-MM-dd}", DateTime.Now)),
-                              new XElement(ns + "changefreq", "always"),
-                              new XElement(ns + "priority", "0.5")))).Union((from i in _Pages.Categories
-                                                                             select
-                                                                             new XElement(ns + "url",
-                                                                                 new XElement(ns + "loc", Request.Url.Scheme + "://" + Request.Url.Authority + "/p/" + i.CatalogFriendlyUrl + "/" + i.FriendlyUrl + "/" + i.CategoryID),
-                                                                                 new XElement(ns + "lastmod", String.Format("{0:yyyy-MM-dd}", DateTime.Now)),
-                                                                                 new XElement(ns + "changefreq", "always"),
-                                                                                 new XElement(ns + "priority", "0.5"))));
+                _Q = _Q.Union((from i in _Pages.Products
+                               select
+                               new XElement(ns + "url",
+                                   new XElement(ns + "loc", Request.Url.Scheme + "://" + Request.Url.Authority + "/d/" + i.FriendlyUrl),
+                                   new XElement(ns + "lastmod", String.Format("{0:yyyy-MM-dd}", DateTime.Now)),
+                                   new XElement(ns + "changefreq", "always"),
+                                   new XElement(ns + "priority", "0.5")))).Union((from i in _Pages.Categories
+                                                                                  select
+                                                                                  new XElement(ns + "url",
+                                                                                      new XElement(ns + "loc", Request.Url.Scheme + "://" + Request.Url.Authority + "/p/" + i.CatalogFriendlyUrl + "/" + i.FriendlyUrl + "/" + i.CategoryID),
+                                                                                      new XElement(ns + "lastmod", String.Format("{0:yyyy-MM-dd}", DateTime.Now)),
+                                                                                      new XElement(ns + "changefreq", "always"),
+                                                                                      new XElement(ns + "priority", "0.5"))));
             }
-            var sitemap = new XDocument(new XDeclaration("1.0", "utf-8", "yes"),new XElement(ns + "urlset",_Q));
+            if (_Pages.Blog)
+            {
+                _Q = _Q.Union((from i in _Pages.Posts
+                               select
+                               new XElement(ns + "url",
+                                   new XElement(ns + "loc", Url.Action("detail", "blog", new { BlogPostID = i.BlogPostID, FriendlyUrl = i.FriendlyUrl }, Request.Url.Scheme)),
+                                   new XElement(ns + "lastmod", String.Format("{0:yyyy-MM-dd}", DateTime.Now)),
+                                   new XElement(ns + "changefreq", "always"),
+                                   new XElement(ns + "priority", "0.5"))))
+                                   .Union((from i in _Pages.BlogCategories
+                                           select
+                                           new XElement(ns + "url",
+                                               new XElement(ns + "loc", Url.Action("index", "blog", new { BlogCategoryFriendlyUrl = i.FriendlyUrl}, Request.Url.Scheme),
+                                               new XElement(ns + "lastmod", String.Format("{0:yyyy-MM-dd}", DateTime.Now)),
+                                               new XElement(ns + "changefreq", "always"),
+                                               new XElement(ns + "priority", "0.5")))))
+                                               .Union((from i in _Pages.BlogTags
+                                                       select
+                                                       new XElement(ns + "url",
+                                                           new XElement(ns + "loc", Url.Action("tag", "blog", new { BlogTagName = i.BlogTagName}, Request.Url.Scheme),
+                                                           new XElement(ns + "lastmod", String.Format("{0:yyyy-MM-dd}", DateTime.Now)),
+                                                           new XElement(ns + "changefreq", "always"),
+                                                           new XElement(ns + "priority", "0.5")))));
+            }
+            var sitemap = new XDocument(new XDeclaration("1.0", "utf-8", "yes"), new XElement(ns + "urlset", _Q));
             return Content("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + sitemap.ToString(), "text/xml");
         }
         [Route("change-lang")]
@@ -97,30 +121,31 @@ namespace thewall9.web.parent.Controllers
         }
 
         #region Products
-        public ActionResult Products(string FriendlyUrl, string CategoryFriendlyUrl, int CategoryID = 0, int Page = 1)
-        {
-            return Index(FriendlyUrl);
-        }
-        public ActionResult Product(string FriendlyUrl)
-        {
-            var _Product = ProductService.Get(APP._SiteID, Request.Url.Authority, FriendlyUrl, APP._CurrentCurrencyID);
-            if (_Product == null)
-                throw new HttpException(404, "Page Not Found");
-            else
-            {
-                ViewBag.Title = _Product.ProductName;
-                ViewBag.MetaDescription = _Product.ProductName + " " + _Product.Price;
-                ViewBag.Product = _Product;
-                var _Model = PageService.GetByAlias(APP._SiteID, Request.Url.Authority, "product", _Product.CultureName);
-                APP._CurrentLang = _Product.CultureName;
-                return View(_Model.Page.ViewRender, _Model);
-            }
-        }
-        public PartialViewResult GetProducts(int CategoryID = 0, int Page = 1)
-        {
-            var _P = ProductService.Get(APP._SiteID, Request.Url.Authority, APP._CurrentLang, null, APP._CurrentCurrencyID, CategoryID, PAGE_SIZE, Page);
-            return PartialView("_Products", _P);
-        }
+        //public ActionResult Products(string FriendlyUrl, string CategoryFriendlyUrl, int CategoryID = 0, int Page = 1)
+        //{
+        //    return Index(FriendlyUrl);
+        //}
+        //public ActionResult Product(string FriendlyUrl)
+        //{
+        //    var _Product = ProductService.Get(APP._SiteID, Request.Url.Authority, FriendlyUrl, APP._CurrentCurrencyID);
+        //    if (_Product == null)
+        //        throw new HttpException(404, "Page Not Found");
+        //    else
+        //    {
+        //        ViewBag.Title = _Product.ProductName;
+        //        ViewBag.MetaDescription = _Product.ProductName + " " + _Product.Price;
+        //        ViewBag.Product = _Product;
+        //        var _Model = PageService.GetByAlias(APP._SiteID, Request.Url.Authority, "product", _Product.CultureName);
+        //        APP._CurrentLang = _Product.CultureName;
+        //        return View(_Model.Page.ViewRender, _Model);
+        //    }
+        //}
+        //public PartialViewResult GetProducts(int CategoryID = 0, int Page = 1)
+        //{
+        //    var _P = ProductService.Get(APP._SiteID, Request.Url.Authority, APP._CurrentLang, null, APP._CurrentCurrencyID, CategoryID, PAGE_SIZE, Page);
+        //    return PartialView("_Products", _P);
+        //}
         #endregion
+
     }
 }

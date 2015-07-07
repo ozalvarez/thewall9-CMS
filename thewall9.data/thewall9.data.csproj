@@ -89,6 +89,8 @@
   <ItemGroup>
     <Compile Include="AccountBindingModels.cs" />
     <Compile Include="AccountViewModels.cs" />
+    <Compile Include="Blog.cs" />
+    <Compile Include="Media.cs" />
     <Compile Include="Migrations\201503242013269_add-product-to-ecommerce.cs" />
     <Compile Include="Migrations\201503242013269_add-product-to-ecommerce.Designer.cs">
       <DependentUpon>201503242013269_add-product-to-ecommerce.cs</DependentUpon>
@@ -136,6 +138,46 @@
     <Compile Include="Migrations\201506121913239_AddEnabledToContent.cs" />
     <Compile Include="Migrations\201506121913239_AddEnabledToContent.Designer.cs">
       <DependentUpon>201506121913239_AddEnabledToContent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507021736246_AddBlog.cs" />
+    <Compile Include="Migrations\201507021736246_AddBlog.Designer.cs">
+      <DependentUpon>201507021736246_AddBlog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507021834598_RemovePublishedOnBlogPost.cs" />
+    <Compile Include="Migrations\201507021834598_RemovePublishedOnBlogPost.Designer.cs">
+      <DependentUpon>201507021834598_RemovePublishedOnBlogPost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507022108498_BlogCategoryNameAsString.cs" />
+    <Compile Include="Migrations\201507022108498_BlogCategoryNameAsString.Designer.cs">
+      <DependentUpon>201507022108498_BlogCategoryNameAsString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507022118335_BlogCategoryAddSiteID.cs" />
+    <Compile Include="Migrations\201507022118335_BlogCategoryAddSiteID.Designer.cs">
+      <DependentUpon>201507022118335_BlogCategoryAddSiteID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507022138351_BlogCategoryAddSiteID2.cs" />
+    <Compile Include="Migrations\201507022138351_BlogCategoryAddSiteID2.Designer.cs">
+      <DependentUpon>201507022138351_BlogCategoryAddSiteID2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507031719061_AddBlogToSite.cs" />
+    <Compile Include="Migrations\201507031719061_AddBlogToSite.Designer.cs">
+      <DependentUpon>201507031719061_AddBlogToSite.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507051915318_AddFriendlyUrlToCategory.cs" />
+    <Compile Include="Migrations\201507051915318_AddFriendlyUrlToCategory.Designer.cs">
+      <DependentUpon>201507051915318_AddFriendlyUrlToCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507061701176_AddMedia.cs" />
+    <Compile Include="Migrations\201507061701176_AddMedia.Designer.cs">
+      <DependentUpon>201507061701176_AddMedia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507070120218_AddImagesToBlog.cs" />
+    <Compile Include="Migrations\201507070120218_AddImagesToBlog.Designer.cs">
+      <DependentUpon>201507070120218_AddImagesToBlog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507071431008_AddContentPreviewToPost.cs" />
+    <Compile Include="Migrations\201507071431008_AddContentPreviewToPost.Designer.cs">
+      <DependentUpon>201507071431008_AddContentPreviewToPost.cs</DependentUpon>
     </Compile>
     <Compile Include="Order.cs" />
     <Compile Include="Product.cs" />
@@ -337,6 +379,36 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506121913239_AddEnabledToContent.resx">
       <DependentUpon>201506121913239_AddEnabledToContent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507021736246_AddBlog.resx">
+      <DependentUpon>201507021736246_AddBlog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507021834598_RemovePublishedOnBlogPost.resx">
+      <DependentUpon>201507021834598_RemovePublishedOnBlogPost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507022108498_BlogCategoryNameAsString.resx">
+      <DependentUpon>201507022108498_BlogCategoryNameAsString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507022118335_BlogCategoryAddSiteID.resx">
+      <DependentUpon>201507022118335_BlogCategoryAddSiteID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507022138351_BlogCategoryAddSiteID2.resx">
+      <DependentUpon>201507022138351_BlogCategoryAddSiteID2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507031719061_AddBlogToSite.resx">
+      <DependentUpon>201507031719061_AddBlogToSite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507051915318_AddFriendlyUrlToCategory.resx">
+      <DependentUpon>201507051915318_AddFriendlyUrlToCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507061701176_AddMedia.resx">
+      <DependentUpon>201507061701176_AddMedia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507070120218_AddImagesToBlog.resx">
+      <DependentUpon>201507070120218_AddImagesToBlog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507071431008_AddContentPreviewToPost.resx">
+      <DependentUpon>201507071431008_AddContentPreviewToPost.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

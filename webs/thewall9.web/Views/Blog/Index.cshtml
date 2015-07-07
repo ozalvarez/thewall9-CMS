@@ -1,0 +1,61 @@
+﻿@model thewall9.data.binding.BlogListWeb
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    @foreach (var item in Model.Categories)
+    {
+        <p>
+            <a href="@Url.Action("index", "blog", new { BlogCategoryFriendlyUrl = item.FriendlyUrl })">@item.BlogCategoryName</a>
+        </p>
+
+    }
+    <table class="table">
+        @foreach (var item in Model.Data)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BlogPostID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CultureID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Published)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Content)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FriendlyUrl)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateCreated)
+                </td>
+                <td>
+                    @Html.ActionLink("detail", "detail", "blog", new { BlogPostID = item.BlogPostID, FriendlyUrl = item.FriendlyUrl }, null)
+                </td>
+            </tr>
+        }
+    </table>
+    @if (ViewBag.BlogCategoryFriendlyUrl)
+    {
+        Html.PageLinks((int?)ViewBag.Page ?? 1, Model.Pages, i => Url.Action("index", "blog", new { Page = i, BlogCategoryFriendlyUrl = ViewBag.BlogCategoryFriendlyUrl }))
+    }else if (ViewBag.BlogTagName)
+    {
+        Html.PageLinks((int?)ViewBag.Page ?? 1, Model.Pages, i => Url.Action("tag", "blog", new { Page = i, BlogTagName = ViewBag.BlogTagName }))
+    }
+</body>
+</html>

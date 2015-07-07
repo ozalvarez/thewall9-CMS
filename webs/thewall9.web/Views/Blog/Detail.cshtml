@@ -1,0 +1,89 @@
+﻿@model thewall9.data.binding.BlogPostWeb
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Detail</title>
+</head>
+<body>
+    @foreach (var item in Model.Categories)
+    {
+        <p>
+            <a href="@Url.Action("index", "blog", new { BlogCategoryFriendlyUrl = item.FriendlyUrl })">@item.BlogCategoryName</a>
+        </p>
+
+    }
+    <div>
+        <h4>BlogPostWeb</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.BlogPostID)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.BlogPostID)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CultureID)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CultureID)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Published)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Published)
+            </dd>
+    
+            <dt>
+                @Html.Raw(Model.Content)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Content)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.FriendlyUrl)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.FriendlyUrl)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.DateCreated)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.DateCreated)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

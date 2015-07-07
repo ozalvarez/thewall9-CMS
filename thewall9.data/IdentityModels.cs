@@ -20,7 +20,6 @@ namespace thewall9.data.Models
             // Add custom user claims here
             return userIdentity;
         }
-        //public virtual List<Site> Sites { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -29,10 +28,46 @@ namespace thewall9.data.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
-        
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
+        }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            //BLOG
+            modelBuilder.Entity<BlogPostCulture>()
+                .HasKey(m => new { m.BlogPostID, m.CultureID })
+                .HasRequired(a => a.Culture)
+                .WithMany(m => m.BlogPostCultures)
+                .WillCascadeOnDelete(false);
+
+
+            modelBuilder.Entity<BlogPostTag>()
+                .HasKey(m => new { m.BlogTagID, m.BlogPostID, m.CultureID });
+
+            modelBuilder.Entity<BlogCategoryCulture>()
+                .HasKey(m => new { m.BlogCategoryID, m.CultureID });
+
+            modelBuilder.Entity<BlogPostCategory>()
+                .HasKey(m => new { m.BlogPostID, m.BlogCategoryID });
+
+            modelBuilder.Entity<BlogCategoryCulture>()
+                .HasRequired(a => a.Culture)
+                .WithMany(m => m.BlogCategoryCultures)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<BlogPostFeatureImage>()
+                .HasKey(m => new { m.BlogPostID, m.CultureID })
+                .HasRequired(m => m.BlogPostCulture)
+                .WithOptional(m => m.BlogPostFeatureImage)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<BlogPostImages>()
+                .HasKey(m => new { m.BlogPostID, m.CultureID, m.MediaID });
+
+
+            base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Site> Sites { get; set; }
@@ -52,12 +87,26 @@ namespace thewall9.data.Models
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductCulture> ProductCultures { get; set; }
         public DbSet<ProductTag> ProductTags { get; set; }
-        public DbSet<ProductCategory> ProductCategories{ get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<ProductGallery> ProductGalleries { get; set; }
         public DbSet<ProductCurrency> ProductCurrencies { get; set; }
 
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
-        
+
+        //BLOG
+        public DbSet<BlogPost> BlogPosts { get; set; }
+        public DbSet<BlogPostCulture> BlogPostCultures { get; set; }
+        public DbSet<BlogTag> BlogTags { get; set; }
+        public DbSet<BlogPostTag> BlogPostTags { get; set; }
+        public DbSet<BlogCategory> BlogCategories { get; set; }
+        public DbSet<BlogCategoryCulture> BlogCategoryCultures { get; set; }
+        public DbSet<BlogPostCategory> BlogPostCategories { get; set; }
+        public DbSet<BlogPostFeatureImage> BlogPostFeatureImages { get; set; }
+        public DbSet<BlogPostImages> BlogPostImages { get; set; }
+
+        //Media
+        public DbSet<Media> Medias { get; set; }
+
     }
 }

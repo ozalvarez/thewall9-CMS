@@ -17,9 +17,14 @@ namespace thewall9.api.Controllers
 
         #region Web
         [AllowAnonymous]
-        public IHttpActionResult Get(int SiteID, string Url, string Lang, string FriendlyUrl, int CurrencyID, int CategoryID, int Take, int Page)
+        public IHttpActionResult Get(int SiteID
+            , string Url
+            , string Lang
+            , int CurrencyID
+            , string ProductCategoryFriendlyUrl
+            , int Page)
         {
-            return Ok(_ProductService.Get(SiteID, Url, Lang, FriendlyUrl, CurrencyID, CategoryID, Take, Page));
+            return Ok(_ProductService.Get(SiteID, Url, Lang, CurrencyID, ProductCategoryFriendlyUrl, Page));
         }
         [AllowAnonymous]
         public IHttpActionResult Get(int SiteID, string Url, string FriendlyUrl, int CurrencyID)

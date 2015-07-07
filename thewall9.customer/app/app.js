@@ -1,5 +1,6 @@
 ﻿var app = angular.module('app',
-    ['ngRoute', 'LocalStorageModule', 'blockUI', 'ui.tree','angularFileUpload']);
+    ['ngRoute', 'LocalStorageModule', 'blockUI', 'ui.tree', 'angularFileUpload'
+        , 'ui.tinymce']);
 
 app.config(["$routeProvider", "blockUIConfig", function ($routeProvider, blockUIConfig) {
 
@@ -56,12 +57,25 @@ app.config(["$routeProvider", "blockUIConfig", function ($routeProvider, blockUI
         templateUrl: '/app/views/orders.html'
     });
 
+    //BLOG
+    $routeProvider.when('/blog', {
+        controller: 'blogController',
+        templateUrl: '/app/views/blog.html'
+    });
+    $routeProvider.when('/blog/post/:blogPostID?', {
+        controller: 'blogPostController',
+        templateUrl: '/app/views/blogPost.html'
+    });
+    $routeProvider.when('/blog/categories?', {
+        controller: 'blogCategoryController',
+        templateUrl: '/app/views/blogCategory.html'
+    });
     $routeProvider.otherwise({ redirectTo: "/" });
 
     // Change the default overlay message
     blockUIConfig.message = 'Cargando...';
 
-    // Change the default delay to 100ms before the blocking is visible
+    //// Change the default delay to 100ms before the blocking is visible
     blockUIConfig.delay = 100;
 }]);
 

@@ -28,7 +28,8 @@ namespace thewall9.bll
                     GAID = m.GAID,
                     SiteID = m.SiteID,
                     SiteName = m.SiteName,
-                    ECommerce = m.ECommerce
+                    ECommerce = m.ECommerce,
+                    Blog=m.Blog
                 }).SingleOrDefault();
             }
         }
@@ -58,7 +59,8 @@ namespace thewall9.bll
                                  GAID = m.GAID,
                                  SiteID = m.SiteID,
                                  SiteName = m.SiteName,
-                                 ECommerce = m.ECommerce
+                                 ECommerce = m.ECommerce,
+                                 Blog=m.Blog
                              }
                          }).SingleOrDefault();
                 if (_Site != null)
@@ -91,7 +93,8 @@ namespace thewall9.bll
                     GAID = m.Site.GAID,
                     SiteID = m.Site.SiteID,
                     SiteName = m.Site.SiteName,
-                    ECommerce = m.Site.ECommerce
+                    ECommerce = m.Site.ECommerce,
+                    Blog = m.Site.Blog
                 }).ToList();
             }
         }
@@ -127,7 +130,8 @@ namespace thewall9.bll
                         CultureID = m2.CultureID,
                         Name = m2.Name,
                         SiteID = m2.SiteID
-                    })
+                    }),
+                    Blog = m.Blog
                 }).ToList();
             }
         }
@@ -337,7 +341,15 @@ namespace thewall9.bll
                 _c.SaveChanges();
             }
         }
-
+        public void EnableBlog(SiteEnabledBinding Model)
+        {
+            using (var _c = db)
+            {
+                var _Model = _c.Sites.Where(m => m.SiteID == Model.SiteID).SingleOrDefault();
+                _Model.Blog = Model.Enabled;
+                _c.SaveChanges();
+            }
+        }
 
         #region IMPORT / EXPORT / DUPLICATE
         private SiteExport ExportObject(int SiteID)
@@ -418,6 +430,8 @@ namespace thewall9.bll
         {
             using (var _c = db)
             {
+               // _c.BlogPostCultures.RemoveRange(_c.BlogPostCultures.Where(m => m.BlogPost.Site.SiteName.Contains(Prefix)).ToList());
+                _c.BlogCategories.RemoveRange(_c.BlogCategories.Where(m => m.Site.SiteName.Contains(Prefix)).ToList());
                 _c.Products.RemoveRange(_c.Products.Where(m => m.Site.SiteName.Contains(Prefix)).ToList());
                 _c.Sites.RemoveRange(_c.Sites.Where(m => m.SiteName.Contains(Prefix)).ToList());
                 _c.SaveChanges();

@@ -27,7 +27,7 @@ module.exports = function (grunt) {
                         'lib/angular-loading-bar/loading-bar.css',
                         'lib/angular-ui-tree/angular-ui-tree.min.css',
                         'lib/font-awesome/font-awesome.css',
-                        'lib/toastr/toastr.min.css',
+                        'lib/toastr/toastr.css',
                         "Content/sb-admin-2.css",
                          "Content/plugins/metisMenu/metisMenu.min.css",
                          "Content/plugins/timeline.css",
@@ -89,7 +89,7 @@ module.exports = function (grunt) {
         watch: {
             scripts: {
                 files: ['app/*.js','app/*/*.js'],
-                tasks: ['uglify:appLogin', 'uglify:appAngular']
+                tasks: ['uglify:appAngular']
             },
             css: {
                 files: ['Content/site.less'],

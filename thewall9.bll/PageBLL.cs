@@ -179,16 +179,19 @@ namespace thewall9.bll
             using (var _c = db)
             {
                 bool _ECommerce = false;
+                bool _Blog = false;
                 if (SiteID == 0)
                 {
                     var _Site=new SiteBLL().Get(Url, _c);
                     SiteID = _Site.SiteID;
                     _ECommerce = _Site.ECommerce;
+                    _Blog = _Site.Blog;
                 }
                 else
                 {
                     var _Site = new SiteBLL().Get(SiteID);
                     _ECommerce = _Site.ECommerce;
+                    _Blog = _Site.Blog;
                 }
                 var _S = new SiteMapModel();
                 _S.Pages = (from p in _c.PageCultures
@@ -203,10 +206,17 @@ namespace thewall9.bll
                             PageAlias = p.Page.Alias
                         }).ToList();
                 _S.Ecommerce = _ECommerce;
+                _S.Blog = _Blog;
                 if (_ECommerce)
                 {
                     _S.Products = new ProductBLL().GetSitemap(SiteID);
                     _S.Categories = new CategoryBLL().GetSitemap(SiteID);
+                }
+                if (_Blog)
+                {
+                    _S.Posts = new BlogBLL().GetSitemap(SiteID);
+                    _S.BlogCategories = new BlogBLL().GetSitemapCategories(SiteID);
+                    _S.BlogTags= new BlogBLL().GetSitemapTags(SiteID);
                 }
                 return _S;
             }

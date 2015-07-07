@@ -72,5 +72,9 @@ namespace thewall9.bll.Utils
             GetBlob(container, blobReference).DownloadToStream(_F);
             return _F;
         }
+        public bool Exist(string Container, string BlobReference)
+        {
+            return GetBlob(Container, BlobReference).Exists();
+        }
     }
 }

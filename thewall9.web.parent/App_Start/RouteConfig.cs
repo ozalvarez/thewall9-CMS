@@ -20,28 +20,29 @@ namespace thewall9.web
                 url: "error",
                 defaults: new { controller = "Page", action = "Error" }
             );
+            //BLOG
 
             //PRODUCTS
-            routes.MapRoute(
-                name: "Product",
-                url: "d/{FriendlyUrl}",
-                defaults: new { controller = "Page", action = "Product" }
-            );
-            routes.MapRoute(
-                name: "GetProductsPartialView",
-                url: "get-products/{CategoryFriendlyUrl}/{CategoryID}/{Page}",
-                defaults: new { controller = "Page", action = "GetProducts", CategoryFriendlyUrl = UrlParameter.Optional, CategoryID = UrlParameter.Optional, Page = UrlParameter.Optional }
-            );
-            routes.MapRoute(
-                name: "ProductsInCategory",
-                url: "p/{FriendlyUrl}/{CategoryFriendlyUrl}/{CategoryID}/{Page}",
-                defaults: new { controller = "Page", action = "Products", Page = UrlParameter.Optional }
-            );
-            routes.MapRoute(
-                name: "Products",
-                url: "p/{FriendlyUrl}/{Page}",
-                defaults: new { controller = "Page", action = "Products", Page = UrlParameter.Optional }
-            );
+            //routes.MapRoute(
+            //    name: "Product",
+            //    url: "d/{FriendlyUrl}",
+            //    defaults: new { controller = "Page", action = "Product" }
+            //);
+            //routes.MapRoute(
+            //    name: "GetProductsPartialView",
+            //    url: "get-products/{CategoryFriendlyUrl}/{CategoryID}/{Page}",
+            //    defaults: new { controller = "Page", action = "GetProducts", CategoryFriendlyUrl = UrlParameter.Optional, CategoryID = UrlParameter.Optional, Page = UrlParameter.Optional }
+            //);
+            //routes.MapRoute(
+            //    name: "ProductsInCategory",
+            //    url: "p/{FriendlyUrl}/{CategoryFriendlyUrl}/{CategoryID}/{Page}",
+            //    defaults: new { controller = "Page", action = "Products", Page = UrlParameter.Optional }
+            //);
+            //routes.MapRoute(
+            //    name: "Products",
+            //    url: "p/{FriendlyUrl}/{Page}",
+            //    defaults: new { controller = "Page", action = "Products", Page = UrlParameter.Optional }
+            //);
 
             //DEFAULT ROUTE
             routes.MapRoute(

@@ -6,16 +6,28 @@ using System.Threading.Tasks;
 
 namespace thewall9.data.binding
 {
-    public class FileRead
+    public class FileRead : MediaBase
     {
         public string FileContent { get; set; }
         public string FileName { get; set; }
+        public bool Deleting { get; set; }
+        public bool Adding { get; set; }
+    }
+    public class FileReadSite : FileRead
+    {
+        public int SiteID { get; set; }
     }
     public class SiteMapModel
     {
         public bool Ecommerce { get; set; }
+        
         public List<PageCultureBinding> Pages { get; set; }
         public List<ProductWeb> Products { get; set; }
         public List<CategoryWeb> Categories { get; set; }
+
+        public bool Blog { get; set; }
+        public List<BlogPostWeb> Posts { get; set; }
+        public List<BlogCategoryCultureBase> BlogCategories { get; set; }
+        public List<BlogTagBase> BlogTags{ get; set; }
     }
 }
