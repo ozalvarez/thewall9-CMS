@@ -42,6 +42,7 @@ namespace thewall9.web.parent.Controllers
         [Route("post/{BlogPostID}/{FriendlyUrl}")]
         public ActionResult Detail(int BlogPostID, string FriendlyUrl)
         {
+            ViewBag.BlogContent = _ContentService.Get(Request.Url.Authority, "blog");
             return View(_BlogService.GetDetail(BlogPostID, FriendlyUrl));
         }
     }
