@@ -27,10 +27,9 @@ namespace thewall9.api.Controllers
             return Ok(_BlogService.Get(SiteID, Url, Lang, BlogCategoryFriendlyUrl,BlogTagName, Page));
         }
         [AllowAnonymous]
-        public IHttpActionResult GetDetail(int BlogPostID
-            , string FriendlyUrl)
+        public IHttpActionResult GetDetail(int SiteID, string Url, int BlogPostID , string FriendlyUrl)
         {
-            return Ok(_BlogService.GetDetail(BlogPostID, FriendlyUrl));
+            return Ok(_BlogService.GetDetail(SiteID, Url, BlogPostID, FriendlyUrl));
         }
         #endregion
 

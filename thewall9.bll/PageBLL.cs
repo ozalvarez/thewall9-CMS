@@ -204,7 +204,7 @@ namespace thewall9.bll
                             RedirectUrl = p.RedirectUrl,
                             Name = p.Name,
                             PageAlias = p.Page.Alias
-                        }).ToList();
+                        }).Distinct().ToList();
                 _S.Ecommerce = _ECommerce;
                 _S.Blog = _Blog;
                 if (_ECommerce)

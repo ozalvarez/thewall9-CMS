@@ -66,7 +66,7 @@ namespace thewall9.bll
 
                 var _Query = from bpc in _c.BlogPostCultures
                              where bpc.BlogPost.SiteID == SiteID
-                                 //THIS CODE BRING ALL FROM REQUETED LANG & IF THERE IS OTHER POST IN THE DEFAULT LANG IT BRINGS AS WELL
+                             //THIS CODE BRING ALL FROM REQUETED LANG & IF THERE IS OTHER POST IN THE DEFAULT LANG IT BRINGS AS WELL
                              && (bpc.Culture.Name.ToLower().Equals(Lang.ToLower())
                                ? bpc.Culture.Name.ToLower().Equals(Lang.ToLower())
                                : bpc.Culture.Name.ToLower().Equals(_Site.DefaultLang))
@@ -108,12 +108,15 @@ namespace thewall9.bll
             }
         }
 
-        private IQueryable<BlogPostWeb> GetDetail(int BlogPostID, string FriendlyUrl, ApplicationDbContext _c)
+        private IQueryable<BlogPostWeb> GetDetail(int SiteID, int BlogPostID, string FriendlyUrl, string Lang, ApplicationDbContext _c)
         {
             return (from bpc in _c.BlogPostCultures
                     where bpc.BlogPostID == BlogPostID
+                    && bpc.BlogPost.SiteID == SiteID
                     && bpc.Published
-                    && (!string.IsNullOrEmpty(FriendlyUrl) ? bpc.FriendlyUrl == FriendlyUrl : true)
+                    && (!string.IsNullOrEmpty(FriendlyUrl)
+                    ? bpc.FriendlyUrl == FriendlyUrl
+                    : (!string.IsNullOrEmpty(Lang) ? bpc.BlogPost.Site.DefaultLang == Lang : true))
                     select new BlogPostWeb
                     {
                         Title = bpc.Title,
@@ -128,14 +131,18 @@ namespace thewall9.bll
                         FeatureImageUrl = bpc.BlogPostFeatureImage != null ? bpc.BlogPostFeatureImage.Media.MediaUrl : null
                     });
         }
-        public BlogPostWeb GetDetail(int BlogPostID, string FriendlyUrl)
+        public BlogPostWeb GetDetail(int SiteID, string Url, int BlogPostID, string FriendlyUrl)
         {
             using (var _c = db)
             {
-                var _Model = GetDetail(BlogPostID, FriendlyUrl,_c).FirstOrDefault();
+                if (SiteID == 0)
+                    SiteID = new SiteBLL().Get(Url, _c).SiteID;
+
+                var _Model = GetDetail(SiteID, BlogPostID, FriendlyUrl, null, _c).FirstOrDefault();
                 if (_Model == null)
                 {
-                    _Model = GetDetail(BlogPostID, null, _c).ToList()[0];
+                    var _Site = new SiteBLL().Get(SiteID);
+                    _Model = GetDetail(SiteID, BlogPostID, null, _Site.DefaultLang, _c).FirstOrDefault();
                 }
                 _Model.Categories = GetCategoriesUsed(_Model.SiteID, _Model.CultureID);
                 _Model.Tags = GetTagUsed(_Model.SiteID);

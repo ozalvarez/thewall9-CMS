@@ -98,9 +98,9 @@ namespace thewall9.bll.test
         public void BlogWebGetDetailTest()
         {
             SettingUp();
-            var _Posts = new BlogBLL().GetDetail(_BlogPost3.BlogPostID, _BlogPost3.FriendlyUrl);
+            var _Posts = new BlogBLL().GetDetail(_SiteID,null,_BlogPost3.BlogPostID, _BlogPost3.FriendlyUrl);
             Assert.IsNotNull(_Posts);
-            _Posts = new BlogBLL().GetDetail(_BlogPost3.BlogPostID, "otra-cosa-loca");
+            _Posts = new BlogBLL().GetDetail(_SiteID, null,_BlogPost3.BlogPostID, "otra-cosa-loca");
             Assert.IsNotNull(_Posts);
         }
         #endregion
