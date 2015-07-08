@@ -155,8 +155,10 @@ namespace thewall9.data.binding
     {
         public string FeatureImageUrl { get; set; }
         public int SiteID { get; set; }
-        public List<BlogCategoryCultureBase> Categories { get; set; }
+        public List<BlogCategoryCultureBase> AllCategories { get; set; }
+        public List<BlogTagBase> AllTags { get; set; }
         public List<BlogTagBase> Tags { get; set; }
+        public List<BlogCategoryCultureBase> Categories { get; set; }
     }
     #endregion
 }

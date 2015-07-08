@@ -3,7 +3,7 @@ app.factory('$myhttp', ["$http", '$q', 'utilService', 'authService', 'localStora
     function ($http, $q, utilService, authService, localStorageService) {
         var myHttpFactory = {};
 
-        myHttpFactory.get = function (url) {
+        myHttpFactory.get = function (url, _blockUI) {
             var deferred = $q.defer();
             $http.get(url).success(function (data) {
                 deferred.resolve(data);
@@ -17,7 +17,7 @@ app.factory('$myhttp', ["$http", '$q', 'utilService', 'authService', 'localStora
                                     deferred.resolve(data);
                                 });
                             });
-                        }
+                        } 
                     } else {
                         authService.logOut();
                     }

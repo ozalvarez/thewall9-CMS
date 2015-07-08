@@ -1,7 +1,7 @@
 ﻿app.controller('blogPostController', ['$scope', '$routeParams', '$location', 'blogService'
-    , 'siteService', 'toastrService', 'cultureService',
+    , 'siteService', 'toastrService', 'cultureService','blockUI',
     function ($scope, $routeParams, $location, blogService, siteService, toastrService
-        , cultureService) {
+        , cultureService,blockUI) {
 
         $scope.tinymceOptions = {
             plugins: ["advlist autolink lists link image charmap print preview anchor",
@@ -73,6 +73,7 @@
 
         //TAGS
         $scope.getTags = function ($query) {
+            blockUI.noOpen = true;
             return blogService.getTags($query)
         };
 

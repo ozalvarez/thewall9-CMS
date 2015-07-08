@@ -24,6 +24,9 @@ namespace thewall9.web.parent.Controllers
             ViewBag.BlogContent = _ContentService.Get(Request.Url.Authority, "blog");
 
             ViewBag.Title = HtmlModel.FindValue(ViewBag.BlogContent, "blog-title", true).ToString();
+            if (!string.IsNullOrEmpty(BlogCategoryFriendlyUrl))
+                ViewBag.Title += " | " + BlogCategoryFriendlyUrl;
+
             ViewBag.MetaDescription = HtmlModel.FindValue(ViewBag.BlogContent, "blog-subtitle", true).ToString();
 
             return View(_BlogService.Get(Request.Url.Authority
@@ -38,9 +41,7 @@ namespace thewall9.web.parent.Controllers
             ViewBag.BlogContent = _ContentService.Get(Request.Url.Authority, "blog");
 
             ViewBag.Title = HtmlModel.FindValue(ViewBag.BlogContent, "blog-title", true).ToString() + " | " + BlogTagName;
-            ViewBag.MetaDescription = HtmlModel.FindValue(ViewBag.BlogContent, "blog-subtitle", true).ToString();
-
-            ViewBag.Title = BlogTagName;
+            ViewBag.MetaDescription = HtmlModel.FindValue(ViewBag.BlogContent, "blog-subtitle", true).ToString() + " | " + BlogTagName;
 
             return View("Index", _BlogService.Get(Request.Url.Authority
                 , APP._CurrentLang, null, BlogTagName, Page));

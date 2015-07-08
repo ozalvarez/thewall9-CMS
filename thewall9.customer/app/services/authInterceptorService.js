@@ -1,27 +1,41 @@
 ﻿'use strict';
-app.factory('authInterceptorService', ['$q', '$injector', '$location', 'localStorageService',
-    function ($q, $injector, $location, localStorageService) {
+app.factory('authInterceptorService', ['$q', '$injector', '$location', 'localStorageService', 'blockUI',
+    function ($q, $injector, $location, localStorageService, blockUI) {
 
-    var authInterceptorServiceFactory = {};
+        var authInterceptorServiceFactory = {};
 
-    var _request = function (config) {
+        authInterceptorServiceFactory.request = function (config) {
+            if (blockUI.noOpen == null) {
+                blockUI.start();
+            }
+            config.headers = config.headers || {};
 
-        config.headers = config.headers || {};
-       
-        var authData = localStorageService.get('authorizationData');
-        if (authData) {
-            config.headers.Authorization = 'Bearer ' + authData.token;
+            var authData = localStorageService.get('authorizationData');
+            if (authData) {
+                config.headers.Authorization = 'Bearer ' + authData.token;
+            }
+
+            return config;
         }
 
-        return config;
+        authInterceptorServiceFactory.responseError = function (rejection) {
+            if (blockUI.noOpen == null) {
+                blockUI.stop();
+            } else {
+                blockUI.noOpen = null;
+            }
+            return $q.reject(rejection);
+        }
+        authInterceptorServiceFactory.response = function (response) {
+            if (blockUI.noOpen == null) {
+                blockUI.stop();
+            } else {
+                blockUI.noOpen = null;
+            }
+
+            return response || $q.when(response);
+        }
+
+        return authInterceptorServiceFactory;
     }
-
-    var _responseError = function (rejection) {
-        return $q.reject(rejection);
-    }
-
-    authInterceptorServiceFactory.request = _request;
-    authInterceptorServiceFactory.responseError = _responseError;
-
-    return authInterceptorServiceFactory;
-}]);
+]);

@@ -128,7 +128,21 @@ namespace thewall9.bll
                         BlogPostID = bpc.BlogPostID,
                         CultureID = bpc.CultureID,
                         SiteID = bpc.BlogPost.SiteID,
-                        FeatureImageUrl = bpc.BlogPostFeatureImage != null ? bpc.BlogPostFeatureImage.Media.MediaUrl : null
+                        FeatureImageUrl = bpc.BlogPostFeatureImage != null ? bpc.BlogPostFeatureImage.Media.MediaUrl : null,
+
+                        Tags = bpc.BlogPostTags.Select(m => new BlogTagBase
+                        {
+                            BlogTagName = m.BlogTag.BlogTagName
+                        }).ToList(),
+
+                        Categories = (from bcc in _c.BlogCategoryCultures
+                                      join bc in _c.BlogCategories on bcc.BlogCategoryID equals bc.BlogCategoryID
+                                      join bpc2 in _c.BlogPostCategories on bc.BlogCategoryID equals bpc2.BlogCategoryID
+                                      where bcc.CultureID == bpc.CultureID && bpc2.BlogPostID == bpc.BlogPostID
+                                      select new BlogCategoryCultureBase {
+                                          BlogCategoryName = bcc.BlogCategoryName,
+                                          FriendlyUrl = bcc.FriendlyUrl
+                                      }).Distinct().ToList()
                     });
         }
         public BlogPostWeb GetDetail(int SiteID, string Url, int BlogPostID, string FriendlyUrl)
@@ -144,8 +158,8 @@ namespace thewall9.bll
                     var _Site = new SiteBLL().Get(SiteID);
                     _Model = GetDetail(SiteID, BlogPostID, null, _Site.DefaultLang, _c).FirstOrDefault();
                 }
-                _Model.Categories = GetCategoriesUsed(_Model.SiteID, _Model.CultureID);
-                _Model.Tags = GetTagUsed(_Model.SiteID);
+                _Model.AllCategories = GetCategoriesUsed(_Model.SiteID, _Model.CultureID);
+                _Model.AllTags = GetTagUsed(_Model.SiteID);
                 return _Model;
             }
         }
