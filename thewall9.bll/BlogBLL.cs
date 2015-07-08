@@ -108,25 +108,35 @@ namespace thewall9.bll
             }
         }
 
+        private IQueryable<BlogPostWeb> GetDetail(int BlogPostID, string FriendlyUrl, ApplicationDbContext _c)
+        {
+            return (from bpc in _c.BlogPostCultures
+                    where bpc.BlogPostID == BlogPostID
+                    && bpc.Published
+                    && (!string.IsNullOrEmpty(FriendlyUrl) ? bpc.FriendlyUrl == FriendlyUrl : true)
+                    select new BlogPostWeb
+                    {
+                        Title = bpc.Title,
+                        Content = bpc.Content,
+                        ContentPreview = bpc.ContentPreview,
+                        DateCreated = bpc.DateCreated,
+                        Published = bpc.Published,
+                        FriendlyUrl = bpc.FriendlyUrl,
+                        BlogPostID = bpc.BlogPostID,
+                        CultureID = bpc.CultureID,
+                        SiteID = bpc.BlogPost.SiteID,
+                        FeatureImageUrl = bpc.BlogPostFeatureImage != null ? bpc.BlogPostFeatureImage.Media.MediaUrl : null
+                    });
+        }
         public BlogPostWeb GetDetail(int BlogPostID, string FriendlyUrl)
         {
             using (var _c = db)
             {
-                var _Model = (from bpc in _c.BlogPostCultures
-                              where (bpc.BlogPostID == BlogPostID && bpc.FriendlyUrl == FriendlyUrl)
-                              select new BlogPostWeb
-                              {
-                                  Title = bpc.Title,
-                                  Content = bpc.Content,
-                                  ContentPreview = bpc.ContentPreview,
-                                  DateCreated = bpc.DateCreated,
-                                  Published = bpc.Published,
-                                  FriendlyUrl = bpc.FriendlyUrl,
-                                  BlogPostID = bpc.BlogPostID,
-                                  CultureID = bpc.CultureID,
-                                  SiteID = bpc.BlogPost.SiteID,
-                                  FeatureImageUrl = bpc.BlogPostFeatureImage != null ? bpc.BlogPostFeatureImage.Media.MediaUrl : null
-                              }).FirstOrDefault();
+                var _Model = GetDetail(BlogPostID, FriendlyUrl,_c).FirstOrDefault();
+                if (_Model == null)
+                {
+                    _Model = GetDetail(BlogPostID, null, _c).ToList()[0];
+                }
                 _Model.Categories = GetCategoriesUsed(_Model.SiteID, _Model.CultureID);
                 _Model.Tags = GetTagUsed(_Model.SiteID);
                 return _Model;
@@ -143,7 +153,7 @@ namespace thewall9.bll
                          select new BlogPostWeb
                          {
                              FriendlyUrl = bcc.FriendlyUrl,
-                             BlogPostID=bcc.BlogPostID
+                             BlogPostID = bcc.BlogPostID
                          };
                 return _Q.ToList();
             }

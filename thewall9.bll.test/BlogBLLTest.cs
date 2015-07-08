@@ -70,7 +70,8 @@ namespace thewall9.bll.test
                 SiteID = _SiteID,
                 CultureID = _Cultures[1].CultureID,
                 Title = "b3",
-                Published = true
+                Published = true,
+                FriendlyUrl="b3"
             };
             _BlogPost3.BlogPostID = new BlogBLL().Save(_BlogPost3, _CustomerUser.Id);
             Assert.IsTrue(_BlogPost3.BlogPostID != 0);
@@ -92,6 +93,15 @@ namespace thewall9.bll.test
             var _Posts = new BlogBLL().Get(_SiteID, null, _Cultures[1].Name, null,null, 1);
             Assert.IsTrue(_Posts.Pages == 1);
             Assert.IsTrue(_Posts.Data.Count == 3);
+        }
+        [TestMethod]
+        public void BlogWebGetDetailTest()
+        {
+            SettingUp();
+            var _Posts = new BlogBLL().GetDetail(_BlogPost3.BlogPostID, _BlogPost3.FriendlyUrl);
+            Assert.IsNotNull(_Posts);
+            _Posts = new BlogBLL().GetDetail(_BlogPost3.BlogPostID, "otra-cosa-loca");
+            Assert.IsNotNull(_Posts);
         }
         #endregion
         #region POST
