@@ -87,15 +87,15 @@ namespace thewall9.web.parent.HtmlHelpers
         public static MvcHtmlString LinkUrl(this HtmlHelper helper, CultureRoutes Culture)
         {
             var _Request = helper.ViewContext.RequestContext.HttpContext.Request;
-            return new MvcHtmlString("/change-lang?Lang=" + Culture.Name+"&FriendlyUrl="+_Request.Url.AbsolutePath);
+            return new MvcHtmlString("/change-lang?Lang=" + Culture.Name + "&FriendlyUrl=" + _Request.Url.AbsolutePath);
         }
         public static MvcHtmlString LinkHome(this HtmlHelper helper)
         {
-            return new MvcHtmlString("/"+APP._Langs.Where(m=>m.Name==APP._CurrentLang).FirstOrDefault().FriendlyUrl);
+            return new MvcHtmlString("/" + APP._Langs.Where(m => m.Name == APP._CurrentLang).FirstOrDefault().FriendlyUrl);
         }
         public static MvcHtmlString LinkCart(this HtmlHelper helper)
         {
-            return new MvcHtmlString(APP._Site.EcommercePages.Where(m=>m.PageAlias=="cart").FirstOrDefault().FriendlyUrl);
+            return new MvcHtmlString(APP._Site.EcommercePages.Where(m => m.PageAlias == "cart").FirstOrDefault().FriendlyUrl);
         }
         public static MvcHtmlString LinkCheckout(this HtmlHelper helper)
         {
@@ -114,12 +114,18 @@ namespace thewall9.web.parent.HtmlHelpers
             return APP._CurrentCurrencyID;
         }
 
-        /*
-         * SOCIAL METHODS
-         */
+        //SOCIAL METHODS
         public static MvcHtmlString LinkTwitter(this HtmlHelper helper)
         {
             return new MvcHtmlString("http://twitter.com/" + APP._Langs.Where(m => m.Name == APP._CurrentLang).FirstOrDefault().Twitter);
+        }
+        public static MvcHtmlString TwitterUsername(this HtmlHelper helper)
+        {
+            var _M = APP._Langs.Where(m => m.Name == APP._CurrentLang).FirstOrDefault();
+            if (_M != null)
+                return new MvcHtmlString(_M.Twitter);
+            else
+                return new MvcHtmlString(string.Empty);
         }
         public static MvcHtmlString LinkFacebook(this HtmlHelper helper)
         {
