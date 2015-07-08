@@ -23,7 +23,11 @@ namespace thewall9.web.parent.HtmlHelpers
         {
             return FindValue(helper, Model.Content, Value);
         }
-        public static MvcHtmlString FindValue(this HtmlHelper helper, ContentBindingList Model, string Value)
+        public static MvcHtmlString FindValue(this HtmlHelper helper, ContentBindingList Model, string Value, bool AllowNull)
+        {
+            return FindValue(Model, Value, AllowNull);
+        }
+        public static MvcHtmlString FindValue(ContentBindingList Model, string Value, bool AllowNull)
         {
             try
             {
@@ -32,12 +36,23 @@ namespace thewall9.web.parent.HtmlHelpers
             }
             catch (ArgumentNullException e)
             {
+                if (AllowNull) return new MvcHtmlString(string.Empty);
                 throw new ArgumentNullException("Value=" + Value + " in " + Model.ContentPropertyAlias + " is NULL", e.InnerException);
             }
             catch (NullReferenceException e)
             {
-                throw new ArgumentNullException("Value=" + Value + " in " + Model.ContentPropertyAlias + " is NULL", e.InnerException);
+                if (AllowNull) return new MvcHtmlString(string.Empty);
+                throw new NullReferenceException("Value=" + Value + " in " + Model.ContentPropertyAlias + " is NULL", e.InnerException);
             }
+            catch (ArgumentOutOfRangeException e)
+            {
+                if (AllowNull) return new MvcHtmlString(string.Empty);
+                throw new ArgumentOutOfRangeException("Value=" + Value + " in " + Model.ContentPropertyAlias + " is NULL", e.InnerException);
+            }
+        }
+        public static MvcHtmlString FindValue(this HtmlHelper helper, ContentBindingList Model, string Value)
+        {
+            return FindValue(helper, Model, Value, false);
         }
         public static MvcHtmlString GetValue(this HtmlHelper helper, ContentBindingList Model)
         {

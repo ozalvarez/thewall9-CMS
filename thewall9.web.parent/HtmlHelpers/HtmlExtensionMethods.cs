@@ -52,6 +52,12 @@ var _gaq = _gaq || [];
                 return null;
             return new MvcHtmlString(string.Format("<meta name='description' content='{0}' />", helper.Raw(helper.ViewBag.MetaDescription)));
         }
+        public static MvcHtmlString MetatagDescriptionContent(this HtmlHelper helper)
+        {
+            if (string.IsNullOrEmpty(helper.ViewBag.MetaDescription))
+                return null;
+            return new MvcHtmlString(helper.ViewBag.MetaDescription);
+        }
         public static MvcHtmlString TitlePageText(this HtmlHelper helper)
         {
             if (string.IsNullOrEmpty(helper.ViewBag.Title))

@@ -23,6 +23,9 @@ namespace thewall9.web.parent.Controllers
 
             ViewBag.BlogContent = _ContentService.Get(Request.Url.Authority, "blog");
 
+            ViewBag.Title = HtmlModel.FindValue(ViewBag.BlogContent, "blog-title", true).ToString();
+            ViewBag.MetaDescription = HtmlModel.FindValue(ViewBag.BlogContent, "blog-subtitle", true).ToString();
+
             return View(_BlogService.Get(APP._SiteID
                 , Request.Url.Authority
                 , APP._CurrentLang, BlogCategoryFriendlyUrl, null, Page));
@@ -35,7 +38,12 @@ namespace thewall9.web.parent.Controllers
 
             ViewBag.BlogContent = _ContentService.Get(Request.Url.Authority, "blog");
 
-            return View("Index",_BlogService.Get(APP._SiteID
+            ViewBag.Title = HtmlModel.FindValue(ViewBag.BlogContent, "blog-title", true).ToString() + " | " + BlogTagName;
+            ViewBag.MetaDescription = HtmlModel.FindValue(ViewBag.BlogContent, "blog-subtitle", true).ToString();
+
+            ViewBag.Title = BlogTagName;
+
+            return View("Index", _BlogService.Get(APP._SiteID
                 , Request.Url.Authority
                 , APP._CurrentLang, null, BlogTagName, Page));
         }
@@ -43,7 +51,13 @@ namespace thewall9.web.parent.Controllers
         public ActionResult Detail(int BlogPostID, string FriendlyUrl)
         {
             ViewBag.BlogContent = _ContentService.Get(Request.Url.Authority, "blog");
-            return View(_BlogService.GetDetail(BlogPostID, FriendlyUrl));
+
+            var _Model = _BlogService.GetDetail(BlogPostID, FriendlyUrl);
+
+            ViewBag.Title = _Model.Title;
+            ViewBag.MetaDescription = _Model.ContentPreview;
+
+            return View(_Model);
         }
     }
 }
