@@ -73,7 +73,7 @@ namespace thewall9.web.parent.ActionFilter
                         }
                     }
                     else
-                        Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception("APP._Langs never can be null"));
+                        Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception("APP._Langs can never be null"));
                 }
             }
             base.OnActionExecuting(filterContext);
@@ -85,11 +85,11 @@ namespace thewall9.web.parent.ActionFilter
                 if (!filterContext.IsChildAction && !filterContext.HttpContext.Request.IsAjaxRequest())
                 {
                     APP._Site = SiteService.Get(APP._SiteID, filterContext.HttpContext.Request.Url.Authority, APP._CurrentLang, APP._CurrentCurrencyID);
-                    if (APP._Site.Site.ECommerce)
-                    {
-                        if (APP._CurrentCurrencyID == 0)
-                            APP._CurrentCurrencyID = APP._Site.Currencies[0].CurrencyID;
-                    }
+                    //if (APP._Site.Site.ECommerce)
+                    //{
+                    //    if (APP._CurrentCurrencyID == 0)
+                    //        APP._CurrentCurrencyID = APP._Site.Currencies[0].CurrencyID;
+                    //}
                 }
             }
         }
