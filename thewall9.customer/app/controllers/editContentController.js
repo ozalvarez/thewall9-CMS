@@ -54,8 +54,10 @@
         };
         /*INIT*/
         $scope.init = function () {
-            $scope.get();
             $scope.selectedCulture = cultureService.currentCulture;
+            if ($scope.selectedCulture.CultureID) {
+                $scope.get();
+            }
         };
         $scope.$on('initDone', function (event) {
             $scope.init();

@@ -20,14 +20,16 @@
             $scope.init();
         }
         $scope.init = function () {
-            $scope.get();
             $scope.selectedCulture = cultureService.currentCulture;
+            $scope.get();
         };
         $scope.$on('initDone', function (event) {
             $scope.init();
         });
         if (siteService.sitesLoaded) {
-            $scope.init();
+            if (cultureService.currentCulture.CultureID) {
+                $scope.init();
+            }
         }
     }
 ]);

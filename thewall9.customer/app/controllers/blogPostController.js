@@ -1,7 +1,7 @@
 ﻿app.controller('blogPostController', ['$scope', '$routeParams', '$location', 'blogService'
-    , 'siteService', 'toastrService', 'cultureService','blockUI',
+    , 'siteService', 'toastrService', 'cultureService', 'blockUI',
     function ($scope, $routeParams, $location, blogService, siteService, toastrService
-        , cultureService,blockUI) {
+        , cultureService, blockUI) {
 
         $scope.tinymceOptions = {
             plugins: ["advlist autolink lists link image charmap print preview anchor",
@@ -10,7 +10,7 @@
             ],
             toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
             extended_valid_elements: "iframe[src|width|height|name|align]",
-            format:null
+            format: null
         };
         $scope.blogPostID = $routeParams.blogPostID;
         $scope.get = function () {
@@ -90,7 +90,9 @@
             $scope.init();
         });
         if (siteService.sitesLoaded) {
-            $scope.init();
+            if (cultureService.currentCulture.CultureID) {
+                $scope.init();
+            }
         }
     }
 ]);

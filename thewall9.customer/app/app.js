@@ -78,6 +78,7 @@ app.config(["$routeProvider", "blockUIConfig", function ($routeProvider, blockUI
     //// Change the default delay to 100ms before the blocking is visible
     blockUIConfig.delay = 100;
     blockUIConfig.autoBlock = false;
+
 }]);
 
 app.constant('ngAuthSettings', {

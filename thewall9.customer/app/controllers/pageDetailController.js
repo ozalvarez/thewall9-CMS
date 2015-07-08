@@ -17,10 +17,12 @@ app.controller('pageDetailController', ['$scope', "$routeParams", 'toastrService
 
         /*INIT*/
         $scope.init = function () {
-            pageService.getDetail($routeParams.pageID, cultureService.currentCulture.CultureID).then(function (page) {
-                $scope.page = page;
-            });
             $scope.selectedCulture = cultureService.currentCulture;
+            if ($scope.selectedCulture.CultureID) {
+                pageService.getDetail($routeParams.pageID, cultureService.currentCulture.CultureID).then(function (page) {
+                    $scope.page = page;
+                });
+            }
         };
         $scope.$on('initDone', function (event) {
             $scope.init();

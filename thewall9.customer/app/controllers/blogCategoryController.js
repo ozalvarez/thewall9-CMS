@@ -24,7 +24,9 @@
             $scope.init();
         });
         if (siteService.sitesLoaded) {
-            $scope.init();
+            if (cultureService.currentCulture.CultureID) {
+                $scope.init();
+            }
         }
     }
 ]);
