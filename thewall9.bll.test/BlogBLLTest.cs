@@ -156,51 +156,6 @@ namespace thewall9.bll.test
             var _Post = new BlogBLL().GetDetail(_BlogPost3.BlogPostID, _BlogPost3.CultureID);
             Assert.IsNull(_Post);
         }
-        [TestMethod]
-        public void BlogPostSaveContentPreviewTest()
-        {
-            SettingUp();
-            _BlogPost.Content = @"
- <a href='http://meta.stackoverflow.com'
-       class='site-link js-gps-track'
-       data-id='552'
-       data-gps-track='
-            site.switch({ target_site:552, item_type:3 }),
-        site_switcher.click({ item_type:4 })'>
-        <div class='site-icon favicon favicon-stackoverflowmeta' title='Meta Stack Overflow'></div>
-        Meta Stack Overflow
-    </a>
-
-                </li>
-                            <li class='related-site'>
-                        <div class='L-shaped-icon-container'>
-        <span class='L-shaped-icon'></span>
-    </div>
-
-                    <a class='site-link js-gps-track'
-                       href='//careers.stackoverflow.com?utm_source=stackoverflow.com&amp;utm_medium=site-ui&amp;utm_campaign=multicollider'
-                            data-gps-track='site_switcher.click({ item_type:9 })'
->
-                        <div class='site-icon favicon favicon-careers' title='Stack Overflow Careers'></div>
-                        Stack Overflow Careers
-                    </a>
-                </li>
-        </ul>
-    </div>
-    
-    <div class='header' id='your-communities-header'>
-        <h3>
-                <a href='//stackexchange.com/users/192027/?tab=accounts'>your communities</a>
-        </h3>
-            
-            <a href='#' id='edit-pinned-sites'>edit</a>
-            <a href='#' id='cancel-pinned-sites' style='display: none;'>cancel</a>
-    </div>
-";
-            var _PostID = new BlogBLL().Save(_BlogPost, _CustomerUser.Id);
-            var _Post = new BlogBLL().GetDetail(_BlogPost.BlogPostID, _BlogPost.CultureID);
-            Assert.IsNotNull( _Post.ContentPreview);
-        }
         #endregion
 
         #region CATEGORIES
