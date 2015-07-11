@@ -67,8 +67,8 @@ namespace thewall9.web.parent.Controllers
                 Lang = APP._CurrentLang;
             var _BlogContent = _ContentService.Get(Request.Url.Authority, Lang, "blog");
 
-            var _Title = HtmlModel.FindValue(ViewBag.BlogContent, "blog-title", true).ToString();
-            var _Description = HtmlModel.FindValue(ViewBag.BlogContent, "blog-subtitle", true).ToString();
+            var _Title = HtmlModel.FindValue(_BlogContent, "blog-title", true).ToString();
+            var _Description = HtmlModel.FindValue(_BlogContent, "blog-subtitle", true).ToString();
 
             var _Feeds = _BlogService.Get(Request.Url.Authority, Lang, null, null, 1, true);
             return new RssResult(_Feeds.Data, _Title, _Description);
