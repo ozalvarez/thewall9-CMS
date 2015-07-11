@@ -75,14 +75,12 @@ namespace thewall9.web.parent.HtmlHelpers
         {
             return FindItems(helper, Model.Content, Value);
         }
+
         public static List<PageCultureBinding> GetMenu(this HtmlHelper helper)
         {
             return APP._Site.Menu;
         }
-        public static SiteFullBinding GetSite(this HtmlHelper helper)
-        {
-            return APP._Site;
-        }
+        
         private static string GetFriendlyUrlByAlias(this HtmlHelper helper, string Alias)
         {
             return APP._Site.Menu.Where(m => m.PageAlias.Equals(Alias)).Select(m => m.FriendlyUrl).SingleOrDefault();
@@ -95,6 +93,17 @@ namespace thewall9.web.parent.HtmlHelpers
         {
             return APP._Langs;
         }
+
+        //SITE
+        public static SiteFullBinding GetSite(this HtmlHelper helper)
+        {
+            return APP._Site;
+        }
+        public static bool SiteHasBlog(this HtmlHelper helper)
+        {
+            return APP._Site.Site.Blog;
+        }
+        //ECOMMERCE
         public static MvcHtmlString CurrentLang(this HtmlHelper helper)
         {
             return new MvcHtmlString(APP._CurrentLang);
@@ -157,6 +166,14 @@ namespace thewall9.web.parent.HtmlHelpers
         public static MvcHtmlString LinkInstagram(this HtmlHelper helper)
         {
             return new MvcHtmlString("http://instagram.com/" + APP._Langs.Where(m => m.Name == APP._CurrentLang).FirstOrDefault().Instagram);
+        }
+        public static MvcHtmlString LinkRss(this HtmlHelper helper)
+        {
+            var _Rss = APP._Langs.Where(m => m.Name == APP._CurrentLang).FirstOrDefault().Rss;
+            if (string.IsNullOrEmpty(_Rss))
+                return new MvcHtmlString("/rss");
+            else
+                return new MvcHtmlString(_Rss);
         }
 
         //MESSAGES

@@ -16,6 +16,7 @@ namespace thewall9.data.binding
         public string GPlus { get; set; }
         public string Tumblr { get; set; }
         public string Instagram { get; set; }
+        public string Rss { get; set; }
     }
     public class CultureBinding: CultureBase
     {

@@ -24,11 +24,11 @@ namespace thewall9.data.binding
     }
     public class SiteBinding : SiteBase
     {
-        
+
     }
     public class SiteFullBinding
     {
-        public SiteBinding  Site { get; set; }
+        public SiteBinding Site { get; set; }
         public List<PageCultureBinding> Menu { get; set; }
         public List<PageCultureBinding> EcommercePages { get; set; }
         public List<PageCultureBinding> OtherPages { get; set; }
@@ -39,7 +39,8 @@ namespace thewall9.data.binding
     {
         public string Url { get; set; }
         public SiteAllBinding() { }
-        public SiteAllBinding(SiteBinding Site, List<CultureBase> Cultures) {
+        public SiteAllBinding(SiteBinding Site, List<CultureBase> Cultures)
+        {
             foreach (PropertyInfo prop in Site.GetType().GetProperties())
                 GetType().GetProperty(prop.Name).SetValue(this, prop.GetValue(Site, null), null);
             var _Cultures = new List<CultureBinding>();
@@ -97,5 +98,5 @@ namespace thewall9.data.binding
         public List<PageBindingListWithCultures> Pages { get; set; }
         public List<ContentBindingList> Content { get; set; }
     }
-    
+
 }

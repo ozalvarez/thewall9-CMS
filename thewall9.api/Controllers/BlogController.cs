@@ -22,9 +22,10 @@ namespace thewall9.api.Controllers
             , string Lang
             , string BlogCategoryFriendlyUrl
             , string BlogTagName
-            , int Page)
+            , int Page
+            , bool IncludeContent = false)
         {
-            return Ok(_BlogService.Get(SiteID, Url, Lang, BlogCategoryFriendlyUrl,BlogTagName, Page));
+            return Ok(_BlogService.Get(SiteID, Url, Lang, BlogCategoryFriendlyUrl,BlogTagName, Page, IncludeContent));
         }
         [AllowAnonymous]
         public IHttpActionResult GetDetail(int SiteID, string Url, int BlogPostID , string FriendlyUrl)

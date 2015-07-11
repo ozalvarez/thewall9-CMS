@@ -101,6 +101,7 @@
     <Compile Include="HtmlHelpers\HtmlModel.cs" />
     <Compile Include="HtmlHelpers\PageHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Result\RssResult.cs" />
     <Compile Include="Thewall9Application.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -123,9 +124,7 @@
     <Content Include="App_Readme\Elmah.txt" />
     <None Include="_CreateNewNuGetPackage\DoNotModify\NuGet.exe" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Result\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>REM Create a NuGet package for this project and place the .nupkg file in the project's output directory.

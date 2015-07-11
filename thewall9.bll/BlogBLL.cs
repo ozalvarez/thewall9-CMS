@@ -55,7 +55,8 @@ namespace thewall9.bll
             , string Lang
             , string BlogCategoryFriendlyUrl
             , string BlogTagName
-            , int Page)
+            , int Page
+            , bool IncludeContent = false)
         {
             var _Take = 10;//SHOULD BE CUSTOM BY USER
             using (var _c = db)
@@ -98,7 +99,8 @@ namespace thewall9.bll
                     Title = m.Title,
                     ContentPreview = m.ContentPreview,
                     FeatureImageUrl = m.BlogPostFeatureImage != null ? m.BlogPostFeatureImage.Media.MediaUrl : null,
-                    DateCreated = m.DateCreated
+                    DateCreated = m.DateCreated,
+                    Content = (IncludeContent) ? m.Content : null
                 })
                 .Skip(_Take * (Page - 1)).Take(_Take).ToList();
 
@@ -139,7 +141,8 @@ namespace thewall9.bll
                                       join bc in _c.BlogCategories on bcc.BlogCategoryID equals bc.BlogCategoryID
                                       join bpc2 in _c.BlogPostCategories on bc.BlogCategoryID equals bpc2.BlogCategoryID
                                       where bcc.CultureID == bpc.CultureID && bpc2.BlogPostID == bpc.BlogPostID
-                                      select new BlogCategoryCultureBase {
+                                      select new BlogCategoryCultureBase
+                                      {
                                           BlogCategoryName = bcc.BlogCategoryName,
                                           FriendlyUrl = bcc.FriendlyUrl
                                       }).Distinct().ToList()

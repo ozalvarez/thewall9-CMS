@@ -28,7 +28,8 @@ namespace thewall9.bll
                     GPlus=m.GPlus,
                     Instagram=m.Instagram,
                     Tumblr=m.Tumblr,
-                    Twitter=m.Twitter
+                    Twitter=m.Twitter,
+                    Rss = m.Rss
                 }).ToList();
             }
         }
@@ -55,7 +56,8 @@ namespace thewall9.bll
                     GPlus = m.GPlus,
                     Instagram = m.Instagram,
                     Tumblr = m.Tumblr,
-                    Twitter = m.Twitter
+                    Twitter = m.Twitter,
+                    Rss=m.Rss
                 }).ToList();
             }
         }
@@ -77,6 +79,7 @@ namespace thewall9.bll
                 _Culture.Instagram = Model.Instagram;
                 _Culture.Tumblr = Model.Tumblr;
                 _Culture.Twitter = Model.Twitter;
+                _Culture.Rss = Model.Rss;
                 _c.SaveChanges();
             }
         }

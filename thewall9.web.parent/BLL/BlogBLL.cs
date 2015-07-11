@@ -17,14 +17,16 @@ namespace thewall9.web.parent.BLL
             , string Lang
             , string BlogCategoryFriendlyUrl
             , string BlogTagName
-            , int Page)
+            , int Page
+            , bool IncludeContent = false)
         {
             return DownloadObject<BlogListWeb>("api/blog?SiteID=" + APP._SiteID
                 + "&Url=" + Url
                 + "&Lang=" + Lang
                 + "&BlogCategoryFriendlyUrl=" + BlogCategoryFriendlyUrl
                 + "&BlogTagName=" + BlogTagName
-                + "&Page=" + Page);
+                + "&Page=" + Page
+                + "&IncludeContent=" + IncludeContent);
         }
         public BlogPostWeb GetDetail(string Url, int BlogPostID, string FriendlyUrl)
         {

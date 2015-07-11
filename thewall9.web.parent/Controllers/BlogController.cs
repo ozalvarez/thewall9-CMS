@@ -5,8 +5,10 @@ using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
+using thewall9.data.binding;
 using thewall9.web.parent.BLL;
 using thewall9.web.parent.HtmlHelpers;
+using thewall9.web.parent.Result;
 
 namespace thewall9.web.parent.Controllers
 {
@@ -57,6 +59,17 @@ namespace thewall9.web.parent.Controllers
             ViewBag.MetaDescription = _Model.ContentPreview;
 
             return View(_Model);
+        }
+        [Route("rss")]
+        public ActionResult Feed()
+        {
+            var _BlogContent = _ContentService.Get(Request.Url.Authority, "blog");
+
+            var _Title = HtmlModel.FindValue(ViewBag.BlogContent, "blog-title", true).ToString();
+            var _Description = HtmlModel.FindValue(ViewBag.BlogContent, "blog-subtitle", true).ToString();
+
+            var _Feeds = _BlogService.Get(Request.Url.Authority, APP._CurrentLang, null, null, 1,true);
+            return new RssResult(_Feeds.Data, _Title, _Description);
         }
     }
 }
