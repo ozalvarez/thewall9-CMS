@@ -11,12 +11,16 @@ namespace thewall9.web.parent.BLL
 {
     public class ContentBLL : BaseBLL
     {
-        public ContentBindingList Get(string Url, string ContentAlias)
+        public ContentBindingList Get(string Url, string Lang, string ContentAlias)
         {
             return DownloadObject<ContentBindingList>("api/content?SiteID=" + APP._SiteID
                 + "&Url=" + Url
-                + "&Lang=" + APP._CurrentLang
+                + "&Lang=" + Lang
                 + "&AliasList=" + ContentAlias);
+        }
+        public ContentBindingList Get(string Url, string ContentAlias)
+        {
+            return Get(Url, APP._CurrentLang, ContentAlias);
         }
     }
 }

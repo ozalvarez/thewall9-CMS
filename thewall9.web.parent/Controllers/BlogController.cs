@@ -60,15 +60,17 @@ namespace thewall9.web.parent.Controllers
 
             return View(_Model);
         }
-        [Route("rss")]
-        public ActionResult Feed()
+        [Route("rss/{Lang?}")]
+        public ActionResult Feed(string Lang)
         {
-            var _BlogContent = _ContentService.Get(Request.Url.Authority, "blog");
+            if (string.IsNullOrEmpty(Lang))
+                Lang = APP._CurrentLang;
+            var _BlogContent = _ContentService.Get(Request.Url.Authority, Lang, "blog");
 
             var _Title = HtmlModel.FindValue(ViewBag.BlogContent, "blog-title", true).ToString();
             var _Description = HtmlModel.FindValue(ViewBag.BlogContent, "blog-subtitle", true).ToString();
 
-            var _Feeds = _BlogService.Get(Request.Url.Authority, APP._CurrentLang, null, null, 1,true);
+            var _Feeds = _BlogService.Get(Request.Url.Authority, Lang, null, null, 1, true);
             return new RssResult(_Feeds.Data, _Title, _Description);
         }
     }
