@@ -49,11 +49,14 @@ namespace thewall9.web.parent.Controllers
                 , APP._CurrentLang, null, BlogTagName, Page));
         }
         [Route("post/{BlogPostID}/{FriendlyUrl}")]
-        public ActionResult Detail(int BlogPostID, string FriendlyUrl)
+        public ActionResult Detail(int? BlogPostID, string FriendlyUrl)
         {
-            ViewBag.BlogContent = _ContentService.Get(Request.Url.Authority, "blog");
+            if (BlogPostID == null) throw new HttpException(404, "Page Not Found");//TUMBLR POST CASE
 
-            var _Model = _BlogService.GetDetail(Request.Url.Authority, BlogPostID, FriendlyUrl);
+            var _Model = _BlogService.GetDetail(Request.Url.Authority, (int)BlogPostID, FriendlyUrl);
+            if (_Model == null) throw new HttpException(404, "Page Not Found");
+
+            ViewBag.BlogContent = _ContentService.Get(Request.Url.Authority, "blog");
 
             ViewBag.Title = _Model.Title;
             ViewBag.MetaDescription = _Model.ContentPreview;
