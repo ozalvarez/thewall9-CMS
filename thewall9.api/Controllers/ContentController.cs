@@ -53,8 +53,6 @@ namespace thewall9.api.Controllers
             return Ok();
         }
 
-
-
         public IHttpActionResult PostSave(ContentBinding Model)
         {
             return Ok(_ContentService.Save(Model, User.Identity.GetUserId()));
@@ -65,13 +63,15 @@ namespace thewall9.api.Controllers
             return Ok(_ContentService.Get(SiteID, User.Identity.GetUserId()));
         }
 
-
-
-
         [Route("duplicate")]
         public IHttpActionResult Duplicate(ContentBinding Model)
         {
             return Ok(_ContentService.Duplicate(Model, User.Identity.GetUserId()));
+        }
+        [Route("duplicate-tree")]
+        public IHttpActionResult DuplicateTree(ContentTree Model)
+        {
+            return Ok(_ContentService.DuplicateTree(Model, User.Identity.GetUserId()));
         }
         public IHttpActionResult Delete(int ContentPropertyID)
         {

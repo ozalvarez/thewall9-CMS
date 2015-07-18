@@ -34,6 +34,11 @@ app.factory('contentService', ["$myhttp", "$q", "ngAuthSettings", "siteService",
                 object.SiteID = siteService.site.SiteID;
                 return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/content/duplicate', object);
             },
+            duplicateTree: function (object) {
+                object.SiteID = siteService.site.SiteID;
+                object.CultureID = cultureService.currentCulture.CultureID;
+                return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/content/duplicate-tree', object);
+            },
             exportContent: function (ContentPropertyID) {
                 return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/content/export?SiteID=' + siteService.site.SiteID + '&ContentPropertyID=' + ContentPropertyID);
             },

@@ -3,12 +3,12 @@
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
                 $scope.$apply(function () {
-                    $scope.showSaveButton = true;
+                    $scope.showItemsFixed = true;
                 });
             }
             else {
                 $scope.$apply(function () {
-                    $scope.showSaveButton = false;
+                    $scope.showItemsFixed = false;
                 });
             }
         });
@@ -30,11 +30,22 @@
             });
         }
         $scope.duplicate = function (item) {
-            contentService.duplicate(item).then(function (data) {
-                $scope.get();
+            contentService.duplicateTree(item).then(function (data) {
+                console.log("DUPLICATING", data);
+                // $scope.get();
+                attach(data, $scope.data)
                 toastrService.success("Nuevo " + item.Hint + " creado");
             });
         };
+        function attach(newItem, tree) {
+            angular.forEach(tree, function (item) {
+                if (item.ContentPropertyID == newItem.ContentPropertyParentID) {
+                    item.Items.push(newItem);
+                } else if (item.Items != null && item.Items.length > 0) {
+                    attach(newItem, item.Items);
+                }
+            });
+        }
         $scope.delete = function (item) {
             if (confirm("¿Estás seguro que quieres eliminar esta propiedad?")) {
                 contentService.remove(item).then(function (data) {
@@ -52,6 +63,17 @@
                 item.Enabled = enabled;
             });
         };
+        $scope.upDown = function (item, upOrDown) {
+            console.log("prio", item.Priority);
+            var _index = (upOrDown ? (item.Priority-1) : (item.Priority+1));
+            console.log("INDEX", _index);
+            if (_index >= 0) {
+                contentService.move(_index, item.ContentPropertyParentID, item.ContentPropertyID).then(function (data) {
+                    $scope.get();
+                    toastrService.success("Propiedad movida exitosamente");
+                });
+            }
+        }
         /*INIT*/
         $scope.init = function () {
             $scope.selectedCulture = cultureService.currentCulture;

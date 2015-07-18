@@ -1,7 +1,19 @@
 ﻿<section id="content">
-    <button class="btn btn-primary btn-lg btn-save" role="button" ng-click="save()" ng-show="showSaveButton">
-        <span class="fa fa-save"></span> Guardar Cambios
-    </button>
+    <div class="items-fixed" ng-show="showItemsFixed">
+        <ul class="list-inline">
+            <li>
+                <button class="btn btn-primary btn-lg" role="button" ng-click="save()">
+                    <span class="fa fa-save"></span> Guardar Cambios
+                </button>
+            </li>
+            <li>
+                <select ng-options="culture as culture.Name for culture in cultures"
+                        ng-model="selectedCulture"
+                        ng-change="updateCulture()"
+                        class="form-control input-lg"></select>
+            </li>
+        </ul>
+    </div>
     <div class="page-header">
         <ul class="list-inline pull-right">
             <li>
@@ -27,6 +39,16 @@
                     </button>
                     <button class="btn btn-success btn-xs" ng-click="enable(item,false)" ng-show="item.Enabled">
                         <span class="fa fa-check"></span> Habilitado
+                    </button>
+                </li>
+                <li>
+                    <button class="btn btn-success btn-xs" ng-click="upDown(item,true)">
+                        <span class="fa fa-angle-up"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn btn-success btn-xs" ng-click="upDown(item,false)">
+                        <span class="fa fa-angle-down"></span>
                     </button>
                 </li>
             </ul>

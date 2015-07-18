@@ -81,6 +81,7 @@ namespace thewall9.bll
                             ContentPropertyType = p.ContentPropertyType,
                             Lock = p.Lock,
                             Enabled = p.Enabled,
+                            ShowInContent = p.ShowInContent,
                             ContentCultures = p.ContentPropertyCultures.Select(m => new ContentCultureBinding
                             {
                                 ContentPropertyID = p.ContentPropertyID,
@@ -179,10 +180,13 @@ namespace thewall9.bll
 
                         ShowInContent = p.ShowInContent,
                         Enabled = p.Enabled,
+                        Priority=p.Priority,
 
                         Hint = p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Any()
                         ? p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Select(m => m.Hint).FirstOrDefault()
-                        : p.ContentPropertyCultures.Select(m => m.Hint).FirstOrDefault(),
+                        : (p.ContentPropertyCultures.Select(m => m.Hint).Any()
+                        ? p.ContentPropertyCultures.Select(m => m.Hint).FirstOrDefault()
+                        : p.ContentPropertyAlias),
 
                         IsEditable = _c.ContentProperties.Where(m => m.SiteID == p.SiteID && m.ContentPropertyParentID == p.ContentPropertyParentID && m.ShowInContent && m.ContentPropertyID != p.ContentPropertyID).Any(),
 
@@ -515,6 +519,18 @@ namespace thewall9.bll
                 return GetOrder(_Model, _ParentID)[0];
             }
         }
+        public ContentTree DuplicateTree(ContentTree Model, string UserID)
+        {
+            using (var _c = db)
+            {
+                var _CPToDuplicate = _c.ContentProperties.Where(m => m.ContentPropertyID == Model.ContentPropertyID).SingleOrDefault();
+                Can(_CPToDuplicate.SiteID, UserID, _c);
+                int _CPID = Duplicate(Model.ContentPropertyID, _CPToDuplicate.ContentPropertyParentID, false);
+                var _Model = new List<ContentProperty>();
+                _Model.Add(_c.ContentProperties.Where(m => m.ContentPropertyID == _CPID).SingleOrDefault());
+                return GetTreeOrder(_Model, _CPToDuplicate.ContentPropertyParentID, Model.CultureID, _c)[0];
+            }
+        }
         private int Duplicate(int ContentPropertyID, int ContentPropertyParentID, Boolean ShowInContent)
         {
             using (var _c = db)
@@ -530,7 +546,6 @@ namespace thewall9.bll
                     ContentPropertyType = _CP.ContentPropertyType,
                     Priority = _IQParent.Any() ? _IQParent.Select(m => m.Priority).Max() + 1 : 0,
                     Enabled = _CP.Enabled
-
                 };
                 if (ShowInContent)
                     _CPNew.ShowInContent = _CP.ShowInContent;
@@ -663,5 +678,6 @@ WHERE SiteID={0} AND ContentPropertyParentID={1} AND Priority>={2} AND ContentPr
                 _c.SaveChanges();
             }
         }
+
     }
 }

@@ -110,7 +110,9 @@ namespace thewall9.data.binding
         public bool ShowInContent { get; set; }
         public bool IsEditable { get; set; }
         public bool Enabled { get; set; }
+        public int Priority { get; set; }
         public List<ContentTree> Items { get; set; }
+        public int CultureID { get; set; }
     }
     public class ImportBinding
     {
