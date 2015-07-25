@@ -367,6 +367,17 @@ namespace thewall9.bll
                 _Model.Published = Model.Published;
                 _c.Pages.Add(_Model);
                 _c.SaveChanges();
+
+                //CRETING CONTENT LIST
+                var _Content = new ContentBinding
+                {
+                    ContentPropertyAlias= Model.Alias,
+                    ContentPropertyParentID=0,
+                    SiteID=Model.SiteID,
+                    Lock=false,
+                    ContentPropertyType= ContentPropertyType.LIST
+                };
+                new ContentBLL().Save(_Content);
                 return _Model.PageID;
             }
         }

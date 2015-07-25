@@ -20,11 +20,11 @@ namespace thewall9.bll
                 {
                     _c.Medias.Remove(_Model);
                     _c.SaveChanges();
-                    new Utils.FileUtil().DeleteFolder("media", _Model.MediaID+"/");
+                    new Utils.FileUtil().DeleteFolder("media", _Model.MediaID + "/");
                 }
             }
         }
-        public MediaBase SaveImage(FileRead Model,int SiteID, string UserID)
+        public MediaBase SaveImage(FileRead Model, int SiteID, string UserID)
         {
             if (Model != null)
             {
