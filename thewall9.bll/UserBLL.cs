@@ -60,7 +60,6 @@ namespace thewall9.bll
         {
             return UserManager.FindByEmail(Email);
         }
-
         public List<string> GetRoles(string UserID)
         {
             return UserManager.GetRoles(UserID).ToList();
