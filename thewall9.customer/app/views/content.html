@@ -99,6 +99,7 @@
                         <a class="btn btn-primary btn-xs" data-nodrag ng-click="edit(item)" ng-hide="item.Lock">
                             <span class="glyphicon glyphicon-edit"></span>
                         </a>
+                        <span ng-if="isAdmin">P:{{item.Priority}} - ID:{{item.ContentPropertyID}}</span>
                     </li>
                 </ul>
             </div>
