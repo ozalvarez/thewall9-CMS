@@ -1,0 +1,102 @@
+﻿<script type="text/ng-template" id="nodes_renderer.html">
+    <div ui-tree-handle ng-attr-data-nodrag="{{true}}" ng-class="{'leaf':item.ContentPropertyType==3}">
+        <ul class="list-inline pull-right">
+            <li>
+                <button class="btn btn-danger btn-xs" ng-click="enable(item,true)" ng-hide="item.Enabled">
+                    <span class="fa fa-remove"></span> Desabilitado
+                </button>
+                <button class="btn btn-success btn-xs" ng-click="enable(item,false)" ng-show="item.Enabled">
+                    <span class="fa fa-check"></span> Habilitado
+                </button>
+            </li>
+            <li>
+                <button class="btn btn-success btn-xs" ng-click="upDown(item,true)">
+                    <span class="fa fa-angle-up"></span>
+                </button>
+            </li>
+            <li>
+                <button class="btn btn-success btn-xs" ng-click="upDown(item,false)">
+                    <span class="fa fa-angle-down"></span>
+                </button>
+            </li>
+        </ul>
+        <ul class="list-inline pull-right" ng-if="item.IsEditable || item.ShowInContent">
+            <li ng-if="item.IsEditable">
+                <button class="btn btn-danger btn-xs" ng-click="delete(item)">
+                    <span class="fa fa-remove"></span> Eliminar {{item.Hint}}
+                </button>
+            </li>
+            <li ng-if="item.IsEditable || item.ShowInContent">
+                <button class="btn btn-primary btn-xs" ng-click="duplicate(item)">
+                    <span class="fa fa-copy"></span> Duplicar {{item.Hint}}
+                </button>
+            </li>
+        </ul>
+        <a class="btn btn-success btn-xs pull-left" style="margin-right:5px;" data-nodrag ng-click="toggle(this)">
+            <span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span>
+        </a>
+        <label ng-show="item.Hint && !isAdmin">{{item.Hint}}</label>
+        <input class="form-control" ng-model="item.ContentPropertyValue" ng-change="item.Edit=true" ng-if="item.ContentPropertyType==2" />
+        <textarea rows="10" ng-model="item.ContentPropertyValue" class="form-control" ng-change="item.Edit=true" ng-if="item.ContentPropertyType==4"></textarea>
+        <div ng-if="item.ContentPropertyType==1">
+            <div class="pull-left" style="margin-right:5px;">
+                <img ng-src="{{item.ContentPropertyValue}}" class="img-responsive img-thumbnail" width="200" ng-show="!item.FileContent" />
+                <img ng-src="{{item.FileContent}}" ng-show="item.FileContent" class="img-responsive img-thumbnail" width="200" />
+            </div>
+            <input type="file" data-fileread="item" />
+            <div class="clearfix"></div>
+        </div>
+        <div class="input-group" ng-if="isAdmin" ng-class="{'has-error':item.Hint==null}">
+            <span class="input-group-addon">Hint</span>
+            <input class="form-control" ng-model="item.Hint" placeholder="Hint" ng-change="item.Edit=true;updateHintRemaining()" />
+            <span class="input-group-addon">{{item.Edit}}</span>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <ol ui-tree-nodes="options" ng-model="item.Items" ng-class="{hidden: collapsed}">
+        <li ng-repeat="item in item.Items" ui-tree-node ng-include="'nodes_renderer.html'">
+        </li>
+    </ol>
+</script>
+<section id="content">
+    <div class="items-fixed" ng-show="showItemsFixed">
+        <ul class="list-inline">
+            <li>
+                <button class="btn btn-primary btn-lg" role="button" ng-click="save()">
+                    <span class="fa fa-save"></span> Guardar Cambios
+                </button>
+            </li>
+            <li>
+                <select ng-options="culture as culture.Name for culture in cultures"
+                        ng-model="selectedCulture"
+                        ng-change="updateCulture()"
+                        class="form-control input-lg"></select>
+            </li>
+        </ul>
+    </div>
+    <div class="page-header">
+        <ul class="list-inline pull-right">
+            <li>
+                <button class="btn btn-primary" role="button" ng-click="save()">
+                    <span class="fa fa-save"></span> Guardar Cambios
+                </button>
+            </li>
+            <li>
+                <select ng-options="culture as culture.Name for culture in cultures"
+                        ng-model="selectedCulture"
+                        ng-change="updateCulture()"
+                        class="form-control"></select>
+            </li>
+        </ul>
+        <h1>Contenido</h1>
+    </div>
+    <tabs>
+        <pane title="{{item.Hint}}" ng-repeat="item in data">
+            <div ui-tree="options" class="ui-tree-tw ui-tree-tw-no-drag">
+                <ol ui-tree-nodes="" ng-model="item" id="tree-root">
+                    <li ui-tree-node ng-include="'nodes_renderer.html'" data-collapsed="false"></li>
+                </ol>
+            </div>
+        </pane>
+    </tabs>
+</section>

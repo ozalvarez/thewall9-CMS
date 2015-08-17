@@ -1,4 +1,4 @@
-﻿app.controller('editContentController', ['$scope', '$location', 'toastrService', 'contentService', 'cultureService', 'siteService',
+﻿app.controller('contentEditController', ['$scope', '$location', 'toastrService', 'contentService', 'cultureService', 'siteService',
     function ($scope, $location, toastrService, contentService, cultureService, siteService) {
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {

@@ -5,7 +5,7 @@
 app.config(["$routeProvider", "blockUIConfig", function ($routeProvider, blockUIConfig) {
 
     $routeProvider.when("/", {
-        redirectTo:'/edit-content'
+        redirectTo:'/content/edit'
     });
 
     $routeProvider.when("/configuration", {
@@ -28,9 +28,9 @@ app.config(["$routeProvider", "blockUIConfig", function ($routeProvider, blockUI
         controller: "passwordController",
         templateUrl: "/app/views/password.html"
     });
-    $routeProvider.when('/edit-content', {
-        controller: 'editContentController',
-        templateUrl: '/app/views/edit-content.html'
+    $routeProvider.when('/content/edit', {
+        controller: 'contentEditController',
+        templateUrl: '/app/views/content-edit.html'
     });
     $routeProvider.when('/categories', {
         controller: 'categoryController',

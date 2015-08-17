@@ -83,7 +83,8 @@
                             ContentPropertyAlias: $scope.content.ContentPropertyAlias,
                             ContentPropertyParentID: 0,
                             ContentPropertyType: $scope.content.ContentPropertyType,
-                            Items: []
+                            Items: [],
+                            Priority: $scope.data[$scope.data.length - 1].Priority+1
                         });
                     } else {
                         $scope.contentParent.Items.push({
@@ -91,7 +92,8 @@
                             ContentPropertyAlias: $scope.content.ContentPropertyAlias,
                             ContentPropertyParentID: $scope.contentParent.ContentPropertyID,
                             ContentPropertyType: $scope.content.ContentPropertyType,
-                            Items: []
+                            Items: [],
+                            Priority: $scope.contentParent.Items[$scope.contentParent.Items.length - 1].Priority + 1
                         });
                     }
                 }
