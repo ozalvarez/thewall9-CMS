@@ -47,6 +47,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bebsabeduque.com", "..\thew
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "thewall9.web", "..\thewall9-web\thewall9.web\thewall9.web.csproj", "{EC1240C8-585D-4846-BD2E-26A652549E5A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "workandgo.web", "..\..\..\Source\Workspaces\thewall9-websites\workandgo.web\workandgo.web.csproj", "{FE5F92FB-7E19-40B1-99EB-3B38AC1988C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,6 +103,10 @@ Global
 		{EC1240C8-585D-4846-BD2E-26A652549E5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC1240C8-585D-4846-BD2E-26A652549E5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC1240C8-585D-4846-BD2E-26A652549E5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE5F92FB-7E19-40B1-99EB-3B38AC1988C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE5F92FB-7E19-40B1-99EB-3B38AC1988C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE5F92FB-7E19-40B1-99EB-3B38AC1988C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE5F92FB-7E19-40B1-99EB-3B38AC1988C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -114,5 +120,6 @@ Global
 		{AEA8E3B6-D83A-48CC-915F-80168073375D} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
 		{D7E60A20-1EB3-496E-9A99-848BD53150B4} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
 		{EC1240C8-585D-4846-BD2E-26A652549E5A} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
+		{FE5F92FB-7E19-40B1-99EB-3B38AC1988C3} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
 	EndGlobalSection
 EndGlobal
