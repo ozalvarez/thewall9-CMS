@@ -56,6 +56,7 @@
         };
         $scope.updateCulture = function () {
             cultureService.currentCulture = $scope.selectedCulture;
+          
             $scope.init();
         }
         $scope.enable = function (item, enabled) {
@@ -65,7 +66,7 @@
         };
         $scope.upDown = function (item, upOrDown) {
             console.log("prio", item.Priority);
-            var _index = (upOrDown ? (item.Priority-1) : (item.Priority+1));
+            var _index = (upOrDown ? (item.Priority - 1) : (item.Priority + 1));
             console.log("INDEX", _index);
             if (_index >= 0) {
                 contentService.move(_index, item.ContentPropertyParentID, item.ContentPropertyID).then(function (data) {

@@ -369,6 +369,7 @@
     <Content Include="Scripts\plugins\morris\morris.min.js" />
     <Content Include="Scripts\plugins\morris\raphael.min.js" />
     <Content Include="Scripts\sb-admin-2.js" />
+    <Content Include="Scripts\ui-bootstrap-custom-tpls-0.13.3.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
