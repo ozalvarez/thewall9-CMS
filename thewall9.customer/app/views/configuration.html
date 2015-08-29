@@ -20,8 +20,8 @@
     </div>
     <p><button type="submit" class="btn btn-default" ng-click="saveSite()">Guardar</button></p>
 </form>
-<tabs>
-    <pane title="{{item.Name}}" ng-repeat="item in cultures">
+<tabset>
+    <tab ng-repeat="item in cultures" heading="{{item.Name}}">
         <br />
         <form role="form">
             <div class="row">
@@ -86,5 +86,5 @@
             </div>
             <p><button type="submit" class="btn btn-default" ng-click="save(item)">Guardar {{item.Name}}</button></p>
         </form>
-    </pane>
-</tabs>
+    </tab>
+</tabset>

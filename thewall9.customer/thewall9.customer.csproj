@@ -147,7 +147,6 @@
     <Content Include="app\controllers\passwordController.js" />
     <Content Include="app\directives\autoFillSync.js" />
     <Content Include="app\directives\fileread.js" />
-    <Content Include="app\directives\tab.js" />
     <Content Include="app\directives\tagManager.js" />
     <Content Include="app\directives\_tagManager.html" />
     <Content Include="app\filters\fromnow.js" />

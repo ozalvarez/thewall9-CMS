@@ -91,7 +91,6 @@
         <h1>Contenido</h1>
     </div>
     <tabset>
-        <!--<tab heading="Static title">Static content</tab>-->
         <tab ng-repeat="item in data" heading="{{item.Hint}}">
             <div ui-tree="options" class="ui-tree-tw ui-tree-tw-no-drag">
                 <ol ui-tree-nodes="" ng-model="item" id="tree-root">
@@ -100,13 +99,4 @@
             </div>
         </tab>
     </tabset>
-    <!--<tabs >
-        <pane title="{{item.Hint}}" ng-repeat="item in data">
-            <div ui-tree="options" class="ui-tree-tw ui-tree-tw-no-drag">
-                <ol ui-tree-nodes="" ng-model="item" id="tree-root">
-                    <li ui-tree-node ng-include="'nodes_renderer.html'" data-collapsed="false"></li>
-                </ol>
-            </div>
-        </pane>
-    </tabs>-->
 </section>

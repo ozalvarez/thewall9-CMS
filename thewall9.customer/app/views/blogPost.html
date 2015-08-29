@@ -19,18 +19,18 @@
     <div class="form-group">
         <textarea ui-tinymce="tinymceOptions" ng-model="model.Content" style="width:100%"></textarea>
     </div>
-    <tabs>
-        <pane title="Subtítulo">
+    <tabset>
+        <tab heading="Subtítulo">
             <div class="form-group">
                 <textarea ng-model="model.ContentPreview" class="form-control" rows="3"></textarea>
             </div>
-        </pane>
-        <pane title="SEO">
+        </tab>
+        <tab heading="SEO">
             <div class="form-group">
                 <input class="form-control" ng-model="model.FriendlyUrl" placeholder="Friendly Url">
             </div>
-        </pane>
-        <pane title="Tags & Categorías">
+        </tab>
+        <tab heading="Tags & Categorías">
             <div class="row">
                 <div class="col-md-6">
                     <div class="panel panel-default">
@@ -58,8 +58,8 @@
                     </div>
                 </div>
             </div>
-        </pane>
-        <pane title="Imagen Principal">
+        </tab>
+        <tab heading="Imagen Principal">
             <div class="row">
                 <div class="col-md-4">
                     <input type="file" data-fileread="model.FeatureImageFileRead" />
@@ -81,11 +81,11 @@
                          class="img-responsive img-thumbnail" />
                 </div>
             </div>
-        </pane>
-        <pane title="Imagenes">
+        </tab>
+        <tab heading="Imagenes">
             <div ng-include src="'/app/views/_MediaList.html'"></div>
-        </pane>
-    </tabs>
+        </tab>
+    </tabset>
     <hr />
     <p>
         <button type="submit" class="btn btn-primary" ng-click="save(true)">Guardar</button>

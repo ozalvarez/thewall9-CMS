@@ -84,16 +84,20 @@
                             ContentPropertyParentID: 0,
                             ContentPropertyType: $scope.content.ContentPropertyType,
                             Items: [],
-                            Priority: $scope.data[$scope.data.length - 1].Priority+1
+                            Priority: $scope.data[$scope.data.length - 1].Priority + 1
                         });
                     } else {
+                        var _Priority = 0;
+                        if ($scope.contentParent.Items.length != 0) {
+                            _Priority = $scope.contentParent.Items[$scope.contentParent.Items.length - 1].Priority + 1
+                        }
                         $scope.contentParent.Items.push({
                             ContentPropertyID: data,
                             ContentPropertyAlias: $scope.content.ContentPropertyAlias,
                             ContentPropertyParentID: $scope.contentParent.ContentPropertyID,
                             ContentPropertyType: $scope.content.ContentPropertyType,
                             Items: [],
-                            Priority: $scope.contentParent.Items[$scope.contentParent.Items.length - 1].Priority + 1
+                            Priority: _Priority
                         });
                     }
                 }
@@ -136,7 +140,7 @@
                 item.Lock = enabled;
             });
         };
-        
+
         $scope.lockAll = function () {
             contentService.lockAll().then(function (response) {
                 $scope.get();
