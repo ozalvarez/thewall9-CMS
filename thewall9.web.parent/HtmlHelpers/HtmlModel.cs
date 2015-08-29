@@ -69,7 +69,19 @@ namespace thewall9.web.parent.HtmlHelpers
         }
         public static ICollection<ContentBindingList> FindItems(this HtmlHelper helper, ContentBindingList Model, string Value)
         {
-            return Model.Items.Where(m => m.ContentPropertyAlias.Equals(Value)).SingleOrDefault().Items;
+            return FindItems(helper, Model, Value,false);
+        }
+        public static ICollection<ContentBindingList> FindItems(this HtmlHelper helper, ContentBindingList Model, string Value, bool AllowNull)
+        {
+            try
+            {
+                return Model.Items.Where(m => m.ContentPropertyAlias.Equals(Value)).SingleOrDefault().Items;
+            }
+            catch (NullReferenceException e)
+            {
+                if (AllowNull) return new List<ContentBindingList>();
+                throw new NullReferenceException("List=" + Value + " in " + Model.ContentPropertyAlias + " is NULL", e.InnerException);
+            }
         }
         public static ICollection<ContentBindingList> FindItems(this HtmlHelper helper, PageWeb Model, string Value)
         {
