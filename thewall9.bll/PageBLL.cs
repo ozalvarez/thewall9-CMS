@@ -155,7 +155,7 @@ namespace thewall9.bll
             {
                 var _Q = SiteID != 0
                     ? from p in _c.PageCultures
-                      where p.Page.SiteID == SiteID && !p.Page.InMenu
+                      where p.Page.SiteID == SiteID
                       select p
                      : from m in _c.PageCultures
                        join u in _c.SiteUrls on m.Page.Site.SiteID equals u.SiteID
