@@ -138,6 +138,10 @@
                         <select class="form-control" ng-model="content.ContentPropertyTypeOptions" ng-options="item.TypeName for item in properties track by item.TypeID"></select>
                     </div>
                     <div class="form-group">
+                        <label>Prioridad</label>
+                        <input type="text" class="form-control" placeholder="Escriba la Prioridad" ng-model="content.Priority">
+                    </div>
+                    <div class="form-group">
                         <input type="submit" value="Guardar Propiedad" class="btn btn-primary" />
                     </div>
                 </form>

@@ -180,7 +180,7 @@ namespace thewall9.bll
 
                         ShowInContent = p.ShowInContent,
                         Enabled = p.Enabled,
-                        Priority=p.Priority,
+                        Priority = p.Priority,
 
                         Hint = p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Any()
                         ? p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Select(m => m.Hint).FirstOrDefault()
@@ -383,6 +383,7 @@ namespace thewall9.bll
                 else
                 {
                     _Model = _c.ContentProperties.Where(m => m.ContentPropertyID == Model.ContentPropertyID).SingleOrDefault();
+                    _Model.Priority = Model.Priority;
                 }
                 _Model.ContentPropertyAlias = Model.ContentPropertyAlias;
                 _Model.ContentPropertyType = Model.ContentPropertyType;

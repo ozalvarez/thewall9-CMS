@@ -395,7 +395,7 @@ namespace thewall9.bll
             {
                 item.SiteID = SiteID;
                 item.PageParentID = PageParentID;
-                int _PageID = new PageBLL().Save(item);
+                int _PageID = new PageBLL().Save(item,false);
                 if (item.Items.Any())
                     ImportSavePages(item.Items, SiteID, _PageID);
             }

@@ -15,9 +15,10 @@ namespace thewall9.web.parent.Controllers
     {
         ContentBLL _ContentService = new ContentBLL();
 
-        public PartialViewResult Index(string Alias, string View)
+        public PartialViewResult Index(string Alias, string View, int Take = 0)
         {
-            return PartialView(View,_ContentService.Get(Request.Url.Authority, Alias));
+            ViewBag.Take = Take;
+            return PartialView(View, _ContentService.Get(Request.Url.Authority, Alias));
         }
     }
 }

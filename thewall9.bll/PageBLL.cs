@@ -353,7 +353,7 @@ namespace thewall9.bll
                 return Save(Model);
             }
         }
-        public int Save(PageBinding Model)
+        public int Save(PageBinding Model, bool CreateContent = true)
         {
             using (var _c = db)
             {
@@ -368,22 +368,25 @@ namespace thewall9.bll
                 _c.Pages.Add(_Model);
                 _c.SaveChanges();
 
-                //CRETING CONTENT LIST
-                var _Content = new ContentBinding
+                if (CreateContent)
                 {
-                    ContentPropertyAlias= Model.Alias,
-                    ContentPropertyParentID=0,
-                    SiteID=Model.SiteID,
-                    Lock=false,
-                    ContentPropertyType= ContentPropertyType.LIST
-                };
-                new ContentBLL().Save(_Content);
+                    //CRETING CONTENT LIST
+                    var _Content = new ContentBinding
+                    {
+                        ContentPropertyAlias = Model.Alias,
+                        ContentPropertyParentID = 0,
+                        SiteID = Model.SiteID,
+                        Lock = false,
+                        ContentPropertyType = ContentPropertyType.LIST
+                    };
+                    new ContentBLL().Save(_Content);
+                }
                 return _Model.PageID;
             }
         }
-        public int Save(PageBindingListWithCultures Model)
+        public int Save(PageBindingListWithCultures Model,bool CreateContent=true)
         {
-            var _PageID = Save((PageBinding)Model);
+            var _PageID = Save((PageBinding)Model, CreateContent);
             using (var _c = db)
             {
                 var _Page = _c.Pages.Where(m => m.PageID == _PageID).SingleOrDefault();
