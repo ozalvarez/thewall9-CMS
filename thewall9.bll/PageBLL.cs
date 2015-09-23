@@ -149,7 +149,7 @@ namespace thewall9.bll
                         }).ToList();
             }
         }
-        public List<PageCultureBinding> GetOtherPages(int SiteID, string Url, string Lang)
+        public List<PageCultureBinding> GetOtherPagesDELETE(int SiteID, string Url, string Lang)
         {
             using (var _c = db)
             {
@@ -172,6 +172,39 @@ namespace thewall9.bll
                             Name = p.Name,
                             PageAlias = p.Page.Alias
                         }).ToList();
+            }
+        }
+        public List<PageCultureBinding> OrderPages(List<PageCulture> Pages, int PageParentID)
+        {
+            return (from p in Pages
+                    where p.Page.PageParentID == PageParentID
+                    orderby p.Page.Priority
+                    select new PageCultureBinding
+                    {
+                        CultureID = p.CultureID,
+                        FriendlyUrl = p.FriendlyUrl,
+                        RedirectUrl = p.RedirectUrl,
+                        Name = p.Name,
+                        PageAlias = p.Page.Alias,
+                        Items = Pages.Where(m => m.Page.PageParentID == p.PageID).Any() 
+                        ? OrderPages(Pages, p.PageID) 
+                        : new List<PageCultureBinding>()
+                        
+                    }).ToList();
+        }
+        public List<PageCultureBinding> GetOtherPages(int SiteID, string Url, string Lang)
+        {
+            using (var _c = db)
+            {
+                var _Q = SiteID != 0
+                    ? from p in _c.PageCultures
+                      where p.Page.SiteID == SiteID
+                      select p
+                     : from m in _c.PageCultures
+                       join u in _c.SiteUrls on m.Page.Site.SiteID equals u.SiteID
+                       where u.Url.Equals(Url) && !m.Page.InMenu
+                       select m;
+                return OrderPages(_Q.ToList(), 0);
             }
         }
         public SiteMapModel GetSitemap(int SiteID, string Url)

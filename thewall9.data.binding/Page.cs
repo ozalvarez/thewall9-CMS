@@ -35,6 +35,7 @@ namespace thewall9.data.binding
         public int CultureID { get; set; }
         public string CultureName { get; set; }
         public string PageAlias { get; set; }
+        public List<PageCultureBinding> Items { get; set; }
     }
     public class PageWeb
     {
