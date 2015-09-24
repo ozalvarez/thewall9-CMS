@@ -1,18 +1,21 @@
 {
-    "name": "thewall9.customer",
-    "private": true,
-    "dependencies": {
-        "angular": "^1.4.1",
-        "angular-local-storage": "^0.2.2",
-        "angular-route": "^1.4.1",
-        "bootstrap": "^3.3.5",
-        "jquery": "^2.1.4",
-        "modernizr": "^2.8.3",
-        "angular-loading-bar": "^0.8.0",
-        "toastr": "^2.1.1",
-        "font-awesome": "^4.3.0",
-        "angular-ui-tree": "^2.5.0",
-        "moment": "^2.10.3",
-        "angular-ui-tinymce": "^0.0.9"
-    }
+  "name": "thewall9.customer",
+  "private": true,
+  "dependencies": {
+    "angular": "^1.4.1",
+    "angular-local-storage": "^0.2.2",
+    "angular-route": "^1.4.1",
+    "bootstrap": "^3.3.5",
+    "jquery": "^2.1.4",
+    "modernizr": "^2.8.3",
+    "angular-loading-bar": "^0.8.0",
+    "toastr": "^2.1.1",
+    "font-awesome": "^4.3.0",
+    "angular-ui-tree": "^2.5.0",
+    "moment": "^2.10.3",
+    "angular-ui-tinymce": "^0.0.9"
+  },
+  "resolutions": {
+    "angular": "1.4.6"
+  }
 }
