@@ -12,7 +12,6 @@ namespace thewall9.api
     {
         public void Configuration(IAppBuilder app)
         {
-            //ENABLE CORS
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             ConfigureAuth(app);
         }
