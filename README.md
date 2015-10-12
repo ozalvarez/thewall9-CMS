@@ -52,18 +52,28 @@ update-database
 ```
 Now you have the database, you can change the location of the database in `Web.config` `thewall9.api`
 
-5. Press F5 or Start Debugging, be sure the **Startup Project** is `thewall9.api`. This will open a browser with this url `http://localhost:2497/` I call this URL `API_URL` all websites will point to this API URL. You can change this URL if you want.
-6. Open in your IIS Express `thewall9.admin` website it will prompt for a username/email and a password. You will put `[YOUR ROOT EMAIL]` as a username/email and `123456` as a password. Now you are in admin portal.
-7. Now you will create your first website, you will create a copy of [thewall9.com](http://thewall9.com) site.
+5. Open Task Runner Explorer, select thewall9.admin and execute **build** task.
+6. Press F5 or Start Debugging, be sure the **Startup Project** is `thewall9.api`. This will open a browser with this url `http://localhost:2497/` I call this URL `API_URL` all websites will point to this API URL. You can change this URL if you want.
+7. Open in your IIS Express `thewall9.admin` website it will prompt for a username/email and a password. You will put `[YOUR ROOT EMAIL]` as a username/email and `123456` as a password. Now you are in admin portal.
+8. Now you will create your first website, you will create a copy of [thewall9.com](http://thewall9.com) site.
     1. Find a file in this folder `/webs` called `SITE.json`
     2. Be sure you have installed and running **Windows Azure Storage Emulator - v3.4+** otherwise this don't work.
     3. In **Admin Portal** go to **Site** section and press **Import Site** button select the file you already locate called `SITE.json` and press the **Upload** button
     4. Now you have a copy of [thewall9.com](http://thewall9.com) site.
-8. We going to test your copy of [thewall9.com](http://thewall9.com) site is working
-    1. Open in your IIS Express `thewall9.web` website
-    2. Be sure in `thewall9.web` `Web.config` file the value of your **Site ID** is the same that in your **Admin Portal Sites** section `<add key="SiteID" value="1" />`
+9. We going to test your copy of [thewall9.com](http://thewall9.com) site is working
+	1. go to the next repository https://github.com/ozalvarez/thewall9-web and open this solution
+    2. Open in your IIS Express `thewall9.web` website
+    3. Be sure in `thewall9.web` `Web.config` file the value of your **Site ID** is the same that in your **Admin Portal Sites** section `<add key="SiteID" value="1" />`
 
 Now you have running **thewall9 CMS** in your computer. You are welcome to make contribution via **Pull Request**.
+
+## Installation of Customer Portal
+1. Open Task Runner Explorer, select thewall9.customer and execute **build** task.
+2. Open Web.config, add this appSetting to point the customer portal to the API
+    ```
+<add key="API_URL" value="http://localhost:2497/" />
+```
+3. Press F5 or Start Debugging, be sure the **Startup Project** is `thewall9.customer`.
 
 ## Documentation
 
