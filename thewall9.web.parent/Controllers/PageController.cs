@@ -10,7 +10,7 @@ using thewall9.web.parent.HtmlHelpers;
 
 namespace thewall9.web.parent.Controllers
 {
-    public class PageContentBaseController : Controller
+    public class PageController : Controller
     {
         PageBLL PageService = new PageBLL();
         ProductBLL ProductService = new ProductBLL();
@@ -52,22 +52,7 @@ namespace thewall9.web.parent.Controllers
                      new XElement(ns + "url",
                          new XElement(ns + "loc", Request.Url.Scheme + "://" + Request.Url.Authority + "/" + i.FriendlyUrl)
                          , new XElement(ns + "changefreq", "always"));
-            //if (_Pages.Ecommerce)
-            //{
-            //    _Q = _Q.Union((from i in _Pages.Products
-            //                   select
-            //                   new XElement(ns + "url",
-            //                       new XElement(ns + "loc", Request.Url.Scheme + "://" + Request.Url.Authority + "/d/" + i.FriendlyUrl),
-            //                       new XElement(ns + "lastmod", String.Format("{0:yyyy-MM-dd}", DateTime.Now)),
-            //                       new XElement(ns + "changefreq", "always"),
-            //                       new XElement(ns + "priority", "0.5")))).Union((from i in _Pages.Categories
-            //                                                                      select
-            //                                                                      new XElement(ns + "url",
-            //                                                                          new XElement(ns + "loc", Request.Url.Scheme + "://" + Request.Url.Authority + "/p/" + i.CatalogFriendlyUrl + "/" + i.FriendlyUrl + "/" + i.CategoryID),
-            //                                                                          new XElement(ns + "lastmod", String.Format("{0:yyyy-MM-dd}", DateTime.Now)),
-            //                                                                          new XElement(ns + "changefreq", "always"),
-            //                                                                          new XElement(ns + "priority", "0.5"))));
-            //}
+
             if (_Pages.Blog)
             {
                 _Q = _Q.Union((from i in _Pages.Posts
@@ -111,33 +96,6 @@ namespace thewall9.web.parent.Controllers
             APP._CurrentCurrencyID = CurrencyID;
             return Redirect(Url);
         }
-
-        #region Products
-        //public ActionResult Products(string FriendlyUrl, string CategoryFriendlyUrl, int CategoryID = 0, int Page = 1)
-        //{
-        //    return Index(FriendlyUrl);
-        //}
-        //public ActionResult Product(string FriendlyUrl)
-        //{
-        //    var _Product = ProductService.Get(APP._SiteID, Request.Url.Authority, FriendlyUrl, APP._CurrentCurrencyID);
-        //    if (_Product == null)
-        //        throw new HttpException(404, "Page Not Found");
-        //    else
-        //    {
-        //        ViewBag.Title = _Product.ProductName;
-        //        ViewBag.MetaDescription = _Product.ProductName + " " + _Product.Price;
-        //        ViewBag.Product = _Product;
-        //        var _Model = PageService.GetByAlias(APP._SiteID, Request.Url.Authority, "product", _Product.CultureName);
-        //        APP._CurrentLang = _Product.CultureName;
-        //        return View(_Model.Page.ViewRender, _Model);
-        //    }
-        //}
-        //public PartialViewResult GetProducts(int CategoryID = 0, int Page = 1)
-        //{
-        //    var _P = ProductService.Get(APP._SiteID, Request.Url.Authority, APP._CurrentLang, null, APP._CurrentCurrencyID, CategoryID, PAGE_SIZE, Page);
-        //    return PartialView("_Products", _P);
-        //}
-        #endregion
 
     }
 }

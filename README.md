@@ -61,7 +61,7 @@ Now you have the database, you can change the location of the database in `Web.c
     3. In **Admin Portal** go to **Site** section and press **Import Site** button select the file you already locate called `SITE.json` and press the **Upload** button
     4. Now you have a copy of [thewall9.com](http://thewall9.com) site.
 9. We going to test your copy of [thewall9.com](http://thewall9.com) site is working
-	1. go to the next repository https://github.com/ozalvarez/thewall9-web and open this solution
+	1. Go to the next repository https://github.com/ozalvarez/thewall9-web and open this solution
     2. Open in your IIS Express `thewall9.web` website
     3. Be sure in `thewall9.web` `Web.config` file the value of your **Site ID** is the same that in your **Admin Portal Sites** section `<add key="SiteID" value="1" />`
 
