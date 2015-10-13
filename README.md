@@ -36,7 +36,7 @@ This repository is a **experimental CMS** your are welcome to contribute. Ecomme
     * Bootstrap
     * Grunt.js
 
-## Installation
+## Installation CMS
 
 1. Download the code and open the solution in Visual Studio
 2. Go to project `thewall9.data` open the file `Migrations/Configuration.cs` to setting up your database
