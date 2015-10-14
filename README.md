@@ -92,15 +92,14 @@ I have a cloud solution running right now, if you want an access write me an ema
 Install-Package thewall9CMS -Pre
 ```
 
-3. Create a Controller and extend from `thewall9.web.parent.PageContentBaseController`
-4. Find the file Global.asax and extend from `thewall9.web.parent.Thewall9Application`
-5. Be sure you have the right values for this settings
+3. Find the file Global.asax and extend from `thewall9.web.parent.Thewall9Application`
+4. Be sure you have the right values for this settings
 
     ```
 <add key="SiteID" value="1" />
 <add key="API_URL" value="http://localhost:2497/" />
 ```
-6. If you want to create a site in the cloud platform write me an email to [oz@thewall9.com](mailto:oz@thewall9.com) and i will create a SiteID for you.
+5. If you want to create a site in the cloud platform write me an email to [info@thewall9.com](mailto:info@thewall9.com) and i will create a SiteID for you.
 
 ### Websites running in thewall9 Cloud CMS
 
