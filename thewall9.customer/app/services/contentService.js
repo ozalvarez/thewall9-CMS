@@ -5,8 +5,14 @@ app.factory('contentService', ["$myhttp", "$q", "ngAuthSettings", "siteService",
             get: function () {
                 return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/content?SiteID=' + siteService.site.SiteID);
             },
+            getMenu: function () {
+                return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/content/menu?SiteID=' + siteService.site.SiteID + "&CultureID=" + cultureService.currentCulture.CultureID);
+            },
             getTree: function () {
                 return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/content?SiteID=' + siteService.site.SiteID + "&CultureID=" + cultureService.currentCulture.CultureID);
+            },
+            getTreeByProperty: function () {
+                return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/content/property?ContentPropertyID=' + siteService.site.SiteID + "&CultureID=" + cultureService.currentCulture.CultureID);
             },
             save: function (object) {
                 object.SiteID = siteService.site.SiteID;
@@ -67,6 +73,12 @@ app.factory('contentService', ["$myhttp", "$q", "ngAuthSettings", "siteService",
             },
             showInContent: function (contentPropertyID, enabled) {
                 return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/content/show-in-content', {
+                    ContentPropertyID: contentPropertyID,
+                    Boolean: enabled
+                })
+            },
+            inMenu: function (contentPropertyID, enabled) {
+                return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/content/inmenu', {
                     ContentPropertyID: contentPropertyID,
                     Boolean: enabled
                 })

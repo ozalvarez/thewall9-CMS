@@ -126,6 +126,7 @@
     <Content Include="app\app-login.js" />
     <Content Include="app\app.js" />
     <Content Include="app\controllers\appController.js" />
+    <Content Include="app\controllers\contentEditController2.js" />
     <Content Include="app\controllers\contentEditController.js" />
     <Content Include="app\controllers\mediaListController.js" />
     <Content Include="app\controllers\blogCategorySaveController.js" />
@@ -169,6 +170,7 @@
     <Content Include="app\views\associate.html" />
     <Content Include="app\views\blogCategory.html" />
     <Content Include="app\views\blogPost.html" />
+    <Content Include="app\views\content-edit2.html" />
     <Content Include="app\views\content-edit.html" />
     <Content Include="app\views\product.html" />
     <Content Include="app\views\blog.html" />

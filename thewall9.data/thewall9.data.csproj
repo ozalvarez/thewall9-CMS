@@ -183,6 +183,10 @@
     <Compile Include="Migrations\201507112139091_AddRssToBlog.Designer.cs">
       <DependentUpon>201507112139091_AddRssToBlog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511121942234_AddInMenuInContentProperty.cs" />
+    <Compile Include="Migrations\201511121942234_AddInMenuInContentProperty.Designer.cs">
+      <DependentUpon>201511121942234_AddInMenuInContentProperty.cs</DependentUpon>
+    </Compile>
     <Compile Include="Order.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Category.cs" />
@@ -416,6 +420,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507112139091_AddRssToBlog.resx">
       <DependentUpon>201507112139091_AddRssToBlog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511121942234_AddInMenuInContentProperty.resx">
+      <DependentUpon>201511121942234_AddInMenuInContentProperty.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

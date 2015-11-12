@@ -151,6 +151,11 @@
                 item.ShowInContent = enabled;
             });
         };
+        $scope.inMenu = function (item, enabled) {
+            contentService.inMenu(item.ContentPropertyID, enabled).then(function (response) {
+                item.InMenu = enabled;
+            });
+        };
 
         /*INIT*/
         $scope.init = function () {

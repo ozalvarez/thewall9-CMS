@@ -24,6 +24,10 @@ namespace thewall9.data.binding
         public bool Lock { get; set; }
         public bool ShowInContent { get; set; }
         public bool Enabled { get; set; }
+        /// <summary>
+        /// In Menu when editing Properties in Customer Portal
+        /// </summary>
+        public bool InMenu { get; set; }
     }
     public class ContentBinding : ContentBase
     {
@@ -119,5 +123,14 @@ namespace thewall9.data.binding
         public int SiteID { get; set; }
         public int ContentPropertyID { get; set; }
         public FileRead FileRead { get; set; }
+    }
+    /// <summary>
+    /// Menu of Parent Content in Customer Portal
+    /// </summary>
+    public class ContentMenu
+    {
+        public int ContentPropertyID { get; set; }
+        public string ContentPropertyValue { get; set; }
+        public string Hint { get; set; }
     }
 }

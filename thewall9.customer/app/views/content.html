@@ -81,6 +81,14 @@
                             Not In Content
                         </a>
                     </li>
+                    <li ng-if="isAdmin">
+                        <a class="btn btn-success btn-xs" data-nodrag ng-click="inMenu(item,false)" ng-show="item.InMenu">
+                            In Menu
+                        </a>
+                        <a class="btn btn-default btn-xs" data-nodrag ng-click="inMenu(item,true)" ng-hide="item.InMenu">
+                            Not In Menu
+                        </a>
+                    </li>
                 </ul>
                 <ul class="list-inline">
                     <li>
