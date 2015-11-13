@@ -29,7 +29,8 @@ namespace thewall9.bll
                     Instagram=m.Instagram,
                     Tumblr=m.Tumblr,
                     Twitter=m.Twitter,
-                    Rss = m.Rss
+                    Rss = m.Rss,
+                    YoutubeChannel = m.YoutubeChannel
                 }).ToList();
             }
         }
@@ -57,7 +58,8 @@ namespace thewall9.bll
                     Instagram = m.Instagram,
                     Tumblr = m.Tumblr,
                     Twitter = m.Twitter,
-                    Rss=m.Rss
+                    Rss=m.Rss,
+                    YoutubeChannel=m.YoutubeChannel
                 }).ToList();
             }
         }
@@ -80,6 +82,7 @@ namespace thewall9.bll
                 _Culture.Tumblr = Model.Tumblr;
                 _Culture.Twitter = Model.Twitter;
                 _Culture.Rss = Model.Rss;
+                _Culture.YoutubeChannel = Model.YoutubeChannel;
                 _c.SaveChanges();
             }
         }

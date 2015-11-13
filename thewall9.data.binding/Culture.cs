@@ -17,6 +17,7 @@ namespace thewall9.data.binding
         public string Tumblr { get; set; }
         public string Instagram { get; set; }
         public string Rss { get; set; }
+        public string YoutubeChannel { get; set; }
     }
     public class CultureBinding: CultureBase
     {
