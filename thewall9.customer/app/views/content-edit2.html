@@ -32,7 +32,7 @@
                 </button>
             </li>
         </ul>
-        <a class="btn btn-success btn-xs pull-left" style="margin-right:5px;" data-nodrag ng-click="toggle(this)">
+        <a class="btn btn-success btn-xs pull-left" style="margin-right:5px;" data-nodrag ng-click="toggle(this)" ng-show="item.Items.length>0">
             <span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span>
         </a>
         <label ng-show="item.Hint && !isAdmin">{{item.Hint}}</label>
@@ -90,13 +90,27 @@
         </ul>
         <h1>Contenido</h1>
     </div>
-    <tabset>
-        <tab ng-repeat="item in data" heading="{{item.Hint}}">
-            <div ui-tree="options" class="ui-tree-tw ui-tree-tw-no-drag">
-                <ol ui-tree-nodes="" ng-model="item" id="tree-root">
-                    <li ui-tree-node ng-include="'nodes_renderer.html'" data-collapsed="false"></li>
-                </ol>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group">
+                <a href="" ng-href="#/content/edit2/{{item.ContentPropertyID}}{{isAdmin?'?isAdmin=true':''}}" class="list-group-item" ng-repeat="item in menu" ng-class="{'active':item.Selected}">
+                    {{item.Hint}}
+                </a>
             </div>
-        </tab>
-    </tabset>
+        </div>
+        <div class="col-md-9">
+            <div class="input-group" ng-if="isAdmin" ng-class="{'has-error':menuSelected.Hint==null}">
+                <span class="input-group-addon">Hint</span>
+                <input class="form-control" ng-model="menuSelected.Hint" placeholder="Hint" ng-change="menuSelected.Edit=true;updateHintRemaining()" />
+                <span class="input-group-addon">{{menuSelected.Edit}}</span>
+            </div>
+            <div ng-repeat="item in data">
+                <div ui-tree="options" class="ui-tree-tw ui-tree-tw-no-drag">
+                    <ol ui-tree-nodes="" ng-model="item" id="tree-root">
+                        <li ui-tree-node ng-include="'nodes_renderer.html'" data-collapsed="false"></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>

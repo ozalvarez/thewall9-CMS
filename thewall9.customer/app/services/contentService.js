@@ -11,8 +11,8 @@ app.factory('contentService', ["$myhttp", "$q", "ngAuthSettings", "siteService",
             getTree: function () {
                 return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/content?SiteID=' + siteService.site.SiteID + "&CultureID=" + cultureService.currentCulture.CultureID);
             },
-            getTreeByProperty: function () {
-                return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/content/property?ContentPropertyID=' + siteService.site.SiteID + "&CultureID=" + cultureService.currentCulture.CultureID);
+            getTreeByProperty: function (ContentPropertyID) {
+                return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/content/property?ContentPropertyID=' + ContentPropertyID + "&CultureID=" + cultureService.currentCulture.CultureID);
             },
             save: function (object) {
                 object.SiteID = siteService.site.SiteID;
