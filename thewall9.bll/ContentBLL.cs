@@ -194,6 +194,7 @@ namespace thewall9.bll
                         ContentPropertyID = p.ContentPropertyID,
                         ContentPropertyParentID = p.ContentPropertyParentID,
                         ContentPropertyType = p.ContentPropertyType,
+                        Lock=p.Lock,
 
                         ContentPropertyValue = p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Any()
                         ? p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Select(m => m.ContentPropertyValue).FirstOrDefault()

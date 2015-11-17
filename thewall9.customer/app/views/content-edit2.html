@@ -21,7 +21,7 @@
             </li>
         </ul>
         <ul class="list-inline pull-right" ng-if="item.IsEditable || item.ShowInContent">
-            <li ng-if="item.IsEditable">
+            <li ng-if="item.IsEditable && !item.Lock">
                 <button class="btn btn-danger btn-xs" ng-click="delete(item)">
                     <span class="fa fa-remove"></span> Eliminar {{item.Hint}}
                 </button>
