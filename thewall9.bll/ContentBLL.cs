@@ -89,7 +89,8 @@ namespace thewall9.bll
                                 ContentPropertyID = p.ContentPropertyID,
                                 ContentPropertyValue = m.ContentPropertyValue,
                                 CultureID = m.CultureID,
-                                CultureName = m.Culture.Name
+                                CultureName = m.Culture.Name,
+                                Hint=m.Hint
                             }).ToList(),
                             Items = _c.ContentProperties.Where(m => m.ContentPropertyParentID == p.ContentPropertyID).Any() ? GetOrder(_c.ContentProperties.Where(m => m.ContentPropertyParentID == p.ContentPropertyID).ToList(), p.ContentPropertyID) : new List<ContentBindingList>()
                         }).OrderBy(m => m.Priority).ToList();
@@ -139,7 +140,8 @@ namespace thewall9.bll
                             {
                                 ContentPropertyID = p.ContentPropertyID,
                                 ContentPropertyValue = m.ContentPropertyValue,
-                                CultureID = m.CultureID
+                                CultureID = m.CultureID,
+                                Hint=m.Hint
                             }).ToList(),
                             Items = _c.ContentProperties.Where(m => m.ContentPropertyParentID == p.ContentPropertyID).Any() ? GetOrder(_c.ContentProperties.Where(m => m.ContentPropertyParentID == p.ContentPropertyID).ToList(), p.ContentPropertyID, Lang) : new List<ContentBindingList>()
                         }).OrderBy(m => m.Priority).ToList();
@@ -414,6 +416,7 @@ namespace thewall9.bll
                         var _M = new ContentCultureBinding();
                         _M.ContentPropertyID = _ContentPropertyID;
                         _M.CultureID = _C.CultureID;
+                        _M.Hint = ic.Hint;
                         if (item.ContentPropertyType == ContentPropertyType.TXT || item.ContentPropertyType == ContentPropertyType.HTML)
                             _M.ContentPropertyValue = ic.ContentPropertyValue;
                         else if (item.ContentPropertyType == ContentPropertyType.IMG)
