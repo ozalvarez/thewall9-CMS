@@ -5,7 +5,7 @@
 app.config(["$routeProvider", "blockUIConfig", function ($routeProvider, blockUIConfig) {
 
     $routeProvider.when("/", {
-        redirectTo:'/content/edit'
+        redirectTo:'/content/edit2'
     });
 
     $routeProvider.when("/configuration", {
