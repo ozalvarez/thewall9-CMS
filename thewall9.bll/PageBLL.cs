@@ -198,11 +198,11 @@ namespace thewall9.bll
             {
                 var _Q = SiteID != 0
                     ? from p in _c.PageCultures
-                      where p.Page.SiteID == SiteID
+                      where p.Page.SiteID == SiteID && p.Published
                       select p
                      : from m in _c.PageCultures
                        join u in _c.SiteUrls on m.Page.Site.SiteID equals u.SiteID
-                       where u.Url.Equals(Url) && !m.Page.InMenu
+                       where u.Url.Equals(Url) && !m.Page.InMenu && m.Published
                        select m;
                 return OrderPages(_Q.ToList(), 0);
             }

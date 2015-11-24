@@ -102,12 +102,13 @@
 
         /*CULTURE*/
         $scope.updateCulture = function () {
-            cultureService.currentCulture = $scope.selectedCulture;
+            cultureService.currentCulture = $scope.selectedCulture;   
             $scope.init();
         }
         /*INIT*/
         $scope.init = function () {
             $scope.selectedCulture = cultureService.currentCulture;
+            $scope.menu = null;
             if ($scope.selectedCulture.CultureID) {
                 $scope.getMenu();
             }
