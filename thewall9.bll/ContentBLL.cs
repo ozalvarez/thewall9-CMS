@@ -53,6 +53,7 @@ namespace thewall9.bll
                         ContentPropertyType = p.ContentPropertyType,
                         Lock = p.Lock,
                         ShowInContent = p.ShowInContent,
+                        InMenu=p.InMenu,
                         Enabled = p.Enabled,
                         ContentCultures = p.ContentPropertyCultures.Select(m => new ContentCultureBinding
                         {
@@ -81,13 +82,15 @@ namespace thewall9.bll
                             ContentPropertyType = p.ContentPropertyType,
                             Lock = p.Lock,
                             Enabled = p.Enabled,
+                            InMenu=p.InMenu,
                             ShowInContent = p.ShowInContent,
                             ContentCultures = p.ContentPropertyCultures.Select(m => new ContentCultureBinding
                             {
                                 ContentPropertyID = p.ContentPropertyID,
                                 ContentPropertyValue = m.ContentPropertyValue,
                                 CultureID = m.CultureID,
-                                CultureName = m.Culture.Name
+                                CultureName = m.Culture.Name,
+                                Hint=m.Hint
                             }).ToList(),
                             Items = _c.ContentProperties.Where(m => m.ContentPropertyParentID == p.ContentPropertyID).Any() ? GetOrder(_c.ContentProperties.Where(m => m.ContentPropertyParentID == p.ContentPropertyID).ToList(), p.ContentPropertyID) : new List<ContentBindingList>()
                         }).OrderBy(m => m.Priority).ToList();
@@ -132,11 +135,13 @@ namespace thewall9.bll
                             SiteID = p.SiteID,
                             ContentPropertyType = p.ContentPropertyType,
                             Enabled = p.Enabled,
+                            InMenu=p.InMenu,
                             ContentCultures = p.ContentPropertyCultures.Where(m => m.Culture.Name.ToLower().Equals(Lang.ToLower()) && m.Culture.SiteID == p.SiteID).Select(m => new ContentCultureBinding
                             {
                                 ContentPropertyID = p.ContentPropertyID,
                                 ContentPropertyValue = m.ContentPropertyValue,
-                                CultureID = m.CultureID
+                                CultureID = m.CultureID,
+                                Hint=m.Hint
                             }).ToList(),
                             Items = _c.ContentProperties.Where(m => m.ContentPropertyParentID == p.ContentPropertyID).Any() ? GetOrder(_c.ContentProperties.Where(m => m.ContentPropertyParentID == p.ContentPropertyID).ToList(), p.ContentPropertyID, Lang) : new List<ContentBindingList>()
                         }).OrderBy(m => m.Priority).ToList();
@@ -159,16 +164,39 @@ namespace thewall9.bll
                 return GetTree(SiteID, CultureID, _c);
             }
         }
+        public List<ContentTree> GetTreeByContentProperty(int ContentPropertyParentID, int CultureID, string UserID)
+        {
+            using (var _c = db)
+            {
+                var _CP = _c.ContentProperties.Where(m => m.ContentPropertyID == ContentPropertyParentID).SingleOrDefault();
+                Can(_CP.SiteID, UserID, _c);
+                return GetTreeOrder(null, ContentPropertyParentID, CultureID, _c);
+            }
+        }
         public List<ContentTree> GetTreeOrder(List<ContentProperty> Content, int ParentID, int CultureID, ApplicationDbContext _c)
         {
-            return (from p in Content
-                    where p.ContentPropertyParentID == ParentID
-                    orderby p.Priority
+            IEnumerable<ContentProperty> _Q;
+            if (Content == null)
+            {
+                _Q = (from c in _c.ContentProperties
+                     where c.ContentPropertyParentID == ParentID
+                     orderby c.Priority
+                     select c).ToList();
+            }
+            else
+            {
+                _Q = from c in Content
+                     where c.ContentPropertyParentID == ParentID
+                     orderby c.Priority
+                     select c;
+            }
+            return (from p in _Q
                     select new ContentTree
                     {
                         ContentPropertyID = p.ContentPropertyID,
                         ContentPropertyParentID = p.ContentPropertyParentID,
                         ContentPropertyType = p.ContentPropertyType,
+                        Lock=p.Lock,
 
                         ContentPropertyValue = p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Any()
                         ? p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Select(m => m.ContentPropertyValue).FirstOrDefault()
@@ -239,6 +267,61 @@ namespace thewall9.bll
                     }
 
                 }
+            }
+        }
+        #endregion
+
+        #region Menu
+        public List<ContentMenu> GetMenu(int SiteID, int CultureID, string UserID)
+        {
+            using (var _c = db)
+            {
+                Can(SiteID, UserID, _c);
+                var _Q = (from c in _c.ContentProperties
+                          where c.SiteID == SiteID && c.ContentPropertyParentID == 0
+                          orderby c.Priority
+                          select new ContentMenu
+                          {
+                              ContentPropertyID = c.ContentPropertyID,
+
+                              ContentPropertyValue = c.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Any()
+                               ? c.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Select(m => m.ContentPropertyValue).FirstOrDefault()
+                               : c.ContentPropertyCultures.Select(m => m.ContentPropertyValue).FirstOrDefault(),
+
+                              Hint = c.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Any()
+                        ? c.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Select(m => m.Hint).FirstOrDefault()
+                        : (c.ContentPropertyCultures.Select(m => m.Hint).Any()
+                        ? c.ContentPropertyCultures.Select(m => m.Hint).FirstOrDefault()
+                        : c.ContentPropertyAlias)
+                          }).ToList();
+                var _Q2 = (from c in _c.ContentProperties
+                           where c.SiteID == SiteID && c.InMenu
+                           orderby c.Priority
+                           select new ContentMenu
+                           {
+                               ContentPropertyID = c.ContentPropertyID,
+
+                               ContentPropertyValue = c.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Any()
+                               ? c.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Select(m => m.ContentPropertyValue).FirstOrDefault()
+                               : c.ContentPropertyCultures.Select(m => m.ContentPropertyValue).FirstOrDefault(),
+
+                               Hint = c.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Any()
+                        ? c.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Select(m => m.Hint).FirstOrDefault()
+                        : (c.ContentPropertyCultures.Select(m => m.Hint).Any()
+                        ? c.ContentPropertyCultures.Select(m => m.Hint).FirstOrDefault()
+                        : c.ContentPropertyAlias)
+                           }).ToList();
+                return _Q.Union(_Q2).ToList();
+            }
+        }
+        public void InMenu(ContentBoolean Model, string UserID)
+        {
+            using (var _c = db)
+            {
+                var _CP = _c.ContentProperties.Where(m => m.ContentPropertyID == Model.ContentPropertyID).SingleOrDefault();
+                Can(_CP.SiteID, UserID, _c);
+                _CP.InMenu = Model.Boolean;
+                _c.SaveChanges();
             }
         }
         #endregion
@@ -333,6 +416,7 @@ namespace thewall9.bll
                         var _M = new ContentCultureBinding();
                         _M.ContentPropertyID = _ContentPropertyID;
                         _M.CultureID = _C.CultureID;
+                        _M.Hint = ic.Hint;
                         if (item.ContentPropertyType == ContentPropertyType.TXT || item.ContentPropertyType == ContentPropertyType.HTML)
                             _M.ContentPropertyValue = ic.ContentPropertyValue;
                         else if (item.ContentPropertyType == ContentPropertyType.IMG)

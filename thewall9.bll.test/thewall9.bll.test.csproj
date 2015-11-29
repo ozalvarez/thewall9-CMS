@@ -101,6 +101,7 @@
   <ItemGroup>
     <Compile Include="BaseTest.cs" />
     <Compile Include="BlogBLLTest.cs" />
+    <Compile Include="ContentBLLTest.cs" />
     <Compile Include="ProductBLLTest.cs" />
     <Compile Include="CategoryBLLTest.cs" />
     <Compile Include="SiteBLLTest.cs" />

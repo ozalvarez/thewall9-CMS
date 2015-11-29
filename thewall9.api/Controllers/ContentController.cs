@@ -26,9 +26,20 @@ namespace thewall9.api.Controllers
         }
         #endregion
 
+        #region CUSTOMER
         public IHttpActionResult GetTree(int SiteID, int CultureID)
         {
             return Ok(_ContentService.GetTree(SiteID, CultureID, User.Identity.GetUserId()));
+        }
+        [Route("menu")]
+        public IHttpActionResult GetMenu(int SiteID, int CultureID)
+        {
+            return Ok(_ContentService.GetMenu(SiteID, CultureID, User.Identity.GetUserId()));
+        }
+        [Route("property")]
+        public IHttpActionResult GetTreeByContentProperty(int ContentPropertyID, int CultureID)
+        {
+            return Ok(_ContentService.GetTreeByContentProperty(ContentPropertyID, CultureID, User.Identity.GetUserId()));
         }
         [Route("save-tree")]
         public IHttpActionResult PostSaveTree(ContentTreeBinding Model)
@@ -36,7 +47,7 @@ namespace thewall9.api.Controllers
             _ContentService.SaveTree(Model, User.Identity.GetUserId());
             return Ok();
         }
-
+        #endregion  
 
         [Route("export")]
         public IHttpActionResult GetExport(int SiteID, int ContentPropertyID)
@@ -110,6 +121,12 @@ namespace thewall9.api.Controllers
         public IHttpActionResult ShowInContent(ContentBoolean Model)
         {
             _ContentService.ShowInContent(Model, User.Identity.GetUserId());
+            return Ok();
+        }
+        [Route("inmenu")]
+        public IHttpActionResult InMenu(ContentBoolean Model)
+        {
+            _ContentService.InMenu(Model, User.Identity.GetUserId());
             return Ok();
         }
     }

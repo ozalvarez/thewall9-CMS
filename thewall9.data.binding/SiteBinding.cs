@@ -53,7 +53,8 @@ namespace thewall9.data.binding
                     GPlus = item.GPlus,
                     Instagram = item.Instagram,
                     Tumblr = item.Tumblr,
-                    Twitter = item.Twitter
+                    Twitter = item.Twitter,
+                    YoutubeChannel=item.YoutubeChannel
                 });
             }
             this.Cultures = _Cultures;

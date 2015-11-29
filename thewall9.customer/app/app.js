@@ -5,7 +5,7 @@
 app.config(["$routeProvider", "blockUIConfig", function ($routeProvider, blockUIConfig) {
 
     $routeProvider.when("/", {
-        redirectTo:'/content/edit'
+        redirectTo:'/content/edit2'
     });
 
     $routeProvider.when("/configuration", {
@@ -32,6 +32,11 @@ app.config(["$routeProvider", "blockUIConfig", function ($routeProvider, blockUI
         controller: 'contentEditController',
         templateUrl: '/app/views/content-edit.html'
     });
+    $routeProvider.when('/content/edit2/:ContentPropertyID?', {
+        controller: 'contentEditController2',
+        templateUrl: '/app/views/content-edit2.html'
+    });
+
     $routeProvider.when('/categories', {
         controller: 'categoryController',
         templateUrl: '/app/views/categories.html'

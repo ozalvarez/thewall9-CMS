@@ -14,8 +14,5 @@
     "angular-ui-tree": "^2.9.0",
     "moment": "^2.10.3",
     "angular-ui-tinymce": "^0.0.9"
-  },
-  "resolutions": {
-    "angular": "1.4.6"
   }
 }

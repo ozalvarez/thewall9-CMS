@@ -12,8 +12,5 @@
     "toastr": "^2.1.1",
     "font-awesome": "^4.3.0",
     "angular-ui-tree": "^2.5.0"
-  },
-  "resolutions": {
-    "angular": "1.4.6"
   }
 }
