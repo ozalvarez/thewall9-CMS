@@ -23,7 +23,7 @@ namespace thewall9.bll.test
                 SiteID = _SiteID
             };
             D0.ContentPropertyID = new ContentBLL().Save(D0);
-
+            
             D00 = new data.binding.ContentBinding
             {
                 ContentPropertyAlias = "0-0",
@@ -61,8 +61,23 @@ namespace thewall9.bll.test
             D011.ContentPropertyID = new ContentBLL().Save(D011);
 
             var _Tree=new ContentBLL().GetTree(_SiteID, _Cultures[0].CultureID, _CustomerUser.Id);
+            new ContentBLL().SaveTree(new data.binding.ContentTreeBinding {
+                CultureID=_Cultures[0].CultureID,
+                Items=_Tree,
+                SiteID=_SiteID
+            }, _CustomerUser.Id);
             Assert.IsNotNull(_Tree);
         }
+        #region WEB
+        [TestMethod]
+        public void ContentGetWeb()
+        {
+            SettingUp();
+            var _Model = new ContentBLL().GetContent(_SiteID, null, D0.ContentPropertyAlias, _Cultures[0].Name);
+            Assert.IsNotNull(_Model);
+        }
+        #endregion
+
         [TestMethod]
         public void ContentSaveTest()
         {
