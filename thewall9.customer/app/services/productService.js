@@ -1,6 +1,6 @@
 ﻿'use strict';
-app.factory('productService', ["$myhttp", "$q", '$upload', "ngAuthSettings", "siteService",
-    function ($http, $q, $upload, ngAuthSettings, siteService) {
+app.factory('productService', ["$myhttp", "$q", 'Upload', "ngAuthSettings", "siteService",
+    function ($http, $q, Upload, ngAuthSettings, siteService) {
         var uri = 'api/product';
         var uriGallery = 'api/product-gallery';
         var productFactory = {};
@@ -27,8 +27,8 @@ app.factory('productService', ["$myhttp", "$q", '$upload', "ngAuthSettings", "si
                 Index: index
             });
         };
-        productFactory.uploadGallery = function (productID,file) {
-            return $upload.upload({
+        productFactory.uploadGallery = function (productID, file) {
+            return Upload.upload({
                 url: ngAuthSettings.apiServiceBaseUri + uriGallery + "/upload",
                 fields: {
                     'ProductID': productID

@@ -21,9 +21,11 @@
         $scope.getMenu = function () {
             if ($scope.menu == null) {
                 contentService.getMenu().then(function (data) {
-                    $scope.menu = data;
-                    var ID = $routeParams.ContentPropertyID == null ? $scope.menu[0].ContentPropertyID : $routeParams.ContentPropertyID;
-                    $scope.get(ID);
+                    if (data.length > 0) {
+                        $scope.menu = data;
+                        var ID = $routeParams.ContentPropertyID == null ? $scope.menu[0].ContentPropertyID : $routeParams.ContentPropertyID;
+                        $scope.get(ID);
+                    }
                 });
             } else {
                 $scope.get($routeParams.ContentPropertyID);

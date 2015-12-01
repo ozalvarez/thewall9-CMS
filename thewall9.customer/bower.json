@@ -13,6 +13,8 @@
     "font-awesome": "^4.3.0",
     "angular-ui-tree": "^2.9.0",
     "moment": "^2.10.3",
-    "angular-ui-tinymce": "^0.0.9"
+    "angular-ui-tinymce": "^0.0.9",
+    "ng-file-upload": "^10.1.0",
+    "ng-file-upload-shim": "^10.1.0"
   }
 }

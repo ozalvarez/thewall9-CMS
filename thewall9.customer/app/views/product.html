@@ -99,10 +99,10 @@
                 <div class="clearfix" ng-if="$index%12==5"></div>
                 <div ng-repeat-end=""></div>
             </div>
-            <div ng-file-select ng-file-drop ng-model="model.Files" class="drop-box"
-                 drag-over-class="dragover" ng-multiple="true" allow-dir="true"
-                 accept=".jpg,.png,.gif">Drop Images or PDFs files here</div>
-            <div ng-no-file-drop>File Drag/Drop is not supported for this browser</div>
+            <div ngf-drop="uploadFiles($files)" ng-model="model.Files" class="drop-box"
+                 ngf-drag-over-class="'dragover'" ngf-multiple="true"
+                 ngf-pattern="'image/*'">Drop Images or PDFs files here</div>
+            <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
             <ul ng-show="model.Files.length > 0">
                 <li ng-repeat="f in model.Files">
                     <img ng-show="f.dataUrl" ng-src="{{f.dataUrl}}" class="thumb">

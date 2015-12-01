@@ -85,7 +85,9 @@ module.exports = function (grunt) {
                         'lib/angular-ui-tree/angular-ui-tree.js',
                         'lib/angular-ui-tinymce/tinymce.js',
                         "scripts/angular-block-ui.min.js",
-                        "scripts/angular-file-upload.min.js",
+                        "lib/ng-file-upload-shim/ng-file-upload-shim.js",
+                        "lib/ng-file-upload/ng-file-upload.js",
+                        //"scripts/angular-file-upload.min.js",
                         "scripts/ui-bootstrap-custom-tpls-0.13.3.min.js"
                     ]
                 }

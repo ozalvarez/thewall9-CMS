@@ -82,7 +82,7 @@ namespace thewall9.bll
                 return _PW;
             }
         }
-        public ProductWeb Get(int SiteID, string Url, string FriendlyUrl, int CurrencyID)
+        public ProductWeb GetDetail(int SiteID, string Url, string FriendlyUrl, int CurrencyID)
         {
             using (var _c = db)
             {

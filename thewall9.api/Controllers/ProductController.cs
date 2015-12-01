@@ -10,7 +10,7 @@ using thewall9.data.binding;
 namespace thewall9.api.Controllers
 {
     [Authorize]
-    [RoutePrefix("api/Product")]
+    [RoutePrefix("api/product")]
     public class ProductController : ApiController
     {
         ProductBLL _ProductService = new ProductBLL();
@@ -27,9 +27,9 @@ namespace thewall9.api.Controllers
             return Ok(_ProductService.Get(SiteID, Url, Lang, CurrencyID, ProductCategoryFriendlyUrl, Page));
         }
         [AllowAnonymous]
-        public IHttpActionResult Get(int SiteID, string Url, string FriendlyUrl, int CurrencyID)
+        public IHttpActionResult GetDetail(int SiteID, string Url, string FriendlyUrl, int CurrencyID)
         {
-            return Ok(_ProductService.Get(SiteID, Url, FriendlyUrl, CurrencyID));
+            return Ok(_ProductService.GetDetail(SiteID, Url, FriendlyUrl, CurrencyID));
         }
         #endregion
 
