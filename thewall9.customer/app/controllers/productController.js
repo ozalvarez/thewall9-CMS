@@ -98,6 +98,10 @@
             item.Deleting = true;
             item.Adding = false;
         };
+        function redirectProductDetail(ProductID) {
+            toastrService.success("Producto Guardado");
+            $location.path("/product/" + ProductID);
+        }
         $scope.save = function () {
             if ($scope.model.ProductCategories != null && $scope.model.ProductCategories.length > 0) {
                 productService.save($scope.model).then(function (data) {
@@ -116,8 +120,11 @@
                                 }
                                 $scope.model.ProductGalleries.push(data);
                                 $scope.model.Files = [];
+                                redirectProductDetail($scope.model.ProductID)
                             });
                         }
+                    } else {
+                        redirectProductDetail($scope.model.ProductID)
                     }
                     
                 });
@@ -133,6 +140,7 @@
                 });
             }
         };
+        
         $scope.deleteGallery = function (item) {
             if (confirm("¿Estas seguro que deseas eliminar esta imagen?")) {
                 productService.removeGallery(item.ProductGalleryID).then(function (data) {

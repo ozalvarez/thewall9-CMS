@@ -47,6 +47,12 @@ namespace thewall9.api.Controllers
         {
             return Ok(_ProductService.Save(Model, User.Identity.GetUserId()));
         }
+        [Route("enable")]
+        public IHttpActionResult Enabled(ProductBoolean Model)
+        {
+            _ProductService.Enable(Model, User.Identity.GetUserId());
+            return Ok();
+        }
         [Route("gallery")]
         public IHttpActionResult DeleteGallery(int GalleryID)
         {

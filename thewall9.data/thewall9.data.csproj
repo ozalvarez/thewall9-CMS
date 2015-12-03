@@ -191,6 +191,10 @@
     <Compile Include="Migrations\201511132121278_ADDYoutubeChannel.Designer.cs">
       <DependentUpon>201511132121278_ADDYoutubeChannel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512022156292_AddEnabledToProducts.cs" />
+    <Compile Include="Migrations\201512022156292_AddEnabledToProducts.Designer.cs">
+      <DependentUpon>201512022156292_AddEnabledToProducts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Order.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Category.cs" />
@@ -430,6 +434,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511132121278_ADDYoutubeChannel.resx">
       <DependentUpon>201511132121278_ADDYoutubeChannel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512022156292_AddEnabledToProducts.resx">
+      <DependentUpon>201512022156292_AddEnabledToProducts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

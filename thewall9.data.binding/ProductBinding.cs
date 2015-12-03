@@ -12,6 +12,7 @@ namespace thewall9.data.binding
         public int SiteID { get; set; }
         public string ProductAlias { get; set; }
         public int Priority { get; set; }
+        public bool Enabled { get; set; }
     }
     public class ProductBinding : ProductBase
     {
@@ -96,5 +97,10 @@ namespace thewall9.data.binding
     {
         public int ProductID { get; set; }
         public int Index { get; set; }
+    }
+    public class ProductBoolean
+    {
+        public int ProductID { get; set; }
+        public bool Boolean { get; set; }
     }
 }

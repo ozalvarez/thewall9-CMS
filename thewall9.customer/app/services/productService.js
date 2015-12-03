@@ -18,6 +18,12 @@ app.factory('productService', ["$myhttp", "$q", 'Upload', "ngAuthSettings", "sit
         productFactory.remove = function (productID) {
             return $http.delete(ngAuthSettings.apiServiceBaseUri + uri + '?ProductID=' + productID);
         };
+        productFactory.enable= function (ProductID, Enabled) {
+            return $http.post(ngAuthSettings.apiServiceBaseUri + uri + '/enable', {
+                ProductID: ProductID,
+                Boolean: Enabled
+            })
+        };
         productFactory.removeGallery = function (galleryID) {
             return $http.delete(ngAuthSettings.apiServiceBaseUri + uri + '/gallery?GalleryID=' + galleryID);
         };

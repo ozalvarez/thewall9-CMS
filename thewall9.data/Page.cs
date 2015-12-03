@@ -35,7 +35,7 @@ namespace thewall9.data
         {
             this.PageID = Model.PageID;
             this.CultureID = Model.CultureID;
-            this.FriendlyUrl = Model.FriendlyUrl==null?"":Model.FriendlyUrl;
+            this.FriendlyUrl = Model.FriendlyUrl == null ? "" : Model.FriendlyUrl;
             this.MetaDescription = Model.MetaDescription;
             this.Published = Model.Published;
             this.TitlePage = Model.TitlePage;

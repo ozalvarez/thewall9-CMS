@@ -13,6 +13,11 @@
                 });
             }
         };
+        $scope.enable = function (item, enabled) {
+            productService.enable(item.ProductID, enabled).then(function (response) {
+                item.Enabled = enabled;
+            });
+        };
         $scope.options = {
             dropped: function (event) {
                 var sourceNode = event.source.nodeScope;

@@ -13,6 +13,14 @@
         {{item.ProductAlias}}
         <ul class="list-inline pull-right">
             <li>
+                <button class="btn btn-danger btn-xs" ng-click="enable(item,true)" ng-hide="item.Enabled">
+                    <span class="fa fa-remove"></span> Desabilitado
+                </button>
+                <button class="btn btn-success btn-xs" ng-click="enable(item,false)" ng-show="item.Enabled">
+                    <span class="fa fa-check"></span> Habilitado
+                </button>
+            </li>
+            <li>
                 <a class="btn btn-sm btn-default" ng-href="#/product/{{item.ProductID}}" data-nodrag>
                     <span class="glyphicon glyphicon-edit"></span>
                 </a>

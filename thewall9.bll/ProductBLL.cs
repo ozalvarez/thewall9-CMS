@@ -19,14 +19,14 @@ namespace thewall9.bll
         {
             return (string.IsNullOrEmpty(ProductCategoryFriendlyUrl)
                 ? from m in _c.ProductCultures
-                  where m.Product.SiteID == SiteID && m.CultureID == CultureID
+                  where m.Product.SiteID == SiteID && m.CultureID == CultureID && m.Product.Enabled
                   orderby m.Product.Priority
                   select m
                : from m in _c.ProductCultures
                  join u in _c.ProductCategories on m.ProductID equals u.ProductID
                  join pc in _c.Categories on u.CategoryID equals pc.CategoryID
                  join pcc in _c.CategoryCultures on pc.CategoryID equals pcc.CategoryID
-                 where pcc.FriendlyUrl == ProductCategoryFriendlyUrl && m.CultureID == CultureID
+                 where pcc.FriendlyUrl == ProductCategoryFriendlyUrl && m.CultureID == CultureID && m.Product.Enabled
                  orderby m.Product.Priority
                  select m);
         }
@@ -62,7 +62,7 @@ namespace thewall9.bll
 
         public ProductsWeb Get(int SiteID, string Url, string Lang, int CurrencyID, string ProductCategoryFriendlyUrl, int Page)
         {
-            int Take = 10;//SHOULD BE FROM USER INPUT
+            int Take = 100;//SHOULD BE FROM USER INPUT
             using (var _c = db)
             {
                 if (SiteID == 0)
@@ -72,7 +72,7 @@ namespace thewall9.bll
                 var _PW = new ProductsWeb();
                 _PW.Products = _Q.Skip(Take * (Page - 1)).Take(Take).ToList();
                 _PW.NumberPages = _Q.Count() / Take;
-              //  _PW.Categories = new CategoryBLL().Get(SiteID, null, ProductCategoryFriendlyUrl, Lang, FriendlyUrl);
+                //  _PW.Categories = new CategoryBLL().Get(SiteID, null, ProductCategoryFriendlyUrl, Lang, FriendlyUrl);
                 _PW.CultureID = _Culture.CultureID;
                 _PW.CultureName = _Culture.Name;
                 //if (!string.IsNullOrEmpty(ProductCategoryFriendlyUrl))
@@ -97,7 +97,7 @@ namespace thewall9.bll
         {
             using (var _c = db)
             {
-                
+
                 var _Q = from m in _c.ProductCultures
                          where m.Product.SiteID == SiteID
                          && m.ProductName.ToLower().Contains(Query)
@@ -115,7 +115,7 @@ namespace thewall9.bll
                          where m.Product.SiteID == SiteID
                          select new ProductWeb
                          {
-                             FriendlyUrl=m.FriendlyUrl
+                             FriendlyUrl = m.FriendlyUrl
                          };
                 return _Q.ToList();
             }
@@ -134,6 +134,7 @@ namespace thewall9.bll
                 ProductID = c.ProductID,
                 ProductAlias = c.ProductAlias,
                 SiteID = c.SiteID,
+                Enabled = c.Enabled,
                 ProductCultures = c.ProductCultures.Select(m => new ProductCultureBinding
                 {
                     ProductName = m.ProductName,
@@ -232,7 +233,12 @@ namespace thewall9.bll
                     //UPDATING
                     _Product = GetByID(Model.ProductID, _c);
                 }
-                _Product.ProductAlias = Model.ProductAlias;
+                _Product.ProductAlias = Model.ProductAlias != null
+                    ? Model.ProductAlias
+                    : (Model.ProductCultures.Count > 0
+                        ? Model.ProductCultures[0].ProductName.CleanUrl()
+                        : null);
+                _Product.Enabled = true;
 
                 //ADDING CULTURES
                 if (Model.ProductCultures != null)
@@ -406,6 +412,17 @@ namespace thewall9.bll
                     }
                 }
                 _P.Priority = Model.Index;
+                _c.SaveChanges();
+            }
+        }
+
+        public void Enable(ProductBoolean Model, string UserID)
+        {
+            using (var _c = db)
+            {
+                var _CP = _c.Products.Where(m => m.ProductID == Model.ProductID).SingleOrDefault();
+                Can(_CP.SiteID, UserID, _c);
+                _CP.Enabled = Model.Boolean;
                 _c.SaveChanges();
             }
         }
