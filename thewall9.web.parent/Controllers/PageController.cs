@@ -30,9 +30,13 @@ namespace thewall9.web.parent.Controllers
             {
                 if (!string.IsNullOrEmpty(_Model.Page.RedirectUrl))
                     return Redirect(_Model.Page.RedirectUrl);
+
                 ViewBag.Title = _Model.Page.TitlePage;
                 ViewBag.MetaDescription = _Model.Page.MetaDescription;
                 ViewBag.Active = "page-" + FriendlyUrl;
+
+                ViewBag.OGraph = _Model.Page.OGraph;
+
                 APP._CurrentLang = _Model.Page.CultureName;
                 return View(_Model.Page.ViewRender, _Model);
             }

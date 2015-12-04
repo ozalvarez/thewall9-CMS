@@ -56,7 +56,11 @@ namespace thewall9.data.binding
         public ICollection<ContentBindingList> Items { get; set; }
         public ICollection<ContentCultureBinding> ContentCultures { get; set; }
     }
-
+    public class ContentBindingListT : ContentBinding
+    {
+        public IEnumerable<ContentBindingListT> Items { get; set; }
+        public IEnumerable<ContentCultureBinding> ContentCultures { get; set; }
+    }
     public class ContentMoveBinding
     {
         public int Index { get; set; }

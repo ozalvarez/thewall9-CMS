@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using thewall9.data.Models;
 
 namespace thewall9.bll.test
 {
@@ -13,7 +14,8 @@ namespace thewall9.bll.test
                 0-1-0 [TXT]
                 0-1-1 [TXT]
         ----*/
-        data.binding.ContentBinding D0,D00,D01,D010,D011;
+        data.binding.ContentBinding D0, D00, D01, D010, D011;
+
         private void SettingUp()
         {
             D0 = new data.binding.ContentBinding
@@ -23,13 +25,13 @@ namespace thewall9.bll.test
                 SiteID = _SiteID
             };
             D0.ContentPropertyID = new ContentBLL().Save(D0);
-            
+
             D00 = new data.binding.ContentBinding
             {
                 ContentPropertyAlias = "0-0",
                 ContentPropertyType = data.binding.ContentPropertyType.TXT,
                 SiteID = _SiteID,
-                ContentPropertyParentID= D0.ContentPropertyID
+                ContentPropertyParentID = D0.ContentPropertyID
             };
             D00.ContentPropertyID = new ContentBLL().Save(D00);
 
@@ -60,11 +62,12 @@ namespace thewall9.bll.test
             };
             D011.ContentPropertyID = new ContentBLL().Save(D011);
 
-            var _Tree=new ContentBLL().GetTree(_SiteID, _Cultures[0].CultureID, _CustomerUser.Id);
-            new ContentBLL().SaveTree(new data.binding.ContentTreeBinding {
-                CultureID=_Cultures[0].CultureID,
-                Items=_Tree,
-                SiteID=_SiteID
+            var _Tree = new ContentBLL().GetTree(_SiteID, _Cultures[0].CultureID, _CustomerUser.Id);
+            new ContentBLL().SaveTree(new data.binding.ContentTreeBinding
+            {
+                CultureID = _Cultures[0].CultureID,
+                Items = _Tree,
+                SiteID = _SiteID
             }, _CustomerUser.Id);
             Assert.IsNotNull(_Tree);
         }
@@ -72,9 +75,16 @@ namespace thewall9.bll.test
         [TestMethod]
         public void ContentGetWeb()
         {
-            SettingUp();
-            var _Model = new ContentBLL().GetContent(_SiteID, null, D0.ContentPropertyAlias, _Cultures[0].Name);
-            Assert.IsNotNull(_Model);
+            using (var _c = new ApplicationDbContext())
+            {
+                SettingUp();
+                var _Logger = new MyLogger();
+                _c.Database.Log = s => _Logger.Log("EFApp", s);
+                var _Model = new ContentBLL().GetContent(_SiteID, null, D0.ContentPropertyAlias, _Cultures[0].Name, _c);
+                Assert.IsNotNull(_Model);
+                Assert.IsTrue(_Logger.NumberSQLQuery < 14);
+            }
+
         }
         #endregion
 

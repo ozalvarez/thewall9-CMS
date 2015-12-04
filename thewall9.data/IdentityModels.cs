@@ -66,6 +66,20 @@ namespace thewall9.data.Models
             modelBuilder.Entity<BlogPostImages>()
                 .HasKey(m => new { m.BlogPostID, m.CultureID, m.MediaID });
 
+            //PAGES
+            modelBuilder.Entity<PageCultureOGraph>()
+                 .HasKey(m => new { m.PageID, m.CultureID })
+                 .HasRequired(m => m.PageCulture)
+                 .WithOptional(m => m.PageCultureOGraph)
+                .WillCascadeOnDelete(true);
+
+            //Odata
+
+            modelBuilder.Entity<OGraphMedia>()
+                 .HasKey(m => new {  m.OGraphID })
+                .HasRequired(m => m.OGraph)
+                .WithOptional(m => m.OGraphMedia)
+               .WillCascadeOnDelete(true);
 
             base.OnModelCreating(modelBuilder);
         }
@@ -73,9 +87,15 @@ namespace thewall9.data.Models
         public DbSet<Site> Sites { get; set; }
         public DbSet<SiteUser> SiteUsers { get; set; }
         public DbSet<SiteUserRol> SiteUserRoles { get; set; }
-        public DbSet<Page> Pages { get; set; }
         public DbSet<Culture> Cultures { get; set; }
+
+        public DbSet<Page> Pages { get; set; }
         public DbSet<PageCulture> PageCultures { get; set; }
+        public DbSet<PageCultureOGraph> PageCulturesOGraphs { get; set; }
+
+        public DbSet<OGraph> OGraphs { get; set; }
+        public DbSet<OGraphMedia> OGraphMedias { get; set; }
+
         public DbSet<ContentProperty> ContentProperties { get; set; }
         public DbSet<ContentPropertyCulture> ContentPropertyCultures { get; set; }
         public DbSet<SiteUrl> SiteUrls { get; set; }

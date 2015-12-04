@@ -36,6 +36,7 @@ namespace thewall9.data.binding
         public string CultureName { get; set; }
         public string PageAlias { get; set; }
         public List<PageCultureBinding> Items { get; set; }
+        public OGraphBinding OGraph { get; set; }
     }
     public class PageWeb
     {

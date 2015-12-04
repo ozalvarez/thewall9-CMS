@@ -12,13 +12,12 @@ namespace thewall9.bll
 {
     public class PageBLL : BaseBLL
     {
-
         #region WEB
-        string[] _EcommercePageAlias = new string[5] { "cart", "checkout", "catalog", "order-sent","product" };
+        string[] _EcommercePageAlias = new string[5] { "cart", "checkout", "catalog", "order-sent", "product" };
         public PageWeb GetPageByAlias(int SiteID, string Url, string Alias, string Lang)
         {
             var _Page = new PageWeb();
-            _Page.Page = GetPageCultureBindingByAlias(SiteID, Url, Alias,Lang);
+            _Page.Page = GetPageCultureBindingByAlias(SiteID, Url, Alias, Lang);
             _Page.Content = new ContentBLL().GetContent(SiteID, Url, Alias, Lang);
             return _Page;
         }
@@ -91,7 +90,17 @@ namespace thewall9.bll
                                   RedirectUrl = p.RedirectUrl,
                                   Name = p.Name,
                                   CultureName = p.Culture.Name,
-                                  PageAlias = p.Page.Alias
+                                  PageAlias = p.Page.Alias,
+                                  OGraph = p.PageCultureOGraph != null ? new OGraphBinding
+                                  {
+                                      OGraphDescription = p.PageCultureOGraph.OGraph.OGraphDescription,
+                                      OGraphTitle = p.PageCultureOGraph.OGraph.OGraphTitle,
+                                      FileRead = p.PageCultureOGraph.OGraph.OGraphMedia != null ? new FileRead
+                                      {
+                                          MediaID = p.PageCultureOGraph.OGraph.OGraphMedia.Media.MediaID,
+                                          MediaUrl= p.PageCultureOGraph.OGraph.OGraphMedia.Media.MediaUrl
+                                      } : null
+                                  } : null
                               }).ToList();
                 if (_Pages == null || _Pages.Count == 0)
                     throw new RuleException("No existe página con ese FriendlyUrl", "0x000");
@@ -186,10 +195,10 @@ namespace thewall9.bll
                         RedirectUrl = p.RedirectUrl,
                         Name = p.Name,
                         PageAlias = p.Page.Alias,
-                        Items = Pages.Where(m => m.Page.PageParentID == p.PageID).Any() 
-                        ? OrderPages(Pages, p.PageID) 
+                        Items = Pages.Where(m => m.Page.PageParentID == p.PageID).Any()
+                        ? OrderPages(Pages, p.PageID)
                         : new List<PageCultureBinding>()
-                        
+
                     }).ToList();
         }
         public List<PageCultureBinding> GetOtherPages(int SiteID, string Url, string Lang)
@@ -215,7 +224,7 @@ namespace thewall9.bll
                 bool _Blog = false;
                 if (SiteID == 0)
                 {
-                    var _Site=new SiteBLL().Get(Url, _c);
+                    var _Site = new SiteBLL().Get(Url, _c);
                     SiteID = _Site.SiteID;
                     _ECommerce = _Site.ECommerce;
                     _Blog = _Site.Blog;
@@ -229,15 +238,15 @@ namespace thewall9.bll
                 var _S = new SiteMapModel();
                 _S.Pages = (from p in _c.PageCultures
                             where p.Page.SiteID == SiteID
-                        where p.Published && p.Page.Published && string.IsNullOrEmpty(p.RedirectUrl)
-                        select new PageCultureBinding
-                        {
-                            CultureID = p.CultureID,
-                            FriendlyUrl = p.FriendlyUrl,
-                            RedirectUrl = p.RedirectUrl,
-                            Name = p.Name,
-                            PageAlias = p.Page.Alias
-                        }).Distinct().ToList();
+                            where p.Published && p.Page.Published && string.IsNullOrEmpty(p.RedirectUrl)
+                            select new PageCultureBinding
+                            {
+                                CultureID = p.CultureID,
+                                FriendlyUrl = p.FriendlyUrl,
+                                RedirectUrl = p.RedirectUrl,
+                                Name = p.Name,
+                                PageAlias = p.Page.Alias
+                            }).Distinct().ToList();
                 _S.Ecommerce = _ECommerce;
                 _S.Blog = _Blog;
                 if (_ECommerce)
@@ -249,7 +258,7 @@ namespace thewall9.bll
                 {
                     _S.Posts = new BlogBLL().GetSitemap(SiteID);
                     _S.BlogCategories = new BlogBLL().GetSitemapCategories(SiteID);
-                    _S.BlogTags= new BlogBLL().GetSitemapTags(SiteID);
+                    _S.BlogTags = new BlogBLL().GetSitemapTags(SiteID);
                 }
                 return _S;
             }
@@ -297,7 +306,17 @@ namespace thewall9.bll
                                   ViewRender = p.ViewRender,
                                   RedirectUrl = p.RedirectUrl,
                                   Name = p.Name,
-                                  PageAlias = p.Page.Alias
+                                  PageAlias = p.Page.Alias,
+                                  OGraph = p.PageCultureOGraph != null ? new OGraphBinding
+                                  {
+                                      OGraphDescription = p.PageCultureOGraph.OGraph.OGraphDescription,
+                                      OGraphTitle = p.PageCultureOGraph.OGraph.OGraphTitle,
+                                      FileRead = p.PageCultureOGraph.OGraph.OGraphMedia != null ? new FileRead
+                                      {
+                                          MediaID = p.PageCultureOGraph.OGraph.OGraphMedia.Media.MediaID,
+                                          MediaUrl = p.PageCultureOGraph.OGraph.OGraphMedia.Media.MediaUrl
+                                      } : null
+                                  } : null
                               }).SingleOrDefault();
                 if (_Model == null)
                 {
@@ -373,7 +392,17 @@ namespace thewall9.bll
                             Published = m.Published,
                             RedirectUrl = m.RedirectUrl,
                             TitlePage = m.TitlePage,
-                            ViewRender = m.ViewRender
+                            ViewRender = m.ViewRender,
+                            OGraph = m.PageCultureOGraph != null ? new OGraphBinding
+                            {
+                                OGraphDescription = m.PageCultureOGraph.OGraph.OGraphDescription,
+                                OGraphTitle = m.PageCultureOGraph.OGraph.OGraphTitle,
+                                FileRead = m.PageCultureOGraph.OGraph.OGraphMedia != null ? new FileRead
+                                {
+                                    MediaID = m.PageCultureOGraph.OGraph.OGraphMedia.Media.MediaID,
+                                    MediaUrl = m.PageCultureOGraph.OGraph.OGraphMedia.Media.MediaUrl
+                                } : null
+                            } : null
                         }).ToList()
                     }).OrderBy(m => m.Priority).ToList();
         }
@@ -417,7 +446,7 @@ namespace thewall9.bll
                 return _Model.PageID;
             }
         }
-        public int Save(PageBindingListWithCultures Model,bool CreateContent=true)
+        public int Save(PageBindingListWithCultures Model, bool CreateContent = true)
         {
             var _PageID = Save((PageBinding)Model, CreateContent);
             using (var _c = db)
@@ -446,13 +475,6 @@ namespace thewall9.bll
             using (var _c = db)
             {
                 Can(Model.SiteID, UserID, _c);
-                SaveCulture(Model);
-            }
-        }
-        public void SaveCulture(PageCultureBinding Model)
-        {
-            using (var _c = db)
-            {
                 var _PageCulture = _c.PageCultures.Where(m => m.PageID == Model.PageID && m.CultureID == Model.CultureID).SingleOrDefault();
                 if (_PageCulture == null)
                 {
@@ -472,6 +494,31 @@ namespace thewall9.bll
                     && m.PageID != Model.PageID && m.Page.SiteID == Model.SiteID).Any())
                     throw new RuleException("Ya existe una seccion con el FriendlyUrl /" + Model.FriendlyUrl);
                 _c.SaveChanges();
+
+                var _OdataID = new OdataBLL().SaveOdata(Model.OGraph, Model.SiteID, UserID);
+                if (_OdataID != 0)
+                {
+                    var _OdataModel = _c.PageCulturesOGraphs.Where(m => m.PageID == Model.PageID && m.CultureID == Model.CultureID).FirstOrDefault();
+                    if (_OdataModel != null)
+                    {
+                        _OdataModel.OGraphID = _OdataID;
+                    }
+                    else
+                    {
+                        _OdataModel = new PageCultureOGraph
+                        {
+                            CultureID = Model.CultureID,
+                            PageID = Model.PageID,
+                            OGraphID = _OdataID
+                        };
+                        _c.PageCulturesOGraphs.Add(_OdataModel);
+                    }
+                }
+                _c.SaveChanges();
+
+                /*SAVE ODATA INFO*/
+
+
             }
         }
         public void Delete(int PageID, string UserID)

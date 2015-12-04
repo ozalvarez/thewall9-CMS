@@ -19,6 +19,8 @@ namespace thewall9.bll
     }
     public class ContentBLL : BaseBLL
     {
+        
+
         public List<ContentBindingList> Get(int SiteID, string UserID)
         {
             using (var _c = db)
@@ -53,7 +55,7 @@ namespace thewall9.bll
                         ContentPropertyType = p.ContentPropertyType,
                         Lock = p.Lock,
                         ShowInContent = p.ShowInContent,
-                        InMenu=p.InMenu,
+                        InMenu = p.InMenu,
                         Enabled = p.Enabled,
                         ContentCultures = p.ContentPropertyCultures.Select(m => new ContentCultureBinding
                         {
@@ -70,82 +72,93 @@ namespace thewall9.bll
         {
             using (var _c = db)
             {
-                return (from p in Content
-                        where p.ContentPropertyParentID == ParentID
-                        select new ContentBindingList
-                        {
-                            ContentPropertyAlias = p.ContentPropertyAlias,
-                            ContentPropertyID = p.ContentPropertyID,
-                            ContentPropertyParentID = p.ContentPropertyParentID,
-                            Priority = p.Priority,
-                            SiteID = p.SiteID,
-                            ContentPropertyType = p.ContentPropertyType,
-                            Lock = p.Lock,
-                            Enabled = p.Enabled,
-                            InMenu=p.InMenu,
-                            ShowInContent = p.ShowInContent,
-                            ContentCultures = p.ContentPropertyCultures.Select(m => new ContentCultureBinding
-                            {
-                                ContentPropertyID = p.ContentPropertyID,
-                                ContentPropertyValue = m.ContentPropertyValue,
-                                CultureID = m.CultureID,
-                                CultureName = m.Culture.Name,
-                                Hint=m.Hint
-                            }).ToList(),
-                            Items = _c.ContentProperties.Where(m => m.ContentPropertyParentID == p.ContentPropertyID).Any() ? GetOrder(_c.ContentProperties.Where(m => m.ContentPropertyParentID == p.ContentPropertyID).ToList(), p.ContentPropertyID) : new List<ContentBindingList>()
-                        }).OrderBy(m => m.Priority).ToList();
+                var _List = (from p in Content
+                             where p.ContentPropertyParentID == ParentID
+                             select new ContentBindingList
+                             {
+                                 ContentPropertyAlias = p.ContentPropertyAlias,
+                                 ContentPropertyID = p.ContentPropertyID,
+                                 ContentPropertyParentID = p.ContentPropertyParentID,
+                                 Priority = p.Priority,
+                                 SiteID = p.SiteID,
+                                 ContentPropertyType = p.ContentPropertyType,
+                                 Lock = p.Lock,
+                                 Enabled = p.Enabled,
+                                 InMenu = p.InMenu,
+                                 ShowInContent = p.ShowInContent,
+                                 ContentCultures = p.ContentPropertyCultures.Select(m => new ContentCultureBinding
+                                 {
+                                     ContentPropertyID = p.ContentPropertyID,
+                                     ContentPropertyValue = m.ContentPropertyValue,
+                                     CultureID = m.CultureID,
+                                     CultureName = m.Culture.Name,
+                                     Hint = m.Hint
+                                 }).ToList(),
+                                 Items = _c.ContentProperties.Where(m => m.ContentPropertyParentID == p.ContentPropertyID).Any()
+                                 ? GetOrder(_c.ContentProperties.Where(m => m.ContentPropertyParentID == p.ContentPropertyID).ToList(), p.ContentPropertyID)
+                                 : new List<ContentBindingList>()
+                             }).OrderBy(m => m.Priority).ToList();
+                var d = _c.Database;
+                return _List;
             }
         }
         public ContentBindingList GetContent(int SiteID, String Url, string AliasList, string Lang)
         {
             using (var _c = db)
             {
-                var _Q = SiteID != 0
-                   ? from p in _c.ContentProperties
-                     where p.SiteID == SiteID
-                     select p
-                    : from m in _c.ContentProperties
-                      join u in _c.SiteUrls on m.Site.SiteID equals u.SiteID
-                      where u.Url.Equals(Url)
-                      select m;
-
-                List<ContentProperty> _List = null;
-                _List = (from p in _Q
-                         where p.ContentPropertyAlias.ToLower().Equals(AliasList.ToLower())
-                         && p.ContentPropertyType == ContentPropertyType.LIST
-                         select p).ToList();
-                var _ListBinding = GetOrder(_List, 0, Lang);
-                if (_ListBinding == null || _ListBinding.Count == 0)
-                    return new ContentBindingList();
-                return _ListBinding[0];
+                return GetContent(SiteID, Url, AliasList, Lang, _c);
             }
         }
-        private List<ContentBindingList> GetOrder(List<ContentProperty> Content, int ParentID, string Lang)
+
+        public ContentBindingList GetContent(int SiteID, String Url, string AliasList, string Lang, ApplicationDbContext _c)
         {
-            using (var _c = db)
-            {
-                return (from p in Content
-                        where p.ContentPropertyParentID == ParentID
-                        select new ContentBindingList
-                        {
-                            ContentPropertyAlias = p.ContentPropertyAlias,
-                            ContentPropertyID = p.ContentPropertyID,
-                            ContentPropertyParentID = p.ContentPropertyParentID,
-                            Priority = p.Priority,
-                            SiteID = p.SiteID,
-                            ContentPropertyType = p.ContentPropertyType,
-                            Enabled = p.Enabled,
-                            InMenu=p.InMenu,
-                            ContentCultures = p.ContentPropertyCultures.Where(m => m.Culture.Name.ToLower().Equals(Lang.ToLower()) && m.Culture.SiteID == p.SiteID).Select(m => new ContentCultureBinding
-                            {
-                                ContentPropertyID = p.ContentPropertyID,
-                                ContentPropertyValue = m.ContentPropertyValue,
-                                CultureID = m.CultureID,
-                                Hint=m.Hint
-                            }).ToList(),
-                            Items = _c.ContentProperties.Where(m => m.ContentPropertyParentID == p.ContentPropertyID).Any() ? GetOrder(_c.ContentProperties.Where(m => m.ContentPropertyParentID == p.ContentPropertyID).ToList(), p.ContentPropertyID, Lang) : new List<ContentBindingList>()
-                        }).OrderBy(m => m.Priority).ToList();
-            }
+            var _Q = SiteID != 0
+               ? from p in _c.ContentProperties
+                 where p.SiteID == SiteID
+                 select p
+                : from m in _c.ContentProperties
+                  join u in _c.SiteUrls on m.Site.SiteID equals u.SiteID
+                  where u.Url.Equals(Url)
+                  select m;
+
+            List<ContentProperty> _List = null;
+            _List = (from p in _Q
+                     where p.ContentPropertyAlias.ToLower().Equals(AliasList.ToLower())
+                     && p.ContentPropertyType == ContentPropertyType.LIST
+                     select p).ToList();
+            var _ListBinding = GetOrder(_List, 0, Lang, _c);
+            if (_ListBinding == null || _ListBinding.Count == 0)
+                return new ContentBindingList();
+            return _ListBinding[0];
+        }
+
+        private List<ContentBindingList> GetOrder(List<ContentProperty> Content, int ParentID, string Lang, ApplicationDbContext _c)
+        {
+
+            var _List = (from p in Content
+                         where p.ContentPropertyParentID == ParentID
+                         select new ContentBindingList
+                         {
+                             ContentPropertyAlias = p.ContentPropertyAlias,
+                             ContentPropertyID = p.ContentPropertyID,
+                             ContentPropertyParentID = p.ContentPropertyParentID,
+                             Priority = p.Priority,
+                             SiteID = p.SiteID,
+                             ContentPropertyType = p.ContentPropertyType,
+                             Enabled = p.Enabled,
+                             InMenu = p.InMenu,
+                             ContentCultures = p.ContentPropertyCultures.Where(m => m.Culture.Name.ToLower().Equals(Lang.ToLower()) && m.Culture.SiteID == p.SiteID).Select(m => new ContentCultureBinding
+                             {
+                                 ContentPropertyID = p.ContentPropertyID,
+                                 ContentPropertyValue = m.ContentPropertyValue,
+                                 CultureID = m.CultureID,
+                                 Hint = m.Hint
+                             }).ToList(),
+                             Items = _c.ContentProperties.Where(m => m.ContentPropertyParentID == p.ContentPropertyID).Any()
+                             ? GetOrder(_c.ContentProperties.Where(m => m.ContentPropertyParentID == p.ContentPropertyID).ToList(), p.ContentPropertyID, Lang, _c)
+                             : new List<ContentBindingList>()
+                         }).OrderBy(m => m.Priority).ToList();
+            return _List;
         }
 
         #region TREE
@@ -179,9 +192,9 @@ namespace thewall9.bll
             if (Content == null)
             {
                 _Q = (from c in _c.ContentProperties
-                     where c.ContentPropertyParentID == ParentID
-                     orderby c.Priority
-                     select c).ToList();
+                      where c.ContentPropertyParentID == ParentID
+                      orderby c.Priority
+                      select c).ToList();
             }
             else
             {
@@ -196,7 +209,7 @@ namespace thewall9.bll
                         ContentPropertyID = p.ContentPropertyID,
                         ContentPropertyParentID = p.ContentPropertyParentID,
                         ContentPropertyType = p.ContentPropertyType,
-                        Lock=p.Lock,
+                        Lock = p.Lock,
 
                         ContentPropertyValue = p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Any()
                         ? p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Select(m => m.ContentPropertyValue).FirstOrDefault()

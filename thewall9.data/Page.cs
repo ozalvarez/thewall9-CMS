@@ -26,6 +26,9 @@ namespace thewall9.data
         public virtual Page Page { get; set; }
         [ForeignKey("CultureID")]
         public virtual Culture Culture { get; set; }
+
+        public virtual PageCultureOGraph PageCultureOGraph { get; set; }
+
         public PageCulture() { }
         public PageCulture(PageCultureBinding Model)
         {
@@ -44,5 +47,16 @@ namespace thewall9.data
             this.Name = Model.Name;
         }
     }
+    public class PageCultureOGraph
+    {
+        public int PageID { get; set; }
+        public int CultureID { get; set; }
+        public int OGraphID { get; set; }
 
+        [ForeignKey("PageID,CultureID")]
+        public virtual PageCulture PageCulture { get; set; }
+
+        [ForeignKey("OGraphID")]
+        public OGraph OGraph { get; set; }
+    }
 }

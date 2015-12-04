@@ -10,6 +10,20 @@ using thewall9.data.Models;
 
 namespace thewall9.bll
 {
+    public class MyLogger
+    {
+        public int NumberSQLQuery { get; set; }
+        public MyLogger()
+        {
+            NumberSQLQuery = 0;
+        }
+        public void Log(string component, string message)
+        {
+            if (message.Contains("SELECT"))
+                NumberSQLQuery++;
+            System.Diagnostics.Trace.WriteLine("Component: "+ component + " Message: "+ message + "");
+        }
+    }
     public class BaseBLL
     {
         public WebClient MyWebClient

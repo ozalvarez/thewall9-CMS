@@ -195,6 +195,11 @@
     <Compile Include="Migrations\201512022156292_AddEnabledToProducts.Designer.cs">
       <DependentUpon>201512022156292_AddEnabledToProducts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512041553334_AddOdataToPages.cs" />
+    <Compile Include="Migrations\201512041553334_AddOdataToPages.Designer.cs">
+      <DependentUpon>201512041553334_AddOdataToPages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OGraph.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Category.cs" />
@@ -437,6 +442,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512022156292_AddEnabledToProducts.resx">
       <DependentUpon>201512022156292_AddEnabledToProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512041553334_AddOdataToPages.resx">
+      <DependentUpon>201512041553334_AddOdataToPages.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
