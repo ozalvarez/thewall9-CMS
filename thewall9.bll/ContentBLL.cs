@@ -20,34 +20,61 @@ namespace thewall9.bll
     public class ContentBLL : BaseBLL
     {
         #region Utils
+        private ContentProperty GetContentProperty(int ContentID)
+        {
+            using (var _c = db)
+            {
+                return _c.ContentProperties.Where(m => m.ContentPropertyID == ContentID).FirstOrDefault();
+            }
+        }
+        private List<ContentProperty> GetContentPropertyChilds(int ContentID)
+        {
+            using (var _c = db)
+            {
+                return _c.ContentProperties.Where(m => m.ContentPropertyParentID == ContentID).ToList();
+            }
+        }
         public void GetParentsID(ref List<int> List, int ContentID)
         {
             using (var _c = db)
             {
-                var _Model = GetContentProperty(ContentID);
-                if (_Model.ContentPropertyParentID != 0)
+                if (ContentID != 0)
                 {
+                    var _Model = GetContentProperty(ContentID);
                     List.Add(_Model.ContentPropertyParentID);
                     GetParentsID(ref List, _Model.ContentPropertyParentID);
                 }
             }
         }
+        public void GetChildsID(ref List<int> List, int ContentID)
+        {
+            using (var _c = db)
+            {
+                var _Model = GetContentPropertyChilds(ContentID);
+                foreach (var item in _Model)
+                {
+                    List.Add(item.ContentPropertyID);
+                    GetChildsID(ref List, item.ContentPropertyID);
+                }
+
+            }
+        }
         #endregion
 
         #region WEB
-        private List<ContentBindingList> Order2(List<ContentBindingList> Model, int ContentParentID)
+        private List<ContentBindingList> OrderByRoot(List<ContentBindingList> Model, int ContentParentID)
         {
-            var _List = Model.Where(m => m.ContentPropertyParentID == ContentParentID);
-            if (_List.Count() > 0)
+            var _List = Model.Where(m => m.ContentPropertyParentID == ContentParentID).ToList();
+            if (_List.Count > 0)
             {
                 foreach (var item in _List)
                 {
-                    item.Items = Order2(Model, item.ContentPropertyID);
+                    item.Items = OrderByRoot(Model, item.ContentPropertyID);
                 }
             }
             return _List.ToList();
         }
-        public ContentBindingList GetContent2(int SiteID, String Url, string AliasList, string Lang, ApplicationDbContext _c)
+        public ContentBindingList GetByRoot(int SiteID, String Url, string AliasList, string Lang, ApplicationDbContext _c)
         {
             List<ContentBindingList> _List;
 
@@ -79,18 +106,19 @@ namespace thewall9.bll
                              Hint = m.Hint
                          })
                      }).OrderBy(m => m.Priority).ToList();
-            return Order2(_List, 0).FirstOrDefault();
+            var _RootItem = _List.Where(m => m.ContentPropertyID == _CParentID).FirstOrDefault();
+
+            _RootItem.Items = OrderByRoot(_List, _CParentID);
+            return _RootItem;
         }
-        public ContentBindingList GetContent2(int SiteID, String Url, string AliasList, string Lang)
+        public ContentBindingList GetByRoot(int SiteID, String Url, string AliasList, string Lang)
         {
             using (var _c = db)
             {
-                return GetContent2(SiteID, Url, AliasList, Lang, _c);
+                return GetByRoot(SiteID, Url, AliasList, Lang, _c);
             }
         }
         #endregion
-
-        #region CUSTOMER
 
         #region Root
         public List<int> GetRootParentsID(int ContentID)
@@ -163,22 +191,28 @@ namespace thewall9.bll
             {
                 if (!_c.ContentRoots.Where(m => m.ContentID == ContentID && m.ContentParentID == ContentParentID).Any())
                 {
-                    if (ContentParentID != 0)
+                    List<int> _NewParents = new List<int>();
+                    GetParentsID(ref _NewParents, ContentID);
+                    foreach (var item in _NewParents)
                     {
-                        var _CR = new ContentRoot(ContentID, ContentParentID);
-                        _c.ContentRoots.Add(_CR);
+                        var _Model = new ContentRoot(ContentID, item);
+                        _c.ContentRoots.Add(_Model);
                         _c.SaveChanges();
-                        while (ContentParentID != 0)
-                        {
-                            ContentParentID = GetContentProperty(ContentParentID).ContentPropertyParentID;
-                            if (ContentParentID != 0)
-                            {
-                                _CR = new ContentRoot(ContentID, ContentParentID);
-                                _c.ContentRoots.Add(_CR);
-                                _c.SaveChanges();
-                            }
-                        }
                     }
+
+                    //var _CR = new ContentRoot(ContentID, ContentParentID);
+                    //_c.ContentRoots.Add(_CR);
+                    //_c.SaveChanges();
+                    //while (ContentParentID != 0)
+                    //{
+                    //    ContentParentID = GetContentProperty(ContentParentID).ContentPropertyParentID;
+                    //    if (ContentParentID != 0)
+                    //    {
+                    //        _CR = new ContentRoot(ContentID, ContentParentID);
+                    //        _c.ContentRoots.Add(_CR);
+                    //        _c.SaveChanges();
+                    //    }
+                    //}
                 }
             }
         }
@@ -189,34 +223,55 @@ namespace thewall9.bll
                 _c.ContentRoots.RemoveRange(_c.ContentRoots.Where(m => m.ContentParentID == ContentID).ToList());
             }
         }
-        public void MoveRoot(int ContentID, int ContentNewParentID, int ContentOldParentID)
+        public void MoveRoot(int ContentID, int ContentNewParentID)
         {
-            //using (var _c = db)
-            //{
-            //    //DELETE ROOT ALL CHILDS
-            //    var _Child = GetRootChilds(ContentID);
-            //    foreach (var item in _Child)
-            //    {
-            //        DeleteRoot(item);
-            //    }
+            List<int> _Childs = new List<int>();
+            _Childs.Add(ContentID);
+            GetChildsID(ref _Childs, ContentID);          
 
-            //    var _Parents = GetRootParentsID(ContentID);
-            //    foreach (var item in _Parents)
-            //    {
-            //        DeleteRoot(item);
-            //    }
-            //}
-        }
-        #endregion
+            List<int> _NewParents = new List<int>();
+            _NewParents.Add(ContentNewParentID);
+           // _NewParents.Add(ContentID);
+            GetParentsID(ref _NewParents, ContentNewParentID);
+            
+            List<int> _OldParents = new List<int>();
+            //_OldParents.Add(ContentID);
+            GetParentsID(ref _OldParents, ContentID);
 
-        #endregion
-        private ContentProperty GetContentProperty(int ContentID)
-        {
             using (var _c = db)
             {
-                return _c.ContentProperties.Where(m => m.ContentPropertyID == ContentID).FirstOrDefault();
+                foreach (var item in _Childs)
+                {
+                    var _ToDelete = _c.ContentRoots.Where(m => _OldParents.Contains(m.ContentParentID) && m.ContentID == item);
+                    _c.ContentRoots.RemoveRange(_ToDelete);
+                    _c.SaveChanges();
+
+                    foreach (var item2 in _NewParents)
+                    {
+                        var _Model = new ContentRoot(item, item2);
+                        _c.ContentRoots.Add(_Model);
+                        _c.SaveChanges();
+                    }
+                }
             }
         }
+        public void DuplicateRoot(int NewContentID, int ContentPropertyParentID)
+        {
+            List<int> _NewParents = new List<int>();
+            GetParentsID(ref _NewParents, NewContentID);
+            using (var _c = db)
+            {
+                foreach (var item in _NewParents)
+                {
+                    var _Model = new ContentRoot(NewContentID, item);
+                    _c.ContentRoots.Add(_Model);
+                    _c.SaveChanges();
+                }
+            }
+        }
+        #endregion
+
+
 
         public List<ContentBindingList> Get(int SiteID, string UserID)
         {
@@ -848,6 +903,9 @@ namespace thewall9.bll
                     _CPNew.ShowInContent = _CP.ShowInContent;
                 _c.ContentProperties.Add(_CPNew);
                 _c.SaveChanges();
+                //DUPLICATE ROOT
+                DuplicateRoot(_CPNew.ContentPropertyID, ContentPropertyParentID);
+
                 //COPY CULTURES
                 var _CPC = _c.ContentPropertyCultures.Where(m => m.ContentPropertyID == ContentPropertyID).ToList();
                 foreach (var item in _CPC)
@@ -898,7 +956,7 @@ WHERE SiteID={0} AND ContentPropertyParentID={1} AND Priority>= {2}  AND Content
 WHERE SiteID={0} AND ContentPropertyParentID={1} AND Priority>={2} AND ContentPropertyID<>{3}", _Item.SiteID, Model.ContentPropertyParentID, Model.Index, Model.ContentPropertyID);
 
                     //UPDATE ROOTS
-                    //SaveRoot(Model.ContentPropertyID, Model.ContentPropertyParentID);
+                    MoveRoot(Model.ContentPropertyID, Model.ContentPropertyParentID);
                 }
                 _Item.ContentPropertyParentID = Model.ContentPropertyParentID;
                 _Item.Priority = Model.Index;

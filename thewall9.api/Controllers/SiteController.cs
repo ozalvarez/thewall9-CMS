@@ -135,6 +135,13 @@ namespace thewall9.api.Controllers
             SiteService.Duplicate(SiteID);
             return Ok();
         }
+        [Authorize(Roles = "admin")]
+        [Route("migrator")]
+        public IHttpActionResult Migrator()
+        {
+            new ContentBLL().Migrator();
+            return Ok();
+        }
         #endregion
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "thewall9.api", "thewall9.api\thewall9.api.csproj", "{7B3CFA34-04DA-42B4-85BE-9BD6252B66EB}"
 EndProject
@@ -43,6 +43,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "evdt.web", "..\thewall9-websites-git\evdt.web\evdt.web.csproj", "{F246B9F8-74B4-40DD-A39D-65403C03C712}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "workandgo.web", "..\thewall9-websites-git\workandgo.web\workandgo.web.csproj", "{FE5F92FB-7E19-40B1-99EB-3B38AC1988C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nazcaboutique.web", "..\thewall9-websites-git\nazcaboutique\nazcaboutique.web.csproj", "{DDA4119C-A595-44F9-B483-636B80F7BEC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -94,6 +96,10 @@ Global
 		{FE5F92FB-7E19-40B1-99EB-3B38AC1988C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE5F92FB-7E19-40B1-99EB-3B38AC1988C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE5F92FB-7E19-40B1-99EB-3B38AC1988C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDA4119C-A595-44F9-B483-636B80F7BEC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDA4119C-A595-44F9-B483-636B80F7BEC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDA4119C-A595-44F9-B483-636B80F7BEC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDA4119C-A595-44F9-B483-636B80F7BEC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -106,5 +112,6 @@ Global
 		{EC1240C8-585D-4846-BD2E-26A652549E5A} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
 		{F246B9F8-74B4-40DD-A39D-65403C03C712} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
 		{FE5F92FB-7E19-40B1-99EB-3B38AC1988C3} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
+		{DDA4119C-A595-44F9-B483-636B80F7BEC0} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
 	EndGlobalSection
 EndGlobal

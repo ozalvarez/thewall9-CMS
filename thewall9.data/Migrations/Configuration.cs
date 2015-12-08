@@ -44,7 +44,6 @@ namespace thewall9.data.Migrations
 
                 userManager.AddToRole(userRoot.Id, "admin");
             }
-
         }
     }
 }

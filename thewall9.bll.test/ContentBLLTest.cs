@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using thewall9.data.Models;
 using System.Collections.Generic;
+using thewall9.data.binding;
 
 namespace thewall9.bll.test
 {
@@ -96,23 +97,34 @@ namespace thewall9.bll.test
         {
             Assert.IsNotNull(Model);
             Assert.IsTrue(Model.Items.Count == 2);
-            Assert.IsTrue((Model.Items as List<data.binding.ContentBindingList>)[1].Items.Count == 2);
+            Assert.IsTrue((Model.Items as List<data.binding.ContentBindingList>)[1].Items.Count == 3);
         }
 
-        #region ROOTS
+        #region UTILS
         [TestMethod]
         public void ContentGetParentsID()
         {
             SettingUp();
             List<int> _List = new List<int>();
             new ContentBLL().GetParentsID(ref _List, D0120.ContentPropertyID);
-            Assert.IsTrue(_List.Count == 3);
+            Assert.IsTrue(_List.Count == 4);
             Assert.IsTrue(_List[0] == D012.ContentPropertyID);
             Assert.IsTrue(_List[1] == D01.ContentPropertyID);
             Assert.IsTrue(_List[2] == D0.ContentPropertyID);
         }
         [TestMethod]
-        public void ContentAddRoots()
+        public void ContentGetChildsID()
+        {
+            SettingUp();
+            List<int> _List = new List<int>();
+            new ContentBLL().GetChildsID(ref _List, D0.ContentPropertyID);
+            Assert.IsTrue(_List.Count == 6);
+        }
+        #endregion
+
+        #region ROOTS
+        [TestMethod]
+        public void ContentRootAdd()
         {
             SettingUp();
             var _Model = new data.binding.ContentBinding
@@ -124,16 +136,16 @@ namespace thewall9.bll.test
             };
             var _ID = new ContentBLL().Save(_Model);
             var _List = new ContentBLL().GetRootParentsID(_ID);
-            Assert.IsTrue(_List.Count == 3);
+            Assert.IsTrue(_List.Count == 4);
 
             //UPDATING
             _Model.ContentPropertyID = _ID;
             new ContentBLL().Save(_Model);
             _List = new ContentBLL().GetRootParentsID(_ID);
-            Assert.IsTrue(_List.Count == 3);
+            Assert.IsTrue(_List.Count == 4);
         }
         [TestMethod]
-        public void ContentDeleteRoots()
+        public void ContentRootDelete()
         {
             SettingUp();
             new ContentBLL().Delete(D01.ContentPropertyID,_CustomerUser.Id);
@@ -142,37 +154,55 @@ namespace thewall9.bll.test
             Assert.IsTrue(_List.Count == 1);
             Assert.IsTrue(_List[0] == D00.ContentPropertyID);
         }
-
+        [TestMethod]
+        public void ContentRootMove()
+        {
+            SettingUp();
+            var _Move = new ContentMoveBinding
+            {
+                ContentPropertyID = D012.ContentPropertyID,
+                ContentPropertyParentID = 0,
+                Index = 1
+            };
+            new ContentBLL().Move(_Move, _CustomerUser.Id);
+            var _List = new ContentBLL().GetRootChilds(D012.ContentPropertyID);
+            Assert.IsTrue(_List.Count == 1);
+            _List = new ContentBLL().GetRootParentsID(D012.ContentPropertyID);
+            Assert.IsTrue(_List.Count == 1);
+            _List = new ContentBLL().GetRootParentsID(D0120.ContentPropertyID);
+            Assert.IsTrue(_List.Count == 2);
+        }
         #endregion
 
         #region WEB
-        //[TestMethod]
-        //public void ContentGetWeb()
-        //{
-        //    using (var _c = new ApplicationDbContext())
-        //    {
-        //        SettingUp();
-        //        var _Logger = new MyLogger();
-        //        _c.Database.Log = s => _Logger.Log("EFApp", s);
-        //        var _Model = new ContentBLL().GetContent(_SiteID, null, D0.ContentPropertyAlias, _Cultures[0].Name, _c);
-        //        Assert.IsNotNull(_Model);
-        //        Assert.IsTrue(_Logger.NumberSQLQuery < 14);
-        //    }
-        //}
-        //[TestMethod]
-        //public void ContentGet2Web()
-        //{
-        //    using (var _c = new ApplicationDbContext())
-        //    {
-        //        SettingUp();
-        //        var _Logger = new MyLogger();
-        //        _c.Database.Log = s => _Logger.Log("EFApp", s);
-        //        //WORKANDGO
-        //        //var _Model = new ContentBLL().GetContent2(2, null, "place-list", "es", _c);
-        //        TreeComplete(new ContentBLL().GetContent2(_SiteID, null, D0.ContentPropertyAlias, _Cultures[0].Name, _c));
-        //        Assert.IsTrue(_Logger.NumberSQLQuery == 2);
-        //    }
-        //}
+        [TestMethod]
+        public void ContentGetWeb()
+        {
+            using (var _c = new ApplicationDbContext())
+            {
+                SettingUp();
+                var _Logger = new MyLogger();
+                _c.Database.Log = s => _Logger.Log("EFApp", s);
+                var _Model = new ContentBLL().GetContent(_SiteID, null, D0.ContentPropertyAlias, _Cultures[0].Name, _c);
+                TreeComplete(_Model);
+                Assert.IsNotNull(_Model);
+             //   Assert.IsTrue(_Logger.NumberSQLQuery < 14);
+            }
+        }
+        [TestMethod]
+        public void ContentGetByRoot()
+        {
+            using (var _c = new ApplicationDbContext())
+            {
+                SettingUp();
+                var _Logger = new MyLogger();
+                _c.Database.Log = s => _Logger.Log("EFApp", s);
+                //WORKANDGO
+                //var _Model = new ContentBLL().GetContent2(2, null, "place-list", "es", _c);
+                TreeComplete(new ContentBLL().GetByRoot(_SiteID, null, D0.ContentPropertyAlias, _Cultures[0].Name, _c));
+                Assert.IsTrue(_Logger.NumberSQLQuery == 2);
+            }
+        }
         #endregion
 
         [TestMethod]

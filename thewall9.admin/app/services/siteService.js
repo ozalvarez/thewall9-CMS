@@ -56,6 +56,9 @@ app.factory('siteService', ["$myhttp",
             },
             duplicate: function (SiteID) {
                 return $http.post(_Url + '/duplicate', SiteID);
+            },
+            migrator: function () {
+                return $http.post(_Url + '/migrator');
             }
         };
     }
