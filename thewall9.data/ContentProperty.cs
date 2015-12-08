@@ -9,7 +9,6 @@ using thewall9.data.binding;
 
 namespace thewall9.data
 {
-
     public class ContentPropertyCulture : ContentCultureBase
     {
         [Key, Column(Order = 1)]
@@ -37,7 +36,18 @@ namespace thewall9.data
     {
         [ForeignKey("SiteID")]
         public virtual Site Site { get; set; }
-        
+
         public virtual List<ContentPropertyCulture> ContentPropertyCultures { get; set; }
+    }
+    public class ContentRoot : ContentRootBase
+    {
+        public ContentRoot() { }
+        public ContentRoot(int ContentID, int ContentParentID)
+        {
+            this.ContentID = ContentID;
+            this.ContentParentID = ContentParentID;
+        }
+        [ForeignKey("ContentID")]
+        public virtual ContentProperty ContentProperty { get; set; }
     }
 }

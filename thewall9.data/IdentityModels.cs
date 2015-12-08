@@ -35,6 +35,10 @@ namespace thewall9.data.Models
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            //CONTENT
+            modelBuilder.Entity<ContentRoot>()
+                .HasKey(m => new { m.ContentID, m.ContentParentID });
+
             //BLOG
             modelBuilder.Entity<BlogPostCulture>()
                 .HasKey(m => new { m.BlogPostID, m.CultureID })
@@ -87,6 +91,8 @@ namespace thewall9.data.Models
         public DbSet<Site> Sites { get; set; }
         public DbSet<SiteUser> SiteUsers { get; set; }
         public DbSet<SiteUserRol> SiteUserRoles { get; set; }
+        public DbSet<SiteUrl> SiteUrls { get; set; }
+
         public DbSet<Culture> Cultures { get; set; }
 
         public DbSet<Page> Pages { get; set; }
@@ -98,7 +104,7 @@ namespace thewall9.data.Models
 
         public DbSet<ContentProperty> ContentProperties { get; set; }
         public DbSet<ContentPropertyCulture> ContentPropertyCultures { get; set; }
-        public DbSet<SiteUrl> SiteUrls { get; set; }
+        public DbSet<ContentRoot> ContentRoots { get; set; }
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<CategoryCulture> CategoryCultures { get; set; }

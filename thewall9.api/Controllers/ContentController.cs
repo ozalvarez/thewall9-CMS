@@ -22,7 +22,8 @@ namespace thewall9.api.Controllers
         [AllowAnonymous]
         public IHttpActionResult Get(int SiteID, string Url, string AliasList, string Lang)
         {
-            return Ok(_ContentService.GetContent(SiteID, Url, AliasList, Lang));
+           //  return Ok(_ContentService.GetContent(SiteID, Url, AliasList, Lang));
+            return Ok(_ContentService.GetByRoot(SiteID, Url, AliasList, Lang));
         }
         #endregion
 

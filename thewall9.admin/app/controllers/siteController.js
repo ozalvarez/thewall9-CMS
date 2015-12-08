@@ -7,6 +7,13 @@ app.controller('siteController', ['$scope', 'siteService', 'toastrService',
             });
         };
         $scope.get();
+
+        $scope.migrator = function () {
+            siteService.migrator().then(function (data) {
+                toastrService.success("Migrator Completed");
+            });
+        };
+
         $scope.new = function (item) {
             $scope.c = { Cultures: [] };
             $('#modal-new').modal({

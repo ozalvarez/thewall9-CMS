@@ -199,6 +199,10 @@
     <Compile Include="Migrations\201512041553334_AddOdataToPages.Designer.cs">
       <DependentUpon>201512041553334_AddOdataToPages.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512081730003_AddContentRoot.cs" />
+    <Compile Include="Migrations\201512081730003_AddContentRoot.Designer.cs">
+      <DependentUpon>201512081730003_AddContentRoot.cs</DependentUpon>
+    </Compile>
     <Compile Include="OGraph.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Product.cs" />
@@ -445,6 +449,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512041553334_AddOdataToPages.resx">
       <DependentUpon>201512041553334_AddOdataToPages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512081730003_AddContentRoot.resx">
+      <DependentUpon>201512081730003_AddContentRoot.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

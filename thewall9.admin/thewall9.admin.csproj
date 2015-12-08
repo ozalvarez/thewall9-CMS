@@ -192,6 +192,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="Properties\PublishProfiles\thewall9-admin - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\thewall9-admin.pubxml" />
     <Content Include="Scripts\min\app-angular.js" />
     <Content Include="Scripts\min\app-login.js" />
