@@ -197,11 +197,12 @@ namespace thewall9.bll.test
                 SettingUp();
                 var _Logger = new MyLogger();
                 _c.Database.Log = s => _Logger.Log("EFApp", s);
-                //WORKANDGO
-                //var _Model = new ContentBLL().GetContent2(2, null, "place-list", "es", _c);
                 TreeComplete(new ContentBLL().GetByRoot(_SiteID, null, D0.ContentPropertyAlias, _Cultures[0].Name, _c));
                 Assert.IsTrue(_Logger.NumberSQLQuery == 2);
+                var _Model = new ContentBLL().GetByRoot(_SiteID, null, "una-cosa-loca-que-no-existe", _Cultures[0].Name, _c);
+                Assert.IsTrue(_Model == null);
             }
+            
         }
         #endregion
 

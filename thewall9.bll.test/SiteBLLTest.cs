@@ -24,7 +24,7 @@ namespace thewall9.bll.test
         [TestMethod]
         public void SiteExportTest()
         {
-            var _URL=new SiteBLL().Export(_SiteID);
+            var _URL = new SiteBLL().Export(_SiteID);
             Assert.IsNotNull(_URL);
         }
         [TestMethod]
@@ -34,18 +34,41 @@ namespace thewall9.bll.test
             string _Content = new WebClient().DownloadString(_URL);
             byte[] toEncodeAsBytes = System.Text.ASCIIEncoding.ASCII.GetBytes(_Content);
             _Content = "64base," + System.Convert.ToBase64String(toEncodeAsBytes);
-            var _NewSiteID=new SiteBLL().Import(new data.binding.FileRead
+            var _NewSiteID = new SiteBLL().Import(new data.binding.FileRead
             {
                 FileContent = _Content,
                 FileName = "Site.json"
             });
             Assert.IsNotNull(_NewSiteID);
-            Assert.IsTrue(_NewSiteID!=0);
-            var _Cultures=new CultureBLL().Get(_NewSiteID);
+            Assert.IsTrue(_NewSiteID != 0);
+            var _Cultures = new CultureBLL().Get(_NewSiteID);
             Assert.IsNotNull(_Cultures);
             Assert.IsTrue(_Cultures.Count != 0);
             Assert.IsTrue(_Cultures[0].Facebook == "f" + _Cultures[0].Name);
             Assert.IsTrue(_Cultures[1].Facebook == "f" + _Cultures[1].Name);
+        }
+        [TestMethod]
+        public void SiteImportFromFileTest()
+        {
+            string _Content = System.IO.File.ReadAllText("Site.json");
+            byte[] toEncodeAsBytes = System.Text.ASCIIEncoding.ASCII.GetBytes(_Content);
+            _Content = "64base," + System.Convert.ToBase64String(toEncodeAsBytes);
+            var _NewSiteID = new SiteBLL().Import(new data.binding.FileRead
+            {
+                FileContent = _Content,
+                FileName = "Site.json"
+            });
+            Assert.IsNotNull(_NewSiteID);
+            Assert.IsTrue(_NewSiteID != 0);
+
+            //VERIFY ROOTS
+            var _Tree = new ContentBLL().GetContent(_NewSiteID, null, "home", "es");
+            var _TreeRoots = new ContentBLL().GetByRoot(_NewSiteID, null, "home", "es");
+            Assert.IsNotNull(_Tree);
+            Assert.IsNotNull(_TreeRoots);
+            Assert.IsTrue(_Tree.Items.Count == _TreeRoots.Items.Count);
+            new SiteBLL().Delete(_NewSiteID);
+
         }
     }
 }

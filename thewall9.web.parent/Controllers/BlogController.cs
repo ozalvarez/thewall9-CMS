@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading;
 using System.Web;
@@ -16,7 +17,15 @@ namespace thewall9.web.parent.Controllers
     {
         BlogBLL _BlogService = new BlogBLL();
         ContentBLL _ContentService = new ContentBLL();
-
+        public BlogController()
+        {
+            
+        }
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            if(!APP._Site.Site.Blog)
+                throw new HttpException(404, "Page Not Found");     
+        }
         [Route("blog/{BlogCategoryFriendlyUrl?}")]
         public ActionResult Index(string BlogCategoryFriendlyUrl, int Page = 1)
         {
@@ -31,8 +40,10 @@ namespace thewall9.web.parent.Controllers
 
             ViewBag.MetaDescription = HtmlModel.FindValue(ViewBag.BlogContent, "blog-subtitle", true).ToString();
 
-            return View(_BlogService.Get(Request.Url.Authority
-                , APP._CurrentLang, BlogCategoryFriendlyUrl, null, Page));
+            var _Model = _BlogService.Get(Request.Url.Authority
+                , APP._CurrentLang, BlogCategoryFriendlyUrl, null, Page);
+
+            return View(_Model);
         }
         [Route("blog/tag/{BlogTagName}")]
         public ActionResult Tag(string BlogTagName, int Page = 1)

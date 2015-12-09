@@ -76,6 +76,8 @@ namespace thewall9.bll
         }
         public ContentBindingList GetByRoot(int SiteID, String Url, string AliasList, string Lang, ApplicationDbContext _c)
         {
+            if (string.IsNullOrEmpty(AliasList)) return null;
+
             List<ContentBindingList> _List;
 
             if (SiteID == 0)
@@ -84,6 +86,7 @@ namespace thewall9.bll
             var _CParentID = (from c in _c.ContentProperties
                               where c.SiteID == SiteID && c.ContentPropertyAlias == AliasList
                               select c.ContentPropertyID).FirstOrDefault();
+            if(_CParentID==0) return null;
 
             _List = (from cr in _c.ContentRoots
                      join p in _c.ContentProperties on cr.ContentID equals p.ContentPropertyID
@@ -106,8 +109,10 @@ namespace thewall9.bll
                              Hint = m.Hint
                          })
                      }).OrderBy(m => m.Priority).ToList();
-            var _RootItem = _List.Where(m => m.ContentPropertyID == _CParentID).FirstOrDefault();
+            if (_List == null || _List.Count == 0)
+                return null;
 
+            var _RootItem = _List.Where(m => m.ContentPropertyID == _CParentID).FirstOrDefault();
             _RootItem.Items = OrderByRoot(_List, _CParentID);
             return _RootItem;
         }
@@ -199,20 +204,6 @@ namespace thewall9.bll
                         _c.ContentRoots.Add(_Model);
                         _c.SaveChanges();
                     }
-
-                    //var _CR = new ContentRoot(ContentID, ContentParentID);
-                    //_c.ContentRoots.Add(_CR);
-                    //_c.SaveChanges();
-                    //while (ContentParentID != 0)
-                    //{
-                    //    ContentParentID = GetContentProperty(ContentParentID).ContentPropertyParentID;
-                    //    if (ContentParentID != 0)
-                    //    {
-                    //        _CR = new ContentRoot(ContentID, ContentParentID);
-                    //        _c.ContentRoots.Add(_CR);
-                    //        _c.SaveChanges();
-                    //    }
-                    //}
                 }
             }
         }
@@ -806,6 +797,8 @@ namespace thewall9.bll
                 };
                 _c.ContentProperties.Add(_CP);
                 _c.SaveChanges();
+                //SAVE ROOT
+                AddRoot(_CP.ContentPropertyID, _CP.ContentPropertyParentID);
 
                 var _NumCultureSite = _c.Cultures.Where(m => m.SiteID == Model.SiteID).Count();
                 if (_NumCultureSite < Model.ContentCultures.Count())

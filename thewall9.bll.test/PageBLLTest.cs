@@ -59,7 +59,7 @@ namespace thewall9.bll.test
             Assert.IsTrue(_FURL == "en");
         }
         [TestMethod]
-        public void PageSaveOdataInfo()
+        public void PageSaveOGraphInfo()
         {
             SettingUp();
             new PageBLL().SaveCulture(new data.binding.PageCultureBinding
