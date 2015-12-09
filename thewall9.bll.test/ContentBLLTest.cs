@@ -175,20 +175,20 @@ namespace thewall9.bll.test
         #endregion
 
         #region WEB
-        [TestMethod]
-        public void ContentGetWeb()
-        {
-            using (var _c = new ApplicationDbContext())
-            {
-                SettingUp();
-                var _Logger = new MyLogger();
-                _c.Database.Log = s => _Logger.Log("EFApp", s);
-                var _Model = new ContentBLL().GetContent(_SiteID, null, D0.ContentPropertyAlias, _Cultures[0].Name, _c);
-                TreeComplete(_Model);
-                Assert.IsNotNull(_Model);
-             //   Assert.IsTrue(_Logger.NumberSQLQuery < 14);
-            }
-        }
+        //[TestMethod]
+        //public void ContentGetWeb()
+        //{
+        //    using (var _c = new ApplicationDbContext())
+        //    {
+        //        SettingUp();
+        //        var _Logger = new MyLogger();
+        //        _c.Database.Log = s => _Logger.Log("EFApp", s);
+        //        var _Model = new ContentBLL().GetContent(_SiteID, null, D0.ContentPropertyAlias, _Cultures[0].Name, _c);
+        //        TreeComplete(_Model);
+        //        Assert.IsNotNull(_Model);
+        //     //   Assert.IsTrue(_Logger.NumberSQLQuery < 14);
+        //    }
+        //}
         [TestMethod]
         public void ContentGetByRoot()
         {

@@ -18,7 +18,7 @@ namespace thewall9.bll
         {
             var _Page = new PageWeb();
             _Page.Page = GetPageCultureBindingByAlias(SiteID, Url, Alias, Lang);
-            _Page.Content = new ContentBLL().GetContent(SiteID, Url, Alias, Lang);
+            _Page.Content = new ContentBLL().GetByRoot(SiteID, Url, Alias, Lang);
             return _Page;
         }
         private PageCultureBinding GetPageCultureBindingByAlias(int SiteID, string Url, string Alias, string Lang)
@@ -59,7 +59,7 @@ namespace thewall9.bll
         {
             var _Page = new PageWeb();
             _Page.Page = GetPageCultureBinding(SiteID, Url, FriendlyUrl);
-            _Page.Content = new ContentBLL().GetContent(SiteID, Url, _Page.Page.PageAlias, _Page.Page.CultureName);
+            _Page.Content = new ContentBLL().GetByRoot(SiteID, Url, _Page.Page.PageAlias, _Page.Page.CultureName);
             return _Page;
         }
 

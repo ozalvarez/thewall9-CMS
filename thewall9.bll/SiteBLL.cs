@@ -68,7 +68,7 @@ namespace thewall9.bll
                     if (string.IsNullOrEmpty(Lang))
                         Lang = _Site.Site.DefaultLang;
                     _Site.Menu = new PageBLL().GetMenu(SiteID, Url, Lang);
-                    _Site.ContentLayout = new ContentBLL().GetContent(SiteID, Url, "layout", Lang);
+                    _Site.ContentLayout = new ContentBLL().GetByRoot(SiteID, Url, "layout", Lang);
                     _Site.OtherPages = new PageBLL().GetOtherPages(SiteID, Url, Lang);
                     if (_Site.Site.ECommerce)
                     {

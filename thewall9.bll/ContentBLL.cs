@@ -227,13 +227,13 @@ namespace thewall9.bll
         {
             List<int> _Childs = new List<int>();
             _Childs.Add(ContentID);
-            GetChildsID(ref _Childs, ContentID);          
+            GetChildsID(ref _Childs, ContentID);
 
             List<int> _NewParents = new List<int>();
             _NewParents.Add(ContentNewParentID);
-           // _NewParents.Add(ContentID);
+            // _NewParents.Add(ContentID);
             GetParentsID(ref _NewParents, ContentNewParentID);
-            
+
             List<int> _OldParents = new List<int>();
             //_OldParents.Add(ContentID);
             GetParentsID(ref _OldParents, ContentID);
@@ -270,8 +270,6 @@ namespace thewall9.bll
             }
         }
         #endregion
-
-
 
         public List<ContentBindingList> Get(int SiteID, string UserID)
         {
@@ -354,34 +352,7 @@ namespace thewall9.bll
                 return _List;
             }
         }
-        public ContentBindingList GetContent(int SiteID, String Url, string AliasList, string Lang)
-        {
-            using (var _c = db)
-            {
-                return GetContent(SiteID, Url, AliasList, Lang, _c);
-            }
-        }
-        public ContentBindingList GetContent(int SiteID, String Url, string AliasList, string Lang, ApplicationDbContext _c)
-        {
-            var _Q = SiteID != 0
-               ? from p in _c.ContentProperties
-                 where p.SiteID == SiteID
-                 select p
-                : from m in _c.ContentProperties
-                  join u in _c.SiteUrls on m.Site.SiteID equals u.SiteID
-                  where u.Url.Equals(Url)
-                  select m;
 
-            List<ContentProperty> _List = null;
-            _List = (from p in _Q
-                     where p.ContentPropertyAlias.ToLower().Equals(AliasList.ToLower())
-                     && p.ContentPropertyType == ContentPropertyType.LIST
-                     select p).ToList();
-            var _ListBinding = GetOrder(_List, 0, Lang, _c);
-            if (_ListBinding == null || _ListBinding.Count == 0)
-                return new ContentBindingList();
-            return _ListBinding[0];
-        }
         private List<ContentBindingList> GetOrder(List<ContentProperty> Content, int ParentID, string Lang, ApplicationDbContext _c)
         {
 
@@ -1037,5 +1008,35 @@ WHERE SiteID={0} AND ContentPropertyParentID={1} AND Priority>={2} AND ContentPr
             }
         }
 
+        #region BackupsNotUsedMethods
+        public ContentBindingList GetContent(int SiteID, String Url, string AliasList, string Lang)
+        {
+            using (var _c = db)
+            {
+                return GetContent(SiteID, Url, AliasList, Lang, _c);
+            }
+        }
+        public ContentBindingList GetContent(int SiteID, String Url, string AliasList, string Lang, ApplicationDbContext _c)
+        {
+            var _Q = SiteID != 0
+               ? from p in _c.ContentProperties
+                 where p.SiteID == SiteID
+                 select p
+                : from m in _c.ContentProperties
+                  join u in _c.SiteUrls on m.Site.SiteID equals u.SiteID
+                  where u.Url.Equals(Url)
+                  select m;
+
+            List<ContentProperty> _List = null;
+            _List = (from p in _Q
+                     where p.ContentPropertyAlias.ToLower().Equals(AliasList.ToLower())
+                     && p.ContentPropertyType == ContentPropertyType.LIST
+                     select p).ToList();
+            var _ListBinding = GetOrder(_List, 0, Lang, _c);
+            if (_ListBinding == null || _ListBinding.Count == 0)
+                return new ContentBindingList();
+            return _ListBinding[0];
+        }
+        #endregion
     }
 }
