@@ -2,8 +2,8 @@
   "name": "thewall9.customer",
   "private": true,
   "dependencies": {
-    "angular": "^1.4.1",
-    "angular-local-storage": "^0.2.2",
+    "angular": "^1.4.8",
+    "angular-local-storage": "^0.2.3",
     "angular-route": "^1.4.1",
     "bootstrap": "^3.3.5",
     "jquery": "^2.1.4",
@@ -16,5 +16,8 @@
     "angular-ui-tinymce": "^0.0.9",
     "ng-file-upload": "^10.1.0",
     "ng-file-upload-shim": "^10.1.0"
+  },
+  "resolutions": {
+    "angular": ">1.2.0"
   }
 }
