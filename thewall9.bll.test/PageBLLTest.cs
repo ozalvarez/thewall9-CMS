@@ -62,7 +62,7 @@ namespace thewall9.bll.test
         public void PageSaveOGraphInfo()
         {
             SettingUp();
-            new PageBLL().SaveCulture(new data.binding.PageCultureBinding
+            var _PageModel = new data.binding.PageCultureBinding
             {
                 CultureID = _Cultures[1].CultureID,
                 FriendlyUrl = "get-odata",
@@ -75,14 +75,30 @@ namespace thewall9.bll.test
                 {
                     OGraphDescription = "odata:desc",
                     OGraphTitle = "odata:title",
-                    FileRead=GetImgFileRead()
+                    FileRead = GetImgFileRead()
                 }
-            }, _CustomerUser.Id);
+            };
+            new PageBLL().SaveCulture(_PageModel, _CustomerUser.Id);
             var _Page = new PageBLL().GetPage(_SiteID, null, "get-odata");
             Assert.IsNotNull(_Page);
             Assert.IsTrue(_Page.Page.OGraph.OGraphDescription == "odata:desc");
             Assert.IsTrue(_Page.Page.OGraph.OGraphTitle == "odata:title");
             Assert.IsNotNull(_Page.Page.OGraph.FileRead.MediaUrl);
+
+            _PageModel.OGraph.OGraphID = _Page.Page.OGraph.OGraphID;
+            _PageModel.OGraph.FileRead.MediaID = _Page.Page.OGraph.FileRead.MediaID;
+            _PageModel.OGraph.FileRead.FileContent = null;
+            _PageModel.OGraph.OGraphDescription = "odata:desc2";
+
+            new PageBLL().SaveCulture(_PageModel, _CustomerUser.Id);
+            var _Page2 = new PageBLL().GetPage(_SiteID, null, "get-odata");
+            Assert.IsNotNull(_Page2);
+            Assert.IsTrue(_Page2.Page.OGraph.OGraphDescription == "odata:desc2");
+            Assert.IsTrue(_Page2.Page.OGraph.OGraphTitle == "odata:title");
+            Assert.IsNotNull(_Page2.Page.OGraph.FileRead.MediaUrl);
+
+            Assert.IsTrue(_Page2.Page.OGraph.OGraphID == _Page.Page.OGraph.OGraphID);
+            Assert.IsTrue(_Page2.Page.OGraph.FileRead.MediaID == _Page.Page.OGraph.FileRead.MediaID);
         }
     }
 }

@@ -8,9 +8,9 @@ using thewall9.data.binding;
 
 namespace thewall9.bll
 {
-    public class OdataBLL : BaseBLL
+    public class OGraphBLL : BaseBLL
     {
-        public int SaveOdata(OGraphBinding OGraph, int SiteID, string UserID)
+        public int SaveOGraph(OGraphBinding OGraph, int SiteID, string UserID)
         {
             using (var _c = db)
             {
@@ -26,6 +26,8 @@ namespace thewall9.bll
                     else
                     {
                         _Model = _c.OGraphs.Where(m => m.OGraphID == OGraph.OGraphID).FirstOrDefault();
+                        _Model.OGraphDescription = OGraph.OGraphDescription;
+                        _Model.OGraphTitle = OGraph.OGraphTitle;
                     }
                     _c.SaveChanges();
 

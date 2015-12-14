@@ -189,7 +189,7 @@ namespace thewall9.web.parent.HtmlHelpers
         }
         public static MvcHtmlString LinkYoutubeChannel(this HtmlHelper helper)
         {
-            return new MvcHtmlString("https://www.youtube.com/channel/" + APP._Langs.Where(m => m.Name == APP._CurrentLang).FirstOrDefault().YoutubeChannel);
+            return new MvcHtmlString("https://www.youtube.com/" + APP._Langs.Where(m => m.Name == APP._CurrentLang).FirstOrDefault().YoutubeChannel);
         }
         //MESSAGES
         public static MvcHtmlString MessagesJson(this HtmlHelper helper)

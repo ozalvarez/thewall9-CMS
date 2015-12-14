@@ -95,10 +95,11 @@ namespace thewall9.bll
                                   {
                                       OGraphDescription = p.PageCultureOGraph.OGraph.OGraphDescription,
                                       OGraphTitle = p.PageCultureOGraph.OGraph.OGraphTitle,
+                                      OGraphID = p.PageCultureOGraph.OGraphID,
                                       FileRead = p.PageCultureOGraph.OGraph.OGraphMedia != null ? new FileRead
                                       {
                                           MediaID = p.PageCultureOGraph.OGraph.OGraphMedia.Media.MediaID,
-                                          MediaUrl= p.PageCultureOGraph.OGraph.OGraphMedia.Media.MediaUrl
+                                          MediaUrl = p.PageCultureOGraph.OGraph.OGraphMedia.Media.MediaUrl
                                       } : null
                                   } : null
                               }).ToList();
@@ -285,6 +286,10 @@ namespace thewall9.bll
                 return _Page.FriendlyUrl;
             }
         }
+        #endregion
+
+        #region OpenGraph
+
         #endregion
 
         public PageCultureBinding Get(int PageID, int CultureID, string UserID)
@@ -495,7 +500,8 @@ namespace thewall9.bll
                     throw new RuleException("Ya existe una seccion con el FriendlyUrl /" + Model.FriendlyUrl);
                 _c.SaveChanges();
 
-                var _OdataID = new OdataBLL().SaveOdata(Model.OGraph, Model.SiteID, UserID);
+                //SAVE OPEN GRAPH DATA
+                var _OdataID = new OGraphBLL().SaveOGraph(Model.OGraph, Model.SiteID, UserID);
                 if (_OdataID != 0)
                 {
                     var _OdataModel = _c.PageCulturesOGraphs.Where(m => m.PageID == Model.PageID && m.CultureID == Model.CultureID).FirstOrDefault();
@@ -515,10 +521,6 @@ namespace thewall9.bll
                     }
                 }
                 _c.SaveChanges();
-
-                /*SAVE ODATA INFO*/
-
-
             }
         }
         public void Delete(int PageID, string UserID)
