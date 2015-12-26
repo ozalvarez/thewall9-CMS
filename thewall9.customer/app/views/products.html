@@ -10,8 +10,8 @@
 </div>
 <script type="text/ng-template" id="nodes_renderer.html">
     <div ui-tree-handle>
-        {{item.ProductAlias}}
         <ul class="list-inline pull-right">
+
             <li>
                 <button class="btn btn-danger btn-xs" ng-click="enable(item,true)" ng-hide="item.Enabled">
                     <span class="fa fa-remove"></span> Desabilitado
@@ -29,6 +29,14 @@
                 <button class="btn btn-sm btn-danger" ng-click="delete(item)" data-nodrag>
                     <span class="glyphicon glyphicon-remove"></span>
                 </button>
+            </li>
+        </ul>
+        <ul class="list-inline">
+            <li>
+                <img ng-src="{{item.IconPath}}" width="60" />
+            </li>
+            <li>
+                {{item.ProductName}}
             </li>
         </ul>
         <div class="clearfix"></div>

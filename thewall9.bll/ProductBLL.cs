@@ -135,6 +135,8 @@ namespace thewall9.bll
                 ProductAlias = c.ProductAlias,
                 SiteID = c.SiteID,
                 Enabled = c.Enabled,
+                ProductName= c.ProductCultures.FirstOrDefault().ProductName,
+                IconPath = c.ProductCultures.FirstOrDefault().IconPath,
                 ProductCultures = c.ProductCultures.Select(m => new ProductCultureBinding
                 {
                     ProductName = m.ProductName,

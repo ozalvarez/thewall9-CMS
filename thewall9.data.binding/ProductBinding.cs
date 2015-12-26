@@ -16,6 +16,15 @@ namespace thewall9.data.binding
     }
     public class ProductBinding : ProductBase
     {
+        /// <summary>
+        /// FIRST PRODUCT CULTURE NAME
+        /// </summary>
+        public string ProductName { get; set; }
+        /// <summary>
+        /// FIRST PRODUCT CULTURE ICON PATH
+        /// </summary>
+        public string IconPath { get; set; }
+
         public List<ProductCultureBinding> ProductCultures { get; set; }
         public List<ProductTagBinding> ProductTags { get; set; }
         public List<ProductCategoryBinding> ProductCategories { get; set; }
