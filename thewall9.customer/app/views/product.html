@@ -40,14 +40,19 @@
                         {{item.TagName}}
                     </a>
                 </div>
-                <button class="btn btn-sm btn-default" ng-repeat="item in model.ProductTags" ng-show="item.Deleting==null || item.Deleting==false" ng-click="removeTag(item)" type="button">
+                <button class="btn btn-sm btn-product" ng-repeat="item in model.ProductTags" ng-show="item.Deleting==null || item.Deleting==false" ng-click="removeTag(item)" type="button">
                     {{item.TagName}} <i class="fa fa-remove"></i>
                 </button>
             </div>
             <hr />
             <div class="form-group" ng-repeat="item in model.ProductCurrencies">
+                <label>Precio [{{item.CurrencyName}}] Antiguo</label>
+                <input type="number" class="form-control" ng-model="item.PriceOld" />
+                <p class="small help-block">Dejarlo en blanco o 0 si no tiene</p>
+
                 <label>Precio [{{item.CurrencyName}}]</label>
                 <input type="number" class="form-control" ng-model="item.Price" required />
+                
             </div>
         </div>
         <div class="col-md-9">

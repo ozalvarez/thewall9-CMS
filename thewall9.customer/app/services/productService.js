@@ -18,10 +18,17 @@ app.factory('productService', ["$myhttp", "$q", 'Upload', "ngAuthSettings", "sit
         productFactory.remove = function (productID) {
             return $http.delete(ngAuthSettings.apiServiceBaseUri + uri + '?ProductID=' + productID);
         };
-        productFactory.enable= function (ProductID, Enabled) {
+
+        productFactory.ProductBooleanType = {
+            Enable: 0,
+            New: 1,
+            Featured: 2
+        }
+        productFactory.enable= function (ProductID, Enabled, ProductBooleanType) {
             return $http.post(ngAuthSettings.apiServiceBaseUri + uri + '/enable', {
                 ProductID: ProductID,
-                Boolean: Enabled
+                Boolean: Enabled,
+                ProductBooleanType: ProductBooleanType
             })
         };
         productFactory.removeGallery = function (galleryID) {

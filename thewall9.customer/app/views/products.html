@@ -11,6 +11,22 @@
 <script type="text/ng-template" id="nodes_renderer.html">
     <div ui-tree-handle>
         <ul class="list-inline pull-right">
+            <li>
+                <button class="btn btn-danger btn-xs" ng-click="enableNew(item,true)" ng-hide="item.New">
+                    <span class="fa fa-remove"></span> Nuevo
+                </button>
+                <button class="btn btn-success btn-xs" ng-click="enableNew(item,false)" ng-show="item.New">
+                    <span class="fa fa-check"></span> Nuevo
+                </button>
+            </li>
+            <li>
+                <button class="btn btn-danger btn-xs" ng-click="enableFeatured(item,true)" ng-hide="item.Featured">
+                    <span class="fa fa-remove"></span> Popular
+                </button>
+                <button class="btn btn-success btn-xs" ng-click="enableFeatured(item,false)" ng-show="item.Featured">
+                    <span class="fa fa-check"></span> Popular
+                </button>
+            </li>
 
             <li>
                 <button class="btn btn-danger btn-xs" ng-click="enable(item,true)" ng-hide="item.Enabled">

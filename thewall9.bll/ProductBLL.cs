@@ -41,7 +41,8 @@ namespace thewall9.bll
                 ProductName = m.ProductName,
                 ProductID = m.ProductID,
                 CultureName = m.Culture.Name,
-
+                New = m.Product.New,
+                Featured = m.Product.Featured,
                 Galleries = m.Product.ProductGalleries.Select(m2 => new ProductGalleryBinding
                 {
                     PhotoPath = m2.PhotoPath
@@ -52,7 +53,23 @@ namespace thewall9.bll
                 ? (m.Product.ProductCurrencies.Any()
                     ? m.Product.ProductCurrencies.FirstOrDefault().Price
                     : 0)
-                : m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).FirstOrDefault().Price
+                : m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).FirstOrDefault().Price,
+
+                PriceOld = (CurrencyID == 0 || !m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).Any())
+                ? (m.Product.ProductCurrencies.Any()
+                    ? m.Product.ProductCurrencies.FirstOrDefault().PriceOld
+                    : 0)
+                : m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).FirstOrDefault().PriceOld,
+
+                Sale = (CurrencyID == 0 || !m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).Any())
+                ? (m.Product.ProductCurrencies.Any()
+                    ? m.Product.ProductCurrencies.FirstOrDefault().PriceOld > 0
+                        ? true
+                        : false
+                    : false)
+                : (m.Product.ProductCurrencies.Where(p => p.CurrencyID == CurrencyID).FirstOrDefault().PriceOld > 0)
+                    ? true
+                    : false
             });
         }
         private IQueryable<ProductWeb> Get(int SiteID, int CultureID, int CurrencyID, string ProductCategoryFriendlyUrl, ApplicationDbContext _c)
@@ -135,7 +152,9 @@ namespace thewall9.bll
                 ProductAlias = c.ProductAlias,
                 SiteID = c.SiteID,
                 Enabled = c.Enabled,
-                ProductName= c.ProductCultures.FirstOrDefault().ProductName,
+                Featured = c.Featured,
+                New = c.New,
+                ProductName = c.ProductCultures.FirstOrDefault().ProductName,
                 IconPath = c.ProductCultures.FirstOrDefault().IconPath,
                 ProductCultures = c.ProductCultures.Select(m => new ProductCultureBinding
                 {
@@ -170,7 +189,8 @@ namespace thewall9.bll
                     CurrencyID = m.CurrencyID,
                     CurrencyName = m.Currency.CurrencyName,
                     ProductID = m.ProductID,
-                    Price = m.Price
+                    Price = m.Price,
+                    PriceOld = m.PriceOld
                 }).ToList()
             });
         }
@@ -304,6 +324,7 @@ namespace thewall9.bll
                             {
                                 var _CC = _Product.ProductCurrencies.Where(m => m.CurrencyID == item.CurrencyID).SingleOrDefault();
                                 _CC.Price = item.Price;
+                                _CC.PriceOld = item.PriceOld;
                             }
                         }
                         if (Model.ProductID == 0 || item.Adding)
@@ -311,7 +332,8 @@ namespace thewall9.bll
                             _Product.ProductCurrencies.Add(new ProductCurrency
                             {
                                 CurrencyID = item.CurrencyID,
-                                Price = item.Price
+                                Price = item.Price,
+                                PriceOld = item.PriceOld
                             });
                         }
                     }
@@ -424,7 +446,19 @@ namespace thewall9.bll
             {
                 var _CP = _c.Products.Where(m => m.ProductID == Model.ProductID).SingleOrDefault();
                 Can(_CP.SiteID, UserID, _c);
-                _CP.Enabled = Model.Boolean;
+                switch (Model.ProductBooleanType)
+                {
+                    case ProductBooleanType.Enable:
+                        _CP.Enabled = Model.Boolean;
+                        break;
+                    case ProductBooleanType.New:
+                        _CP.New = Model.Boolean;
+                        break;
+                    case ProductBooleanType.Featured:
+                        _CP.Featured = Model.Boolean;
+                        break;
+                }
+
                 _c.SaveChanges();
             }
         }

@@ -14,8 +14,18 @@
             }
         };
         $scope.enable = function (item, enabled) {
-            productService.enable(item.ProductID, enabled).then(function (response) {
+            productService.enable(item.ProductID, enabled, productService.ProductBooleanType.Enable).then(function (response) {
                 item.Enabled = enabled;
+            });
+        };
+        $scope.enableNew = function (item, enabled) {
+            productService.enable(item.ProductID, enabled, productService.ProductBooleanType.New).then(function (response) {
+                item.New = enabled;
+            });
+        };
+        $scope.enableFeatured = function (item, enabled) {
+            productService.enable(item.ProductID, enabled, productService.ProductBooleanType.Featured).then(function (response) {
+                item.Featured = enabled;
             });
         };
         $scope.options = {

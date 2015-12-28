@@ -13,6 +13,8 @@ namespace thewall9.data.binding
         public string ProductAlias { get; set; }
         public int Priority { get; set; }
         public bool Enabled { get; set; }
+        public bool New { get; set; }
+        public bool Featured { get; set; }
     }
     public class ProductBinding : ProductBase
     {
@@ -51,8 +53,12 @@ namespace thewall9.data.binding
     {
         public int ProductID { get; set; }
         public double Price { get; set; }
+        public double PriceOld { get; set; }
         public string CultureName { get; set; }
         public List<ProductGalleryBinding> Galleries { get; set; }
+        public bool New { get; set; }
+        public bool Featured { get; set; }
+        public bool Sale { get; set; }
     }
     public class ProductsWeb
     {
@@ -94,6 +100,7 @@ namespace thewall9.data.binding
     public class ProductCurrencyBase
     {
         public double Price { get; set; }
+        public double PriceOld { get; set; }
     }
     public class ProductCurrencyBinding : ProductCurrencyBase
     {
@@ -107,9 +114,14 @@ namespace thewall9.data.binding
         public int ProductID { get; set; }
         public int Index { get; set; }
     }
+    public enum ProductBooleanType
+    {
+        Enable = 0, New = 1, Featured = 2
+    }
     public class ProductBoolean
     {
         public int ProductID { get; set; }
         public bool Boolean { get; set; }
+        public ProductBooleanType ProductBooleanType { get; set; }
     }
 }
