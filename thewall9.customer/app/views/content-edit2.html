@@ -53,7 +53,7 @@
         </div>
         <div class="clearfix"></div>
     </div>
-    <ol ui-tree-nodes="options" ng-model="item.Items" ng-class="{hidden: collapsed}">
+    <ol ui-tree-nodes="options" ng-model="item.Items" ng-class="{hidden: collapsed}" ng-init="initParents(item)">
         <li ng-repeat="item in item.Items" ui-tree-node ng-include="'nodes_renderer.html'">
         </li>
     </ol>

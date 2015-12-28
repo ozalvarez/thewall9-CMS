@@ -61,8 +61,6 @@
         }
         $scope.duplicate = function (item) {
             contentService.duplicateTree(item).then(function (data) {
-                console.log("DUPLICATING", data);
-                // $scope.get();
                 attach(data, $scope.data)
                 toastrService.success("Nuevo " + item.Hint + " creado");
             });
@@ -77,9 +75,15 @@
             });
         }
         $scope.delete = function (item) {
+            //console.log(item);
             if (confirm("¿Estás seguro que quieres eliminar esta propiedad?")) {
                 contentService.remove(item).then(function (data) {
-                    $scope.get();
+                    //$scope.get();
+                    angular.forEach(item.Parent.Items, function (i, index) {
+                        if (i.ContentPropertyID == item.ContentPropertyID) {
+                            item.Parent.Items.splice(index, 1);
+                        }
+                    });
                     toastrService.success("Propiedad eliminada");
                 });
             }
@@ -102,9 +106,16 @@
             }
         }
 
+        //ADD PARENT TO ALL OBJECTS TO EASY MANIPULATION, EXAMPLE DELETE FUNCTION
+        $scope.initParents = function (item) {
+            angular.forEach(item.Items, function (i) {
+                i.Parent = item;
+            });
+        }
+
         /*CULTURE*/
         $scope.updateCulture = function () {
-            cultureService.currentCulture = $scope.selectedCulture;   
+            cultureService.currentCulture = $scope.selectedCulture;
             $scope.init();
         }
         /*INIT*/
