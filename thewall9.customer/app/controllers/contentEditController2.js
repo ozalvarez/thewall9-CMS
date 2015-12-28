@@ -61,7 +61,7 @@
         }
         $scope.duplicate = function (item) {
             contentService.duplicateTree(item).then(function (data) {
-                attach(data, $scope.data)
+                attach(data, $scope.data);
                 toastrService.success("Nuevo " + item.Hint + " creado");
             });
         };
@@ -75,20 +75,22 @@
             });
         }
         $scope.delete = function (item) {
-            //console.log(item);
             if (confirm("¿Estás seguro que quieres eliminar esta propiedad?")) {
                 contentService.remove(item).then(function (data) {
-                    //$scope.get();
-                    angular.forEach(item.Parent.Items, function (i, index) {
-                        if (i.ContentPropertyID == item.ContentPropertyID) {
-                            item.Parent.Items.splice(index, 1);
-                        }
-                    });
+                    deleteFromTree(item, $scope.data);
                     toastrService.success("Propiedad eliminada");
                 });
             }
         };
-
+        function deleteFromTree(newItem, tree) {
+            angular.forEach(tree, function (item, index) {
+                if (item.ContentPropertyID == newItem.ContentPropertyID) {
+                    tree.splice(index, 1);
+                } else if (item.Items != null && item.Items.length > 0) {
+                    deleteFromTree(newItem, item.Items);
+                }
+            });
+        }
         $scope.enable = function (item, enabled) {
             contentService.enable(item.ContentPropertyID, enabled).then(function (response) {
                 item.Enabled = enabled;
@@ -104,13 +106,6 @@
                     toastrService.success("Propiedad movida exitosamente");
                 });
             }
-        }
-
-        //ADD PARENT TO ALL OBJECTS TO EASY MANIPULATION, EXAMPLE DELETE FUNCTION
-        $scope.initParents = function (item) {
-            angular.forEach(item.Items, function (i) {
-                i.Parent = item;
-            });
         }
 
         /*CULTURE*/
