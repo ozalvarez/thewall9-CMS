@@ -205,15 +205,28 @@ namespace thewall9.bll
                 return Get(_P, _c);
             }
         }
-        public List<ProductBinding> Get(int SiteID, string UserID)
+        public List<ProductBinding> Get(int SiteID, int CategoryID, string UserID)
         {
             using (var _c = db)
             {
                 Can(SiteID, UserID, _c);
-                var _P = from c in _c.Products
-                         where c.SiteID == SiteID
-                         orderby c.Priority
-                         select c;
+                IQueryable<Product> _P = null;
+                if (CategoryID == 0)
+                {
+                    _P = from p in _c.Products
+                         where p.SiteID == SiteID
+                         orderby p.Priority
+                         select p;
+                }
+                else
+                {
+                    _P = from pc in _c.ProductCategories
+                         join p in _c.Products on pc.ProductID equals p.ProductID
+                         where p.SiteID == SiteID && pc.CategoryID == CategoryID
+                         orderby pc.CategoryID, p.Priority
+                         select p;
+
+                }
                 return _P.ToList().Select(m => Get(m, _c)).ToList();
             }
         }
@@ -469,8 +482,11 @@ namespace thewall9.bll
             using (var _c = db)
             {
                 return (from cc in _c.CategoryCultures
-                        where cc.Category.SiteID == SiteID && (cc.CategoryName.ToLower().Contains(Query.ToLower())
-                        || cc.Category.CategoryAlias.ToLower().Contains(Query.ToLower()))
+                        where cc.Category.SiteID == SiteID
+                        && ((!string.IsNullOrEmpty(Query))
+                            ? (cc.CategoryName.ToLower().Contains(Query.ToLower())
+                                || cc.Category.CategoryAlias.ToLower().Contains(Query.ToLower()))
+                            : true)
                         select new ProductCategoryBinding
                         {
                             CategoryID = cc.CategoryID,

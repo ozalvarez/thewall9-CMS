@@ -5,8 +5,8 @@ app.factory('productService', ["$myhttp", "$q", 'Upload', "ngAuthSettings", "sit
         var uriGallery = 'api/product-gallery';
         var productFactory = {};
 
-        productFactory.get = function () {
-            return $http.get(ngAuthSettings.apiServiceBaseUri + uri + '?SiteID=' + siteService.site.SiteID);
+        productFactory.get = function (CategoryID) {
+            return $http.get(ngAuthSettings.apiServiceBaseUri + uri + '?SiteID=' + siteService.site.SiteID + '&CategoryID=' + CategoryID);
         };
         productFactory.getByID = function (productID) {
             return $http.get(ngAuthSettings.apiServiceBaseUri + uri + '/byID?ProductID=' + productID);
@@ -24,7 +24,7 @@ app.factory('productService', ["$myhttp", "$q", 'Upload', "ngAuthSettings", "sit
             New: 1,
             Featured: 2
         }
-        productFactory.enable= function (ProductID, Enabled, ProductBooleanType) {
+        productFactory.enable = function (ProductID, Enabled, ProductBooleanType) {
             return $http.post(ngAuthSettings.apiServiceBaseUri + uri + '/enable', {
                 ProductID: ProductID,
                 Boolean: Enabled,
@@ -52,6 +52,9 @@ app.factory('productService', ["$myhttp", "$q", 'Upload', "ngAuthSettings", "sit
         //CATEGORIES
         productFactory.getCategories = function (query) {
             return $http.get(ngAuthSettings.apiServiceBaseUri + uri + '/categories?SiteID=' + siteService.site.SiteID + "&Query=" + query);
+        }
+        productFactory.getCategories = function () {
+            return $http.get(ngAuthSettings.apiServiceBaseUri + uri + '/categories?SiteID=' + siteService.site.SiteID);
         }
         productFactory.getCategoriesUrl = function () {
             return ngAuthSettings.apiServiceBaseUri + uri + '/categories?SiteID=' + siteService.site.SiteID + "&Query=%QUERY";

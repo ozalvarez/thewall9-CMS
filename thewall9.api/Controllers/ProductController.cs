@@ -34,9 +34,9 @@ namespace thewall9.api.Controllers
         #endregion
 
         #region Customers
-        public IHttpActionResult Get(int SiteID)
+        public IHttpActionResult Get(int SiteID, int CategoryID = 0)
         {
-            return Ok(_ProductService.Get(SiteID, User.Identity.GetUserId()));
+            return Ok(_ProductService.Get(SiteID, CategoryID, User.Identity.GetUserId()));
         }
         [Route("byID")]
         public IHttpActionResult GetByID(int ProductID)
@@ -71,7 +71,7 @@ namespace thewall9.api.Controllers
             return Ok();
         }
         [Route("categories")]
-        public IHttpActionResult GetCategories(int SiteID, string Query)
+        public IHttpActionResult GetCategories(int SiteID, string Query = null)
         {
             return Ok(_ProductService.GetCategories(SiteID, Query));
         }

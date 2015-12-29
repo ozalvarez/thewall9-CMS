@@ -94,7 +94,7 @@ namespace thewall9.bll.test
         public void ProductSaveTest()
         {
             SettingUp();
-            var _P = new ProductBLL().Get(_SiteID, _CustomerUser.Id);
+            var _P = new ProductBLL().Get(_SiteID,0, _CustomerUser.Id);
             Assert.IsNotNull(_P);
             Assert.IsTrue(_P[0].ProductCategories.Count == 1);
             Assert.IsTrue(_P[0].ProductCurrencies.Count == 2);
@@ -128,7 +128,7 @@ namespace thewall9.bll.test
         public void ProductGetTest()
         {
             SettingUp();
-            var _P = new ProductBLL().Get(_SiteID, _CustomerUser.Id);
+            var _P = new ProductBLL().Get(_SiteID,0, _CustomerUser.Id);
             Assert.IsNotNull(_P);
         }
         [TestMethod]
@@ -155,7 +155,7 @@ namespace thewall9.bll.test
             //Updating
             _Product.ProductAlias = "00 Updated";
             new ProductBLL().Save(_Product, _CustomerUser.Id);
-            var _P = new ProductBLL().Get(_SiteID, _CustomerUser.Id);
+            var _P = new ProductBLL().Get(_SiteID,0, _CustomerUser.Id);
             Assert.IsNotNull(_P);
             Assert.IsTrue(_P[0].ProductAlias == _Product.ProductAlias);
             Assert.IsTrue(_P[0].ProductCategories.Count == 1);
@@ -166,7 +166,7 @@ namespace thewall9.bll.test
         public void ProductSaveEmptyFriendlyURLTest()
         {
             SettingUp();
-            var _P = new ProductBLL().Get(_SiteID, _CustomerUser.Id);
+            var _P = new ProductBLL().Get(_SiteID,0, _CustomerUser.Id);
             Assert.IsNotNull(_P);
             Assert.IsNotNull(_P[0].ProductCultures[0].FriendlyUrl);
         }
@@ -228,7 +228,7 @@ namespace thewall9.bll.test
         public void ProductGetWebTest()
         {
             SettingUp();
-            var _Pr = new ProductBLL().Get(_SiteID, _CustomerUser.Id);
+            var _Pr = new ProductBLL().Get(_SiteID,0, _CustomerUser.Id);
             var _P = new ProductBLL().Get(_SiteID, null, null, _ProductCurrencies[0].CurrencyID, _Category.CategoryCultures[0].FriendlyUrl, 1);
             Assert.IsNotNull(_P);
         }

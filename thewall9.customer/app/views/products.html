@@ -1,6 +1,14 @@
 ﻿<div class="page-header">
     <ul class="list-inline pull-right">
         <li>
+            <select ng-options="category as category.CategoryAlias for category in categories"
+                    ng-model="selectedCategory"
+                    ng-change="changeCategory()"
+                    class="form-control">
+                <option value="">TODAS LAS CATEGORIAS</option>
+            </select>
+        </li>
+        <li>
             <a class="btn btn-primary" role="button" ng-href="#/product">
                 <span class="glyphicon glyphicon-plus"></span> Nuevo Producto
             </a>
@@ -9,7 +17,7 @@
     <h1>Productos</h1>
 </div>
 <script type="text/ng-template" id="nodes_renderer.html">
-    <div ui-tree-handle>
+    <div ui-tree-handle ng-attr-data-nodrag="{{selectedCategory.CategoryID!=0}}">
         <ul class="list-inline pull-right">
             <li>
                 <button class="btn btn-danger btn-xs" ng-click="enableNew(item,true)" ng-hide="item.New">

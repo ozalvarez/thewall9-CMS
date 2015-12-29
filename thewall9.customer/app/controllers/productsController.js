@@ -1,9 +1,22 @@
 ﻿app.controller('productsController', ['$scope', 'productService', 'siteService', 'toastrService',
     function ($scope, productService, siteService, toastrService) {
+        $scope.selectedCategory = {
+            CategoryID:0
+        }
         $scope.get = function () {
-            productService.get().then(function (data) {
+            productService.get($scope.selectedCategory.CategoryID).then(function (data) {
                 $scope.data = data;
             });
+        }
+        function getCategories() {
+            productService.getCategories().then(function (dataCategories) {
+                $scope.categories = dataCategories;
+                $scope.get();
+            });
+        }
+        $scope.changeCategory = function () {
+            $scope.selectedCategory= ($scope.selectedCategory == null) ? { CategoryID: 0 } : $scope.selectedCategory;
+            $scope.get($scope.selectedCategory.CategoryID);
         }
         $scope.delete = function (item) {
             if (confirm("¿Estas seguro que deseas eliminar este producto?")) {
@@ -38,9 +51,10 @@
                 });
             }
         };
+
         /*INIT*/
         $scope.init = function () {
-            $scope.get();
+            getCategories();
         };
         $scope.$on('initDone', function (event) {
             $scope.init();
