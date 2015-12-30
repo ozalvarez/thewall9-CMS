@@ -17,7 +17,7 @@
     <h1>Productos</h1>
 </div>
 <script type="text/ng-template" id="nodes_renderer.html">
-    <div ui-tree-handle ng-attr-data-nodrag="{{selectedCategory.CategoryID!=0}}">
+    <div ui-tree-handle ng-attr-data-nodrag="{{selectedCategory.CategoryID==0}}">
         <ul class="list-inline pull-right">
             <li>
                 <button class="btn btn-danger btn-xs" ng-click="enableNew(item,true)" ng-hide="item.New">
@@ -60,7 +60,10 @@
                 <img ng-src="{{item.IconPath}}" width="60" />
             </li>
             <li>
-                {{item.ProductName}}
+                {{item.ProductAlias}}
+            </li>
+            <li>
+                {{item.Priority}}
             </li>
         </ul>
         <div class="clearfix"></div>

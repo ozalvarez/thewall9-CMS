@@ -49,10 +49,11 @@ app.config(["$routeProvider", "blockUIConfig", function ($routeProvider, blockUI
         controller: 'tagController',
         templateUrl: '/app/views/tags.html'
     });
-    $routeProvider.when('/products', {
+    $routeProvider.when('/products/:CategoryID?', {
         controller: 'productsController',
         templateUrl: '/app/views/products.html'
     });
+
     $routeProvider.when('/product/:productID?', {
         controller: 'productController',
         templateUrl: '/app/views/product.html'

@@ -34,9 +34,10 @@ app.factory('productService', ["$myhttp", "$q", 'Upload', "ngAuthSettings", "sit
         productFactory.removeGallery = function (galleryID) {
             return $http.delete(ngAuthSettings.apiServiceBaseUri + uri + '/gallery?GalleryID=' + galleryID);
         };
-        productFactory.move = function (productID, index) {
+        productFactory.move = function (productID,CategoryID, index) {
             return $http.post(ngAuthSettings.apiServiceBaseUri + uri + '/move', {
                 ProductID: productID,
+                CategoryID:CategoryID,
                 Index: index
             });
         };

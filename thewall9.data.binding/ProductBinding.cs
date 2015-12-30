@@ -6,34 +6,16 @@ using System.Threading.Tasks;
 
 namespace thewall9.data.binding
 {
+    #region BASE
     public class ProductBase
     {
         public int ProductID { get; set; }
         public int SiteID { get; set; }
         public string ProductAlias { get; set; }
-        public int Priority { get; set; }
         public bool Enabled { get; set; }
         public bool New { get; set; }
         public bool Featured { get; set; }
     }
-    public class ProductBinding : ProductBase
-    {
-        /// <summary>
-        /// FIRST PRODUCT CULTURE NAME
-        /// </summary>
-        public string ProductName { get; set; }
-        /// <summary>
-        /// FIRST PRODUCT CULTURE ICON PATH
-        /// </summary>
-        public string IconPath { get; set; }
-
-        public List<ProductCultureBinding> ProductCultures { get; set; }
-        public List<ProductTagBinding> ProductTags { get; set; }
-        public List<ProductCategoryBinding> ProductCategories { get; set; }
-        public List<ProductGalleryBinding> ProductGalleries { get; set; }
-        public List<ProductCurrencyBinding> ProductCurrencies { get; set; }
-    }
-
     public class ProductCultureBase
     {
         public string ProductName { get; set; }
@@ -42,6 +24,38 @@ namespace thewall9.data.binding
         public string IconPath { get; set; }
         public string FriendlyUrl { get; set; }
     }
+    public class ProductCategoryBase
+    {
+        public int ProductID { get; set; }
+        public int CategoryID { get; set; }
+        public int Priority { get; set; }
+    }
+    public class ProductGalleryBase
+    {
+        public int ProductGalleryID { get; set; }
+        public int ProductID { get; set; }
+        public string PhotoPath { get; set; }
+    }
+    #endregion
+
+    public class ProductListBinding: ProductBase
+    {
+        /// <summary>
+        /// FIRST PRODUCT CULTURE ICON PATH
+        /// </summary>
+        public string IconPath { get; set; }
+        public int Priority { get; set; }
+    }
+    public class ProductBinding : ProductBase
+    {
+        public List<ProductCultureBinding> ProductCultures { get; set; }
+        public List<ProductTagBinding> ProductTags { get; set; }
+        public List<ProductCategoryBinding> ProductCategories { get; set; }
+        public List<ProductGalleryBinding> ProductGalleries { get; set; }
+        public List<ProductCurrencyBinding> ProductCurrencies { get; set; }
+    }
+
+    
     public class ProductCultureBinding : ProductCultureBase
     {
         public int CultureID { get; set; }
@@ -78,21 +92,14 @@ namespace thewall9.data.binding
         public bool Adding { get; set; }
         public bool Deleting { get; set; }
     }
-    public class ProductCategoryBinding
+    
+    public class ProductCategoryBinding: ProductCategoryBase
     {
-        public int ProductID { get; set; }
-        public int CategoryID { get; set; }
         public string CategoryAlias { get; set; }
         public bool Adding { get; set; }
         public bool Deleting { get; set; }
     }
-    public class ProductGalleryBase
-    {
-        public int ProductGalleryID { get; set; }
-        public int ProductID { get; set; }
-        public string PhotoPath { get; set; }
-
-    }
+    
     public class ProductGalleryBinding : ProductGalleryBase
     {
 
@@ -112,6 +119,10 @@ namespace thewall9.data.binding
     public class ProductUpdatePriorities
     {
         public int ProductID { get; set; }
+        public int CategoryID { get; set; }
+        public bool InNew { get; set; }
+        public bool InFeatured { get; set; }
+        public bool InSale { get; set; }
         public int Index { get; set; }
     }
     public enum ProductBooleanType
