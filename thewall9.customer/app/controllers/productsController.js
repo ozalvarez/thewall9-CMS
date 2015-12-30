@@ -1,8 +1,5 @@
-﻿app.controller('productsController', ['$scope', 'productService', 'siteService', 'toastrService',
-    function ($scope, productService, siteService, toastrService) {
-        $scope.selectedCategory = {
-            CategoryID:0
-        }
+﻿app.controller('productsController', ['$scope', '$routeParams', '$location', 'productService', 'siteService', 'toastrService',
+    function ($scope, $routeParams, $location, productService, siteService, toastrService) {
         $scope.get = function () {
             productService.get($scope.selectedCategory.CategoryID).then(function (data) {
                 $scope.data = data;
@@ -11,12 +8,25 @@
         function getCategories() {
             productService.getCategories().then(function (dataCategories) {
                 $scope.categories = dataCategories;
+                if ($routeParams.CategoryID != null) {
+                    angular.forEach($scope.categories, function (item) {
+                        if (item.CategoryID == $routeParams.CategoryID) {
+                            $scope.selectedCategory = item;
+                        }
+                    });
+                } else {
+                    $scope.selectedCategory = {
+                        CategoryID: 0
+                    }
+                }
                 $scope.get();
             });
         }
         $scope.changeCategory = function () {
-            $scope.selectedCategory= ($scope.selectedCategory == null) ? { CategoryID: 0 } : $scope.selectedCategory;
-            $scope.get($scope.selectedCategory.CategoryID);
+            if ($scope.selectedCategory == null)
+                $location.path("/products/");
+            else
+                $location.path("/products/" + $scope.selectedCategory.CategoryID);
         }
         $scope.delete = function (item) {
             if (confirm("¿Estas seguro que deseas eliminar este producto?")) {
@@ -46,8 +56,8 @@
                 var sourceNode = event.source.nodeScope;
                 var index = event.dest.index;
                 var productID = sourceNode.$modelValue.ProductID
-                productService.move(productID, index).then(function (data) {
-
+                productService.move(productID, $scope.selectedCategory.CategoryID, index).then(function (data) {
+                    sourceNode.$modelValue.Priority = data;
                 });
             }
         };

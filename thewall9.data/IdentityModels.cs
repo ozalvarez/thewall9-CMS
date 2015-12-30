@@ -85,6 +85,10 @@ namespace thewall9.data.Models
                 .WithOptional(m => m.OGraphMedia)
                .WillCascadeOnDelete(true);
 
+            //PRODUCT
+            modelBuilder.Entity<ProductCategory>()
+                .HasKey(m => new { m.ProductID, m.CategoryID });
+
             base.OnModelCreating(modelBuilder);
         }
 

@@ -20,14 +20,13 @@ namespace thewall9.bll
             return (string.IsNullOrEmpty(ProductCategoryFriendlyUrl)
                 ? from m in _c.ProductCultures
                   where m.Product.SiteID == SiteID && m.CultureID == CultureID && m.Product.Enabled
-                  orderby m.Product.Priority
                   select m
                : from m in _c.ProductCultures
                  join u in _c.ProductCategories on m.ProductID equals u.ProductID
                  join pc in _c.Categories on u.CategoryID equals pc.CategoryID
                  join pcc in _c.CategoryCultures on pc.CategoryID equals pcc.CategoryID
                  where pcc.FriendlyUrl == ProductCategoryFriendlyUrl && m.CultureID == CultureID && m.Product.Enabled
-                 orderby m.Product.Priority
+                 orderby u.Priority
                  select m);
         }
         private IQueryable<ProductWeb> Select(IQueryable<ProductCulture> _PC, int CurrencyID, ApplicationDbContext _c)
@@ -154,8 +153,6 @@ namespace thewall9.bll
                 Enabled = c.Enabled,
                 Featured = c.Featured,
                 New = c.New,
-                ProductName = c.ProductCultures.FirstOrDefault().ProductName,
-                IconPath = c.ProductCultures.FirstOrDefault().IconPath,
                 ProductCultures = c.ProductCultures.Select(m => new ProductCultureBinding
                 {
                     ProductName = m.ProductName,
@@ -194,6 +191,34 @@ namespace thewall9.bll
                 }).ToList()
             });
         }
+        private ProductListBinding GetList(ProductCategory c, ApplicationDbContext _c)
+        {
+            return (new ProductListBinding
+            {
+                ProductID = c.ProductID,
+                ProductAlias = c.Product.ProductAlias,
+                SiteID = c.Product.SiteID,
+                Enabled = c.Product.Enabled,
+                Featured = c.Product.Featured,
+                New = c.Product.New,
+                IconPath = c.Product.ProductCultures.FirstOrDefault().IconPath,
+                Priority = c.Priority
+            });
+        }
+        private ProductListBinding GetList(Product c, ApplicationDbContext _c)
+        {
+            return (new ProductListBinding
+            {
+                ProductID = c.ProductID,
+                ProductAlias = c.ProductAlias,
+                SiteID = c.SiteID,
+                Enabled = c.Enabled,
+                Featured = c.Featured,
+                New = c.New,
+                IconPath = c.ProductCultures.FirstOrDefault().IconPath,
+                Priority = 0
+            });
+        }
         public ProductBinding GetByID(int ProductID, string UserID)
         {
             using (var _c = db)
@@ -205,29 +230,38 @@ namespace thewall9.bll
                 return Get(_P, _c);
             }
         }
-        public List<ProductBinding> Get(int SiteID, int CategoryID, string UserID)
+        public List<ProductListBinding> Get(int SiteID, int CategoryID, string UserID)
         {
             using (var _c = db)
             {
                 Can(SiteID, UserID, _c);
-                IQueryable<Product> _P = null;
                 if (CategoryID == 0)
                 {
-                    _P = from p in _c.Products
-                         where p.SiteID == SiteID
-                         orderby p.Priority
-                         select p;
+                    return (from p in _c.Products
+                            where p.SiteID == SiteID
+                            orderby p.ProductAlias
+                            select p).ToList().Select(m => GetList(m, _c)).ToList();
                 }
                 else
                 {
-                    _P = from pc in _c.ProductCategories
-                         join p in _c.Products on pc.ProductID equals p.ProductID
-                         where p.SiteID == SiteID && pc.CategoryID == CategoryID
-                         orderby pc.CategoryID, p.Priority
-                         select p;
+                    return (from pc in _c.ProductCategories
+                            join p in _c.Products on pc.ProductID equals p.ProductID
+                            where p.SiteID == SiteID && pc.CategoryID == CategoryID
+                            orderby pc.Priority
+                            select pc).ToList().Select(m => GetList(m, _c)).ToList();
 
                 }
-                return _P.ToList().Select(m => Get(m, _c)).ToList();
+            }
+        }
+        public List<ProductBinding> Get(int SiteID, string UserID)
+        {
+            using (var _c = db)
+            {
+                Can(SiteID, UserID, _c);
+                return (from p in _c.Products
+                        where p.SiteID == SiteID
+                        orderby p.ProductAlias
+                        select p).ToList().Select(m => Get(m, _c)).ToList();
             }
         }
 
@@ -258,9 +292,6 @@ namespace thewall9.bll
                     _Product.ProductCategories = new List<ProductCategory>();
                     _Product.ProductCurrencies = new List<ProductCurrency>();
                     _Product.ProductTags = new List<ProductTag>();
-                    _Product.Priority = _c.Products.Where(m => m.SiteID == Model.SiteID).Any()
-                    ? _c.Products.Where(m => m.SiteID == Model.SiteID).Select(m => m.Priority).Max() + 1
-                    : 0;
                     _c.Products.Add(_Product);
                 }
                 else
@@ -362,7 +393,10 @@ namespace thewall9.bll
                         if (_PC == null)
                             _Product.ProductCategories.Add(new ProductCategory
                             {
-                                CategoryID = item.CategoryID
+                                CategoryID = item.CategoryID,
+                                Priority = _c.ProductCategories.Where(m => m.CategoryID == item.CategoryID).Any()
+                                ? _c.ProductCategories.Where(m => m.CategoryID == item.CategoryID).Select(m => m.Priority).Max() + 1
+                                : 0
                             });
                     }
                     else if (item.Deleting)
@@ -416,40 +450,62 @@ namespace thewall9.bll
         {
             using (var _c = db)
             {
-                var _Category = GetByID(ProductID, _c);
-                Can(_Category.SiteID, UserID, _c);
-                _c.Products.Remove(_Category);
+                //TO-DO UPDATE PRIORITIES
+                var _P = _c.ProductCategories.Where(m => m.ProductID == ProductID).ToList();
+                foreach (var item in _P)
+                {
+                    var _ToUpdate = _c.ProductCategories.Where(m => m.CategoryID == item.CategoryID && m.Priority > item.Priority).ToList();
+                    foreach (var itemToUpdate in _ToUpdate)
+                    {
+                        itemToUpdate.Priority--;
+                    }
+                    _c.SaveChanges();
+                }
+
+                var _Product = GetByID(ProductID, _c);
+                Can(_Product.SiteID, UserID, _c);
+                _c.Products.Remove(_Product);
                 _c.SaveChanges();
 
+                //DELETE GALLERY
                 var _Container = "product-gallery";
                 var _ContainerReference = ProductID + "/";
                 new Utils.FileUtil().DeleteFolder(_Container, _ContainerReference);
+
+                //TO-DO DELETE ICON
+
+                
             }
         }
-        public void UpdatePriorities(ProductUpdatePriorities Model, string UserID)
+        public int UpdatePriorities(ProductUpdatePriorities Model, string UserID)
         {
             using (var _c = db)
             {
-                var _P = GetByID(Model.ProductID, _c);
-                Can(_P.SiteID, UserID, _c);
-                if (Model.Index > _P.Priority)
+                if (Model.CategoryID > 0)
                 {
-                    var _OP = _c.Products.Where(m => m.SiteID == _P.SiteID && m.Priority > _P.Priority && m.Priority <= Model.Index).ToList();
-                    foreach (var item in _OP)
+                    var _P = GetProductCategory(Model.ProductID, Model.CategoryID, _c);
+                    Can(_P.Product.SiteID, UserID, _c);
+                    if (Model.Index > _P.Priority)
                     {
-                        item.Priority--;
+                        var _OP = _c.ProductCategories.Where(m => m.CategoryID == Model.CategoryID && m.Priority > _P.Priority && m.Priority <= Model.Index).ToList();
+                        foreach (var item in _OP)
+                        {
+                            item.Priority--;
+                        }
                     }
-                }
-                else if (Model.Index < _P.Priority)
-                {
-                    var _OP = _c.Products.Where(m => m.SiteID == _P.SiteID && m.Priority < _P.Priority && m.Priority >= Model.Index).ToList();
-                    foreach (var item in _OP)
+                    else if (Model.Index < _P.Priority)
                     {
-                        item.Priority++;
+                        var _OP = _c.ProductCategories.Where(m => m.CategoryID == Model.CategoryID && m.Priority < _P.Priority && m.Priority >= Model.Index).ToList();
+                        foreach (var item in _OP)
+                        {
+                            item.Priority++;
+                        }
                     }
+                    _P.Priority = Model.Index;
+                    _c.SaveChanges();
+                    return _P.Priority;
                 }
-                _P.Priority = Model.Index;
-                _c.SaveChanges();
+                return 0;
             }
         }
 
@@ -477,6 +533,10 @@ namespace thewall9.bll
         }
 
         //CATEGORIES
+        private ProductCategory GetProductCategory(int ProductID, int CategoryID, ApplicationDbContext _c)
+        {
+            return _c.ProductCategories.Where(m => m.ProductID == ProductID && m.CategoryID == CategoryID).FirstOrDefault();
+        }
         public List<ProductCategoryBinding> GetCategories(int SiteID, string Query)
         {
             using (var _c = db)

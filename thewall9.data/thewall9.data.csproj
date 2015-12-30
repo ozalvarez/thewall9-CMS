@@ -215,6 +215,14 @@
     <Compile Include="Migrations\201512281854523_CahngToPriceOld.Designer.cs">
       <DependentUpon>201512281854523_CahngToPriceOld.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512302226311_AddPriorityToCategoryInProducts.cs" />
+    <Compile Include="Migrations\201512302226311_AddPriorityToCategoryInProducts.Designer.cs">
+      <DependentUpon>201512302226311_AddPriorityToCategoryInProducts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512302304372_RemovePriorityInProducts.cs" />
+    <Compile Include="Migrations\201512302304372_RemovePriorityInProducts.Designer.cs">
+      <DependentUpon>201512302304372_RemovePriorityInProducts.cs</DependentUpon>
+    </Compile>
     <Compile Include="OGraph.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Product.cs" />
@@ -473,6 +481,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512281854523_CahngToPriceOld.resx">
       <DependentUpon>201512281854523_CahngToPriceOld.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512302226311_AddPriorityToCategoryInProducts.resx">
+      <DependentUpon>201512302226311_AddPriorityToCategoryInProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512302304372_RemovePriorityInProducts.resx">
+      <DependentUpon>201512302304372_RemovePriorityInProducts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

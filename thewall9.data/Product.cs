@@ -31,13 +31,8 @@ namespace thewall9.data
         [ForeignKey("CultureID")]
         public virtual Culture Culture { get; set; }
     }
-    public class ProductCategory
+    public class ProductCategory : ProductCategoryBase
     {
-        [Key, Column(Order = 1)]
-        public int ProductID { get; set; }
-        [Key, Column(Order = 2)]
-        public int CategoryID { get; set; }
-
         [ForeignKey("ProductID")]
         public virtual Product Product { get; set; }
         [ForeignKey("CategoryID")]
@@ -60,7 +55,8 @@ namespace thewall9.data
         [ForeignKey("ProductID")]
         public virtual Product Product { get; set; }
         public ProductGallery() { }
-        public ProductGallery(int ProductID, string Path) {
+        public ProductGallery(int ProductID, string Path)
+        {
             this.ProductID = ProductID;
             this.PhotoPath = Path;
         }

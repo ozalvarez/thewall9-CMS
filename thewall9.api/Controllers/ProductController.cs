@@ -62,8 +62,7 @@ namespace thewall9.api.Controllers
         [Route("move")]
         public IHttpActionResult PostMove(ProductUpdatePriorities Model)
         {
-            _ProductService.UpdatePriorities(Model, User.Identity.GetUserId());
-            return Ok();
+            return Ok(_ProductService.UpdatePriorities(Model, User.Identity.GetUserId()));
         }
         public IHttpActionResult Delete(int ProductID)
         {
