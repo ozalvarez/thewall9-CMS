@@ -34,6 +34,20 @@ namespace thewall9.web.parent
                 },
                 namespaces: new[] { typeof(parent.Controllers.PageController).Namespace }
             );
+            //DEFAULT ROUTE
+            routes.MapRoute(
+                name: "2Url",
+                url: "{FriendlyUrl1}/{FriendlyUrl2}",
+                defaults: new
+                {
+                    controller = "Page",
+                    action = "Index2",
+                    FriendlyUrl1 = UrlParameter.Optional,
+                    FriendlyUrl2 = UrlParameter.Optional
+
+                },
+                namespaces: new[] { typeof(parent.Controllers.PageController).Namespace }
+            );
         }
     }
 }

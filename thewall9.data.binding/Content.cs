@@ -118,6 +118,7 @@ namespace thewall9.data.binding
         public List<ContentTree> Items { get; set; }
         public int CultureID { get; set; }
         public bool Lock { get; set; }
+        public string ContentPropertyAlias { get; set; }
     }
     public class ImportBinding
     {

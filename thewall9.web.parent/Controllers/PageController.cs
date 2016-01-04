@@ -41,6 +41,11 @@ namespace thewall9.web.parent.Controllers
                 return View(_Model.Page.ViewRender, _Model);
             }
         }
+        public ActionResult Index2(string FriendlyUrl1, string FriendlyUrl2)
+        {
+            return Index(FriendlyUrl1 + "/" + FriendlyUrl2);
+        }
+
         public ActionResult Error()
         {
             return View();
