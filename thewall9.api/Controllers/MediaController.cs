@@ -16,10 +16,18 @@ namespace thewall9.api.Controllers
         MediaBLL _MediaService = new MediaBLL();
 
         #region Customers
-
+        public IHttpActionResult Get(int SiteID)
+        {
+            return Ok(_MediaService.Get(SiteID, User.Identity.GetUserId()));
+        }
         public IHttpActionResult PostSave(FileReadSite Model)
         {
             return Ok(_MediaService.SaveImage(Model,Model.SiteID, User.Identity.GetUserId()));
+        }
+        public IHttpActionResult Delete(int MediaID, int SiteID)
+        {
+            _MediaService.DeleteMedia(MediaID, SiteID, User.Identity.GetUserId());
+            return Ok();
         }
         #endregion
     }

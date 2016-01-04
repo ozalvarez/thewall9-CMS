@@ -76,6 +76,13 @@ app.config(["$routeProvider", "blockUIConfig", function ($routeProvider, blockUI
         controller: 'blogCategoryController',
         templateUrl: '/app/views/blogCategory.html'
     });
+
+    //FILES & IMAGES
+    $routeProvider.when('/media', {
+        controller: 'mediaController',
+        templateUrl: '/app/views/media.html'
+    });
+
     $routeProvider.otherwise({ redirectTo: "/" });
 
     // Change the default overlay message

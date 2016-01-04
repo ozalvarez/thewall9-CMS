@@ -10,6 +10,37 @@ namespace thewall9.bll
 {
     public class MediaBLL : BaseBLL
     {
+        #region ADMIN MEDIA
+        public List<FileRead> Get(int SiteID, string UserID)
+        {
+            using (var _c = db)
+            {
+                Can(SiteID, UserID, _c);
+                var _Media = (from bpf in _c.BlogPostFeatureImages
+                              where bpf.BlogPostCulture.BlogPost.SiteID == SiteID
+                              select new FileRead
+                              {
+                                  MediaID = bpf.MediaID,
+                                  MediaUrl = bpf.Media.MediaUrl
+                              }).Union(from bpi in _c.BlogPostImages
+                                       where bpi.BlogPostCulture.BlogPost.SiteID == SiteID
+                                       select new FileRead
+                                       {
+                                           MediaID = bpi.MediaID,
+                                           MediaUrl = bpi.Media.MediaUrl
+                                       }).Union(from og in _c.PageCulturesOGraphs
+                                                where og.PageCulture.Page.SiteID == SiteID
+                                                select new FileRead
+                                                {
+                                                    MediaID = og.OGraph.OGraphMedia.MediaID,
+                                                    MediaUrl = og.OGraph.OGraphMedia.Media.MediaUrl
+                                                });
+                return _Media.Distinct().ToList();
+
+            }
+        }
+
+        #endregion
         public void DeleteMedia(int MediaID, int SiteID, string UserID)
         {
             using (var _c = db)

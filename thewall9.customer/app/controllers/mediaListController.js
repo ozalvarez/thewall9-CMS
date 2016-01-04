@@ -3,6 +3,9 @@
         $scope.removeMedia = function (item) {
             item.Deleting = true;
             item.Adding = false;
+            if (typeof $scope.deleteMedia == 'function') {
+                $scope.deleteMedia(item);
+            }
         }
         $scope.addMedia = function () {
             $scope.mediaModel.SiteID = siteService.site.SiteID;
