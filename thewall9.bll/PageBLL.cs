@@ -275,7 +275,8 @@ namespace thewall9.bll
         }
         public string GetPageFriendlyUrl(int SiteID, string Url, string FriendlyUrl, string TargetLang)
         {
-            FriendlyUrl = !string.IsNullOrEmpty(FriendlyUrl) ? FriendlyUrl.Replace("/", "") : "";
+            if (FriendlyUrl[0] == '/')
+                FriendlyUrl = FriendlyUrl.Substring(1);
             using (var _c = db)
             {
                 var _Q = SiteID != 0
