@@ -10,5 +10,9 @@ namespace thewall9.data.binding
     {
         public int MediaID { get; set; }
         public string MediaUrl { get; set; }
+        public int SiteID { get; set; }
+    }
+    public class MediaBinding : MediaBase
+    {
     }
 }

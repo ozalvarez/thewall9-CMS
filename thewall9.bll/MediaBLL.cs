@@ -16,26 +16,32 @@ namespace thewall9.bll
             using (var _c = db)
             {
                 Can(SiteID, UserID, _c);
-                var _Media = (from bpf in _c.BlogPostFeatureImages
-                              where bpf.BlogPostCulture.BlogPost.SiteID == SiteID
-                              select new FileRead
-                              {
-                                  MediaID = bpf.MediaID,
-                                  MediaUrl = bpf.Media.MediaUrl
-                              }).Union(from bpi in _c.BlogPostImages
-                                       where bpi.BlogPostCulture.BlogPost.SiteID == SiteID
-                                       select new FileRead
-                                       {
-                                           MediaID = bpi.MediaID,
-                                           MediaUrl = bpi.Media.MediaUrl
-                                       }).Union(from og in _c.PageCulturesOGraphs
-                                                where og.PageCulture.Page.SiteID == SiteID
-                                                select new FileRead
-                                                {
-                                                    MediaID = og.OGraph.OGraphMedia.MediaID,
-                                                    MediaUrl = og.OGraph.OGraphMedia.Media.MediaUrl
-                                                });
-                return _Media.Distinct().ToList();
+                //var _Media = (from bpf in _c.BlogPostFeatureImages
+                //              where bpf.BlogPostCulture.BlogPost.SiteID == SiteID
+                //              select new FileRead
+                //              {
+                //                  MediaID = bpf.MediaID,
+                //                  MediaUrl = bpf.Media.MediaUrl
+                //              }).Union(from bpi in _c.BlogPostImages
+                //                       where bpi.BlogPostCulture.BlogPost.SiteID == SiteID
+                //                       select new FileRead
+                //                       {
+                //                           MediaID = bpi.MediaID,
+                //                           MediaUrl = bpi.Media.MediaUrl
+                //                       }).Union(from og in _c.PageCulturesOGraphs
+                //                                where og.PageCulture.Page.SiteID == SiteID
+                //                                select new FileRead
+                //                                {
+                //                                    MediaID = og.OGraph.OGraphMedia.MediaID,
+                //                                    MediaUrl = og.OGraph.OGraphMedia.Media.MediaUrl
+                //                                });
+                return (from m in _c.Medias
+                        where m.SiteID == SiteID
+                        select new FileRead
+                        {
+                            MediaID = m.MediaID,
+                            MediaUrl = m.MediaUrl
+                        }).ToList();
 
             }
         }
@@ -55,14 +61,14 @@ namespace thewall9.bll
                 }
             }
         }
-        public MediaBase SaveImage(FileRead Model, int SiteID, string UserID)
+        public MediaBinding SaveImage(FileRead Model, int SiteID, string UserID)
         {
             if (Model != null)
             {
                 using (var _c = db)
                 {
                     Can(SiteID, UserID, _c);
-                    var _Media = SaveMedia(null);
+                    var _Media = SaveMedia(null, SiteID);
                     var _ContainerReference = _Media.MediaID + "/" + Model.FileName;
                     if (new Utils.FileUtil().Exist("media", _ContainerReference))
                     {
@@ -74,18 +80,24 @@ namespace thewall9.bll
                     _Media = _c.Medias.Where(m => m.MediaID == _Media.MediaID).FirstOrDefault();
                     _Media.MediaUrl = _FinalURL;
                     _c.SaveChanges();
-                    return _Media;
+                    return new MediaBinding
+                    {
+                        MediaID=_Media.MediaID,
+                        SiteID=SiteID,
+                        MediaUrl=_Media.MediaUrl
+                    };
                 }
             }
             return null;
         }
-        private Media SaveMedia(string FinalUrl)
+        private Media SaveMedia(string FinalUrl, int SiteID)
         {
             using (var _c = db)
             {
                 var _Media = new Media
                 {
-                    MediaUrl = FinalUrl
+                    MediaUrl = FinalUrl,
+                    SiteID = SiteID
                 };
                 _c.Medias.Add(_Media);
                 _c.SaveChanges();

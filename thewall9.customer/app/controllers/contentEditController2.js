@@ -1,5 +1,5 @@
-﻿app.controller('contentEditController2', ['$scope', '$routeParams', '$location', 'toastrService', 'contentService', 'cultureService', 'siteService',
-    function ($scope, $routeParams, $location, toastrService, contentService, cultureService, siteService) {
+﻿app.controller('contentEditController2', ['$scope', '$routeParams', '$location', 'toastrService', 'contentService', 'cultureService', 'siteService','mediaService',
+    function ($scope, $routeParams, $location, toastrService, contentService, cultureService, siteService, mediaService) {
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
                 $scope.$apply(function () {
@@ -24,7 +24,7 @@
                 "searchreplace visualblocks code fullscreen",
                 "insertdatetime media table contextmenu paste"
             ],
-            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+            toolbar: "mybutton insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
             extended_valid_elements: "iframe[src|width|height|name|align]",
             format: null
         };
@@ -125,6 +125,20 @@
             $('#modal-edit').modal({
                 backdrop: true
             });
+        }
+        // Prevent bootstrap dialog from blocking focusin
+        $(document).on('focusin', function (e) {
+            if ($(e.target).closest(".mce-window").length) {
+                e.stopImmediatePropagation();
+            }
+        });
+        $scope.openImages = function () {
+            mediaService.get().then(function (data) {
+                $scope.mediaList = data;
+                $('#modal-images').modal({
+                    backdrop: false
+                });
+            });          
         }
 
         /*CULTURE*/
