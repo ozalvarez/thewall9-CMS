@@ -1,5 +1,5 @@
-﻿app.controller('contentEditController2', ['$scope', '$routeParams', '$location', 'toastrService', 'contentService', 'cultureService', 'siteService',
-    function ($scope, $routeParams, $location, toastrService, contentService, cultureService, siteService) {
+﻿app.controller('contentEditController2', ['$scope', '$routeParams', '$location', 'toastrService', 'contentService', 'cultureService', 'siteService','mediaService',
+    function ($scope, $routeParams, $location, toastrService, contentService, cultureService, siteService, mediaService) {
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
                 $scope.$apply(function () {
@@ -18,6 +18,17 @@
         } else {
             $scope.isAdmin = false;
         }
+
+        $scope.tinymceOptions = {
+            plugins: ["advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table contextmenu paste"
+            ],
+            toolbar: "mybutton insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+            extended_valid_elements: "iframe[src|width|height|name|align]",
+            format: null
+        };
+
         $scope.getMenu = function () {
             if ($scope.menu == null) {
                 contentService.getMenu().then(function (data) {
@@ -61,7 +72,10 @@
         }
         $scope.duplicate = function (item) {
             contentService.duplicateTree(item).then(function (data) {
-                attach(data, $scope.data);
+                if ($scope.data[0].ContentPropertyParentID == data.ContentPropertyParentID)
+                    $scope.data.push(data);
+                else
+                    attach(data, $scope.data);
                 toastrService.success("Nuevo " + item.Hint + " creado");
             });
         };
@@ -97,15 +111,34 @@
             });
         };
         $scope.upDown = function (item, upOrDown) {
-            console.log("prio", item.Priority);
             var _index = (upOrDown ? (item.Priority - 1) : (item.Priority + 1));
-            console.log("INDEX", _index);
+            //console.log("INDEX", _index);
             if (_index >= 0) {
                 contentService.move(_index, item.ContentPropertyParentID, item.ContentPropertyID).then(function (data) {
                     $scope.get();
                     toastrService.success("Propiedad movida exitosamente");
                 });
             }
+        }
+        $scope.edit = function (item) {
+            $scope.modelToEdit = item;
+            $('#modal-edit').modal({
+                backdrop: true
+            });
+        }
+        // Prevent bootstrap dialog from blocking focusin
+        $(document).on('focusin', function (e) {
+            if ($(e.target).closest(".mce-window").length) {
+                e.stopImmediatePropagation();
+            }
+        });
+        $scope.openImages = function () {
+            mediaService.get().then(function (data) {
+                $scope.mediaList = data;
+                $('#modal-images').modal({
+                    backdrop: false
+                });
+            });          
         }
 
         /*CULTURE*/

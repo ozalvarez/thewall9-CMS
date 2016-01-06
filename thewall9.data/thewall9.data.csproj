@@ -223,6 +223,18 @@
     <Compile Include="Migrations\201512302304372_RemovePriorityInProducts.Designer.cs">
       <DependentUpon>201512302304372_RemovePriorityInProducts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601060021423_AddSiteIDToMedia.cs" />
+    <Compile Include="Migrations\201601060021423_AddSiteIDToMedia.Designer.cs">
+      <DependentUpon>201601060021423_AddSiteIDToMedia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601060106338_PutSiteIDInMediaRequired.cs" />
+    <Compile Include="Migrations\201601060106338_PutSiteIDInMediaRequired.Designer.cs">
+      <DependentUpon>201601060106338_PutSiteIDInMediaRequired.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601060113527_ClearMigration.cs" />
+    <Compile Include="Migrations\201601060113527_ClearMigration.Designer.cs">
+      <DependentUpon>201601060113527_ClearMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="OGraph.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Product.cs" />
@@ -487,6 +499,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512302304372_RemovePriorityInProducts.resx">
       <DependentUpon>201512302304372_RemovePriorityInProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601060021423_AddSiteIDToMedia.resx">
+      <DependentUpon>201601060021423_AddSiteIDToMedia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601060106338_PutSiteIDInMediaRequired.resx">
+      <DependentUpon>201601060106338_PutSiteIDInMediaRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601060113527_ClearMigration.resx">
+      <DependentUpon>201601060113527_ClearMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

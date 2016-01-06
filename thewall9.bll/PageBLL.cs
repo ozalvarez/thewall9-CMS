@@ -63,11 +63,9 @@ namespace thewall9.bll
             return _Page;
         }
 
-        private PageCultureBinding GetPageCultureBinding(int SiteID, string Url, string FriendlyUrl)
+        private IQueryable<PageCulture> GetPageCultureBindingIQ(int SiteID, string Url, ApplicationDbContext _c)
         {
-            using (var _c = db)
-            {
-                var _Q = SiteID != 0
+            return SiteID != 0
                     ? from p in _c.PageCultures
                       where p.Page.SiteID == SiteID
                       select p
@@ -75,39 +73,50 @@ namespace thewall9.bll
                        join u in _c.SiteUrls on m.Page.Site.SiteID equals u.SiteID
                        where u.Url.Equals(Url)
                        select m;
-
-                var _Pages = (from p in _Q
-                              where FriendlyUrl == null ? p.FriendlyUrl == "" : (p.FriendlyUrl.ToLower().Equals(FriendlyUrl.ToLower()))
-                              select new PageCultureBinding
+        }
+        private PageCultureBinding GetPageCultureBindingModel(IQueryable<PageCulture> _Q)
+        {
+            var _Pages = (from p in _Q
+                          select new PageCultureBinding
+                          {
+                              CultureID = p.CultureID,
+                              FriendlyUrl = p.FriendlyUrl,
+                              MetaDescription = p.MetaDescription,
+                              PageID = p.PageID,
+                              Published = p.Published,
+                              TitlePage = p.TitlePage,
+                              ViewRender = p.ViewRender,
+                              RedirectUrl = p.RedirectUrl,
+                              Name = p.Name,
+                              CultureName = p.Culture.Name,
+                              PageAlias = p.Page.Alias,
+                              OGraph = p.PageCultureOGraph != null ? new OGraphBinding
                               {
-                                  CultureID = p.CultureID,
-                                  FriendlyUrl = p.FriendlyUrl,
-                                  MetaDescription = p.MetaDescription,
-                                  PageID = p.PageID,
-                                  Published = p.Published,
-                                  TitlePage = p.TitlePage,
-                                  ViewRender = p.ViewRender,
-                                  RedirectUrl = p.RedirectUrl,
-                                  Name = p.Name,
-                                  CultureName = p.Culture.Name,
-                                  PageAlias = p.Page.Alias,
-                                  OGraph = p.PageCultureOGraph != null ? new OGraphBinding
+                                  OGraphDescription = p.PageCultureOGraph.OGraph.OGraphDescription,
+                                  OGraphTitle = p.PageCultureOGraph.OGraph.OGraphTitle,
+                                  OGraphID = p.PageCultureOGraph.OGraphID,
+                                  FileRead = p.PageCultureOGraph.OGraph.OGraphMedia != null ? new FileRead
                                   {
-                                      OGraphDescription = p.PageCultureOGraph.OGraph.OGraphDescription,
-                                      OGraphTitle = p.PageCultureOGraph.OGraph.OGraphTitle,
-                                      OGraphID = p.PageCultureOGraph.OGraphID,
-                                      FileRead = p.PageCultureOGraph.OGraph.OGraphMedia != null ? new FileRead
-                                      {
-                                          MediaID = p.PageCultureOGraph.OGraph.OGraphMedia.Media.MediaID,
-                                          MediaUrl = p.PageCultureOGraph.OGraph.OGraphMedia.Media.MediaUrl
-                                      } : null
+                                      MediaID = p.PageCultureOGraph.OGraph.OGraphMedia.Media.MediaID,
+                                      MediaUrl = p.PageCultureOGraph.OGraph.OGraphMedia.Media.MediaUrl
                                   } : null
-                              }).ToList();
-                if (_Pages == null || _Pages.Count == 0)
-                    throw new RuleException("No existe página con ese FriendlyUrl", "0x000");
-                return _Pages[0];
+                              } : null
+                          }).ToList();
+            if (_Pages == null || _Pages.Count == 0)
+                throw new RuleException("No existe página con ese FriendlyUrl", "0x000");
+            return _Pages[0];
+        }
+        private PageCultureBinding GetPageCultureBinding(int SiteID, string Url, string FriendlyUrl)
+        {
+            using (var _c = db)
+            {
+                var _Q = GetPageCultureBindingIQ(SiteID, Url, _c);
+                return GetPageCultureBindingModel(from p in _Q
+                                                  where FriendlyUrl == null ? p.FriendlyUrl == "" : (p.FriendlyUrl.ToLower().Equals(FriendlyUrl.ToLower()))
+                                                  select p);
             }
         }
+
         public List<PageCultureBinding> GetMenu(int SiteID, string Url, string DefaultLang)
         {
             using (var _c = db)
@@ -266,7 +275,8 @@ namespace thewall9.bll
         }
         public string GetPageFriendlyUrl(int SiteID, string Url, string FriendlyUrl, string TargetLang)
         {
-            FriendlyUrl = !string.IsNullOrEmpty(FriendlyUrl) ? FriendlyUrl.Replace("/", "") : "";
+            if (FriendlyUrl[0] == '/')
+                FriendlyUrl = FriendlyUrl.Substring(1);
             using (var _c = db)
             {
                 var _Q = SiteID != 0
@@ -303,7 +313,14 @@ namespace thewall9.bll
                               select new PageCultureBinding
                               {
                                   CultureID = p.CultureID,
-                                  FriendlyUrl = p.FriendlyUrl,
+                                  FriendlyUrl = !string.IsNullOrEmpty(p.FriendlyUrl)
+                                    ? p.FriendlyUrl
+                                    : (p.Page.PageParentID == 0
+                                        ? null
+                                        : (_c.PageCultures.Where(m => m.PageID == p.Page.PageParentID && m.CultureID == CultureID).Any()
+                                            ? _c.PageCultures.Where(m => m.PageID == p.Page.PageParentID && m.CultureID == CultureID).FirstOrDefault().FriendlyUrl + "/"
+                                            : null)
+                                    ),
                                   MetaDescription = p.MetaDescription,
                                   PageID = p.PageID,
                                   Published = p.Published,
@@ -330,7 +347,12 @@ namespace thewall9.bll
                               select new PageCultureBinding
                               {
                                   CultureID = CultureID,
-                                  FriendlyUrl = null,
+                                  FriendlyUrl = (p.PageParentID == 0
+                                        ? null
+                                        : (_c.PageCultures.Where(m => m.PageID == p.PageParentID && m.CultureID == CultureID).Any()
+                                            ? _c.PageCultures.Where(m => m.PageID == p.PageParentID && m.CultureID == CultureID).FirstOrDefault().FriendlyUrl + "/"
+                                            : null)
+                                    ),
                                   PageID = p.PageID,
                                   Published = p.Published,
                                   TitlePage = p.Alias + " - " + p.Site.DefaultLang,
@@ -441,10 +463,13 @@ namespace thewall9.bll
                     var _Content = new ContentBinding
                     {
                         ContentPropertyAlias = Model.Alias,
-                        ContentPropertyParentID = 0,
+                        //ContentPropertyParentID = (_c.Pages.Where(m => m.PageID == Model.PageParentID).Any()
+                        //? _c.ContentPropertyCultures.Where(m => m.ContentProperty.SiteID == Model.SiteID && m.ContentProperty.ContentPropertyAlias.Equals(_c.Pages.Where(m2 => m2.PageID == Model.PageParentID).FirstOrDefault().Alias)).FirstOrDefault().ContentProperty.ContentPropertyID
+                        //: 0),
+                        ContentPropertyParentID=0,
                         SiteID = Model.SiteID,
                         Lock = false,
-                        ContentPropertyType = ContentPropertyType.LIST
+                        ContentPropertyType = ContentPropertyType.LIST,
                     };
                     new ContentBLL().Save(_Content);
                 }

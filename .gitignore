@@ -196,5 +196,6 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 *.pubxml
+*.pubxml.user
 thewall9.api/Web.Release.config
 thewall9.api/Web.Release.config

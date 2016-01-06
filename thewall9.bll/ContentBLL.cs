@@ -422,6 +422,7 @@ namespace thewall9.bll
                         ContentPropertyParentID = p.ContentPropertyParentID,
                         ContentPropertyType = p.ContentPropertyType,
                         Lock = p.Lock,
+                        ContentPropertyAlias=p.ContentPropertyAlias,
 
                         ContentPropertyValue = p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Any()
                         ? p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Select(m => m.ContentPropertyValue).FirstOrDefault()
@@ -457,7 +458,11 @@ namespace thewall9.bll
                 {
                     if (item.Edit)
                     {
+                        var _Content= _c.ContentProperties.Where(m => m.ContentPropertyID == item.ContentPropertyID).SingleOrDefault();
+                        _Content.ContentPropertyAlias = item.ContentPropertyAlias;
+
                         var _ContentCulture = _c.ContentPropertyCultures.Where(m => m.ContentPropertyID == item.ContentPropertyID && m.CultureID == Model.CultureID).SingleOrDefault();
+
                         if (_ContentCulture == null)
                         {
                             _ContentCulture = new ContentPropertyCulture();
@@ -466,7 +471,7 @@ namespace thewall9.bll
                             _c.ContentPropertyCultures.Add(_ContentCulture);
                         }
                         _ContentCulture.Hint = item.Hint;
-
+                        
                         if (item.ContentPropertyType == ContentPropertyType.IMG)
                         {
                             if (!string.IsNullOrEmpty(item.FileName))

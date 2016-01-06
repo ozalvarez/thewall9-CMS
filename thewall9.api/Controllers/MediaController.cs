@@ -22,7 +22,8 @@ namespace thewall9.api.Controllers
         }
         public IHttpActionResult PostSave(FileReadSite Model)
         {
-            return Ok(_MediaService.SaveImage(Model,Model.SiteID, User.Identity.GetUserId()));
+            var _M = _MediaService.SaveImage(Model, Model.SiteID, User.Identity.GetUserId());
+            return Ok(_M);
         }
         public IHttpActionResult Delete(int MediaID, int SiteID)
         {
