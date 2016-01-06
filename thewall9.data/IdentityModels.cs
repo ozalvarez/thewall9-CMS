@@ -77,6 +77,7 @@ namespace thewall9.data.Models
                  .WithOptional(m => m.PageCultureOGraph)
                 .WillCascadeOnDelete(true);
 
+
             //Odata
 
             modelBuilder.Entity<OGraphMedia>()
@@ -88,6 +89,8 @@ namespace thewall9.data.Models
             //PRODUCT
             modelBuilder.Entity<ProductCategory>()
                 .HasKey(m => new { m.ProductID, m.CategoryID });
+
+            //MEDIA
 
             base.OnModelCreating(modelBuilder);
         }
