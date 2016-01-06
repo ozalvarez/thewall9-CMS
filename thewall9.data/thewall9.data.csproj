@@ -235,6 +235,10 @@
     <Compile Include="Migrations\201601060113527_ClearMigration.Designer.cs">
       <DependentUpon>201601060113527_ClearMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601062209008_RemovePublishedInPage.cs" />
+    <Compile Include="Migrations\201601062209008_RemovePublishedInPage.Designer.cs">
+      <DependentUpon>201601062209008_RemovePublishedInPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="OGraph.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Product.cs" />
@@ -508,6 +512,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601060113527_ClearMigration.resx">
       <DependentUpon>201601060113527_ClearMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601062209008_RemovePublishedInPage.resx">
+      <DependentUpon>201601062209008_RemovePublishedInPage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

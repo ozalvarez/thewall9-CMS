@@ -79,13 +79,6 @@ namespace thewall9.api.Controllers
             _PageService.Move(model, User.Identity.GetUserId());
             return Ok();
         }
-        [Route("publish")]
-        public IHttpActionResult Publish(PublishBinding Model)
-        {
-            _PageService.Publish(Model, User.Identity.GetUserId());
-            return Ok();
-
-        }
         [Route("in-menu")]
         public IHttpActionResult InMenu(PublishBinding Model)
         {

@@ -16,7 +16,6 @@ namespace thewall9.bll.test
             {
                 Alias = "Home Test",
                 SiteID = _SiteID,
-                Published = true,
                 PageParentID = 0
             });
             new PageBLL().SaveCulture(new data.binding.PageCultureBinding

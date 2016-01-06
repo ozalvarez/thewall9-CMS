@@ -131,7 +131,7 @@ namespace thewall9.bll
                        select m;
                 return (from p in _Q
                         where p.Page.InMenu && p.Culture.Name.Equals(DefaultLang)
-                        && p.Published && p.Page.Published
+                        && p.Published
                         orderby p.Page.Priority
                         select new PageCultureBinding
                         {
@@ -248,7 +248,7 @@ namespace thewall9.bll
                 var _S = new SiteMapModel();
                 _S.Pages = (from p in _c.PageCultures
                             where p.Page.SiteID == SiteID
-                            where p.Published && p.Page.Published && string.IsNullOrEmpty(p.RedirectUrl)
+                            where p.Published && string.IsNullOrEmpty(p.RedirectUrl)
                             select new PageCultureBinding
                             {
                                 CultureID = p.CultureID,
@@ -275,7 +275,7 @@ namespace thewall9.bll
         }
         public string GetPageFriendlyUrl(int SiteID, string Url, string FriendlyUrl, string TargetLang)
         {
-            if (FriendlyUrl[0] == '/')
+            if (!string.IsNullOrEmpty(FriendlyUrl) && FriendlyUrl[0] == '/')
                 FriendlyUrl = FriendlyUrl.Substring(1);
             using (var _c = db)
             {
@@ -354,7 +354,6 @@ namespace thewall9.bll
                                             : null)
                                     ),
                                   PageID = p.PageID,
-                                  Published = p.Published,
                                   TitlePage = p.Alias + " - " + p.Site.DefaultLang,
                                   ViewRender = "Index",
                                   Name = p.Alias,
@@ -406,7 +405,6 @@ namespace thewall9.bll
                         PageID = p.PageID,
                         PageParentID = p.PageParentID,
                         Priority = p.Priority,
-                        Published = p.Published,
                         SiteID = p.SiteID,
                         Items = Pages.Where(m => m.PageParentID == p.PageID).Any() ? OrderWithCultures(Pages, p.PageID) : new List<PageBindingListWithCultures>(),
                         PageCultures = p.PageCultures.Select(m => new PageCultureBinding
@@ -453,25 +451,27 @@ namespace thewall9.bll
                 _Model.SiteID = Model.SiteID;
                 _Model.Priority = _IQParent.Any() ? _IQParent.Select(m => m.Priority).Max() + 1 : 0;
                 _Model.InMenu = Model.InMenu;
-                _Model.Published = Model.Published;
                 _c.Pages.Add(_Model);
                 _c.SaveChanges();
 
                 if (CreateContent)
                 {
-                    //CRETING CONTENT LIST
-                    var _Content = new ContentBinding
+                    if (_Model.PageParentID == 0)
                     {
-                        ContentPropertyAlias = Model.Alias,
-                        //ContentPropertyParentID = (_c.Pages.Where(m => m.PageID == Model.PageParentID).Any()
-                        //? _c.ContentPropertyCultures.Where(m => m.ContentProperty.SiteID == Model.SiteID && m.ContentProperty.ContentPropertyAlias.Equals(_c.Pages.Where(m2 => m2.PageID == Model.PageParentID).FirstOrDefault().Alias)).FirstOrDefault().ContentProperty.ContentPropertyID
-                        //: 0),
-                        ContentPropertyParentID=0,
-                        SiteID = Model.SiteID,
-                        Lock = false,
-                        ContentPropertyType = ContentPropertyType.LIST,
-                    };
-                    new ContentBLL().Save(_Content);
+                        //CRETING CONTENT LIST
+                        var _Content = new ContentBinding
+                        {
+                            ContentPropertyAlias = Model.Alias,
+                            //ContentPropertyParentID = (_c.Pages.Where(m => m.PageID == Model.PageParentID).Any()
+                            //? _c.ContentPropertyCultures.Where(m => m.ContentProperty.SiteID == Model.SiteID && m.ContentProperty.ContentPropertyAlias.Equals(_c.Pages.Where(m2 => m2.PageID == Model.PageParentID).FirstOrDefault().Alias)).FirstOrDefault().ContentProperty.ContentPropertyID
+                            //: 0),
+                            ContentPropertyParentID = 0,
+                            SiteID = Model.SiteID,
+                            Lock = false,
+                            ContentPropertyType = ContentPropertyType.LIST,
+                        };
+                        new ContentBLL().Save(_Content);
+                    }
                 }
                 return _Model.PageID;
             }
@@ -584,7 +584,6 @@ namespace thewall9.bll
                         PageID = p.PageID,
                         PageParentID = p.PageParentID,
                         Priority = p.Priority,
-                        Published = p.Published,
                         SiteID = p.SiteID,
                         Items = Pages.Where(m => m.PageParentID == p.PageID).Any() ? Order(Pages, p.PageID) : new List<PageBindingList>()
                     }).OrderBy(m => m.Priority).ToList();
@@ -624,22 +623,7 @@ WHERE SiteID={0} AND PageParentID={1} AND Priority>={2} AND PageID<>{3}", _Item.
 
             }
         }
-        public void Publish(PublishBinding Model, string UserID)
-        {
-            using (var _c = db)
-            {
-                var _P = _c.Pages.Where(m => m.PageID == Model.PageID).SingleOrDefault();
-                Can(_P.SiteID, UserID, _c);
-                var _Page = _c.Pages.Where(m => m.PageID == Model.PageID).SingleOrDefault();
-                _Page.Published = Model.Published;
-                var _PagesC = _c.PageCultures.Where(m => m.PageID == Model.PageID).ToList();
-                foreach (var item in _PagesC)
-                {
-                    item.Published = Model.Published;
-                }
-                _c.SaveChanges();
-            }
-        }
+
         public void InMenu(PublishBinding Model, string UserID)
         {
             using (var _c = db)

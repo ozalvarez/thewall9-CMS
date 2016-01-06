@@ -14,7 +14,7 @@
                 });
             }
         }
-        /*INIT*/
+        /*INIT */
         $scope.updateCulture = function () {
             cultureService.currentCulture = $scope.selectedCulture;
             $scope.init();

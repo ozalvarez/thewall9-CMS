@@ -26,12 +26,6 @@ app.factory('pageService', ["$myhttp", "ngAuthSettings", "siteService",
                     PageID: PageID
                 });
             },
-            publish: function (PageID, Published) {
-                return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/page/publish', {
-                    PageID: PageID,
-                    Published: Published
-                });
-            },
             inMenu: function (PageID, Published) {
                 return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/page/in-menu', {
                     PageID: PageID,

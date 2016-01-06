@@ -141,7 +141,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" ng-show="modelToEdit.ContentPropertyType==4">
+                <div class="row" ng-if="modelToEdit.ContentPropertyType==4">
                     <div class="col-md-12">
                         <textarea rows="10" ng-model="modelToEdit.ContentPropertyValue" class="form-control" ng-change="modelToEdit.Edit=true"
                                   ui-tinymce="tinymceOptions" style="width:100%"></textarea>

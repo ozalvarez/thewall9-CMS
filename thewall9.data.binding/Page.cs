@@ -11,7 +11,6 @@ namespace thewall9.data.binding
     {
         public int PageID { get; set; }
         public string Alias { get; set; }
-        public bool Published { get; set; }
         public int Priority { get; set; }
         public bool InMenu { get; set; }
         public int SiteID { get; set; }
