@@ -885,11 +885,12 @@ namespace thewall9.bll
                         CultureID = item.CultureID,
                         ContentPropertyValue = item.ContentPropertyValue,
                         Hint = item.Hint
+                       
                     });
                 }
                 _c.SaveChanges();
                 //Make the same with childs
-                var _CPChilds = _c.ContentProperties.Where(m => m.ContentPropertyParentID == ContentPropertyID).ToList();
+                var _CPChilds = _c.ContentProperties.Where(m => m.ContentPropertyParentID == ContentPropertyID).OrderBy(m=>m.Priority).ToList();
                 foreach (var item in _CPChilds)
                 {
                     Duplicate(item.ContentPropertyID, _CPNew.ContentPropertyID, true);
