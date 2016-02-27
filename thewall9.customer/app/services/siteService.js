@@ -32,7 +32,12 @@ app.factory('siteService', ["$myhttp", "$q", "ngAuthSettings", 'localStorageServ
             return deferred.promise;
         };
         siteServiceFactory.save = function (object) {
-            return $http.put(ngAuthSettings.apiServiceBaseUri + 'api/site', object);
+            var deferred = $q.defer();
+            $http.put(ngAuthSettings.apiServiceBaseUri + 'api/site', object).then(function (data) {
+                siteServiceFactory.site = object;
+                deferred.resolve(data);
+            });
+            return deferred.promise;
         };
         siteServiceFactory.change = function (site) {
             siteServiceFactory.site = site;
