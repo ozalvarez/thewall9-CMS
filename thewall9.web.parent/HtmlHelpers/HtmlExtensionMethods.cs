@@ -102,7 +102,7 @@ var _gaq = _gaq || [];
             if (helper.ViewBag.OGraph != null)
             {
                 var _HTML = @"
-<meta property='og: title' content='" + helper.ViewBag.OGraph.OGraphTitle + @"' />
+<meta property='og:title' content='" + helper.ViewBag.OGraph.OGraphTitle + @"' />
 <meta property = 'og:url' content = '" + helper.ViewContext.HttpContext.Request.Url + @"' />
 <meta property = 'og:description' content = '" + helper.ViewBag.OGraph.OGraphDescription + @"' />
 <meta name = 'twitter:card' content = 'summary_large_image' >
