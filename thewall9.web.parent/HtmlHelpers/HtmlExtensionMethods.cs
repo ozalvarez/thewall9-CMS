@@ -105,23 +105,19 @@ var _gaq = _gaq || [];
 <meta property='og:title' content='" + helper.ViewBag.OGraph.OGraphTitle + @"' />
 <meta property = 'og:url' content = '" + helper.ViewContext.HttpContext.Request.Url + @"' />
 <meta property = 'og:description' content = '" + helper.ViewBag.OGraph.OGraphDescription + @"' />
-<meta name = 'twitter:card' content = 'summary_large_image' >
-<meta name = 'twitter:site' content = '" + helper.TwitterUsername() + @"' >
-<meta name = 'twitter:creator' content = '" + helper.TwitterUsername() + @"' >
-<meta name = 'twitter:title' content = '" + helper.ViewBag.OGraph.OGraphTitle + @"' >
-<meta name = 'twitter:description' content = '" + helper.ViewBag.OGraph.OGraphDescription + @"' >";
-                if (helper.ViewBag.OGraph.FileRead != null && helper.ViewBag.OGraph.FileRead.MediaUrl!=null)
+<meta name = 'twitter:card' content = 'summary' >";
+                if (!string.IsNullOrEmpty(helper.TwitterUsername().ToString()))
                 {
-                    _HTML += @"
-<meta property = 'og:image' content = '" + helper.ViewBag.OGraph.FileRead.MediaUrl + @"' />
-<meta name = 'twitter:image' content = '" + helper.ViewBag.OGraph.FileRead.MediaUrl + @"' >";
+                    _HTML += @"<meta name = 'twitter:site' content = '" + helper.TwitterUsername() + @"' >
+<meta name = 'twitter:creator' content = '" + helper.TwitterUsername() + "' >";
+                }
+                if (helper.ViewBag.OGraph.FileRead != null && helper.ViewBag.OGraph.FileRead.MediaUrl != null)
+                {
+                    _HTML += @"<meta property = 'og:image' content = '" + helper.ViewBag.OGraph.FileRead.MediaUrl + @"' />";
                 }
                 return new MvcHtmlString(_HTML);
             }
             return new MvcHtmlString(string.Empty);
-            //< meta property = 'og:site_name' content = 'Work&Go' />
-            // < meta property = 'og:image' content = '@Html.FindValue(_LayoutContent, 'share - img')' />
-            //  < meta name = 'twitter:image' content = '@Html.FindValue(_LayoutContent, 'share - img')' > ";
         }
     }
 }
