@@ -105,6 +105,5 @@ namespace thewall9.web.parent.Controllers
             APP._CurrentCurrencyID = CurrencyID;
             return Redirect(Url);
         }
-
     }
 }

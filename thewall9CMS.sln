@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "thewall9.api", "thewall9.api\thewall9.api.csproj", "{7B3CFA34-04DA-42B4-85BE-9BD6252B66EB}"
 EndProject
@@ -51,8 +51,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "elcubo9.web", "..\thewall9-websites-git\elcubo9\elcubo9.web.csproj", "{A0EDB1D5-E704-44F7-A5BB-D9D7577F148B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "yolanda.web", "..\thewall9-websites-git\yolanda.web\yolanda.web.csproj", "{EA3F0048-FB03-42B6-B858-FDB4BC559CDA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "theplayer9.com", "..\thewall9-websites-git\theplayer9.com\theplayer9.com.csproj", "{1283DA87-85BE-483F-A1DB-ED51DA12C886}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -120,10 +118,6 @@ Global
 		{EA3F0048-FB03-42B6-B858-FDB4BC559CDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA3F0048-FB03-42B6-B858-FDB4BC559CDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA3F0048-FB03-42B6-B858-FDB4BC559CDA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1283DA87-85BE-483F-A1DB-ED51DA12C886}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1283DA87-85BE-483F-A1DB-ED51DA12C886}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1283DA87-85BE-483F-A1DB-ED51DA12C886}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1283DA87-85BE-483F-A1DB-ED51DA12C886}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -140,6 +134,5 @@ Global
 		{FFC391B6-115D-4134-83A3-12FE8E67C902} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
 		{A0EDB1D5-E704-44F7-A5BB-D9D7577F148B} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
 		{EA3F0048-FB03-42B6-B858-FDB4BC559CDA} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
-		{1283DA87-85BE-483F-A1DB-ED51DA12C886} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
 	EndGlobalSection
 EndGlobal
