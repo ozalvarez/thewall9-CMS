@@ -418,7 +418,7 @@ namespace thewall9.bll
                             RedirectUrl = m.RedirectUrl,
                             TitlePage = m.TitlePage,
                             ViewRender = m.ViewRender,
-                            OGraph = m.PageCultureOGraph != null ? new OGraphBinding
+                            OGraph = (m.PageCultureOGraph != null && m.PageCultureOGraph.OGraph != null) ? new OGraphBinding
                             {
                                 OGraphDescription = m.PageCultureOGraph.OGraph.OGraphDescription,
                                 OGraphTitle = m.PageCultureOGraph.OGraph.OGraphTitle,

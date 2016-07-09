@@ -98,14 +98,14 @@ namespace thewall9.bll
                 return _PW;
             }
         }
-        public ProductWeb GetDetail(int SiteID, string Url, string FriendlyUrl, int CurrencyID)
+        public ProductWeb GetDetail(int SiteID, string Url, int ProductID, string FriendlyUrl, int CurrencyID)
         {
             using (var _c = db)
             {
                 if (SiteID == 0)
                     SiteID = new SiteBLL().Get(Url, _c).SiteID;
                 return Select((from m in _c.ProductCultures
-                               where m.Product.SiteID == SiteID && m.FriendlyUrl.ToLower().Equals(FriendlyUrl.ToLower())
+                               where m.Product.SiteID == SiteID && m.ProductID==ProductID && m.FriendlyUrl.ToLower().Equals(FriendlyUrl.ToLower())
                                select m), CurrencyID, _c).FirstOrDefault();
             }
         }
@@ -131,7 +131,8 @@ namespace thewall9.bll
                          where m.Product.SiteID == SiteID
                          select new ProductWeb
                          {
-                             FriendlyUrl = m.FriendlyUrl
+                             FriendlyUrl = m.FriendlyUrl,
+                             ProductID=m.ProductID
                          };
                 return _Q.ToList();
             }
@@ -474,7 +475,7 @@ namespace thewall9.bll
 
                 //TO-DO DELETE ICON
 
-                
+
             }
         }
         public int UpdatePriorities(ProductUpdatePriorities Model, string UserID)

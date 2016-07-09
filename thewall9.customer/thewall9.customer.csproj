@@ -49,8 +49,8 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -191,8 +191,6 @@
     <Content Include="app\views\tokens.html" />
     <Content Include="app\views\_BlogCategory.html" />
     <Content Include="app\views\_MediaList.html" />
-    <Content Include="Content\angular-block-ui.css" />
-    <Content Include="Content\angular-block-ui.min.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\min\app.css" />
@@ -223,9 +221,6 @@
     <Content Include="Content\variables.less" />
     <Content Include="Gruntfile.js" />
     <Content Include="robot.txt" />
-    <Content Include="Scripts\angular-block-ui.js" />
-    <Content Include="Scripts\angular-block-ui.min.js" />
-    <Content Include="Content\angular-block-ui.css.map" />
     <Content Include="package.json" />
     <Content Include="bower.json" />
     <Content Include="Content\fonts\fontawesome-webfont.eot" />
@@ -239,8 +234,6 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\thewall9-customer - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\thewall9-customer.pubxml" />
-    <Content Include="Scripts\angular-block-ui.min.js.map" />
-    <Content Include="Scripts\angular-block-ui.js.map" />
     <Content Include="Scripts\angular-file-upload.min.js" />
     <Content Include="Scripts\min\angular.js" />
     <Content Include="Scripts\min\app-angular.js" />

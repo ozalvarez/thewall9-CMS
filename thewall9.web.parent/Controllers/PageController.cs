@@ -62,6 +62,14 @@ namespace thewall9.web.parent.Controllers
                          new XElement(ns + "loc", Request.Url.Scheme + "://" + Request.Url.Authority + "/" + i.FriendlyUrl)
                          , new XElement(ns + "changefreq", "always"));
 
+            if (_Pages.Ecommerce)
+            {
+                _Q = _Q.Union((from i in _Pages.Products
+                               select
+                               new XElement(ns + "url",
+                                   new XElement(ns + "loc", Url.Action("detail", "product", new { ProductID = i.ProductID, FriendlyUrl = i.FriendlyUrl }, Request.Url.Scheme))
+                                   , new XElement(ns + "changefreq", "always"))));
+            }
             if (_Pages.Blog)
             {
                 _Q = _Q.Union((from i in _Pages.Posts

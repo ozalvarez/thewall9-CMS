@@ -227,6 +227,8 @@ namespace thewall9.bll
                 return _Model.SiteID;
             }
         }
+
+        //TO-DO REMOVE ALL FILES
         public void Delete(int SiteID)
         {
             using (var _c = db)
