@@ -234,7 +234,6 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\thewall9-customer - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\thewall9-customer.pubxml" />
-    <Content Include="Scripts\angular-file-upload.min.js" />
     <Content Include="Scripts\min\angular.js" />
     <Content Include="Scripts\min\app-angular.js" />
     <Content Include="Scripts\min\app-login.js" />

@@ -14,6 +14,7 @@ namespace thewall9.web.parent.Controllers
     public class ProductController : Controller
     {
         ProductBLL _ProductService = new ProductBLL();
+        CategoryBLL _CategoryService = new CategoryBLL();
         ContentBLL _ContentService = new ContentBLL();
 
         //   [Route("product/{ProductCategoryFriendlyUrl?}")]
@@ -49,6 +50,23 @@ namespace thewall9.web.parent.Controllers
                 , ProductCategoryFriendlyUrl
                 , Page);
             return PartialView(View, _P);
+        }
+        //CATEGORIES
+        [Route("category/{CategoryID}/{FriendlyUrl}/{Page?}")]
+        public ActionResult Category(int CategoryID, string FriendlyUrl, int Page = 1)
+        {
+            var _Products = _ProductService.Get(Request.Url.Authority, FriendlyUrl, Page);
+            var _Category = _CategoryService.GetByID(CategoryID, FriendlyUrl);
+            if (_Products == null || _Category == null) throw new HttpException(404, "Page Not Found");
+
+            ViewBag.Content = _ContentService.Get(Request.Url.Authority, "category");
+            ViewBag.Products = _Products;
+
+            ViewBag.Title = _Category.CategoryName;
+            //TO-DO ADD DESCRIPTION TO CATEGORY
+           // ViewBag.MetaDescription = _Model.Description;
+
+            return View(_Category);
         }
     }
 }

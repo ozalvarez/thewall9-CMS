@@ -57,7 +57,7 @@ namespace thewall9.bll
                 {
                     _c.Medias.Remove(_Model);
                     _c.SaveChanges();
-                    new Utils.FileUtil().DeleteFolder("media", _Model.MediaID + "/");
+                    new Utils.AzureBlobUtil().DeleteFolder("media", _Model.MediaID + "/");
                 }
             }
         }
@@ -70,12 +70,12 @@ namespace thewall9.bll
                     Can(SiteID, UserID, _c);
                     var _Media = SaveMedia(null, SiteID);
                     var _ContainerReference = _Media.MediaID + "/" + Model.FileName;
-                    if (new Utils.FileUtil().Exist("media", _ContainerReference))
+                    if (new Utils.AzureBlobUtil().Exist("media", _ContainerReference))
                     {
                         Model.FileName = Utils.Util.RandomString(5) + Model.FileName;
                         _ContainerReference = _Media.MediaID + "/" + Model.FileName;
                     }
-                    new Utils.FileUtil().UploadImage(Utils.ImageUtil.StringToStream(Model.FileContent), "media", _ContainerReference);
+                    new Utils.AzureBlobUtil().UploadImage(Utils.ImageUtil.StringToStream(Model.FileContent), "media", _ContainerReference);
                     var _FinalURL = StorageUrl + "/media/" + _ContainerReference;
                     _Media = _c.Medias.Where(m => m.MediaID == _Media.MediaID).FirstOrDefault();
                     _Media.MediaUrl = _FinalURL;

@@ -72,8 +72,9 @@ namespace thewall9.bll
                     _Site.OtherPages = new PageBLL().GetOtherPages(SiteID, Url, Lang);
                     if (_Site.Site.ECommerce)
                     {
-                        _Site.Currencies = new CurrencyBLL().Get(SiteID, Url);
-                        _Site.EcommercePages = new PageBLL().GetEcommercePages(SiteID, Url, Lang);
+                        _Site.Currencies = new CurrencyBLL().Get(SiteID);
+                        _Site.Categories=new CategoryBLL().GetAll(SiteID, Lang);
+                        //_Site.EcommercePages = new PageBLL().GetEcommercePages(SiteID, Url, Lang);
                     }
                     return _Site;
                 }
@@ -366,7 +367,7 @@ namespace thewall9.bll
         public string Export(int SiteID)
         {
             var _URL = SiteID + "/SITE.json";
-            var blob = new Utils.FileUtil().GetBlob("export", _URL);
+            var blob = new Utils.AzureBlobUtil().GetBlob("export", _URL);
             using (Stream blobStream = blob.OpenWrite())
             {
                 using (StreamWriter writer = new StreamWriter(blobStream))

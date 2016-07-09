@@ -34,6 +34,7 @@ namespace thewall9.data.binding
         public List<PageCultureBinding> OtherPages { get; set; }
         public ContentBindingList ContentLayout { get; set; }
         public List<CurrencyBinding> Currencies { get; set; }
+        public List<CategoryWeb> Categories { get; set; }
     }
     public class SiteAllBinding : SiteBinding
     {

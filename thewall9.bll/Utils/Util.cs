@@ -111,5 +111,9 @@ namespace thewall9.bll.Utils
 
             return Regex.Replace(htmlString, "<(.|\n)*?>", ""); ;
         }
+        public static string CleanFileName(this string value)
+        {
+            return value.Replace(" ", "").Trim().ToLower();
+        }
     }
 }

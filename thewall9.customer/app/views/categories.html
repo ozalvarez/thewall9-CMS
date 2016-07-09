@@ -59,30 +59,40 @@
                 <h4 class="modal-title">Datos de la Categoría</h4>
             </div>
             <div class="modal-body">
-                <form ng-submit="save()">
-                    <div class="form-group" ng-if="selectedCategory">
-                        <label>Categoría Padre</label>
-                        <select ng-options="category as category.CategoryAlias for category in categories"
-                                ng-model="selectedCategory"
-                                ng-change="model.CategoryParentID=selectedCategory.CategoryID"
-                                class="form-control"></select>
-                    </div>
-                    <div class="form-group">
-                        <label>Nombre de la Categoría</label>
-                        <input type="text" class="form-control" ng-model="model.CategoryAlias" required />
-                    </div>
-                    <div ng-repeat="item in model.CategoryCultures">
-                        <div class="form-group">
-                            <label>Nombre de la Categoría [{{item.CultureName}}]</label>
-                            <input type="text" class="form-control" ng-model="item.CategoryName" required />
+                <form ng-submit="save()" class="row">
+                    <div class="col-md-7">
+                        <div class="form-group" ng-if="selectedCategory">
+                            <label>Categoría Padre</label>
+                            <select ng-options="category as category.CategoryAlias for category in categories"
+                                    ng-model="selectedCategory"
+                                    ng-change="model.CategoryParentID=selectedCategory.CategoryID"
+                                    class="form-control">
+                                <option value="">ROOT</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label>Friendly Url [{{item.CultureName}}]</label>
-                            <input type="text" class="form-control" ng-model="item.FriendlyUrl" required />
+                            <label>Nombre de la Categoría</label>
+                            <input type="text" class="form-control" ng-model="model.CategoryAlias" required />
+                        </div>
+                        <div ng-repeat="item in model.CategoryCultures">
+                            <div class="form-group">
+                                <label>Nombre de la Categoría [{{item.CultureName}}]</label>
+                                <input type="text" class="form-control" ng-model="item.CategoryName" required />
+                            </div>
+                            <div class="form-group">
+                                <label>Friendly Url [{{item.CultureName}}]</label>
+                                <input type="text" class="form-control" ng-model="item.FriendlyUrl" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Guardar Categoría" class="btn btn-primary" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <input type="submit" value="Guardar Categoría" class="btn btn-primary" />
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>Icon</label>
+                            <file-read-element datasource="model.Icon"></file-read-element>
+                        </div>
                     </div>
                 </form>
             </div>

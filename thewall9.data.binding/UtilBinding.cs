@@ -6,16 +6,32 @@ using System.Threading.Tasks;
 
 namespace thewall9.data.binding
 {
+    public interface IEditableBinding
+    {
+        bool Adding { get; set; }
+        bool Deleting { get; set; }
+    }
+    public interface IFileReadBinding : IEditableBinding
+    {
+        string FileContent { get; set; }
+        string FileUrl { get; set; }
+        string FileName { get; set; }
+    }
+    public class FileReadBinding : IFileReadBinding
+    {
+        public string FileContent { get; set; }
+        public string FileName { get; set; }
+        public string FileUrl { get; set; }
+        public bool Adding { get; set; }
+        public bool Deleting { get; set; }
+    }
+    //TO-DO CHANGE AL TO FILEREADBINDING
     public class FileRead : MediaBase
     {
         public string FileContent { get; set; }
         public string FileName { get; set; }
         public bool Deleting { get; set; }
         public bool Adding { get; set; }
-    }
-    public class FileReadSite : FileRead
-    {
-        public int SiteID { get; set; }
     }
     public class SiteMapModel
     {

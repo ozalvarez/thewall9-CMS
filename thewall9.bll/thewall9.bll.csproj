@@ -163,8 +163,9 @@
     <Compile Include="CultureBLL.cs" />
     <Compile Include="SiteBLL.cs" />
     <Compile Include="UserBLL.cs" />
-    <Compile Include="Utils\FileUtil.cs" />
+    <Compile Include="Utils\AzureBlobUtil.cs" />
     <Compile Include="Utils\ApplicationUserManager.cs" />
+    <Compile Include="Utils\FileReadBLL.cs" />
     <Compile Include="Utils\ImageUtil.cs" />
     <Compile Include="Utils\Util.cs" />
   </ItemGroup>

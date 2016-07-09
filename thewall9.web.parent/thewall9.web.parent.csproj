@@ -90,6 +90,7 @@
     <Compile Include="BLL\BaseBLL.cs" />
     <Compile Include="BLL\ContentBLL.cs" />
     <Compile Include="BLL\BlogBLL.cs" />
+    <Compile Include="BLL\CategoryBLL.cs" />
     <Compile Include="BLL\ProductBLL.cs" />
     <Compile Include="BLL\PageBLL.cs" />
     <Compile Include="BLL\SiteBLL.cs" />

@@ -575,7 +575,7 @@ namespace thewall9.bll
                 ExportFillFile(_CP);
                 var _URL = SiteID + (ContentPropertyID == 0 ? "" : "/" + ContentPropertyID) + "/PROPERTIES.json";
 
-                var blob = new Utils.FileUtil().GetBlob("export", _URL);
+                var blob = new Utils.AzureBlobUtil().GetBlob("export", _URL);
                 using (Stream blobStream = blob.OpenWrite())
                 {
                     using (StreamWriter writer = new StreamWriter(blobStream))
@@ -674,8 +674,8 @@ namespace thewall9.bll
         private string SaveFile(int ContentPropertyID, int CultureID, string FileName, string FileContent)
         {
             var ContentPropertyValue = ContentPropertyID + "/" + CultureID + "/" + FileName;
-            new Utils.FileUtil().DeleteFolder("content", ContentPropertyID + "/" + CultureID + "/");
-            new Utils.FileUtil().UploadImage(Utils.ImageUtil.StringToStream(FileContent), "content", ContentPropertyValue);
+            new Utils.AzureBlobUtil().DeleteFolder("content", ContentPropertyID + "/" + CultureID + "/");
+            new Utils.AzureBlobUtil().UploadImage(Utils.ImageUtil.StringToStream(FileContent), "content", ContentPropertyValue);
             return StorageUrl + "/content/" + ContentPropertyValue;
         }
 

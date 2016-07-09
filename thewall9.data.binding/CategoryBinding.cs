@@ -13,11 +13,13 @@ namespace thewall9.data.binding
         public string CategoryAlias { get; set; }
         public int Priority { get; set; }
         public int CategoryParentID { get; set; }
+        public string IconUrl { get; set; }
     }
     public class CategoryBinding : CategoryBase
     {
         public List<CategoryBinding> CategoryItems { get; set; }
         public List<CategoryCultureBinding> CategoryCultures { get; set; }
+        public FileReadBinding Icon { get; set; }
     }
 
     public class CategoryCultureBase
@@ -35,7 +37,8 @@ namespace thewall9.data.binding
     {
         public int CategoryID { get; set; }
         public List<CategoryWeb> CategoryItems { get; set; }
-        public string CatalogFriendlyUrl { get; set; }
+        public string IconUrl { get; set; }
+        public int CultureID { get; set; }
     }
 
     public class UpOrDown

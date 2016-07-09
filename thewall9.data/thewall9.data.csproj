@@ -239,6 +239,10 @@
     <Compile Include="Migrations\201601062209008_RemovePublishedInPage.Designer.cs">
       <DependentUpon>201601062209008_RemovePublishedInPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607090224165_AddIconUrlToCategories.cs" />
+    <Compile Include="Migrations\201607090224165_AddIconUrlToCategories.Designer.cs">
+      <DependentUpon>201607090224165_AddIconUrlToCategories.cs</DependentUpon>
+    </Compile>
     <Compile Include="OGraph.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Product.cs" />
@@ -515,6 +519,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601062209008_RemovePublishedInPage.resx">
       <DependentUpon>201601062209008_RemovePublishedInPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607090224165_AddIconUrlToCategories.resx">
+      <DependentUpon>201607090224165_AddIconUrlToCategories.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

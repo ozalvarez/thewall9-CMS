@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace thewall9.bll.Utils
 {
-    public class FileUtil
+    public class AzureBlobUtil
     {
         public CloudBlobContainer GetBlobContainer(string container)
         {
@@ -65,6 +65,12 @@ namespace thewall9.bll.Utils
         {
             ImageUtil.IsImagen(stream, blobReference);
             UploadFile(stream, container, blobReference);
+        }
+        public void UploadImage(string Content, string container, string blobReference)
+        {
+            var _Stream = Utils.ImageUtil.StringToStream(Content);
+            ImageUtil.IsImagen(_Stream, blobReference);
+            UploadFile(_Stream, container, blobReference);
         }
         public Stream GetFile(string container, string blobReference)
         {

@@ -11,40 +11,7 @@ namespace thewall9.bll
 {
     public class CurrencyBLL : BaseBLL
     {
-        #region Web
-        private IQueryable<Currency> Get(int SiteID, string Url, ApplicationDbContext _c)
-        {
-            return (SiteID != 0
-                    ? from c in _c.Currencies
-                      where c.SiteID == SiteID
-                      orderby c.Default descending
-                      select c
-                     : from c in _c.Currencies
-                       join u in _c.SiteUrls on c.SiteID equals u.SiteID
-                       where u.Url.Equals(Url)
-                       orderby c.Default descending
-                       select c);
-        }
-        public List<CurrencyBinding> Get(int SiteID, string Url)
-        {
-            using (var _c = db)
-            {
-                return Get(SiteID, Url, _c).Select(m => new CurrencyBinding
-                {
-                    CurrencyID = m.CurrencyID,
-                    CurrencyName = m.CurrencyName,
-                    MoneySymbol = m.MoneySymbol,
-                    ShippingPrice=m.ShippingPrice
-                }).ToList();
-            }
-        }
-        #endregion
-
-        #region Customer
-        private Currency GetByID(int CurrencyID, ApplicationDbContext _c)
-        {
-            return _c.Currencies.Where(m => m.CurrencyID == CurrencyID).SingleOrDefault();
-        }
+        #region Common
         public List<CurrencyBinding> Get(int SiteID)
         {
             using (var _c = db)
@@ -59,6 +26,29 @@ namespace thewall9.bll
                     ShippingPrice = m.ShippingPrice
                 }).ToList();
             }
+        }
+        #endregion
+
+        #region Web
+        private IQueryable<Currency> Get(int SiteID, string Url, ApplicationDbContext _c)
+        {
+            return (SiteID != 0
+                    ? from c in _c.Currencies
+                      where c.SiteID == SiteID
+                      orderby c.Default descending
+                      select c
+                     : from c in _c.Currencies
+                       join u in _c.SiteUrls on c.SiteID equals u.SiteID
+                       where u.Url.Equals(Url)
+                       orderby c.Default descending
+                       select c);
+        }
+        #endregion
+
+        #region Customer
+        private Currency GetByID(int CurrencyID, ApplicationDbContext _c)
+        {
+            return _c.Currencies.Where(m => m.CurrencyID == CurrencyID).SingleOrDefault();
         }
         public int Save(CurrencyBinding Model, string UserID)
         {

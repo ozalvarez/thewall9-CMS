@@ -21,7 +21,7 @@ module.exports = function (grunt) {
                         'lib/angular-loading-bar/loading-bar.css',
                         'lib/font-awesome/font-awesome.css',
                         "Content/sb-admin-2.css",
-                        "Content/angular-block-ui.min.css",
+                        "lib/angular-block-ui/angular-block-ui.css",
                     ],
                     'Content/min/app.css': [
                         'lib/bootstrap/bootstrap.css',
@@ -33,7 +33,7 @@ module.exports = function (grunt) {
                         "Content/plugins/metisMenu/metisMenu.min.css",
                         "Content/plugins/timeline.css",
                         "Content/plugins/morris.css",
-                        "Content/angular-block-ui.min.css",
+                        "lib/angular-block-ui/angular-block-ui.css",
                         'Content/site.css'
                     ]
                 }
@@ -57,7 +57,7 @@ module.exports = function (grunt) {
                             'app/services/toastrService.js',
                             'app/directives/autoFillSync.js',
                             'app/controllers/loginController.js',
-                            "scripts/angular-block-ui.min.js"
+                            "lib/angular-block-ui/angular-block-ui.js"
                     ]
                 }
             },
@@ -84,10 +84,9 @@ module.exports = function (grunt) {
                         'lib/angular-loading-bar/loading-bar.js',
                         'lib/angular-ui-tree/angular-ui-tree.js',
                         'lib/angular-ui-tinymce/tinymce.js',
-                        "scripts/angular-block-ui.min.js",
+                        "lib/angular-block-ui/angular-block-ui.js",
                         "lib/ng-file-upload-shim/ng-file-upload-shim.js",
                         "lib/ng-file-upload/ng-file-upload.js",
-                        //"scripts/angular-file-upload.min.js",
                         "scripts/ui-bootstrap-custom-tpls-0.13.3.min.js"
                     ]
                 }

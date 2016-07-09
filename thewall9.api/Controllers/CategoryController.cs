@@ -17,7 +17,10 @@ namespace thewall9.api.Controllers
 
         #region Web & Customer
         [AllowAnonymous]
-        
+        public IHttpActionResult GetByID(int CategoryID, string FriendlyUrl)
+        {
+            return Ok(_CategoryService.GetByID(CategoryID, FriendlyUrl));
+        }
         #endregion
 
         #region Customer

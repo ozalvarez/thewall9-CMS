@@ -270,8 +270,8 @@ namespace thewall9.bll
         {
             var _Container = "product-icon";
             var _ContainerReference = ProductID + "/" + CultureID + "/" + FileReadModel.FileName;
-            new Utils.FileUtil().DeleteFolder(_Container, ProductID + "/" + CultureID + "/");
-            new Utils.FileUtil().UploadImage(Utils.ImageUtil.StringToStream(FileReadModel.FileContent), _Container, _ContainerReference);
+            new Utils.AzureBlobUtil().DeleteFolder(_Container, ProductID + "/" + CultureID + "/");
+            new Utils.AzureBlobUtil().UploadImage(Utils.ImageUtil.StringToStream(FileReadModel.FileContent), _Container, _ContainerReference);
             return StorageUrl + "/" + _Container + "/" + _ContainerReference;
         }
         public int Save(ProductBinding Model, string UserID)
@@ -471,7 +471,7 @@ namespace thewall9.bll
                 //DELETE GALLERY
                 var _Container = "product-gallery";
                 var _ContainerReference = ProductID + "/";
-                new Utils.FileUtil().DeleteFolder(_Container, _ContainerReference);
+                new Utils.AzureBlobUtil().DeleteFolder(_Container, _ContainerReference);
 
                 //TO-DO DELETE ICON
 
@@ -582,7 +582,7 @@ namespace thewall9.bll
                 FileStream stream = new FileStream(TempPath, FileMode.Open);
                 var _Container = "product-gallery";
                 var _ContainerReference = ProductID + "/" + _Gallery.ProductGalleryID + "/" + FileName;
-                new Utils.FileUtil().UploadImage(stream, _Container, _ContainerReference);
+                new Utils.AzureBlobUtil().UploadImage(stream, _Container, _ContainerReference);
                 var _Path = StorageUrl + "/" + _Container + "/" + _ContainerReference;
 
                 var _Model = _c.ProductGalleries.Where(m => m.ProductGalleryID == _Gallery.ProductGalleryID).FirstOrDefault();
@@ -608,7 +608,7 @@ namespace thewall9.bll
 
                 var _Container = "product-gallery";
                 var _ContainerReference = _Model.ProductID + "/" + GalleryID;
-                new Utils.FileUtil().DeleteFolder(_Container, _ContainerReference);
+                new Utils.AzureBlobUtil().DeleteFolder(_Container, _ContainerReference);
             }
         }
         #endregion
