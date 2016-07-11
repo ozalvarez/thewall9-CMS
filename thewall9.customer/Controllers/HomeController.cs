@@ -8,12 +8,12 @@ namespace thewall9.customer.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Login()
         {
             return View();
         }
-        [Route("intern")]
-        public ActionResult Intern()
+        [Route("app")]
+        public ActionResult App()
         {
             return View();
         }
