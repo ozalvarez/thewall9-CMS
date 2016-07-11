@@ -1,4 +1,4 @@
-﻿app.directive("fileReadElement", [function () {
+﻿app.directive("imgRead", [function () {
     return {
         restrict: 'E',
         replace: true,

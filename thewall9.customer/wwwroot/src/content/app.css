@@ -5,14 +5,12 @@ div.page-header {
 div.page-header h1 {
   margin-top: 0px;
 }
-/*#content {
-    .items-fixed {
-        position: fixed;
-        top: 10px;
-        left: 48%;
-        z-index: 2000;
-    }
-}*/
+#content .items-fixed {
+  position: fixed;
+  top: 10px;
+  left: 48%;
+  z-index: 2000;
+}
 .vcenter {
   display: inline-block;
   vertical-align: middle;
