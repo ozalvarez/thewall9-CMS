@@ -241,6 +241,7 @@
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\BrandController.cs" />
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\CurrencyController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />

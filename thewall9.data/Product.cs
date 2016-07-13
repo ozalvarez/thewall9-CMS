@@ -18,6 +18,7 @@ namespace thewall9.data
         public virtual List<ProductCategory> ProductCategories { get; set; }
         public virtual List<ProductGallery> ProductGalleries { get; set; }
         public virtual List<ProductCurrency> ProductCurrencies { get; set; }
+        public virtual Brand Brand { get; set; }
     }
     public class ProductCulture : ProductCultureBase
     {

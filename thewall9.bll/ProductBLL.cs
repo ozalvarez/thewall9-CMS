@@ -105,7 +105,7 @@ namespace thewall9.bll
                 if (SiteID == 0)
                     SiteID = new SiteBLL().Get(Url, _c).SiteID;
                 return Select((from m in _c.ProductCultures
-                               where m.Product.SiteID == SiteID && m.ProductID==ProductID && m.FriendlyUrl.ToLower().Equals(FriendlyUrl.ToLower())
+                               where m.Product.SiteID == SiteID && m.ProductID == ProductID && m.FriendlyUrl.ToLower().Equals(FriendlyUrl.ToLower())
                                select m), CurrencyID, _c).FirstOrDefault();
             }
         }
@@ -132,7 +132,7 @@ namespace thewall9.bll
                          select new ProductWeb
                          {
                              FriendlyUrl = m.FriendlyUrl,
-                             ProductID=m.ProductID
+                             ProductID = m.ProductID
                          };
                 return _Q.ToList();
             }
@@ -154,6 +154,7 @@ namespace thewall9.bll
                 Enabled = c.Enabled,
                 Featured = c.Featured,
                 New = c.New,
+                BrandID = c.BrandID,
                 ProductCultures = c.ProductCultures.Select(m => new ProductCultureBinding
                 {
                     ProductName = m.ProductName,
@@ -306,7 +307,7 @@ namespace thewall9.bll
                         ? Model.ProductCultures[0].ProductName.CleanUrl()
                         : null);
                 _Product.Enabled = true;
-
+                _Product.BrandID = Model.BrandID;
                 //ADDING CULTURES
                 if (Model.ProductCultures != null)
                 {
@@ -444,6 +445,22 @@ namespace thewall9.bll
                     }
                     _c.SaveChanges();
                 }
+                //ADD BRAND
+                //var _BP = _c.BrandProducts.Where(m => m.ProductID == _Product.ProductID).FirstOrDefault();
+                //if (Model.BrandID != 0)
+                //{
+                //    if (_BP != null)
+                //        _BP.BrandID = Model.BrandID;
+                //    else
+                //        _c.BrandProducts.Add(new BrandProduct
+                //        {
+                //            BrandID = Model.BrandID,
+                //            ProductID = _Product.ProductID
+                //        });
+                //}
+                //else if (_BP != null)
+                //    _c.BrandProducts.Remove(_BP);
+                //_c.SaveChanges();
                 return _Product.ProductID;
             }
         }

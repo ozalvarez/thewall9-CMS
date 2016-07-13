@@ -91,6 +91,7 @@
     <Compile Include="AccountBindingModels.cs" />
     <Compile Include="AccountViewModels.cs" />
     <Compile Include="Blog.cs" />
+    <Compile Include="Brand.cs" />
     <Compile Include="Media.cs" />
     <Compile Include="Migrations\201503242013269_add-product-to-ecommerce.cs" />
     <Compile Include="Migrations\201503242013269_add-product-to-ecommerce.Designer.cs">
@@ -243,6 +244,10 @@
     <Compile Include="Migrations\201607090224165_AddIconUrlToCategories.cs" />
     <Compile Include="Migrations\201607090224165_AddIconUrlToCategories.Designer.cs">
       <DependentUpon>201607090224165_AddIconUrlToCategories.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607131750111_AddBrand.cs" />
+    <Compile Include="Migrations\201607131750111_AddBrand.Designer.cs">
+      <DependentUpon>201607131750111_AddBrand.cs</DependentUpon>
     </Compile>
     <Compile Include="OGraph.cs" />
     <Compile Include="Order.cs" />
@@ -523,6 +528,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607090224165_AddIconUrlToCategories.resx">
       <DependentUpon>201607090224165_AddIconUrlToCategories.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607131750111_AddBrand.resx">
+      <DependentUpon>201607131750111_AddBrand.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

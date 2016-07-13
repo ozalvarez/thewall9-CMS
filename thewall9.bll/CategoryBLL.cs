@@ -127,21 +127,6 @@ namespace thewall9.bll
                 return GetTree(_Category, SiteID, CultureID, CategoryID, _c);
             }
         }
-        //public CategoryWeb Get(int CategoryID, int CultureID)
-        //{
-        //    using (var _c = db)
-        //    {
-        //        return (from m in _c.CategoryCultures
-        //                where m.CategoryID == CategoryID
-        //                 && m.Culture.CultureID == CultureID
-        //                select new CategoryWeb
-        //             {
-        //                 CategoryName = m.CategoryName,
-        //                 CategoryID = m.CategoryID
-        //             }).FirstOrDefault();
-        //    }
-        //}
-        
         #endregion
 
         #region Customer
@@ -282,7 +267,7 @@ namespace thewall9.bll
                 }
                 _Category.CategoryAlias = Model.CategoryAlias;
                 _Category.CategoryParentID = Model.CategoryParentID;
-                _Category.IconUrl = new FileReadBLL().AddImage(Model.Icon, FileReadBLL.FileType.PRODUCT_CATEGORY, _Category.CategoryID.ToString(), _Category.IconUrl);
+                _Category.IconUrl = new FileReadBLL().AddImage(Model.Icon, FileReadBLL.FileType.PRODUCT_CATEGORY, _Category.CategoryID.ToString(), _Category.IconUrl, Model.SiteID);
                 _c.SaveChanges();
 
                 //ADD ICON

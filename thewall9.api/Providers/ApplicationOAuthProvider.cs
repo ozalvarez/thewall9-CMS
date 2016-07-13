@@ -52,7 +52,7 @@ namespace thewall9.api.Providers
                 context.Validated(ticket);
                 context.Request.Context.Authentication.SignIn(cookiesIdentity);
             }
-            catch (InvalidOperationException e)
+            catch (InvalidOperationException)
             {
                 context.SetError("invalid_grant", "The user name or password is incorrect. This should not happen");
                 return;

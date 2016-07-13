@@ -1,5 +1,5 @@
-﻿app.controller('productController', ['$scope', '$routeParams', '$location', 'productService', 'siteService', 'currencyService', 'toastrService',
-    function ($scope, $routeParams, $location, productService, siteService, currencyService, toastrService) {
+﻿app.controller('productController', ['$scope', '$routeParams', '$location', 'productService', 'siteService', 'currencyService', 'toastrService', 'brandService',
+    function ($scope, $routeParams, $location, productService, siteService, currencyService, toastrService, brandService) {
         $scope.get = function () {
             $scope.model = {
                 ProductCultures: [],
@@ -9,7 +9,9 @@
             };
             if ($routeParams.productID != null) {
                 productService.getByID($routeParams.productID).then(function (data) {
+
                     $scope.model = data;
+                    
                     //CATEGORIES
                     angular.forEach($scope.cultures, function (item) {
                         var exist = false;
@@ -45,6 +47,13 @@
                             })
                         }
                     });
+                    //BRANDS
+                    if (data.BrandID != null) {
+                        angular.forEach($scope.brands, function (item) {
+                            if (data.BrandID == item.BrandID)
+                                $scope.brandSelected = item;
+                        });
+                    }
                 });
             } else {
                 angular.forEach($scope.cultures, function (item) {
@@ -104,6 +113,11 @@
         }
         $scope.save = function () {
             if ($scope.model.ProductCategories != null && $scope.model.ProductCategories.length > 0) {
+                //console.log($scope.brandSelected);
+                if ($scope.brandSelected != null && $scope.brandSelected != undefined)
+                    $scope.model.BrandID = $scope.brandSelected.BrandID;
+                else
+                    $scope.model.BrandID = null;
                 productService.save($scope.model).then(function (data) {
                     $scope.model.ProductID = $scope.model.ProductID == null ? data : $scope.model.ProductID;
                     //UPLOAD FILES
@@ -126,7 +140,7 @@
                     } else {
                         redirectProductDetail($scope.model.ProductID)
                     }
-                    
+
                 });
             } else {
                 toastrService.error("Tienes que agregar al menos una categoría");
@@ -140,7 +154,7 @@
                 });
             }
         };
-        
+
         $scope.deleteGallery = function (item) {
             if (confirm("¿Estas seguro que deseas eliminar esta imagen?")) {
                 productService.removeGallery(item.ProductGalleryID).then(function (data) {
@@ -151,10 +165,13 @@
         };
         /*INIT*/
         $scope.init = function () {
-            currencyService.get().then(function (data) {
-                $scope.currencies = data;
-                $scope.get();
-            })
+            brandService.get().then(function (brands) {
+                $scope.brands = brands;
+                currencyService.get().then(function (data) {
+                    $scope.currencies = data;
+                    $scope.get();
+                });
+            });
         };
         $scope.$on('initDone', function (event) {
             $scope.init();

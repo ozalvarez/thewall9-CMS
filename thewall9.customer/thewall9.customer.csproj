@@ -144,6 +144,7 @@
     <Content Include="wwwroot\src\app\controllers\productsController.js" />
     <Content Include="wwwroot\src\app\controllers\productController.js" />
     <Content Include="wwwroot\src\app\controllers\ordersController.js" />
+    <Content Include="wwwroot\src\app\controllers\brandsController.js" />
     <Content Include="wwwroot\src\app\controllers\tagController.js" />
     <Content Include="wwwroot\src\app\controllers\currencyController.js" />
     <Content Include="wwwroot\src\app\controllers\configurationController.js" />
@@ -165,6 +166,7 @@
     <Content Include="wwwroot\src\app\services\blogService.js" />
     <Content Include="wwwroot\src\app\services\productService.js" />
     <Content Include="wwwroot\src\app\services\orderService.js" />
+    <Content Include="wwwroot\src\app\services\brandService.js" />
     <Content Include="wwwroot\src\app\services\tagService.js" />
     <Content Include="wwwroot\src\app\services\currencyService.js" />
     <Content Include="wwwroot\src\app\services\cultureService.js" />
@@ -187,6 +189,7 @@
     <Content Include="wwwroot\views\blog.html" />
     <Content Include="wwwroot\views\products.html" />
     <Content Include="wwwroot\views\orders.html" />
+    <Content Include="wwwroot\views\brands.html" />
     <Content Include="wwwroot\views\tags.html" />
     <Content Include="wwwroot\views\currencies.html" />
     <Content Include="wwwroot\views\categories.html" />

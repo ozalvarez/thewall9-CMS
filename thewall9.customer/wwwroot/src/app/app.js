@@ -61,6 +61,10 @@ app.config(["$routeProvider", "blockUIConfig", function ($routeProvider, blockUI
         controller: 'ordersController',
         templateUrl: '/wwwroot/views/orders.html'
     });
+    $routeProvider.when('/brands', {
+        controller: 'brandsController',
+        templateUrl: '/wwwroot/views/brands.html'
+    });
 
     //BLOG
     $routeProvider.when('/blog', {

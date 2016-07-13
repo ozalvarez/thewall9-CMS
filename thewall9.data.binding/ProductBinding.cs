@@ -15,6 +15,7 @@ namespace thewall9.data.binding
         public bool Enabled { get; set; }
         public bool New { get; set; }
         public bool Featured { get; set; }
+        public int? BrandID { get; set; }
     }
     public class ProductCultureBase
     {
@@ -53,6 +54,8 @@ namespace thewall9.data.binding
         public List<ProductCategoryBinding> ProductCategories { get; set; }
         public List<ProductGalleryBinding> ProductGalleries { get; set; }
         public List<ProductCurrencyBinding> ProductCurrencies { get; set; }
+       // public int BrandID { get; set; }
+
     }
 
     
