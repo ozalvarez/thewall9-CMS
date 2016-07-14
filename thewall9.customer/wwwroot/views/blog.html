@@ -16,8 +16,8 @@
 </div>
 <table class="table table-bordered">
     <tr ng-repeat="item in data">
+        <td>{{item.BlogPostID}}</td>
         <td>
-            {{item.BlogPostID}}
             <span ng-show="item.CultureInfo">{{item.CultureInfo.Title}}</span>
             <span ng-show="item.CultureInfo==null">UNTITLED</span>
             <label ng-show="item.CultureInfo.Published" class="label label-success">

@@ -228,7 +228,7 @@ namespace thewall9.bll
                               })
                               .FirstOrDefault()
                           };
-                return _BP.ToList();
+                return _BP.OrderByDescending(m=>m.DateCreated).ToList();
             }
         }
         public BlogPostModelBinding GetDetail(int BlogPostID, int CultureID)
