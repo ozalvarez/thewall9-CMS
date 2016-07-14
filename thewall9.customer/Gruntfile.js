@@ -33,7 +33,7 @@ module.exports = function (grunt) {
                         'wwwroot/src/content/sb-admin.css',
                         //ANGULAR ui.tree
                         'lib/angular-ui-tree/angular-ui-tree.min.css',
-                    ] 
+                    ]
                 }
             },
             app: {
@@ -57,30 +57,6 @@ module.exports = function (grunt) {
                     'wwwroot/build/css/login.min.css': ['wwwroot/src/content/login.css'],
                 }
             },
-            //target: {
-            //    files: {
-            //        'Content/min/login.css': [
-            //            'lib/bootstrap/bootstrap.css',
-            //            'lib/angular-loading-bar/loading-bar.css',
-            //            'lib/font-awesome/font-awesome.css',
-            //            "Content/sb-admin-2.css",
-            //            "lib/angular-block-ui/angular-block-ui.css",
-            //        ],
-            //        'Content/min/app.css': [
-            //            'lib/bootstrap/bootstrap.css',
-            //            'lib/angular-loading-bar/loading-bar.css',
-            //            'lib/angular-ui-tree/angular-ui-tree.min.css',
-            //            'bower_components/font-awesome/css/font-awesome.min.css',
-            //            'lib/toastr/toastr.css',
-            //            "Content/sb-admin-2.css",
-            //            "Content/plugins/metisMenu/metisMenu.min.css",
-            //            "Content/plugins/timeline.css",
-            //            "Content/plugins/morris.css",
-            //            "lib/angular-block-ui/angular-block-ui.css",
-            //            'Content/site.css'
-            //        ]
-            //    }
-            //}
         },
         uglify: {
             vendors: {
@@ -96,7 +72,6 @@ module.exports = function (grunt) {
                         'lib/angular-local-storage/angular-local-storage.js',
                         'lib/angular-block-ui/angular-block-ui.js',
                         'lib/angular-bootstrap/ui-bootstrap-tpls.js',
-                        
                         //ANGULAR ui.tree
                         'lib/angular-ui-tree/angular-ui-tree.js',
                         //FILE UPLOAD
@@ -204,26 +179,26 @@ module.exports = function (grunt) {
             },
             tinymce: {
                 files: [{
-                      cwd: 'lib/tinymce-dist/',
-                      src: 'tinymce.min.js',
-                      dest: 'wwwroot/build/js/',
-                      expand: true
-                  },{
-                      cwd: 'bower_components/tinymce-dist/skins',
-                      src: '**/*',
-                      dest: 'wwwroot/build/js/skins',
-                      expand: true
-                  },{
-                      cwd: 'bower_components/tinymce-dist/themes',
-                      src: '**/*',
-                      dest: 'wwwroot/build/js/themes',
-                      expand: true
-                  }, {
-                      cwd: 'bower_components/tinymce-dist/plugins',
-                      src: '**/*',
-                      dest: 'wwwroot/build/js/plugins',
-                      expand: true
-                  }]
+                    cwd: 'lib/tinymce-dist/',
+                    src: 'tinymce.min.js',
+                    dest: 'wwwroot/build/js/',
+                    expand: true
+                }, {
+                    cwd: 'bower_components/tinymce-dist/skins',
+                    src: '**/*',
+                    dest: 'wwwroot/build/js/skins',
+                    expand: true
+                }, {
+                    cwd: 'bower_components/tinymce-dist/themes',
+                    src: '**/*',
+                    dest: 'wwwroot/build/js/themes',
+                    expand: true
+                }, {
+                    cwd: 'bower_components/tinymce-dist/plugins',
+                    src: '**/*',
+                    dest: 'wwwroot/build/js/plugins',
+                    expand: true
+                }]
             }
         }
     });
@@ -236,7 +211,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
 
     // Default task.
-    grunt.registerTask('build', ['bower', 'less', 'uglify', 'cssmin', 'watch']);
-    grunt.registerTask('no-watch', ['bower', 'less', 'uglify', 'copy', 'cssmin']);
+    grunt.registerTask('BUILD', ['bower', 'less', 'uglify', 'copy', 'cssmin']);
+    grunt.registerTask('BUILD-WATCH', ['bower', 'less', 'uglify', 'copy', 'cssmin', 'watch']);
 
 };

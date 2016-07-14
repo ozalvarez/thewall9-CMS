@@ -3,7 +3,8 @@
         restrict: 'E',
         replace: true,
         scope: {
-            datasource: '='
+            datasource: '=',
+            fileurl: '='
         },
         link: function (scope, element, attributes) {
             var fileInput = element.find('input');
@@ -29,11 +30,11 @@
             + '<input type="file" />'
         + '</div>'
         + '<div class="container-btns">'
-            + '<img ng-src="{{datasource.FileContent || datasource.FileUrl}}"'
-            + 'ng-show="(datasource.FileContent || datasource.FileUrl) && !datasource.Deleting"'
+            + '<img ng-src="{{datasource.FileContent || fileurl}}"'
+            + 'ng-show="(datasource.FileContent || fileurl) && !datasource.Deleting"'
             + 'class="img-responsive img-thumbnail" />'
             + '<button class="btn btn-danger"'
-            + 'ng-show="(datasource.FileContent || datasource.FileUrl) && !datasource.Deleting"'
+            + 'ng-show="(datasource.FileContent || fileurl) && !datasource.Deleting"'
             + 'ng-click="datasource.Deleting=true;" type="button"><i class="fa fa-remove"></i>'
             + '</button>'
        + '</div></div>'

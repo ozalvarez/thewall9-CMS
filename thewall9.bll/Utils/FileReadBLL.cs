@@ -45,8 +45,6 @@ namespace thewall9.bll.Utils
 
                     new AzureBlobUtil().DeleteFolder(_Container, _ContainerReference);
                     new AzureBlobUtil().UploadImage(Image.FileContent, _Container, _ContainerReference + FileName);
-
-                    Image.FileUrl = _Path;
                     return _Path;
                 }
                 Image.FileContent = null;

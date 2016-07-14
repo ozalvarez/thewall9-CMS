@@ -152,10 +152,6 @@ namespace thewall9.bll
                         Priority = c.Priority,
                         SiteID = c.SiteID,
                         IconUrl = c.IconUrl,
-                        Icon = new FileReadBinding
-                        {
-                            FileUrl = c.IconUrl
-                        },
                         CategoryCultures = c.CategoryCultures.Select(m => new CategoryCultureBinding
                         {
                             CategoryName = m.CategoryName,

@@ -14,14 +14,12 @@ namespace thewall9.data.binding
     public interface IFileReadBinding : IEditableBinding
     {
         string FileContent { get; set; }
-        string FileUrl { get; set; }
         string FileName { get; set; }
     }
     public class FileReadBinding : IFileReadBinding
     {
         public string FileContent { get; set; }
         public string FileName { get; set; }
-        public string FileUrl { get; set; }
         public bool Adding { get; set; }
         public bool Deleting { get; set; }
     }

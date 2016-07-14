@@ -26,11 +26,7 @@ namespace thewall9.bll
                     BrandName = m.BrandName,
                     BrandDescription = m.BrandDescription,
                     IconUrl = m.IconUrl,
-                    SiteID = m.SiteID,
-                    Icon=new FileReadBinding
-                    {
-                        FileUrl=m.IconUrl
-                    }
+                    SiteID = m.SiteID
                 }).ToList();
             }
         }
