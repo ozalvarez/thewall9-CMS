@@ -23,6 +23,7 @@ namespace thewall9.bll
                         select new CategoryWeb
                         {
                             CategoryName = c.CategoryName,
+                            CategoryDescription = c.CategoryDescription,
                             FriendlyUrl = c.FriendlyUrl,
                             CategoryID = c.CategoryID,
                             IconUrl = c.Category.IconUrl,
@@ -53,6 +54,7 @@ namespace thewall9.bll
                           select new CategoryWeb
                           {
                               CategoryName = c.CategoryName,
+                              CategoryDescription = c.CategoryDescription,
                               FriendlyUrl = c.FriendlyUrl,
                               CategoryID = c.CategoryID,
                               IconUrl = c.Category.IconUrl,
@@ -157,7 +159,8 @@ namespace thewall9.bll
                             CategoryName = m.CategoryName,
                             CultureID = m.CultureID,
                             CultureName = m.Culture.Name,
-                            FriendlyUrl = m.FriendlyUrl
+                            FriendlyUrl = m.FriendlyUrl,
+                            CategoryDescription=m.CategoryDescription
                         }).ToList(),
 
                         CategoryItems = Model.Where(m => m.CategoryParentID == c.CategoryID).Any()
@@ -216,6 +219,7 @@ namespace thewall9.bll
                             _Category.CategoryCultures.Add(new CategoryCulture
                             {
                                 CategoryName = item.CategoryName,
+                                CategoryDescription=item.CategoryDescription,
                                 CultureID = item.CultureID,
                                 FriendlyUrl = GetFriendlyUrl(Model, item.CategoryName, item.FriendlyUrl, item.CultureID, _c)
                             });
@@ -237,6 +241,7 @@ namespace thewall9.bll
                                 _Category.CategoryCultures.Add(new CategoryCulture
                                 {
                                     CategoryName = item.CategoryName,
+                                    CategoryDescription = item.CategoryDescription,
                                     CultureID = item.CultureID,
                                     FriendlyUrl = GetFriendlyUrl(Model, item.CategoryName, item.FriendlyUrl, item.CultureID, _c)
                                 });
@@ -245,6 +250,7 @@ namespace thewall9.bll
                             {
                                 var _CC = _Category.CategoryCultures.Where(m => m.CultureID == item.CultureID).SingleOrDefault();
                                 _CC.CategoryName = item.CategoryName;
+                                _CC.CategoryDescription = item.CategoryDescription;
                                 _CC.FriendlyUrl = GetFriendlyUrl(Model, item.CategoryName, item.FriendlyUrl, item.CultureID, _c);
                             }
                         }

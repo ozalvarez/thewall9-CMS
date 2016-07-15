@@ -119,5 +119,26 @@ var _gaq = _gaq || [];
             }
             return new MvcHtmlString(string.Empty);
         }
+        public static MvcHtmlString OpenGraphTags(this HtmlHelper helper, string Title, string Description, string ImageUrl)
+        {
+            var _HTML = @"
+<meta property='og:title' content='" + Title + @"' />
+<meta property='og:url' content='" + helper.ViewContext.HttpContext.Request.Url + @"' />
+<meta property='og:description' content='" + Description + @"' />
+
+<meta name='twitter:card' content='summary_large_image' >
+<meta name='twitter:site' content='@somostheplayer9' />
+<meta name='twitter:creator' content='@somostheplayer9' />
+<meta name='twitter:title' content='" + Title + @"'>
+<meta name='twitter:description' content='" + Description + @"'>
+";
+
+            if (!string.IsNullOrEmpty(ImageUrl))
+            {
+                _HTML += @"<meta property ='og:image' content='" + ImageUrl + @"' />";
+                _HTML += @"<meta name ='twitter:image' content='" + ImageUrl + @"' />";
+            }
+            return new MvcHtmlString(_HTML);
+        }
     }
 }

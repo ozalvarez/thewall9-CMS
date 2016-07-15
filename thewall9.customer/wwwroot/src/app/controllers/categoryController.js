@@ -30,7 +30,8 @@
                 $scope.model.CategoryCultures.push({
                     CultureID: item.CultureID,
                     CultureName: item.Name,
-                    CategoryName: ""
+                    CategoryName: "",
+                    CategoryDescription:""
                 });
             });
             $('#modal-new').modal({
@@ -59,6 +60,7 @@
                         CultureID: itemC.CultureID,
                         CultureName: itemC.Name,
                         CategoryName: "",
+                        CategoryDescription:"",
                         CategoryID: item.CategoryID,
                         Adding: true,
                         FriendlyUrl:item.FriendlyUrl

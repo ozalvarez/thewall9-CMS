@@ -249,6 +249,10 @@
     <Compile Include="Migrations\201607131750111_AddBrand.Designer.cs">
       <DependentUpon>201607131750111_AddBrand.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607151948275_AddDescriptionCategory.cs" />
+    <Compile Include="Migrations\201607151948275_AddDescriptionCategory.Designer.cs">
+      <DependentUpon>201607151948275_AddDescriptionCategory.cs</DependentUpon>
+    </Compile>
     <Compile Include="OGraph.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Product.cs" />
@@ -531,6 +535,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607131750111_AddBrand.resx">
       <DependentUpon>201607131750111_AddBrand.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607151948275_AddDescriptionCategory.resx">
+      <DependentUpon>201607151948275_AddDescriptionCategory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
