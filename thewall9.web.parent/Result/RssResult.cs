@@ -55,6 +55,14 @@ namespace thewall9.web.parent.Result
                     _writer.WriteElementString("title", x.Title);
                     _writer.WriteElementString("description", x.Content);
                     _writer.WriteElementString("link", context.HttpContext.Request.Url.GetLeftPart(UriPartial.Authority) + "/post/" + x.BlogPostID + "/" + x.FriendlyUrl);
+                    if (!string.IsNullOrEmpty(x.FeatureImageUrl))
+                    {
+                        _writer.WriteStartElement("image");
+                        _writer.WriteElementString("url", x.FeatureImageUrl);
+                        _writer.WriteElementString("title", x.Title);
+                        _writer.WriteElementString("link", context.HttpContext.Request.Url.GetLeftPart(UriPartial.Authority) + "/post/" + x.BlogPostID + "/" + x.FriendlyUrl);
+                        _writer.WriteEndElement();
+                    }
                     _writer.WriteEndElement();
                 });
 
