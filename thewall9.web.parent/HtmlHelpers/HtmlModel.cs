@@ -19,6 +19,10 @@ namespace thewall9.web.parent.HtmlHelpers
             }
             return false;
         }
+        public static bool ExistValue(this HtmlHelper helper, PageWeb Model, string Value)
+        {
+            return ExistValue(helper, Model.Content,Value);
+        }
         public static MvcHtmlString FindValue(this HtmlHelper helper, PageWeb Model, string Value)
         {
             return FindValue(helper, Model.Content, Value);
