@@ -9,7 +9,7 @@
                 "insertdatetime media table contextmenu paste"
             ],
             toolbar: "fontsizeselect  | insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-            extended_valid_elements: "iframe[src|width|height|name|align]",
+            extended_valid_elements: "iframe[src|width|height|name|align|allowfullscreen|frameborder]",
             format: null
         };
         $scope.blogPostID = $routeParams.blogPostID;
