@@ -90,6 +90,10 @@ namespace thewall9.web.parent.HtmlHelpers
                 throw new NullReferenceException("List=" + Value + " in " + Model.ContentPropertyAlias + " is NULL", e.InnerException);
             }
         }
+        public static ICollection<ContentBindingList> FindItems(this HtmlHelper helper, PageWeb Model, string Value, bool AllowNull, bool OnlyEnabled = false)
+        {
+            return FindItems(helper, Model.Content, Value, AllowNull, OnlyEnabled);
+        }
         public static ICollection<ContentBindingList> FindItems(this HtmlHelper helper, PageWeb Model, string Value)
         {
             return FindItems(helper, Model.Content, Value);
