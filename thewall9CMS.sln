@@ -54,6 +54,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "yolanda.web", "..\thewall9-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "theplayer9.com", "..\theplayer9\theplayer9.com\theplayer9.com.csproj", "{1283DA87-85BE-483F-A1DB-ED51DA12C886}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "thewall9.v2.web", "..\thewall9-web\thewall9.v2.web\thewall9.v2.web.csproj", "{1070212A-9F43-4696-9AA4-F94D1CAF7904}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -124,6 +126,10 @@ Global
 		{1283DA87-85BE-483F-A1DB-ED51DA12C886}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1283DA87-85BE-483F-A1DB-ED51DA12C886}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1283DA87-85BE-483F-A1DB-ED51DA12C886}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1070212A-9F43-4696-9AA4-F94D1CAF7904}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1070212A-9F43-4696-9AA4-F94D1CAF7904}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1070212A-9F43-4696-9AA4-F94D1CAF7904}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1070212A-9F43-4696-9AA4-F94D1CAF7904}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -141,5 +147,6 @@ Global
 		{A0EDB1D5-E704-44F7-A5BB-D9D7577F148B} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
 		{EA3F0048-FB03-42B6-B858-FDB4BC559CDA} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
 		{1283DA87-85BE-483F-A1DB-ED51DA12C886} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
+		{1070212A-9F43-4696-9AA4-F94D1CAF7904} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
 	EndGlobalSection
 EndGlobal
