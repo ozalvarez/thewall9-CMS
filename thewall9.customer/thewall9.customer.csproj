@@ -341,7 +341,6 @@
     <Content Include="wwwroot\build\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="wwwroot\build\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\thewall9-customer - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\thewall9-customer.pubxml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -365,6 +364,7 @@
     <Content Include="wwwroot\build\js\skins\lightgray\fonts\tinymce.eot" />
     <Content Include="wwwroot\build\js\skins\lightgray\fonts\tinymce.ttf" />
     <Content Include="wwwroot\build\js\skins\lightgray\fonts\tinymce.woff" />
+    <None Include="Properties\PublishProfiles\thewall9-customer2 - Web Deploy.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\src\scripts\" />
