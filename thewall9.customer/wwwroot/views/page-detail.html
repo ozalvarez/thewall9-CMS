@@ -45,7 +45,7 @@
                         <input class="form-control" ng-model="page.PageAlias">
                     </div>
                     <div class="form-group">
-                        <label>Metatag Description ({{page.MetaDescription.length==null?0:page.MetaDescription.length}})</label>
+                        <label>Metatag Description (150-160 Characteres) ({{page.MetaDescription.length==null?0:page.MetaDescription.length}})</label>
                         <span class="label label-warning" ng-show="page.MetaDescription.length==null || page.MetaDescription.length<metatagDescriptionMin || page.MetaDescription.length>metatagDescriptionMax">
                             <i class="fa fa-warning"></i>
                         </span>
