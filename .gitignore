@@ -7,7 +7,7 @@
 bower_components/
 lib/
 
-#Grunt
+#NPM
 node_modules/
 
 # User-specific files
