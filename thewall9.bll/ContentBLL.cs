@@ -86,7 +86,7 @@ namespace thewall9.bll
             var _CParentID = (from c in _c.ContentProperties
                               where c.SiteID == SiteID && c.ContentPropertyAlias == AliasList
                               select c.ContentPropertyID).FirstOrDefault();
-            if(_CParentID==0) return null;
+            if (_CParentID == 0) return null;
 
             _List = (from cr in _c.ContentRoots
                      join p in _c.ContentProperties on cr.ContentID equals p.ContentPropertyID
@@ -422,7 +422,7 @@ namespace thewall9.bll
                         ContentPropertyParentID = p.ContentPropertyParentID,
                         ContentPropertyType = p.ContentPropertyType,
                         Lock = p.Lock,
-                        ContentPropertyAlias=p.ContentPropertyAlias,
+                        ContentPropertyAlias = p.ContentPropertyAlias,
 
                         ContentPropertyValue = p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Any()
                         ? p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Select(m => m.ContentPropertyValue).FirstOrDefault()
@@ -436,11 +436,11 @@ namespace thewall9.bll
                         Enabled = p.Enabled,
                         Priority = p.Priority,
 
-                        Hint = p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Any()
+                        Hint = p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Any() && !string.IsNullOrEmpty(p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Select(m => m.Hint).FirstOrDefault())
                         ? p.ContentPropertyCultures.Where(m => m.CultureID == CultureID).Select(m => m.Hint).FirstOrDefault()
-                        : (p.ContentPropertyCultures.Select(m => m.Hint).Any()
-                        ? p.ContentPropertyCultures.Select(m => m.Hint).FirstOrDefault()
-                        : p.ContentPropertyAlias),
+                        : ((p.ContentPropertyCultures.Where(m=> !string.IsNullOrEmpty(m.Hint)).Select(m => m.Hint).Any()
+                            ? p.ContentPropertyCultures.Where(m => !string.IsNullOrEmpty(m.Hint)).Select(m => m.Hint).FirstOrDefault()
+                            : p.ContentPropertyAlias)),
 
                         IsEditable = _c.ContentProperties.Where(m => m.SiteID == p.SiteID && m.ContentPropertyParentID == p.ContentPropertyParentID && m.ShowInContent && m.ContentPropertyID != p.ContentPropertyID).Any(),
 
@@ -458,7 +458,7 @@ namespace thewall9.bll
                 {
                     if (item.Edit)
                     {
-                        var _Content= _c.ContentProperties.Where(m => m.ContentPropertyID == item.ContentPropertyID).SingleOrDefault();
+                        var _Content = _c.ContentProperties.Where(m => m.ContentPropertyID == item.ContentPropertyID).SingleOrDefault();
                         _Content.ContentPropertyAlias = item.ContentPropertyAlias;
 
                         var _ContentCulture = _c.ContentPropertyCultures.Where(m => m.ContentPropertyID == item.ContentPropertyID && m.CultureID == Model.CultureID).SingleOrDefault();
@@ -471,7 +471,7 @@ namespace thewall9.bll
                             _c.ContentPropertyCultures.Add(_ContentCulture);
                         }
                         _ContentCulture.Hint = item.Hint;
-                        
+
                         if (item.ContentPropertyType == ContentPropertyType.IMG)
                         {
                             if (!string.IsNullOrEmpty(item.FileName))
@@ -885,12 +885,12 @@ namespace thewall9.bll
                         CultureID = item.CultureID,
                         ContentPropertyValue = item.ContentPropertyValue,
                         Hint = item.Hint
-                       
+
                     });
                 }
                 _c.SaveChanges();
                 //Make the same with childs
-                var _CPChilds = _c.ContentProperties.Where(m => m.ContentPropertyParentID == ContentPropertyID).OrderBy(m=>m.Priority).ToList();
+                var _CPChilds = _c.ContentProperties.Where(m => m.ContentPropertyParentID == ContentPropertyID).OrderBy(m => m.Priority).ToList();
                 foreach (var item in _CPChilds)
                 {
                     Duplicate(item.ContentPropertyID, _CPNew.ContentPropertyID, true);

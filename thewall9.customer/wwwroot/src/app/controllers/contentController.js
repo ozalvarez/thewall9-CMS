@@ -123,9 +123,16 @@
                 window.open(data.Url, '_blank', '');
             });
         }
+        $scope.importFromRoot = function () {
+            contentService.importContent(0, $scope.fileImport).then(function (data) {
+                $scope.fileImport = null;
+                toastrService.success("Propiedades creadas exitosamente, cargando nuevas propiedades..");
+                $scope.get();
+            });
+        }
         $scope.import = function (item) {
-            contentService.importContent(item == null ? 0 : item.ContentPropertyID, item.FileImport).then(function (data) {
-                if (item == null) {
+            contentService.importContent(item == undefined ? 0 : item.ContentPropertyID, item.FileImport).then(function (data) {
+                if (item == undefined) {
                     $scope.fileImport = null;
                 } else {
                     item.FileImport == null;
