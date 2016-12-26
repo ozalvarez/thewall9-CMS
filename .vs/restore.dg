@@ -1,4 +1,2 @@
-#:C:\Users\oswal\Source\thewall9-CMS\WebApplication2\WebApplication2.xproj
-C:\Users\oswal\Source\thewall9-CMS\WebApplication2\WebApplication2.xproj|C:\Users\oswal\Source\thewall9-CMS\thewall9.data.binding\thewall9.data.binding.csproj
-C:\Users\oswal\Source\thewall9-CMS\WebApplication2\WebApplication2.xproj|C:\Users\oswal\Source\thewall9-CMS\thewall9.web.parent\thewall9.web.parent.csproj
-C:\Users\oswal\Source\thewall9-CMS\thewall9.web.parent\thewall9.web.parent.csproj|C:\Users\oswal\Source\thewall9-CMS\thewall9.data.binding\thewall9.data.binding.csproj
+#:C:\Users\oswal\Source\thewall9-CMS\aspnet-core\thewall9.web.core\thewall9.web.core.xproj
+C:\Users\oswal\Source\thewall9-CMS\aspnet-core\thewall9.web.core\thewall9.web.core.xproj|C:\Users\oswal\Source\thewall9-CMS\aspnet-core\thewall9.web.parent.core\thewall9.web.parent.core.xproj

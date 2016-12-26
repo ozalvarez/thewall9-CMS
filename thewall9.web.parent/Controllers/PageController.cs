@@ -50,6 +50,7 @@ namespace thewall9.web.parent.Controllers
         {
             return View();
         }
+
         [Route("sitemap.xml")]
         [OutputCache(Duration = 12 * 3600, VaryByParam = "*")]
         public ActionResult SiteMap()
