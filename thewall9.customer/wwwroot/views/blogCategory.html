@@ -1,0 +1,31 @@
+﻿<div class="page-header">
+    <ul class="list-inline pull-right">
+        <li>
+            <button class="btn btn-primary" role="button" ng-click="edit(null)">
+                <span class="glyphicon glyphicon-plus"></span> Nueva Categoría
+            </button>
+        </li>
+        <li>
+            <select ng-options="culture as culture.Name for culture in cultures"
+                    ng-model="selectedCulture"
+                    ng-change="updateCulture()"
+                    class="form-control"></select>
+        </li>
+    </ul>
+    <h1>Categorías</h1>
+</div>
+<table class="table table-bordered">
+    <tr ng-repeat="item in data">
+        <td>
+            {{item.BlogCategoryID}}
+            <span ng-show="item.BlogCategoryName">{{item.BlogCategoryName}}</span>
+            <span ng-show="item.BlogCategoryName==null">UNTITLED</span>
+        </td>
+        <td>
+            <button class="btn btn-default btn-sm" role="button" ng-click="edit(item)">
+                <span class="glyphicon glyphicon-edit"></span>
+            </button>
+        </td>
+    </tr>
+</table>
+<div ng-include src="'/wwwroot/views/_BlogCategory.html'"></div>

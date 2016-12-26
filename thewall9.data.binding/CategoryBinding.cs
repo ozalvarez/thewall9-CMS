@@ -25,6 +25,7 @@ namespace thewall9.data.binding
     public class CategoryCultureBase
     {
         public string CategoryName { get; set; }
+        public string CategoryDescription { get; set; }
         public string FriendlyUrl { get; set; }
     }
     public class CategoryCultureBinding : CategoryCultureBase

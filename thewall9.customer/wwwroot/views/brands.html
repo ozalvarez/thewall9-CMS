@@ -1,0 +1,67 @@
+﻿<div class="page-header">
+    <ul class="list-inline pull-right">
+        <li>
+            <button class="btn btn-primary" role="button" ng-click="open()">
+                <span class="glyphicon glyphicon-plus"></span> New Brand
+            </button>
+        </li>
+    </ul>
+    <h1>Brands</h1>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+            <tr>
+                <td></td>
+                <td>Brand</td>
+                <td>Brand Description</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in data">
+                <td><img ng-src="{{item.IconUrl}}" style="max-height:50px;" ng-show="item.IconUrl" /></td>
+                <td>{{item.BrandName}}</td>
+                <td>{{item.BrandDescription}}</td>
+                <td>
+                    <button class="btn btn-sm btn-default" ng-click="open(item)">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </button>
+                    <button class="btn btn-sm btn-danger" ng-click="delete(item)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+</div>
+<div class="modal fade" id="modal-new" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Brand Info</h4>
+            </div>
+            <div class="modal-body">
+                <form ng-submit="save()">
+                    <div class="form-group">
+                        <label>Brand Name</label>
+                        <input type="text" class="form-control" ng-model="model.BrandName" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Brand Description</label>
+                        <textarea class="form-control" ng-model="model.BrandDescription"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Icon</label>
+                        <img-read datasource="model.Icon" fileurl="model.IconUrl"></img-read>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Guardar Brand" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

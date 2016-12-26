@@ -23,6 +23,7 @@ namespace thewall9.bll
                         select new CategoryWeb
                         {
                             CategoryName = c.CategoryName,
+                            CategoryDescription = c.CategoryDescription,
                             FriendlyUrl = c.FriendlyUrl,
                             CategoryID = c.CategoryID,
                             IconUrl = c.Category.IconUrl,
@@ -53,6 +54,7 @@ namespace thewall9.bll
                           select new CategoryWeb
                           {
                               CategoryName = c.CategoryName,
+                              CategoryDescription = c.CategoryDescription,
                               FriendlyUrl = c.FriendlyUrl,
                               CategoryID = c.CategoryID,
                               IconUrl = c.Category.IconUrl,
@@ -127,21 +129,6 @@ namespace thewall9.bll
                 return GetTree(_Category, SiteID, CultureID, CategoryID, _c);
             }
         }
-        //public CategoryWeb Get(int CategoryID, int CultureID)
-        //{
-        //    using (var _c = db)
-        //    {
-        //        return (from m in _c.CategoryCultures
-        //                where m.CategoryID == CategoryID
-        //                 && m.Culture.CultureID == CultureID
-        //                select new CategoryWeb
-        //             {
-        //                 CategoryName = m.CategoryName,
-        //                 CategoryID = m.CategoryID
-        //             }).FirstOrDefault();
-        //    }
-        //}
-        
         #endregion
 
         #region Customer
@@ -167,16 +154,13 @@ namespace thewall9.bll
                         Priority = c.Priority,
                         SiteID = c.SiteID,
                         IconUrl = c.IconUrl,
-                        Icon = new FileReadBinding
-                        {
-                            FileUrl = c.IconUrl
-                        },
                         CategoryCultures = c.CategoryCultures.Select(m => new CategoryCultureBinding
                         {
                             CategoryName = m.CategoryName,
                             CultureID = m.CultureID,
                             CultureName = m.Culture.Name,
-                            FriendlyUrl = m.FriendlyUrl
+                            FriendlyUrl = m.FriendlyUrl,
+                            CategoryDescription=m.CategoryDescription
                         }).ToList(),
 
                         CategoryItems = Model.Where(m => m.CategoryParentID == c.CategoryID).Any()
@@ -235,6 +219,7 @@ namespace thewall9.bll
                             _Category.CategoryCultures.Add(new CategoryCulture
                             {
                                 CategoryName = item.CategoryName,
+                                CategoryDescription=item.CategoryDescription,
                                 CultureID = item.CultureID,
                                 FriendlyUrl = GetFriendlyUrl(Model, item.CategoryName, item.FriendlyUrl, item.CultureID, _c)
                             });
@@ -256,6 +241,7 @@ namespace thewall9.bll
                                 _Category.CategoryCultures.Add(new CategoryCulture
                                 {
                                     CategoryName = item.CategoryName,
+                                    CategoryDescription = item.CategoryDescription,
                                     CultureID = item.CultureID,
                                     FriendlyUrl = GetFriendlyUrl(Model, item.CategoryName, item.FriendlyUrl, item.CultureID, _c)
                                 });
@@ -264,6 +250,7 @@ namespace thewall9.bll
                             {
                                 var _CC = _Category.CategoryCultures.Where(m => m.CultureID == item.CultureID).SingleOrDefault();
                                 _CC.CategoryName = item.CategoryName;
+                                _CC.CategoryDescription = item.CategoryDescription;
                                 _CC.FriendlyUrl = GetFriendlyUrl(Model, item.CategoryName, item.FriendlyUrl, item.CultureID, _c);
                             }
                         }
@@ -282,7 +269,7 @@ namespace thewall9.bll
                 }
                 _Category.CategoryAlias = Model.CategoryAlias;
                 _Category.CategoryParentID = Model.CategoryParentID;
-                _Category.IconUrl = new FileReadBLL().AddImage(Model.Icon, FileReadBLL.FileType.PRODUCT_CATEGORY, _Category.CategoryID.ToString(), _Category.IconUrl);
+                _Category.IconUrl = new FileReadBLL().AddImage(Model.Icon, FileReadBLL.FileType.PRODUCT_CATEGORY, _Category.CategoryID.ToString(), _Category.IconUrl, Model.SiteID);
                 _c.SaveChanges();
 
                 //ADD ICON

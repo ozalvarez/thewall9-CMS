@@ -19,6 +19,10 @@ namespace thewall9.web.parent.HtmlHelpers
             }
             return false;
         }
+        public static bool ExistValue(this HtmlHelper helper, PageWeb Model, string Value)
+        {
+            return ExistValue(helper, Model.Content, Value);
+        }
         public static MvcHtmlString FindValue(this HtmlHelper helper, PageWeb Model, string Value)
         {
             return FindValue(helper, Model.Content, Value);
@@ -69,19 +73,26 @@ namespace thewall9.web.parent.HtmlHelpers
         }
         public static ICollection<ContentBindingList> FindItems(this HtmlHelper helper, ContentBindingList Model, string Value)
         {
-            return FindItems(helper, Model, Value,false);
+            return FindItems(helper, Model, Value, false);
         }
-        public static ICollection<ContentBindingList> FindItems(this HtmlHelper helper, ContentBindingList Model, string Value, bool AllowNull)
+        public static ICollection<ContentBindingList> FindItems(this HtmlHelper helper, ContentBindingList Model, string Value, bool AllowNull, bool OnlyEnabled = false)
         {
             try
             {
-                return Model.Items.Where(m => m.ContentPropertyAlias.Equals(Value)).SingleOrDefault().Items;
+                var _Q = Model.Items.Where(m => m.ContentPropertyAlias.Equals(Value)).SingleOrDefault().Items;
+                if (OnlyEnabled)
+                    return _Q.Where(m=>m.Enabled).ToList();
+                return _Q;
             }
             catch (NullReferenceException e)
             {
                 if (AllowNull) return new List<ContentBindingList>();
                 throw new NullReferenceException("List=" + Value + " in " + Model.ContentPropertyAlias + " is NULL", e.InnerException);
             }
+        }
+        public static ICollection<ContentBindingList> FindItems(this HtmlHelper helper, PageWeb Model, string Value, bool AllowNull, bool OnlyEnabled = false)
+        {
+            return FindItems(helper, Model.Content, Value, AllowNull, OnlyEnabled);
         }
         public static ICollection<ContentBindingList> FindItems(this HtmlHelper helper, PageWeb Model, string Value)
         {
@@ -92,7 +103,7 @@ namespace thewall9.web.parent.HtmlHelpers
         {
             return APP._Site.Menu;
         }
-        
+
         private static string GetFriendlyUrlByAlias(this HtmlHelper helper, string Alias)
         {
             return APP._Site.Menu.Where(m => m.PageAlias.Equals(Alias)).Select(m => m.FriendlyUrl).SingleOrDefault();

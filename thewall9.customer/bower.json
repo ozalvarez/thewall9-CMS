@@ -11,8 +11,11 @@
     "angular-ui-tinymce": "^0.0.9",
     "ng-file-upload": "^10.1.0",
     "ng-file-upload-shim": "^10.1.0",
+    "angular-bootstrap": "^1.1.2",
 
     "bootstrap": "^3.3.5",
+    "bootstrap-daterangepicker": "^2.1.19",
+
     "jquery": "^2.1.4",
     "modernizr": "^2.8.3",
     "toastr": "^2.1.1",

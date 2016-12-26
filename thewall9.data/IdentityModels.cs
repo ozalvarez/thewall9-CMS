@@ -78,19 +78,23 @@ namespace thewall9.data.Models
                 .WillCascadeOnDelete(true);
 
 
-            //Odata
-
+            //ODATA
             modelBuilder.Entity<OGraphMedia>()
-                 .HasKey(m => new {  m.OGraphID })
+                 .HasKey(m => new { m.OGraphID })
                 .HasRequired(m => m.OGraph)
                 .WithOptional(m => m.OGraphMedia)
                .WillCascadeOnDelete(true);
 
             //PRODUCT
+            modelBuilder.Entity<Product>()
+                .HasOptional(m=>m.Brand)
+                .WithMany(o => o.Products)
+                .HasForeignKey(ol => ol.BrandID);
+
             modelBuilder.Entity<ProductCategory>()
                 .HasKey(m => new { m.ProductID, m.CategoryID });
-
-            //MEDIA
+            //modelBuilder.Entity<BrandProduct>()
+            //    .HasKey(m => new { m.ProductID, m.BrandID });
 
             base.OnModelCreating(modelBuilder);
         }
@@ -126,6 +130,9 @@ namespace thewall9.data.Models
 
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
+
+        public DbSet<Brand> Brands { get; set; }
+       // public DbSet<BrandProduct> BrandProducts { get; set; }
 
         //BLOG
         public DbSet<BlogPost> BlogPosts { get; set; }

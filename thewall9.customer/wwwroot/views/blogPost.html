@@ -1,0 +1,95 @@
+﻿
+<div class="page-header">
+    <ul class="list-inline pull-right">
+        <li>
+            <select ng-options="culture as culture.Name for culture in cultures"
+                    ng-model="selectedCulture"
+                    ng-change="updateCulture()"
+                    class="form-control"></select>
+        </li>
+    </ul>
+    <h1 ng-show="model.Title==null">Nuevo Post</h1>
+    <h1 ng-show="model.Title">{{model.Title}}</h1>
+</div>
+<form role="form">
+    <div class="form-group">
+        <label>Título</label>
+        <input class="form-control" ng-model="model.Title" placeholder="Título" required>
+    </div>
+    <div class="form-group">
+        <textarea ui-tinymce="tinymceOptions" ng-model="model.Content" style="width:100%"></textarea>
+    </div>
+    <uib-tabset>
+        <uib-tab heading="Subtítulo">
+            <div class="form-group">
+                <textarea ng-model="model.ContentPreview" class="form-control" rows="3"></textarea>
+            </div>
+        </uib-tab>
+        <uib-tab heading="SEO">
+            <div class="form-group">
+                <input class="form-control" ng-model="model.FriendlyUrl" placeholder="Friendly Url">
+            </div>
+        </uib-tab>
+        <uib-tab heading="Tags & Categorías">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Categorías</div>
+                        <div class="panel-body">
+                            <div class="checkbox">
+                                <label ng-repeat="item in categories">
+                                    <input type="checkbox" ng-click="selectCategory(item)" ng-checked="item.Enabled">
+                                    {{item.BlogCategoryName}} &nbsp;
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Tags</div>
+                        <div class="panel-body">
+                            <tag-manager tags="model.Tags"
+                                         keyproperty="BlogTagID"
+                                         valueproperty="BlogTagName"
+                                         autocomplete="getTags"></tag-manager>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab heading="Imagen Principal">
+            <div class="row">
+                <div class="col-md-4">
+                    <input type="file" data-fileread="model.FeatureImageFileRead" />
+                    <button class="btn btn-danger"
+                            ng-show="!model.FeatureImageFileRead.Deleting
+                             && model.FeatureImageFileRead!=null"
+                            ng-click="model.FeatureImageFileRead.Deleting=true;">
+                        Delete Feature Image
+                    </button>
+                </div>
+                <div class="col-md-8">
+                    <img ng-src="{{model.FeatureImageFileRead.MediaUrl}}"
+                         ng-show="model.FeatureImageFileRead.MediaUrl
+                         && !model.FeatureImageFileRead.FileContent
+                         && !model.FeatureImageFileRead.Deleting" class="img-responsive img-thumbnail" />
+                    <img ng-src="{{model.FeatureImageFileRead.FileContent}}"
+                         ng-show="model.FeatureImageFileRead.FileContent
+                         && !model.FeatureImageFileRead.Deleting"
+                         class="img-responsive img-thumbnail" />
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab heading="Imagenes">
+            <div ng-include src="'/wwwroot/views/_MediaList.html'"></div>
+        </uib-tab>
+    </uib-tabset>
+    <hr />
+    <p>
+        <button type="submit" class="btn btn-primary" ng-click="save(true)">Guardar</button>
+        <button type="submit" class="btn btn-primary" ng-click="save(false)">Guardar como Draft</button>
+        <a href="" class="btn btn-default" ng-href="#/blog"> Ir al Listado</a>
+    </p>
+</form>

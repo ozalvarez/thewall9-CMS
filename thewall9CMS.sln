@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "thewall9.api", "thewall9.api\thewall9.api.csproj", "{7B3CFA34-04DA-42B4-85BE-9BD6252B66EB}"
 EndProject
@@ -31,14 +31,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "webs-admin", "webs-admin", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4E01CD09-0539-4529-A89C-6239D0916675}"
 	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
 		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{B46AA2A2-89F0-4FFB-85EB-B92D132C8A62}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "thewall9.bll.test", "thewall9.bll.test\thewall9.bll.test.csproj", "{F03DA678-F31B-41E7-B4FE-95F2B12C0F05}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "thewall9.web", "..\thewall9-web\thewall9.web\thewall9.web.csproj", "{EC1240C8-585D-4846-BD2E-26A652549E5A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "evdt.web", "..\thewall9-websites-git\evdt.web\evdt.web.csproj", "{F246B9F8-74B4-40DD-A39D-65403C03C712}"
 EndProject
@@ -51,6 +51,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "elcubo9.web", "..\thewall9-websites-git\elcubo9\elcubo9.web.csproj", "{A0EDB1D5-E704-44F7-A5BB-D9D7577F148B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "yolanda.web", "..\thewall9-websites-git\yolanda.web\yolanda.web.csproj", "{EA3F0048-FB03-42B6-B858-FDB4BC559CDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "theplayer9.com", "..\theplayer9\theplayer9.com\theplayer9.com.csproj", "{1283DA87-85BE-483F-A1DB-ED51DA12C886}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "thewall9.v2.web", "..\thewall9-web\thewall9.v2.web\thewall9.v2.web.csproj", "{1070212A-9F43-4696-9AA4-F94D1CAF7904}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bebsabeduque.com", "..\thewall9-websites-git\bebsabeduque.com\bebsabeduque.com.csproj", "{D7E60A20-1EB3-496E-9A99-848BD53150B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -90,10 +96,6 @@ Global
 		{F03DA678-F31B-41E7-B4FE-95F2B12C0F05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F03DA678-F31B-41E7-B4FE-95F2B12C0F05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F03DA678-F31B-41E7-B4FE-95F2B12C0F05}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EC1240C8-585D-4846-BD2E-26A652549E5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EC1240C8-585D-4846-BD2E-26A652549E5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EC1240C8-585D-4846-BD2E-26A652549E5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EC1240C8-585D-4846-BD2E-26A652549E5A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F246B9F8-74B4-40DD-A39D-65403C03C712}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F246B9F8-74B4-40DD-A39D-65403C03C712}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F246B9F8-74B4-40DD-A39D-65403C03C712}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -118,6 +120,18 @@ Global
 		{EA3F0048-FB03-42B6-B858-FDB4BC559CDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA3F0048-FB03-42B6-B858-FDB4BC559CDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA3F0048-FB03-42B6-B858-FDB4BC559CDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1283DA87-85BE-483F-A1DB-ED51DA12C886}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1283DA87-85BE-483F-A1DB-ED51DA12C886}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1283DA87-85BE-483F-A1DB-ED51DA12C886}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1283DA87-85BE-483F-A1DB-ED51DA12C886}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1070212A-9F43-4696-9AA4-F94D1CAF7904}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1070212A-9F43-4696-9AA4-F94D1CAF7904}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1070212A-9F43-4696-9AA4-F94D1CAF7904}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1070212A-9F43-4696-9AA4-F94D1CAF7904}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7E60A20-1EB3-496E-9A99-848BD53150B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7E60A20-1EB3-496E-9A99-848BD53150B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7E60A20-1EB3-496E-9A99-848BD53150B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7E60A20-1EB3-496E-9A99-848BD53150B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -127,12 +141,14 @@ Global
 		{B7672DB4-FC34-4F79-A6C0-4F1F15ADD1ED} = {99EF3134-9897-42EE-A595-21286B5E905A}
 		{A3F8C792-E3D3-4945-A5A1-B999141C8980} = {99EF3134-9897-42EE-A595-21286B5E905A}
 		{F03DA678-F31B-41E7-B4FE-95F2B12C0F05} = {B46AA2A2-89F0-4FFB-85EB-B92D132C8A62}
-		{EC1240C8-585D-4846-BD2E-26A652549E5A} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
 		{F246B9F8-74B4-40DD-A39D-65403C03C712} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
 		{FE5F92FB-7E19-40B1-99EB-3B38AC1988C3} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
 		{D76FF67E-DCC6-4560-A8D9-432060F5449A} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
 		{FFC391B6-115D-4134-83A3-12FE8E67C902} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
 		{A0EDB1D5-E704-44F7-A5BB-D9D7577F148B} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
 		{EA3F0048-FB03-42B6-B858-FDB4BC559CDA} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
+		{1283DA87-85BE-483F-A1DB-ED51DA12C886} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
+		{1070212A-9F43-4696-9AA4-F94D1CAF7904} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
+		{D7E60A20-1EB3-496E-9A99-848BD53150B4} = {F221A52E-0296-4849-B391-B202B4A2B8C0}
 	EndGlobalSection
 EndGlobal
