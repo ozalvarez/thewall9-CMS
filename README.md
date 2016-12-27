@@ -18,7 +18,9 @@ There are a several reason to create this architecture, here some of them:
 
 ## Status
 
-This repository is a **experimental CMS** your are welcome to contribute. Ecommerce features is under development
+This repository is a **Experimental Alpha CMS** your are welcome to contribute. Ecommerce features is under development.
+
+We consider this repository a pre-release
 
 ## Technologies
 
