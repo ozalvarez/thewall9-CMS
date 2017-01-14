@@ -3,7 +3,6 @@ app.controller('appController', ['$scope', '$rootScope', "$q", '$location', 'aut
     function ($scope, $rootScope, $q, $location, authService, siteService, cultureService) {
         $scope.logOut = function () {
             authService.logOut();
-            window.location = "/"
         }
         $scope.authentication = authService.authentication;
 
@@ -30,6 +29,9 @@ app.controller('appController', ['$scope', '$rootScope', "$q", '$location', 'aut
                     $rootScope.$broadcast('initDone');
                 });
             });
+        }
+        $scope.getPath = function (path) {
+            return APP.ApplicationPath + path;
         }
     }
 ]);

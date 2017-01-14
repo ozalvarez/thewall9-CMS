@@ -2,7 +2,7 @@
     return {
         restrict: 'E',
         scope: { tags: '=', autocomplete: '=' },
-        templateUrl: '/wwwroot/src/app/directives/_tagManager.html',
+        templateUrl: APP.ApplicationPath + '/wwwroot/src/app/directives/_tagManager.html',
         link: function ($scope, $element, $attributes) {
             // FIXME: this is lazy and error-prone
             var input = angular.element($element.children()[1]);

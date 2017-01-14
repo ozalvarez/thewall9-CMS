@@ -183,7 +183,13 @@
         </div>
     </div>
     <script>
+        //deprecated
         var serviceBase = '@APP._API_URL';
+        var APP = {
+            Url: '@APP._API_URL',
+            ApplicationPath: '@Request.ApplicationPath',
+            AppInternUrl:'app'
+        };
     </script>
     <script src="~/wwwroot/build/js/app-vendors.min.js"></script>
     <script src="~/wwwroot/build/js/tinymce.min.js"></script>

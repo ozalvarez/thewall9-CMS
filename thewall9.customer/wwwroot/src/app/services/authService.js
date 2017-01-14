@@ -58,7 +58,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
             _authentication.userName = "";
             _authentication.useRefreshTokens = false;
             if (noRefresh == null) {
-                window.location = "/";
+                window.location = APP.ApplicationPath;
             }
         };
 

@@ -54,7 +54,12 @@
         </div>
     </div>
     <script>
+        //deprecated
         var serviceBase = '@APP._API_URL';
+        var APP = {
+            Url: '@APP._API_URL',
+            ApplicationPath: '@Request.ApplicationPath'
+        };
     </script>
     <script src="~/wwwroot/build/js/login-vendors.min.js"></script>
     <script src="~/wwwroot/build/js/login.min.js"></script>
