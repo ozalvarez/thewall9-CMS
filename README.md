@@ -1,6 +1,6 @@
-# Welcome to thewall9 CMS
+# Welcome to THE WALL9 CMS
 
-This is a Multilanguaje **Experimental Cloud CMS with Blog features** created with ASP.NET MVC 5.2.2, ASP.NET Web API 2, Entity Framework Code First, Identity 2.0, SQL Server on Azure, Azure Blobs, Angular.js, jQuery and Twitter Bootstrap.
+This is a Multilanguaje **Experimental Cloud CMS with Blog features** created with ASP.NET MVC 5.2.2, ASP.NET Web API 2, Entity Framework Code First, Identity 2.0, SQL Server on Azure, Azure Blobs, Angular.js, jQuery, Twitter Bootstrap & Grunt.
 
 Screenshots: [https://www.flickr.com/photos/129114186@N06/sets/72157650109877927/](https://www.flickr.com/photos/129114186@N06/sets/72157650109877927/)
 ## Why a Cloud CMS
@@ -55,16 +55,16 @@ update-database
 Now you have the database, you can change the location of the database in `Web.config` `thewall9.api`
 
 5. Open Task Runner Explorer, select thewall9.admin and execute **build** task.
-6. Press F5 or Start Debugging, be sure the **Startup Project** is `thewall9.api`. This will open a browser with this url `http://localhost:2497/` I call this URL `API_URL` all websites will point to this API URL. You can change this URL if you want.
-7. Open in your IIS Express `thewall9.admin` website it will prompt for a username/email and a password. You will put `[YOUR ROOT EMAIL]` as a username/email and `123456` as a password. Now you are in admin portal.
+6. Be sure `thewall9.api` is mapped to a local IIS (Properties -> Web -> Servers) Press F5 or Start Debugging, be sure the **Startup Project** is `thewall9.api`. This will open a browser with this url `http://localhost/thewall9.api/` I call this URL `API_URL` all websites will point to this API URL. You can change this URL if you want.
+7. Open in your IIS `thewall9.admin` website it will prompt for a username/email and a password. You will put `[YOUR ROOT EMAIL]` as a username/email and `123456` as a password. Now you are in admin portal.
 8. Now you will create your first website, you will create a copy of [thewall9.com](http://thewall9.com) site.
-    1. Find a file in this folder `/webs` called `SITE.json`
+    1. Download this file [SITE.json](https://github.com/ozalvarez/thewall9-web/blob/master/SITE.json)
     2. Be sure you have installed and running **Windows Azure Storage Emulator - v3.4+** otherwise this don't work.
     3. In **Admin Portal** go to **Site** section and press **Import Site** button select the file you already locate called `SITE.json` and press the **Upload** button
     4. Now you have a copy of [thewall9.com](http://thewall9.com) site.
 9. We going to test your copy of [thewall9.com](http://thewall9.com) site is working
 	1. Go to the next repository https://github.com/ozalvarez/thewall9-web and open this solution
-    2. Open in your IIS Express `thewall9.web` website
+    2. Open in your IIS Express or Local IIS `thewall9.web` website
     3. Be sure in `thewall9.web` `Web.config` file the value of your **Site ID** is the same that in your **Admin Portal Sites** section `<add key="SiteID" value="1" />`
 
 Now you have running **thewall9 CMS** in your computer. You are welcome to make contribution via **Pull Request**.
@@ -77,13 +77,13 @@ Now you have running **thewall9 CMS** in your computer. You are welcome to make 
 ```
 3. Press F5 or Start Debugging, be sure the **Startup Project** is `thewall9.customer`.
 
-**IMPORTANT**: All websites are configurated to run on local IIS
+**IMPORTANT**: All websites are configured to run on local IIS, be sure `thewall9.api` & `thewall9.customer` projects are mapped to the IIS. You can change to run this CMS in IIS Express changing the configuration of each project and mapping them in the Web.config
 
 ## Documentation
 
 Is under development
 
-## thewall9 Cloud CMS
+## THE WALL9 Cloud CMS
 
 I have a cloud solution running right now, if you want an access write me an email to [oz@thewall9.com](mailto:oz@thewall9.com) and i can create a site for you. you only have to clone a website project called `blank.web` in `webs` solution folder, be sure in Web.config `<add key="API_URL" value="https://api-thewall9.azurewebsites.net/" />` is set and you are ready to use the cloud solution
 
@@ -101,7 +101,7 @@ Install-Package thewall9CMS -Pre
 
     ```
 <add key="SiteID" value="1" />
-<add key="API_URL" value="http://localhost:2497/" />
+<add key="API_URL" value="http://localhost/thewall9.api/" />
 ```
 5. If you want to create a site in the cloud platform write me an email to [info@thewall9.com](mailto:info@thewall9.com) and i will create a SiteID for you.
 
