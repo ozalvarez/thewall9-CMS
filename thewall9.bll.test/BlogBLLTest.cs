@@ -43,6 +43,7 @@ namespace thewall9.bll.test
             {
                 BlogTagName = "t2"
             });
+
             //CREATING POSTS
             _BlogPost = new BlogPostModelBinding
             {
@@ -145,8 +146,6 @@ namespace thewall9.bll.test
             SettingUp();
             var _Posts = new BlogBLL().Get(_SiteID, _Cultures[0].CultureID);
             Assert.IsTrue(_Posts.Count == 3);
-            Assert.AreEqual(_BlogPost.Title, _Posts[0].CultureInfo.Title);
-            Assert.AreEqual(_BlogPost2.Title, _Posts[1].CultureInfo.Title);
         }
         [TestMethod]
         public void BlogPostRemoveTest()
