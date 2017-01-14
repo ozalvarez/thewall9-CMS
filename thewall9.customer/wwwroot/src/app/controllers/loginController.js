@@ -1,6 +1,6 @@
 ﻿'use strict';
 app.controller('loginController', ['$scope', '$location', 'authService', 'ngAuthSettings', function ($scope, $location, authService, ngAuthSettings) {
-    var AppPath = APP.ApplicationPath + "/app";
+    var AppPath = APP.ApplicationPath + APP.AppInternUrl;
     if (authService.authentication.isAuth) {
         window.location = AppPath;
     }

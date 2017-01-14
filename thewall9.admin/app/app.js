@@ -4,11 +4,11 @@ app.config(["$routeProvider", function ($routeProvider) {
 
     $routeProvider.when("/", {
         controller: "homeController",
-        templateUrl: "/app/views/home.html"
+        templateUrl: APP.ApplicationPath + "/app/views/home.html"
     });
     $routeProvider.when("/sites", {
         controller: "siteController",
-        templateUrl: "/app/views/sites.html"
+        templateUrl: APP.ApplicationPath + "/app/views/sites.html"
     });
     $routeProvider.otherwise({ redirectTo: "/" });
 }]);

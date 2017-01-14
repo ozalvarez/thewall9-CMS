@@ -3,8 +3,10 @@ app.controller('appController', ['$scope','$rootScope',"$q", '$location', 'authS
     function ($scope,$rootScope, $q, $location, authService, utilService) {
         $scope.logOut = function () {
             authService.logOut();
-            window.location = "/"
         }
         $scope.authentication = authService.authentication;
+        $scope.getPath = function (path) {
+            return APP.ApplicationPath + path;
+        }
     }
 ]);
