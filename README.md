@@ -73,9 +73,11 @@ Now you have running **thewall9 CMS** in your computer. You are welcome to make 
 1. Open Task Runner Explorer, select thewall9.customer and execute **build** task.
 2. Open Web.config, add this appSetting to point the customer portal to the API
     ```
-<add key="API_URL" value="http://localhost:2497/" />
+<add key="API_URL" value="http://localhost/thewall9.api/" />
 ```
 3. Press F5 or Start Debugging, be sure the **Startup Project** is `thewall9.customer`.
+
+**IMPORTANT**: All websites are configurated to run on local IIS
 
 ## Documentation
 
